@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#464747",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#f9f9f9", // Updated from #ffffff
+                    "on-surface-variant": "#4c4546",
+                    "surface-container-low": "#f3f3f3",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface-variant": "#e2e2e2",
+                    "secondary-container": "#e1dfdf",
+                    "on-primary-fixed-variant": "#474747",
+                    "primary-container": "#1b1b1b",
+                    "surface-container-high": "#e8e8e8",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#5e5e5e",
+                    "primary": "#000000",
+                    "secondary-fixed": "#e4e2e2",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "on-surface": "#1a1c1c",
+                    "inverse-primary": "#c6c6c6",
+                    "surface-bright": "#fcfcfc", // Updated from #f9f9f9
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f1f1f1",
+                    "on-primary-fixed": "#1b1b1b",
+                    "surface": "#f9f9f9", // This is our main off-white surface
+                    "on-primary-container": "#848484",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1a1c1c",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "surface-container": "#eeeeee",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#1b1b1b",
+                    "secondary-fixed-dim": "#c7c6c6",
+                    "outline": "#7e7576",
+                    "inverse-surface": "#2f3131",
+                    "tertiary-fixed": "#e2e2e2",
+                    "tertiary": "#000000",
+                    "background": "#f9f9f9",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "outline-variant": "#cfc4c5",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#626262",
+                    "primary-fixed": "#e2e2e2",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "secondary": "#5e5e5e",
+                    "surface-dim": "#dadada",
+                    "on-tertiary-container": "#848484"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "16px",
+                    "stack-lg": "16px",
+                    "unit": "4px",
+                    "stack-sm": "4px",
+                    "stack-md": "8px",
+                    "gutter": "12px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "h2": ["Inter"],
+                    "h1": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-caps": ["10px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "h2": ["16px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h1": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopAppBar -->
+<nav class="fixed top-0 left-0 z-50 flex justify-between items-center w-full px-4 h-16 max-w-full bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-primary" data-icon="grid_view">grid_view</span>
+<span class="text-xl font-black tracking-tighter text-primary uppercase">OCHI</span>
+</div>
+<div class="hidden md:flex items-center space-x-6">
+<a class="font-inter text-sm font-medium uppercase tracking-tighter text-secondary hover:bg-surface-container-low px-2 py-1 transition-opacity duration-150" href="#">Dashboard</a>
+<a class="font-inter text-sm font-bold uppercase tracking-tighter text-primary px-2 py-1" href="#">About</a>
+<a class="font-inter text-sm font-medium uppercase tracking-tighter text-secondary hover:bg-surface-container-low px-2 py-1 transition-opacity duration-150" href="#">Contact</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-32 px-container-margin max-w-3xl mx-auto">
+<!-- The Vision Section -->
+<header class="mb-stack-lg">
+<p class="font-label-caps text-label-caps text-secondary mb-unit uppercase">The Vision</p>
+<h1 class="font-h1 text-h1 text-primary mb-stack-md">Addressing the Coastal Forecasting Gap</h1>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+                OCHI exists to empower hospitality stakeholders with high-fidelity volume forecasts. We fill the critical intelligence gap in the Oregon Coast region, translating complex environmental and economic data into actionable operational intelligence for better labor allocation and inventory management.
+            </p>
+</header>
+<!-- Visual Hero -->
+<div class="w-full h-48 bg-surface-container-highest border border-outline-variant mb-stack-lg overflow-hidden relative">
+<img alt="Oregon Coast" class="w-full h-full object-cover grayscale opacity-40" data-alt="Moody aerial shot of the Oregon coastline with fog rolling over dark pine forests and rugged cliffs at dawn" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_AU0tgd0TdAtc8rf_0RKp30Kuk3nr9fcvd3Nh7Hcmmt_fenL6GcYPCuO2GtE_R5s1-uSnkGZO0HtTA283CdlxFwD-PN4P2bFovgQuV_AUSMXtsY-FPL1f_WGvSuNTCekdg31YgtklVD0qFr5iEUfWP9t9ZHTBio8gbhOAnhTg5q5t4w8JqKRl2ydf0DqFH_DHcuB-sbiz7ww0gtrLm7MhAeN9bXYzATB_1VF-L8OOmE1fCvJiijhSVSkS5YC5IPLvPuDxxNUagmY"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-primary text-on-primary px-stack-lg py-stack-md">
+<p class="font-label-caps text-label-caps tracking-[0.2em]">TECHNICAL CHIC • UTILITY DRIVEN</p>
+</div>
+</div>
+</div>
+<!-- The Data Five Section -->
+<section class="mb-stack-lg">
+<h2 class="font-h2 text-h2 text-primary border-b-2 border-primary pb-stack-sm mb-stack-lg uppercase tracking-tight">The Data Five Pillars</h2>
+<div class="space-y-gutter">
+<!-- Pillar 1: Hwy 6 -->
+<div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-gutter items-start border-b border-outline-variant pb-gutter">
+<div class="flex items-center gap-stack-sm">
+<span class="font-data-mono text-data-mono bg-primary text-on-primary px-unit">01</span>
+<span class="font-label-caps text-label-caps text-primary">HWY 6 STATUS</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary font-bold mb-unit">Primary Arterial Pulse</p>
+<p class="font-body-sm text-body-sm text-on-surface">Real-time traffic fluidity monitored from Highway 6 sensors. This provides a 90-minute lead time on coastal arrivals for Portland-originating traffic.</p>
+</div>
+</div>
+<!-- Pillar 2: Gas -->
+<div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-gutter items-start border-b border-outline-variant pb-gutter">
+<div class="flex items-center gap-stack-sm">
+<span class="font-data-mono text-data-mono bg-primary text-on-primary px-unit">02</span>
+<span class="font-label-caps text-label-caps text-primary">GAS INDEX</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary font-bold mb-unit">Inertia Coefficient</p>
+<p class="font-body-sm text-body-sm text-on-surface">Analysis of regional fuel volatility. High prices trigger the "Inertia Coefficient," directly predicting a reduction in spontaneous day-trip travelers.</p>
+</div>
+</div>
+<!-- Pillar 3: Search -->
+<div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-gutter items-start border-b border-outline-variant pb-gutter">
+<div class="flex items-center gap-stack-sm">
+<span class="font-data-mono text-data-mono bg-primary text-on-primary px-unit">03</span>
+<span class="font-label-caps text-label-caps text-primary">SEARCH INTEREST</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary font-bold mb-unit">Digital Intent Signals</p>
+<p class="font-body-sm text-body-sm text-on-surface">Aggregated digital intent for localized coastal keywords. Measures the pre-arrival interest phase and emerging visitor destination trends.</p>
+</div>
+</div>
+<!-- Pillar 4: TLT -->
+<div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-gutter items-start border-b border-outline-variant pb-gutter">
+<div class="flex items-center gap-stack-sm">
+<span class="font-data-mono text-data-mono bg-primary text-on-primary px-unit">04</span>
+<span class="font-label-caps text-label-caps text-primary">TLT PULSE</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary font-bold mb-unit">Economic Baseline</p>
+<p class="font-body-sm text-body-sm text-on-surface">Transient Lodging Tax collections. This metric provides the foundational economic baseline and long-term volume cyclicality for the region.</p>
+</div>
+</div>
+<!-- Pillar 5: Forecast -->
+<div class="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-gutter items-start">
+<div class="flex items-center gap-stack-sm">
+<span class="font-data-mono text-data-mono bg-primary text-on-primary px-unit">05</span>
+<span class="font-label-caps text-label-caps text-primary">OCHI FORECAST</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg text-primary font-bold mb-unit">Synthesized Output</p>
+<p class="font-body-sm text-body-sm text-on-surface">Meteorological impact modeling. We weight "Visual Utility" (sunlight/visibility) higher than temperature to determine outdoor recreation viability and foot traffic.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Logic Section -->
+<section class="bg-surface-container-low p-stack-lg border border-outline-variant mb-stack-lg">
+<div class="flex items-center gap-stack-md mb-stack-md">
+<span class="material-symbols-outlined text-primary" data-icon="settings_input_component">settings_input_component</span>
+<h2 class="font-h2 text-h2 text-primary uppercase tracking-tight">The Logic</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mb-stack-md">
+                OCHI is a dynamic weighted algorithm that adjusts based on seasonal variance. It isn't a static model; it recalibrates the importance of each pillar depending on the operational calendar.
+            </p>
+<ul class="space-y-stack-md">
+<li class="flex items-start gap-stack-md p-stack-md bg-surface border border-outline-variant">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5" data-icon="calendar_month">calendar_month</span>
+<p class="font-body-sm text-body-sm text-on-surface"><strong>Peak Season:</strong> HWY 6 and Forecast take precedence for immediate labor allocation and staffing decisions.</p>
+</li>
+<li class="flex items-start gap-stack-md p-stack-md bg-surface border border-outline-variant">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5" data-icon="trending_up">trending_up</span>
+<p class="font-body-sm text-body-sm text-on-surface"><strong>Shoulder Season:</strong> TLT Pulse and Search Interest drive long-term marketing strategy and procurement forecasting.</p>
+</li>
+</ul>
+</section>
+<!-- CTA Section -->
+<section class="flex flex-col items-center pt-stack-lg border-t border-outline-variant">
+<a class="w-full bg-primary text-on-primary font-bold uppercase tracking-widest text-center py-4 hover:bg-neutral-800 transition-colors duration-200" href="#">
+                View Live Dashboard
+            </a>
+<p class="mt-4 font-label-caps text-label-caps text-secondary text-center">Proprietary Operational Intelligence Framework</p>
+</section>
+</main>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-6 bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-secondary pt-2 active:scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest mt-1">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary border-t-2 border-primary pt-2 active:scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest mt-1">About</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary pt-2 active:scale-95 transition-transform duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest mt-1">Contact</span>
+</a>
+</nav>
+</body></html>

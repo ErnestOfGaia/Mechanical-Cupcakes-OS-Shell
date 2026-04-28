@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@theme {
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-alert: #ef4444;
+}
+
+body {
+  background-color: #F8F9FA;
+  color: #1A1A1A;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilitarian UI utilities */
+.data-card {
+  @apply bg-white border border-gray-100 rounded-xl p-5 shadow-sm;
+}
+
+.logic-annotation {
+  @apply bg-gray-100 rounded-2xl p-6 border border-gray-200 text-xs text-gray-600 leading-relaxed;
+}

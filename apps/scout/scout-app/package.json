@@ -1,0 +1,31 @@
+{
+  "name": "scout-protocol-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3004",
+    "build": "next build",
+    "start": "next start -p 3004",
+    "lint": "next lint",
+    "node:start": "ts-node src/main/node.ts"
+  },
+  "dependencies": {
+    "next": "15.3.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "lucide-react": "latest",
+    "ethers": "^6.0.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.2",
+    "framer-motion": "^10.18.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "postcss": "^8.0.0",
+    "tailwindcss": "^4.0.0",
+    "ts-node": "^10.9.2"
+  }
+}

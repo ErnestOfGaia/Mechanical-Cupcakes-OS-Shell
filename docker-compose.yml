@@ -1,0 +1,60 @@
+services:
+  mcos-shell:
+    build:
+      context: .
+      dockerfile: Dockerfile.node
+    container_name: mcos-shell
+    restart: unless-stopped
+    ports:
+      - "8080:3000"
+      - "4111:4111"
+    env_file:
+      - .env
+    networks:
+      - nginx-proxy
+
+  mcos-postcards:
+    build:
+      context: ./apps/postcards
+    container_name: mcos-postcards
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./apps/postcards/.env
+    networks:
+      - nginx-proxy
+
+  mcos-pelican:
+    build:
+      context: ./apps/pelican
+    container_name: mcos-pelican
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    networks:
+      - nginx-proxy
+
+  mcos-ochi:
+    build:
+      context: ./apps/ochi/ochi-app
+    container_name: mcos-ochi
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    networks:
+      - nginx-proxy
+
+  mcos-scout:
+    build:
+      context: ./apps/scout/scout-app
+    container_name: mcos-scout
+    restart: unless-stopped
+    ports:
+      - "3004:3004"
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true

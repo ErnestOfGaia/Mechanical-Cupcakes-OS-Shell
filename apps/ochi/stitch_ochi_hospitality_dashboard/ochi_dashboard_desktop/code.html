@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary": "#5e5e5e",
+                        "surface-container-high": "#e8e8e8",
+                        "on-secondary": "#ffffff",
+                        "surface": "#f5f4ef", /* Updated to beachy off-white */
+                        "primary-fixed-dim": "#c6c6c6",
+                        "on-tertiary-container": "#848484",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "surface-container-low": "#f0ede5", /* Updated to beachy off-white variant */
+                        "on-secondary-fixed": "#1b1c1c",
+                        "outline-variant": "#cfc4c5",
+                        "on-primary-container": "#848484",
+                        "inverse-surface": "#2f3131",
+                        "surface-tint": "#5e5e5e",
+                        "on-surface-variant": "#4c4546",
+                        "on-error-container": "#93000a",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c6c6c6",
+                        "on-surface": "#1a1c1c",
+                        "inverse-on-surface": "#f1f1f1",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#c6c6c6",
+                        "surface-dim": "#dadada",
+                        "tertiary": "#000000",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#464747",
+                        "background": "#f5f4ef", /* Updated to beachy off-white */
+                        "on-primary-fixed": "#1b1b1b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#e9e7df", /* Updated to beachy off-white variant */
+                        "primary-container": "#1b1b1b",
+                        "on-tertiary-fixed": "#1b1b1b",
+                        "surface-bright": "#f9f8f4", /* Updated to beachy off-white variant */
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e2e2e2",
+                        "primary": "#000000",
+                        "tertiary-container": "#1b1b1b",
+                        "outline": "#7e7576",
+                        "on-secondary-container": "#626262",
+                        "on-tertiary-fixed-variant": "#474747",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#e4e2e2",
+                        "on-background": "#1a1c1c",
+                        "secondary-container": "#e1dfdf",
+                        "on-primary-fixed-variant": "#474747",
+                        "tertiary-fixed": "#e2e2e2"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "container-margin": "16px",
+                        "gutter": "12px",
+                        "stack-lg": "16px",
+                        "stack-sm": "4px",
+                        "stack-md": "8px"
+                    },
+                    "fontFamily": {
+                        "h2": ["Inter"],
+                        "h1": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "data-mono": ["Inter"],
+                        "body-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- SideNavBar Shell -->
+<nav class="flex flex-col fixed left-0 top-0 h-full z-40 bg-surface h-screen w-64 border-r border-zinc-200 dark:border-zinc-800">
+<div class="p-6">
+<h1 class="font-black text-2xl tracking-tighter text-zinc-900 dark:text-zinc-50">OCHI</h1>
+<p class="font-inter text-xs tracking-tight uppercase text-zinc-500 mt-1">Clinical Utility v1.0</p>
+</div>
+<div class="flex-1 mt-4">
+<!-- Active: Dashboard -->
+<a class="flex items-center gap-3 px-6 py-3 bg-surface-container text-zinc-900 dark:text-zinc-50 font-bold border-l-4 border-zinc-900 dark:border-zinc-50" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-inter text-xs tracking-tight uppercase">Dashboard</span>
+</a>
+<!-- Inactive: About -->
+<a class="flex items-center gap-3 px-6 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-surface-container-low transition-colors duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-inter text-xs tracking-tight uppercase">About</span>
+</a>
+<!-- Inactive: Contact -->
+<a class="flex items-center gap-3 px-6 py-3 text-zinc-500 dark:text-zinc-400 hover:bg-surface-container-low transition-colors duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
+<span class="font-inter text-xs tracking-tight uppercase">Contact</span>
+</a>
+</div>
+<div class="p-6 border-t border-zinc-200 dark:border-zinc-800 flex items-center gap-3">
+<div class="w-8 h-8 bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-zinc-600" data-icon="person">person</span>
+</div>
+<div class="overflow-hidden">
+<p class="font-label-caps text-[10px] uppercase truncate">Operator 042</p>
+<p class="font-body-sm text-[10px] text-zinc-400">SESSION: ACTIVE</p>
+</div>
+</div>
+</nav>
+<!-- TopNavBar Shell -->
+<header class="fixed top-0 right-0 left-64 h-14 border-b border-zinc-200 dark:border-zinc-800 bg-surface/80 dark:bg-zinc-950/80 backdrop-blur-md flex items-center justify-between px-6 z-30">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-[10px] text-zinc-400 uppercase tracking-widest">System Monitor</span>
+<span class="w-[1px] h-4 bg-zinc-200 dark:border-zinc-800"></span>
+<span class="font-data-mono text-[11px] text-zinc-900 dark:text-zinc-50 uppercase">LIVE FEED: OK</span>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-zinc-400" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-zinc-400" data-icon="settings">settings</span>
+</div>
+<div class="h-8 w-px bg-zinc-200 dark:bg-zinc-800"></div>
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-[10px] text-zinc-900 dark:text-zinc-50 uppercase">SEARCH ENGINE</span>
+<span class="material-symbols-outlined text-zinc-900 dark:text-zinc-50" data-icon="search">search</span>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-64 pt-14 min-h-screen">
+<div class="p-container-margin max-w-7xl mx-auto space-y-gutter">
+<!-- Hero Multiplier Section -->
+<section class="bg-surface-bright border border-zinc-200 p-12 flex flex-col items-center justify-center text-center">
+<p class="font-label-caps text-label-caps text-secondary mb-2">OCHI MULTIPLIER</p>
+<div class="relative">
+<h2 class="text-[120px] font-black leading-none tracking-tighter text-primary">0.82</h2>
+<div class="absolute -right-12 top-1/2 -translate-y-1/2">
+<span class="inline-block px-2 py-1 bg-primary text-white font-label-caps text-[10px] rotate-90 origin-left">QUANT_CORE</span>
+</div>
+</div>
+<div class="mt-6 flex items-center gap-2">
+<span class="w-3 h-3 bg-green-500"></span>
+<p class="font-h1 text-h1 uppercase tracking-tighter">BULLISH MOMENTUM</p>
+</div>
+<div class="mt-8 w-full max-w-md h-[1px] bg-zinc-200 relative">
+<div class="absolute inset-y-0 left-0 bg-primary w-[82%]"></div>
+</div>
+</section>
+<!-- Data Five Pillars Grid -->
+<div class="grid grid-cols-1 md:grid-cols-5 gap-gutter">
+<!-- Hwy 6 Status -->
+<div class="bg-surface-bright border border-zinc-200 p-stack-lg">
+<p class="font-label-caps text-label-caps text-secondary uppercase mb-stack-md">Hwy 6 Status</p>
+<div class="flex items-end justify-between">
+<span class="font-h1 text-h1">88%</span>
+<div class="px-2 py-0.5 bg-green-100 text-green-700 font-label-caps text-[10px]">OPTIMAL</div>
+</div>
+</div>
+<!-- Gas Index -->
+<div class="bg-surface-bright border border-zinc-200 p-stack-lg">
+<p class="font-label-caps text-label-caps text-secondary uppercase mb-stack-md">Gas Index</p>
+<div class="flex items-end justify-between">
+<span class="font-h1 text-h1">$3.42</span>
+<div class="px-2 py-0.5 bg-yellow-100 text-yellow-700 font-label-caps text-[10px]">STABLE</div>
+</div>
+</div>
+<!-- Search Interest -->
+<div class="bg-surface-bright border border-zinc-200 p-stack-lg">
+<p class="font-label-caps text-label-caps text-secondary uppercase mb-stack-md">Search Interest</p>
+<div class="flex items-end justify-between">
+<span class="font-h1 text-h1 text-green-600">+12.4%</span>
+<span class="material-symbols-outlined text-green-600" data-icon="trending_up">trending_up</span>
+</div>
+</div>
+<!-- TLT Pulse -->
+<div class="bg-surface-bright border border-zinc-200 p-stack-lg">
+<p class="font-label-caps text-label-caps text-secondary uppercase mb-stack-md">TLT Pulse</p>
+<div class="flex items-end justify-between">
+<span class="font-h1 text-h1 text-error">CRIT</span>
+<div class="w-4 h-4 bg-error"></div>
+</div>
+</div>
+<!-- OCHI Forecast -->
+<div class="bg-surface-bright border border-zinc-200 p-stack-lg">
+<p class="font-label-caps text-label-caps text-secondary uppercase mb-stack-md">OCHI Forecast</p>
+<div class="flex items-end justify-between">
+<span class="font-h1 text-h1">HIGH</span>
+<div class="px-2 py-0.5 bg-green-600 text-white font-label-caps text-[10px]">PROBABLE</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Loud AI & Analytics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Loud AI Commentary -->
+<div class="md:col-span-2 bg-primary text-white p-8">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-white" data-icon="neurology">neurology</span>
+<h3 class="font-h2 text-h2 uppercase tracking-widest">Loud AI Commentary</h3>
+</div>
+<div class="space-y-4">
+<p class="font-body-lg text-zinc-300 leading-relaxed border-l-2 border-white/20 pl-4 italic">
+                        "Technical divergence identified in tertiary sectors. Momentum override active. Multiplier suggests high-confidence entry points across infrastructure and energy tokens. Warning: TLT Pulse critical state may trigger volatility protocols."
+                    </p>
+<div class="flex flex-wrap gap-4 mt-8 pt-6 border-t border-white/10">
+<div>
+<p class="font-label-caps text-[9px] text-zinc-500 uppercase">Analysis Uptime</p>
+<p class="font-data-mono text-white">99.98%</p>
+</div>
+<div>
+<p class="font-label-caps text-[9px] text-zinc-500 uppercase">Signal Latency</p>
+<p class="font-data-mono text-white">14ms</p>
+</div>
+<div>
+<p class="font-label-caps text-[9px] text-zinc-500 uppercase">Protocol</p>
+<p class="font-data-mono text-white">OCHI-VX9</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Performance Metrics Table -->
+<div class="bg-surface-bright border border-zinc-200 flex flex-col">
+<div class="bg-surface-container-low p-4 border-b border-zinc-200">
+<p class="font-label-caps text-label-caps text-primary">SESSION METRICS</p>
+</div>
+<div class="flex-1 overflow-auto">
+<table class="w-full text-left">
+<tbody class="divide-y divide-zinc-200">
+<tr class="hover:bg-surface-container-low/50">
+<td class="p-4 font-body-sm text-secondary uppercase">API Nodes</td>
+<td class="p-4 text-right font-data-mono text-primary">12/12</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50">
+<td class="p-4 font-body-sm text-secondary uppercase">Buffer Load</td>
+<td class="p-4 text-right font-data-mono text-primary">0.04%</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50">
+<td class="p-4 font-body-sm text-secondary uppercase">Hash Rate</td>
+<td class="p-4 text-right font-data-mono text-primary">4.2 TH/s</td>
+</tr>
+<tr class="hover:bg-surface-container-low/50">
+<td class="p-4 font-body-sm text-secondary uppercase">Entropy</td>
+<td class="p-4 text-right font-data-mono text-primary">LOW</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-zinc-200">
+<button class="w-full bg-primary text-white py-3 font-label-caps text-[10px] uppercase tracking-widest hover:bg-zinc-800 transition-colors">
+                        DOWNLOAD LOGS
+                    </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Subtle Footer Bar -->
+<footer class="ml-64 h-12 bg-surface-container border-t border-zinc-200 flex items-center justify-between px-6">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 bg-green-500 animate-pulse"></span>
+<span class="font-label-caps text-[9px] text-secondary uppercase">System Operational</span>
+</div>
+<span class="font-label-caps text-[9px] text-zinc-300 uppercase">|</span>
+<span class="font-label-caps text-[9px] text-secondary uppercase">TZ: GMT-5</span>
+</div>
+<div>
+<p class="font-label-caps text-[9px] text-zinc-400 uppercase">OCHI Clinical Utility © 2024</p>
+</div>
+</footer>
+</body></html>

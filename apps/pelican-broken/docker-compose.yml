@@ -1,0 +1,61 @@
+version: '3.8'
+
+# ============================================================
+#  Pellito | Deckhand — Production Compose
+#
+#  The app image is built by GitHub Actions and pushed to GHCR.
+#  To update: docker compose pull && docker compose up -d
+#
+#  Required .env values on the VPS:
+#    DB_USER, DB_PASSWORD, OPENROUTER_API_KEY,
+#    SESSION_SECRET, APP_URL
+#  Optional:
+#    OPENROUTER_MODEL (defaults to google/gemini-flash-1.5)
+# ============================================================
+
+services:
+
+  db:
+    image: postgres:15-alpine
+    container_name: pellito-db
+    restart: always
+    environment:
+      POSTGRES_USER:     ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB:       pellito_recipes
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pellito-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d pellito_recipes"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  app:
+    image: ghcr.io/ernestofgaia/pelican-recipe-book:latest
+    pull_policy: always          # always pull latest on 'docker compose up'
+    container_name: pellito-app
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"   # localhost only — NPM proxies inbound traffic
+    environment:
+      DATABASE_URL:        postgresql://${DB_USER}:${DB_PASSWORD}@db:5432/pellito_recipes
+      OPENROUTER_API_KEY:  ${OPENROUTER_API_KEY}
+      OPENROUTER_MODEL:    ${OPENROUTER_MODEL:-google/gemini-flash-1.5}
+      NEXT_PUBLIC_APP_URL: ${APP_URL}
+      SESSION_SECRET:      ${SESSION_SECRET}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - pellito-network
+
+networks:
+  pellito-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

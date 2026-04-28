@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#464747",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#4c4546",
+                    "surface-container-low": "#f3f3f3",
+                    "surface-container-highest": "#e2e2e2",
+                    "surface-variant": "#e2e2e2",
+                    "secondary-container": "#e1dfdf",
+                    "on-primary-fixed-variant": "#474747",
+                    "primary-container": "#1b1b1b",
+                    "surface-container-high": "#e8e8e8",
+                    "on-primary": "#ffffff",
+                    "surface-tint": "#5e5e5e",
+                    "primary": "#000000",
+                    "secondary-fixed": "#e4e2e2",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "on-surface": "#1a1c1c",
+                    "inverse-primary": "#c6c6c6",
+                    "surface-bright": "#f9f9f9",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f1f1f1",
+                    "on-primary-fixed": "#1b1b1b",
+                    "surface": "#f9f9f9",
+                    "on-primary-container": "#848484",
+                    "on-error-container": "#93000a",
+                    "on-background": "#1a1c1c",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "surface-container": "#eeeeee",
+                    "error": "#ba1a1a",
+                    "tertiary-container": "#1b1b1b",
+                    "secondary-fixed-dim": "#c7c6c6",
+                    "outline": "#7e7576",
+                    "inverse-surface": "#2f3131",
+                    "tertiary-fixed": "#e2e2e2",
+                    "tertiary": "#000000",
+                    "background": "#f9f9f9",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "outline-variant": "#cfc4c5",
+                    "on-secondary": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#626262",
+                    "primary-fixed": "#e2e2e2",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "secondary": "#5e5e5e",
+                    "surface-dim": "#dadada",
+                    "on-tertiary-container": "#848484"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-margin": "16px",
+                    "stack-lg": "16px",
+                    "unit": "4px",
+                    "stack-sm": "4px",
+                    "stack-md": "8px",
+                    "gutter": "12px"
+            },
+            "fontFamily": {
+                    "body-sm": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "h2": ["Inter"],
+                    "h1": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "label-caps": ["10px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "h2": ["16px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "h1": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f9f9f9;
+            color: #1a1c1c;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="font-body-lg text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-zinc-950 docked full-width top-0 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center w-full px-4 h-16 max-w-full sticky top-0 z-50">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-black dark:text-white" data-icon="grid_view">grid_view</span>
+<span class="font-inter text-sm font-medium uppercase tracking-tighter text-zinc-500 dark:text-zinc-400">Dashboard</span>
+</div>
+<div class="text-xl font-black tracking-tighter text-black dark:text-white">OCHI</div>
+<div class="flex items-center gap-stack-md">
+<span class="font-inter text-sm font-medium uppercase tracking-tighter text-black dark:text-white font-bold">Contact</span>
+</div>
+</header>
+<main class="px-container-margin py-stack-lg max-w-md mx-auto min-h-[calc(100vh-128px)]">
+<!-- Hero Section / Title -->
+<div class="mb-stack-lg">
+<h1 class="font-h1 text-h1 text-primary mb-unit">Contact Support</h1>
+<p class="font-body-sm text-body-sm text-secondary">Report data discrepancies or send feedback to our clinical data team.</p>
+</div>
+<!-- Data Integrity Alert (Clinical Context) -->
+<!-- Contact Form -->
+<section class="space-y-stack-lg">
+<form action="#" class="space-y-stack-md">
+<!-- Category Select -->
+<div class="space-y-unit">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant">Issue Category</label>
+<select class="w-full bg-white border border-outline p-stack-md font-body-lg focus:border-primary focus:ring-0 appearance-none">
+<option>Data Discrepancy</option>
+<option>System Feedback</option>
+<option>User Interface Bug</option>
+<option>Feature Request</option>
+<option>Other</option>
+</select>
+</div>
+<!-- Input Field -->
+<div class="space-y-unit">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant">Subject / Reference ID</label>
+<input class="w-full bg-white border border-outline p-stack-md font-body-lg focus:border-primary focus:ring-0 placeholder:text-outline-variant" placeholder="e.g. DATA-9283-X" type="text"/>
+</div>
+<!-- Detailed Message -->
+<div class="space-y-unit">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant">Message Detail</label>
+<textarea class="w-full bg-white border border-outline p-stack-md font-body-lg focus:border-primary focus:ring-0 placeholder:text-outline-variant" placeholder="Describe the discrepancy or feedback in detail..." rows="6"></textarea>
+</div>
+<!-- File Upload (Secondary Style) -->
+<div class="border border-dashed border-outline-variant p-stack-lg flex flex-col items-center justify-center bg-surface-container-low">
+<span class="material-symbols-outlined text-secondary mb-unit" data-icon="upload_file">upload_file</span>
+<p class="font-label-caps text-label-caps text-secondary mb-unit">Attach screenshots (Max 5MB)</p>
+<button class="font-body-sm text-body-sm text-primary font-bold underline" type="button">Select Files</button>
+</div>
+<!-- Submit Action -->
+<div class="pt-stack-md">
+<button class="w-full bg-primary text-on-primary py-stack-md font-label-caps text-label-caps uppercase tracking-widest active:scale-[0.98] transition-transform" type="submit">
+                        Submit Report
+                    </button>
+</div>
+</form>
+</section>
+<!-- Alternative Contact Channels -->
+<section class="mt-stack-lg border-t border-surface-container-highest pt-stack-lg">
+<h2 class="font-label-caps text-label-caps uppercase text-secondary mb-stack-md">Direct Channels</h2>
+<div class="grid grid-cols-1 gap-stack-md">
+<!-- Contact Row -->
+<div class="flex justify-between items-center py-stack-md border-b border-surface-container-highest">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-primary" data-icon="mail">mail</span>
+<div>
+<p class="font-body-lg text-body-lg">Personal Inquiries</p>
+<p class="font-data-mono text-body-sm text-secondary">eog@ErnestOfGaia.xyz</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div>
+<!-- Contact Row -->
+<div class="flex justify-between items-center py-stack-md border-b border-surface-container-highest">
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-primary" data-icon="phone">terminal</span>
+<div>
+<p class="font-body-lg text-body-lg">Voice &amp; Text</p>
+<p class="font-data-mono text-body-sm text-secondary">503-664-0546</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</div><div class="flex justify-between items-center py-stack-md border-b border-surface-container-highest"><div class="flex items-center gap-stack-md"><span class="material-symbols-outlined text-primary" data-icon="link">link</span><div><p class="font-body-lg text-body-lg">LinkedIn</p><p class="font-data-mono text-body-sm text-secondary">ErnestOfGaia</p></div></div><span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span></div><div class="flex justify-between items-center py-stack-md border-b border-surface-container-highest"><div class="flex items-center gap-stack-md"><span class="material-symbols-outlined text-primary" data-icon="share">share</span><div><p class="font-body-lg text-body-lg">Twitter / X</p><p class="font-data-mono text-body-sm text-secondary">@ErnestOfGaia</p></div></div><span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span></div>
+</div>
+</section>
+<!-- Status Map Decoration (Subtle Visual) -->
+<section class="mt-stack-lg h-32 w-full bg-surface-container-highest flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 grayscale opacity-20">
+<img alt="Global network map" class="w-full h-full object-cover" data-alt="Monochrome minimalist global satellite map showing data nodes and connections with technical grid overlay" data-location="Global" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY1TYnumwpCBqYAX2BCLCbIQBW5UfF6rfx2c-3LbzKddw2SVJLvxnTB5b9QUpZQDbAbyfFO125WCV6Wklf8zttkywhS6vea1LuyQPyEAHgfTsCKDU-9VdtMnzGFl0NRpGtzt8DgvuHeFGhRAHZGdtFS66RBGuPmqfinAY7yGHFQAOJNFgTvsGPHA996QbcJpAzUFUeoSIQyuyDvW0KINngsaRQaJ4BjNQdmfvvYJz_xerwh5SrpWjC3lxa2jXNaMqjSR_pbVR1B1E"/>
+</div>
+<div class="relative z-10 flex flex-col items-center">
+<div class="flex items-center gap-unit">
+<div class="w-2 h-2 bg-green-500 rounded-none"></div>
+<p class="font-label-caps text-[8px] uppercase tracking-tighter">Systems Nominal: Global Core</p>
+</div>
+</div>
+</section>
+<div class="h-20"></div> <!-- Bottom Spacer -->
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-6 bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800">
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-600 pt-2 hover:text-black dark:hover:text-white transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Dashboard</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-600 pt-2 hover:text-black dark:hover:text-white transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">About</span>
+</a>
+<a class="flex flex-col items-center justify-center text-black dark:text-white border-t-2 border-black dark:border-white pt-2 transition-transform duration-100 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="alternate_email">alternate_email</span>
+<span class="font-inter text-[10px] font-bold uppercase tracking-widest">Contact</span>
+</a>
+</nav>
+</body></html>

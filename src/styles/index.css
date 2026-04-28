@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base: #0F1115;
+  --color-surface: #1A1F2B;
+  --color-violet: #7C5CFF;
+  --color-teal: #2ED3B7;
+  --color-warm-white: #EAEAF0;
+}
+
+:root {
+  --base-bg: #0F1115;
+  --surface-bg: #1A1F2B;
+  --accent-violet: #7C5CFF;
+  --accent-teal: #2ED3B7;
+  --text-primary: #EAEAF0;
+  --glass-bg: rgba(20, 22, 30, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: blur(12px);
+}
+
+body {
+  background-color: var(--base-bg);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-top-bar {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.glass-shadow {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Transitions */
+.transition-all-fast {
+  transition: all 200ms ease;
+}
+
+/* Glow Effects */
+.glow-violet:hover {
+  box-shadow: 0 0 15px rgba(124, 92, 255, 0.3);
+  border-color: rgba(124, 92, 255, 0.5);
+}
+
+.glow-teal:hover {
+  box-shadow: 0 0 15px rgba(46, 211, 183, 0.3);
+  border-color: rgba(46, 211, 183, 0.5);
+}

@@ -1,0 +1,39 @@
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(cuid())
+  username      String     @unique
+  email         String     @unique
+  password      String
+  mailboxScene  String     @default("oregon")
+  birdImage     String     @default("/images/ernest-bird.png")
+  createdAt     DateTime   @default(now())
+  sentCards     Postcard[] @relation("SentCards")
+  receivedCards Postcard[] @relation("ReceivedCards")
+}
+
+model Postcard {
+  id               String   @id @default(cuid())
+  senderId         String
+  recipientId      String
+  imageUrl         String
+  cloudStoragePath String   @default("")
+  isPublic         Boolean  @default(true)
+  message          String
+  createdAt        DateTime @default(now())
+  isRead           Boolean  @default(false)
+  isSaved          Boolean  @default(false)
+  sender           User     @relation("SentCards", fields: [senderId], references: [id])
+  recipient        User     @relation("ReceivedCards", fields: [recipientId], references: [id])
+
+  @@index([recipientId])
+  @@index([senderId])
+}

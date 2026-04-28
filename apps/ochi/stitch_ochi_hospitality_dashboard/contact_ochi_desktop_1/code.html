@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-container": "#626262",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-surface-variant": "#4c4546",
+                    "inverse-primary": "#c6c6c6",
+                    "on-tertiary-container": "#848484",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#848484",
+                    "on-primary-fixed": "#1b1b1b",
+                    "primary-container": "#1b1b1b",
+                    "inverse-surface": "#2f3131",
+                    "outline-variant": "#cfc4c5",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "on-surface": "#1a1c1c",
+                    "surface-dim": "#dadada",
+                    "tertiary-container": "#1b1b1b",
+                    "surface": "#f9f9f9",
+                    "surface-bright": "#f9f9f9",
+                    "primary": "#000000",
+                    "tertiary-fixed": "#e2e2e2",
+                    "primary-fixed": "#e2e2e2",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#e8e8e8",
+                    "tertiary": "#000000",
+                    "on-primary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f3f3f3",
+                    "secondary": "#5e5e5e",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "on-secondary-fixed-variant": "#464747",
+                    "on-primary-fixed-variant": "#474747",
+                    "surface-container": "#eeeeee",
+                    "on-background": "#1a1c1c",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f1f1f1",
+                    "secondary-fixed": "#e4e2e2",
+                    "background": "#f9f9f9",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#e1dfdf",
+                    "outline": "#7e7576",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "secondary-fixed-dim": "#c7c6c6",
+                    "surface-tint": "#5e5e5e",
+                    "primary-fixed-dim": "#c6c6c6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "16px",
+                    "container-margin": "16px",
+                    "stack-sm": "4px",
+                    "unit": "4px",
+                    "stack-md": "8px",
+                    "gutter": "12px"
+            },
+            "fontFamily": {
+                    "h2": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "h1": ["Inter"],
+                    "label-caps": ["Inter"],
+                    "data-mono": ["Inter"]
+            },
+            "fontSize": {
+                    "h2": ["16px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-lg": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "h1": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-caps": ["10px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full h-16 z-50 flex items-center justify-between px-6 bg-white border-b border-gray-200">
+<div class="flex items-center gap-stack-lg">
+<span class="text-xl font-bold tracking-tighter text-black">OCHI</span>
+<div class="hidden md:flex items-center gap-6 ml-12">
+<a class="text-gray-500 font-inter text-sm tracking-tight hover:text-black transition-colors" href="#">Work</a>
+<a class="text-gray-500 font-inter text-sm tracking-tight hover:text-black transition-colors" href="#">Services</a>
+<a class="text-gray-500 font-inter text-sm tracking-tight hover:text-black transition-colors" href="#">About</a>
+<a class="text-black font-bold border-b-2 border-black font-inter text-sm tracking-tight" href="#">Contact</a>
+<a class="text-gray-500 font-inter text-sm tracking-tight hover:text-black transition-colors" href="#">Insights</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-black cursor-pointer scale-95 active:opacity-80 transition-all" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-black cursor-pointer scale-95 active:opacity-80 transition-all" data-icon="account_circle">account_circle</span>
+</div>
+</nav>
+<!-- SideNavBar (Desktop) -->
+<aside class="fixed left-0 top-16 h-[calc(100vh-64px)] w-64 flex flex-col p-4 bg-gray-50 border-r border-gray-200 hidden md:flex">
+<div class="mb-8 px-2">
+<h2 class="text-lg font-black text-black leading-tight">OCHI</h2>
+<p class="font-inter text-xs font-medium uppercase tracking-widest text-gray-600">Precision Design</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 p-3 transition-all duration-150 ease-in-out hover:bg-gray-200 text-gray-600 font-inter text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="work">work</span>
+                Work
+            </a>
+<a class="flex items-center gap-3 p-3 transition-all duration-150 ease-in-out hover:bg-gray-200 text-gray-600 font-inter text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+                Services
+            </a>
+<a class="flex items-center gap-3 p-3 transition-all duration-150 ease-in-out hover:bg-gray-200 text-gray-600 font-inter text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+                About
+            </a>
+<a class="flex items-center gap-3 p-3 transition-all duration-150 ease-in-out bg-black text-white font-inter text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="mail">mail</span>
+                Contact
+            </a>
+<a class="flex items-center gap-3 p-3 transition-all duration-150 ease-in-out hover:bg-gray-200 text-gray-600 font-inter text-xs font-medium uppercase tracking-widest" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                Insights
+            </a>
+</nav>
+<div class="mt-auto p-4 bg-white border border-gray-200">
+<span class="font-label-caps text-label-caps text-on-secondary-container mb-2 block">SYSTEM STATUS</span>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-green-500"></div>
+<span class="font-data-mono text-data-mono">ALL SYSTEMS NOMINAL</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="md:ml-64 pt-16 min-h-screen">
+<div class="max-w-6xl mx-auto px-container-margin py-stack-lg">
+<!-- Page Header -->
+<header class="mb-stack-lg border-b border-gray-200 pb-stack-md flex justify-between items-end">
+<div>
+<h1 class="font-h1 text-h1 text-primary">Contact Support</h1>
+<p class="font-body-sm text-body-sm text-secondary mt-1">Submit technical tickets or reach direct agents.</p>
+</div>
+<div class="font-data-mono text-data-mono text-on-secondary-container">
+                    REF_ID: SUP-2024-05X
+                </div>
+</header>
+<!-- CRITICAL NOTICE BOX -->
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Contact Form Section -->
+<section class="lg:col-span-8 bg-white border border-gray-200 p-8">
+<form class="space-y-6">
+<div>
+<label class="block font-label-caps text-label-caps text-on-secondary-container mb-stack-sm">ISSUE CATEGORY</label>
+<select class="w-full h-12 border border-gray-200 bg-surface-container-low px-4 font-body-lg text-body-lg focus:border-primary focus:ring-0 appearance-none">
+<option>Technical Integration Error</option>
+<option>Billing &amp; Procurement</option>
+<option>Security Audit Request</option>
+<option>Performance Bottleneck</option>
+<option>Other Inquiry</option>
+</select>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<div>
+<label class="block font-label-caps text-label-caps text-on-secondary-container mb-stack-sm">SUBJECT</label>
+<input class="w-full h-12 border border-gray-200 bg-surface-container-low px-4 font-body-lg text-body-lg focus:border-primary focus:ring-0" placeholder="Brief descriptive title" type="text"/>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-secondary-container mb-stack-sm">REFERENCE ID (OPTIONAL)</label>
+<input class="w-full h-12 border border-gray-200 bg-surface-container-low px-4 font-body-lg text-body-lg focus:border-primary focus:ring-0" placeholder="e.g. TR-99821" type="text"/>
+</div>
+</div>
+<div>
+<label class="block font-label-caps text-label-caps text-on-secondary-container mb-stack-sm">MESSAGE DETAIL</label>
+<textarea class="w-full border border-gray-200 bg-surface-container-low p-4 font-body-lg text-body-lg focus:border-primary focus:ring-0" placeholder="Provide a detailed description of the technical issue..." rows="6"></textarea>
+</div>
+<div class="flex items-center justify-between pt-4 border-t border-gray-100">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" data-icon="attach_file">attach_file</span>
+<span class="font-body-sm text-body-sm text-secondary">Attach Log Files (Max 20MB)</span>
+</div>
+<button class="bg-black text-white px-8 py-3 font-h2 text-h2 hover:opacity-90 transition-opacity" type="submit">
+                                TRANSMIT TICKET
+                            </button>
+</div>
+</form>
+</section>
+<!-- Sidebar Content -->
+<aside class="lg:col-span-4 space-y-gutter">
+<!-- Direct Channels -->
+<section class="bg-white border border-gray-200 p-6">
+<h3 class="font-label-caps text-label-caps text-on-secondary-container mb-4">DIRECT CHANNELS</h3>
+<ul class="space-y-4">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="alternate_email">alternate_email</span>
+<div>
+<p class="font-label-caps text-label-caps text-secondary">PERSONAL INQUIRIES</p>
+<a class="font-data-mono text-data-mono text-primary hover:underline" href="mailto:eog@ErnestOfGaia.xyz">eog@ErnestOfGaia.xyz</a>
+</div>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="call">call</span>
+<div>
+<p class="font-label-caps text-label-caps text-secondary">VOICE &amp; TEXT</p>
+<a class="font-data-mono text-data-mono text-primary hover:underline" href="tel:503-664-0546">503-664-0546</a>
+</div>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="share">share</span>
+<div>
+<p class="font-label-caps text-label-caps text-secondary">LINKEDIN</p>
+<a class="font-data-mono text-data-mono text-primary hover:underline" href="#">ErnestOfGaia</a>
+</div>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="chat">chat</span>
+<div>
+<p class="font-label-caps text-label-caps text-secondary">TWITTER / X</p>
+<a class="font-data-mono text-data-mono text-primary hover:underline" href="#">@ErnestOfGaia</a>
+</div>
+</li>
+</ul>
+</section>
+<!-- Global Systems Map -->
+<section class="bg-white border border-gray-200 overflow-hidden">
+<div class="p-4 border-b border-gray-100 flex justify-between items-center">
+<h3 class="font-label-caps text-label-caps text-on-secondary-container">GLOBAL SYSTEMS MAP</h3>
+<div class="flex items-center gap-1">
+<div class="w-1.5 h-1.5 bg-green-500"></div>
+<span class="font-data-mono text-[10px] text-green-700">LIVE</span>
+</div>
+</div>
+<div class="h-48 bg-gray-200 relative">
+<img alt="Systems Map" class="w-full h-full object-cover grayscale opacity-80" data-alt="Technical schematic vector map showing global network nodes and connection lines in minimalist grayscale style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHHvWuY3wapXkegBop67iKk8StyUKweElEklMZJbGFJERtWcfg7QkTzHQN4QTpVwwIvyVWSNjAS4rRleQMJp5GEv8ZbayR4fzIrTil4owlTZRZh2IP3DaD51wWTORKVHEn9zM5dP7UX3hJlSsmCDyVImi8HKMZPAAcuK1Crwwok6leESCDsgmVbWS1ldgCffeMx7MttyaFemDzVbNoTNHBJP8XoHjs8TdxSgz97I27WiHg98LUKt5_9x-MLXW3OnPsj2T0d3IV-Js"/>
+<div class="absolute inset-0 bg-black/5 flex items-center justify-center">
+<div class="p-2 bg-black text-white font-data-mono text-[10px]">LOC: 45.5152° N, 122.6784° W</div>
+</div>
+</div>
+<div class="p-4 space-y-2">
+<div class="flex justify-between items-center font-data-mono text-[11px]">
+<span class="text-secondary">PACIFIC HUB</span>
+<span class="text-green-600">ACTIVE</span>
+</div>
+<div class="flex justify-between items-center font-data-mono text-[11px]">
+<span class="text-secondary">ATLANTIC HUB</span>
+<span class="text-green-600">ACTIVE</span>
+</div>
+<div class="flex justify-between items-center font-data-mono text-[11px]">
+<span class="text-secondary">ASIA-PACIFIC</span>
+<span class="text-amber-500">MAINTENANCE</span>
+</div>
+</div>
+</section>
+</aside>
+</div>
+<!-- Footer Meta -->
+<footer class="mt-24 border-t border-gray-200 pt-8 pb-12 flex flex-col md:flex-row justify-between gap-gutter">
+<div class="flex gap-12">
+<div>
+<span class="font-label-caps text-label-caps text-secondary block mb-4">LEGAL</span>
+<ul class="space-y-2">
+<li><a class="font-body-sm text-body-sm hover:text-primary" href="#">Service Agreement</a></li>
+<li><a class="font-body-sm text-body-sm hover:text-primary" href="#">Data Protection</a></li>
+<li><a class="font-body-sm text-body-sm hover:text-primary" href="#">Privacy Protocol</a></li>
+</ul>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-secondary block mb-4">RESOURCES</span>
+<ul class="space-y-2">
+<li><a class="font-body-sm text-body-sm hover:text-primary" href="#">API Documentation</a></li>
+<li><a class="font-body-sm text-body-sm hover:text-primary" href="#">Integration Guide</a></li>
+<li><a class="font-body-sm text-body-sm hover:text-primary" href="#">Legacy Archive</a></li>
+</ul>
+</div>
+</div>
+<div class="text-right">
+<p class="font-label-caps text-label-caps text-primary">OCHI PRECISION DESIGN</p>
+<p class="font-data-mono text-[10px] text-secondary mt-1">EST. 2024 // VERSION 4.0.1</p>
+<div class="mt-4 flex justify-end gap-2">
+<div class="w-8 h-8 border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[16px]" data-icon="language">language</span>
+</div>
+<div class="w-8 h-8 border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[16px]" data-icon="shield">shield</span>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</main>
+</body></html>

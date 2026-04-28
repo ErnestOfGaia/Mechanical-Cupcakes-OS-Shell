@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#1b1b1b",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-dim": "#dadada",
+                    "on-primary-fixed": "#1b1b1b",
+                    "tertiary": "#000000",
+                    "secondary": "#5e5e5e",
+                    "inverse-primary": "#c6c6c6",
+                    "on-primary-fixed-variant": "#474747",
+                    "on-primary-container": "#848484",
+                    "surface-container-highest": "#e2e2e2",
+                    "secondary-fixed": "#e4e2e2",
+                    "on-background": "#1a1c1c",
+                    "surface-variant": "#e2e2e2",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#474747",
+                    "on-surface": "#1a1c1c",
+                    "surface-container": "#eeeeee",
+                    "secondary-fixed-dim": "#c7c6c6",
+                    "on-secondary-fixed-variant": "#464747",
+                    "inverse-on-surface": "#f1f1f1",
+                    "surface-container-low": "#f3f3f3",
+                    "surface": "#f9f9f9",
+                    "primary-fixed": "#e2e2e2",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed": "#1b1b1b",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#e2e2e2",
+                    "on-tertiary-container": "#848484",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "primary-fixed-dim": "#c6c6c6",
+                    "tertiary-fixed-dim": "#c6c6c6",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f9f9f9",
+                    "primary-container": "#1b1b1b",
+                    "primary": "#000000",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#4c4546",
+                    "on-secondary-container": "#626262",
+                    "secondary-container": "#e1dfdf",
+                    "surface-container-high": "#e8e8e8",
+                    "outline": "#7e7576",
+                    "background": "#f9f9f9",
+                    "outline-variant": "#cfc4c5",
+                    "error": "#ba1a1a",
+                    "surface-tint": "#5e5e5e",
+                    "inverse-surface": "#2f3131",
+                    "on-error": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-sm": "4px",
+                    "gutter": "12px",
+                    "stack-md": "8px",
+                    "stack-lg": "16px",
+                    "container-margin": "16px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "label-caps": ["Inter"],
+                    "h1": ["Inter"],
+                    "h2": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "data-mono": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-caps": ["10px", {"lineHeight": "12px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "h1": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "h2": ["16px", {"lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-lg": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-mono": ["13px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-white">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 w-full h-14 flex items-center justify-between px-6 bg-surface-container-lowest dark:bg-zinc-950 border-b border-outline-variant dark:border-zinc-800 z-50 font-inter antialiased uppercase tracking-tighter">
+<div class="flex items-center gap-8">
+<span class="text-lg font-black tracking-widest text-primary dark:text-zinc-50">OCHI</span>
+<div class="hidden md:flex gap-6">
+<a class="text-primary dark:text-zinc-50 font-bold" href="#">Dashboard</a>
+<a class="text-secondary dark:text-zinc-400 hover:bg-surface-container-high dark:hover:bg-zinc-800 transition-colors duration-150 px-2 py-1" href="#">About</a>
+<a class="text-secondary dark:text-zinc-400 hover:bg-surface-container-high dark:hover:bg-zinc-800 transition-colors duration-150 px-2 py-1" href="#">Framework</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-2 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-surface-container dark:bg-zinc-900 border-none text-[10px] py-1.5 pl-8 pr-4 w-48 focus:ring-1 focus:ring-primary" placeholder="SEARCH SYSTEM..." type="text"/>
+</div>
+<span class="material-symbols-outlined cursor-pointer text-secondary hover:text-primary" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined cursor-pointer text-secondary hover:text-primary" data-icon="settings">settings</span>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-14 bottom-0 flex flex-col pt-4 bg-surface-container-low dark:bg-zinc-900 border-r border-outline-variant dark:border-zinc-800 w-64 z-40">
+<div class="px-6 mb-8">
+<p class="font-inter text-xs font-medium uppercase tracking-tight text-on-surface-variant dark:text-zinc-400">OCHI Framework</p>
+<p class="text-[10px] text-secondary uppercase tracking-widest mt-1">Predictive Index v1.0</p>
+</div>
+<nav class="flex-1">
+<a class="block w-full px-4 py-3 border-b border-outline-variant dark:border-zinc-800 text-on-surface-variant dark:text-zinc-400 hover:bg-surface-container-high dark:hover:bg-zinc-800 transition-all duration-75 font-inter text-xs font-medium uppercase tracking-tight" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg" data-icon="analytics">analytics</span>
+<span>Dashboard</span>
+</div>
+</a>
+<a class="block w-full px-4 py-3 border-b border-outline-variant dark:border-zinc-800 bg-tertiary dark:bg-zinc-50 text-white dark:text-zinc-950 font-bold border-r-4 border-primary dark:border-zinc-50 font-inter text-xs uppercase tracking-tight" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg" data-icon="query_stats">query_stats</span>
+<span>OCHI Forecast</span>
+</div>
+</a>
+<a class="block w-full px-4 py-3 border-b border-outline-variant dark:border-zinc-800 text-on-surface-variant dark:text-zinc-400 hover:bg-surface-container-high dark:hover:bg-zinc-800 transition-all duration-75 font-inter text-xs font-medium uppercase tracking-tight" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg" data-icon="traffic">traffic</span>
+<span>Hwy 6 Flow</span>
+</div>
+</a>
+<a class="block w-full px-4 py-3 border-b border-outline-variant dark:border-zinc-800 text-on-surface-variant dark:text-zinc-400 hover:bg-surface-container-high dark:hover:bg-zinc-800 transition-all duration-75 font-inter text-xs font-medium uppercase tracking-tight" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg" data-icon="local_gas_station">local_gas_station</span>
+<span>Gas Index</span>
+</div>
+</a>
+<a class="block w-full px-4 py-3 border-b border-outline-variant dark:border-zinc-800 text-on-surface-variant dark:text-zinc-400 hover:bg-surface-container-high dark:hover:bg-zinc-800 transition-all duration-75 font-inter text-xs font-medium uppercase tracking-tight" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg" data-icon="search_insights">search_insights</span>
+<span>Search Interest</span>
+</div>
+</a>
+<a class="block w-full px-4 py-3 border-b border-outline-variant dark:border-zinc-800 text-on-surface-variant dark:text-zinc-400 hover:bg-surface-container-high dark:hover:bg-zinc-800 transition-all duration-75 font-inter text-xs font-medium uppercase tracking-tight" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-lg" data-icon="monitor_heart">monitor_heart</span>
+<span>TLT Pulse</span>
+</div>
+</a>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 mt-14 p-10 max-w-7xl">
+<!-- Section 1: The Vision -->
+<section class="mb-16 border-l-2 border-primary pl-8">
+<header class="mb-6">
+<span class="font-label-caps text-label-caps uppercase text-secondary block mb-2">Internal Manifest v1.0</span>
+<h1 class="font-h1 text-h1 text-primary uppercase tracking-tight mb-4 text-4xl">THE VISION</h1>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+<div>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed max-w-xl">
+                        OCHI is an objective, multi-modal predictive framework designed to quantify urban equilibrium. By isolating high-velocity data signals from noise, we provide a clinical perspective on regional health, traffic density, and economic momentum. We don't predict the future; we map the inevitability of present momentum.
+                    </p>
+</div>
+<div class="relative bg-surface-container-high h-48 border border-outline-variant overflow-hidden">
+<img class="w-full h-full object-cover grayscale brightness-50" data-alt="abstract high-tech data visualization with glowing blue grid patterns and digital nodes in a dark clinical environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_SL2QwYMej6x3Nb025x7gPQ2s_QXjnEzil0Kz4Ye7kHXvHFB7MJDzgfo384Q7U0uXsxV8U-Mm01GPg42XwLjLdGN7D3aBC1NbOWhskAm6_MpIO4YRhWT5X4VGQJV9NOSc022ZFyrRuDXuFAU3GOlkmAUjX3JKtkARgo06quyEB-mDRZ__B8kld0N94RgNV1T6cA0Wmr45_NlKDv74bY1kTnt8u5wuqH5abKBxFsVOdRg4lfhIhOPolkPzbCnkeQeWTe6fWcoqPKU"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="text-white border border-white/20 px-4 py-2 bg-black/40 backdrop-blur-sm">
+<span class="font-data-mono text-data-mono uppercase">System Active // Ver 4.0.2</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: The Data Five Pillars -->
+<section class="mb-16">
+<header class="mb-8 flex justify-between items-end border-b border-outline-variant pb-4">
+<h2 class="font-h1 text-h1 text-primary uppercase">THE DATA FIVE PILLARS</h2>
+<span class="font-label-caps text-label-caps text-secondary uppercase">Metric Weights: EQUALIZED</span>
+</header>
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-0 border-t border-l border-outline-variant">
+<!-- Pillar 1: Hwy 6 -->
+<div class="p-6 border-r border-b border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-secondary mb-4 group-hover:text-primary" data-icon="traffic">traffic</span>
+<h3 class="font-h2 text-h2 uppercase mb-2">Hwy 6 Flow</h3>
+<p class="font-body-sm text-body-sm text-secondary mb-4">Real-time throughput analysis for the Highway 6 corridor.</p>
+<div class="bg-surface-container p-3">
+<span class="font-label-caps text-label-caps text-secondary block mb-1">Key Metric</span>
+<span class="font-data-mono text-data-mono text-primary">90-MIN LEAD</span>
+</div>
+</div>
+<!-- Pillar 2: Gas Index -->
+<div class="p-6 border-r border-b border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-secondary mb-4 group-hover:text-primary" data-icon="local_gas_station">local_gas_station</span>
+<h3 class="font-h2 text-h2 uppercase mb-2">Gas Index</h3>
+<p class="font-body-sm text-body-sm text-secondary mb-4">Market-wide fuel pricing volatility and availability index.</p>
+<div class="bg-surface-container p-3">
+<span class="font-label-caps text-label-caps text-secondary block mb-1">Key Metric</span>
+<span class="font-data-mono text-data-mono text-primary">INERTIA COEFF</span>
+</div>
+</div>
+<!-- Pillar 3: Search Interest -->
+<div class="p-6 border-r border-b border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-secondary mb-4 group-hover:text-primary" data-icon="search_insights">search_insights</span>
+<h3 class="font-h2 text-h2 uppercase mb-2">Search Int.</h3>
+<p class="font-body-sm text-body-sm text-secondary mb-4">Aggregated regional intent signals and sentiment velocity.</p>
+<div class="bg-surface-container p-3">
+<span class="font-label-caps text-label-caps text-secondary block mb-1">Key Metric</span>
+<span class="font-data-mono text-data-mono text-primary">SENTIMENT VOL</span>
+</div>
+</div>
+<!-- Pillar 4: TLT Pulse -->
+<div class="p-6 border-r border-b border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-secondary mb-4 group-hover:text-primary" data-icon="monitor_heart">monitor_heart</span>
+<h3 class="font-h2 text-h2 uppercase mb-2">TLT Pulse</h3>
+<p class="font-body-sm text-body-sm text-secondary mb-4">The core heart-beat of the technical-logistical terminal.</p>
+<div class="bg-surface-container p-3">
+<span class="font-label-caps text-label-caps text-secondary block mb-1">Key Metric</span>
+<span class="font-data-mono text-data-mono text-primary">HEARTBEAT FREQ</span>
+</div>
+</div>
+<!-- Pillar 5: OCHI Forecast -->
+<div class="p-6 border-r border-b border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors group">
+<span class="material-symbols-outlined text-secondary mb-4 group-hover:text-primary" data-icon="query_stats">query_stats</span>
+<h3 class="font-h2 text-h2 uppercase mb-2">OCHI Forecast</h3>
+<p class="font-body-sm text-body-sm text-secondary mb-4">The ultimate predictive output of all unified signals.</p>
+<div class="bg-surface-container p-3">
+<span class="font-label-caps text-label-caps text-secondary block mb-1">Key Metric</span>
+<span class="font-data-mono text-data-mono text-primary">PROBABILITY 0.98</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: The Logic -->
+<section class="mb-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-center bg-tertiary-container text-white p-12 -mx-10 shadow-2xl">
+<div>
+<span class="font-label-caps text-label-caps text-secondary uppercase block mb-2">Algorithm Structural Logic</span>
+<h2 class="font-h1 text-h1 uppercase mb-6 text-3xl">THE LOGIC</h2>
+<p class="font-body-lg text-body-lg text-surface-dim leading-relaxed mb-8">
+                    Our Seasonal Weighted Algorithm adjusts data importance based on historical environmental patterns. During peak logistical periods, "Inertia Coefficient" takes priority; during recessionary phases, "Search Interest" serves as our leading indicator. This dynamic balancing ensures high-fidelity results across any economic climate.
+                </p>
+<div class="flex gap-4">
+<div class="flex-1 border-l border-outline pl-4">
+<span class="font-label-caps text-label-caps text-secondary block">WEIGHT ALPHA</span>
+<span class="font-data-mono text-data-mono">VAR(0.42)</span>
+</div>
+<div class="flex-1 border-l border-outline pl-4">
+<span class="font-label-caps text-label-caps text-secondary block">DAMPENING</span>
+<span class="font-data-mono text-data-mono">ENABLED</span>
+</div>
+</div>
+</div>
+<div class="aspect-video bg-black border border-outline flex flex-col justify-end p-6 overflow-hidden relative">
+<img class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen" data-alt="complex analytical bar chart showing data trends with clean white lines on a dark background with surgical precision" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2gjCEENsx8iW6cGFkBASLrn-NVbdvwiVHE2LZZ8pPMVj9IDFTSt8Uaw0zDvFpzmNdXBueHEEjDbL39pQlR_MUs4Wi-RUvKINILEG9GUozEuOKR7heKoEka9iYSS2Q5s-Lmsglk5kFFe4lQogTbEc3h_VjErIG28ATpA1hvSg1tOIh8LR3O3qMXVnItHrybl6UFxydn9x1LyzZanIR_2oARt7gweLKdz9JBOsBTSygXDb2pFdqY-S4CNCPILDrWqd6SLYwYaCpRcs"/>
+<div class="relative z-10">
+<span class="text-[8px] font-mono text-secondary block mb-1">// EXECUTION LOG: 0xFF-4392</span>
+<div class="h-1 bg-tertiary w-full mb-2">
+<div class="h-full bg-white w-2/3"></div>
+</div>
+<p class="font-data-mono text-[10px] text-surface-dim">CALCULATING SEASONAL OFFSET: +14.2%</p>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="flex flex-col items-center text-center py-20 border-t border-outline-variant">
+<h2 class="font-h1 text-h1 text-primary uppercase mb-4 text-4xl">READY FOR DEPLOYMENT?</h2>
+<p class="font-body-lg text-body-lg text-secondary mb-10 max-w-md">Access the raw data feed and real-time predictive analytics terminal.</p>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps uppercase px-12 py-5 hover:bg-tertiary-container transition-colors tracking-widest flex items-center gap-4">
+<span>View Live Dashboard</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<p class="font-label-caps text-label-caps text-secondary mt-8">RESTRICTED ACCESS ONLY // OCHI AUTH REQUIRED</p>
+</section>
+</main>
+<!-- Simple Status Bar -->
+<footer class="fixed bottom-0 left-64 right-0 h-8 bg-surface-container-low border-t border-outline-variant flex items-center justify-between px-6 z-40">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-green-500"></div>
+<span class="font-label-caps text-label-caps text-on-surface">SYSTEM: NOMINAL</span>
+</div>
+<span class="text-outline-variant">|</span>
+<span class="font-label-caps text-label-caps text-secondary uppercase">NODE: US-EAST-01</span>
+</div>
+<div class="font-label-caps text-label-caps text-secondary">
+            © 2024 OCHI INDUSTRIAL SYSTEMS
+        </div>
+</footer>
+</body></html>
