@@ -7,18 +7,18 @@ async function loadMarkdownDocs() {
   const baseDir = "C:\\Users\\Owner\\.claude\\Ideas & Projects\\Projects Management\\Product Projects\\Mechanical Cupcakes OS";
   const projectDirs = [
     "OS Notes",
-    "Pelican Recipe Library",
+    "Pellito Hub",
     "love.postcards",
-    "OCHI Dashboard"
+    "OCHI Dashboard",
+    "Scout Protocol Prototype"
   ];
 
   const docs = [];
 
   for (const dir of projectDirs) {
-    let briefPath = path.join(baseDir, dir, "PROJECT_BRIEF.md");
-    if (!fs.existsSync(briefPath)) {
-      // Check for other common names like Project DNA Brief.md
-      briefPath = path.join(baseDir, dir, "Project DNA Brief.md");
+    let briefPath = path.join(baseDir, dir, "HOOT_EXHIBIT_NOTES.md");
+    if (dir === "OS Notes") {
+      briefPath = path.join(baseDir, dir, "HOOT_MUSEUM_GUIDE.md");
     }
     
     if (fs.existsSync(briefPath)) {
