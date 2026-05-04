@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-container": "#334155",
+                      "surface-container-highest": "#2d3449",
+                      "on-primary-fixed-variant": "#3a485c",
+                      "tertiary-fixed": "#ffddb8",
+                      "inverse-on-surface": "#283044",
+                      "primary-fixed-dim": "#b9c7e0",
+                      "secondary": "#89ceff",
+                      "surface-variant": "#2d3449",
+                      "surface-tint": "#b9c7e0",
+                      "primary": "#b9c7e0",
+                      "primary-fixed": "#d5e3fd",
+                      "secondary-fixed": "#c9e6ff",
+                      "surface": "#0b1326",
+                      "outline": "#8e9197",
+                      "outline-variant": "#44474c",
+                      "on-primary-container": "#9eadc5",
+                      "on-secondary-fixed-variant": "#004c6e",
+                      "secondary-container": "#00a2e6",
+                      "on-secondary-container": "#00344e",
+                      "on-background": "#dae2fd",
+                      "inverse-primary": "#515f74",
+                      "surface-container-high": "#222a3d",
+                      "secondary-fixed-dim": "#89ceff",
+                      "error": "#ffb4ab",
+                      "on-primary": "#233144",
+                      "on-tertiary": "#472a00",
+                      "error-container": "#93000a",
+                      "tertiary-fixed-dim": "#ffb95f",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-container": "#5c3800",
+                      "on-tertiary-fixed-variant": "#653e00",
+                      "surface-bright": "#31394d",
+                      "on-tertiary-fixed": "#2a1700",
+                      "surface-container": "#171f33",
+                      "tertiary": "#ffb95f",
+                      "background": "#0b1326",
+                      "on-secondary-fixed": "#001e2f",
+                      "inverse-surface": "#dae2fd",
+                      "surface-container-lowest": "#060e20",
+                      "on-surface-variant": "#c5c6cd",
+                      "surface-dim": "#0b1326",
+                      "on-tertiary-container": "#ef9900",
+                      "on-error": "#690005",
+                      "on-surface": "#dae2fd",
+                      "surface-container-low": "#131b2e",
+                      "on-secondary": "#00344d",
+                      "on-primary-fixed": "#0d1c2f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin": "32px",
+                      "xl": "40px",
+                      "xs": "4px",
+                      "unit": "4px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "gutter": "20px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Work Sans"],
+                      "data-mono": ["Space Grotesk"],
+                      "label-sm": ["Work Sans"],
+                      "section-header": ["Space Grotesk"],
+                      "body-md": ["Work Sans"]
+              },
+              "fontSize": {
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "section-header": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-secondary-container selection:text-on-secondary-container flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-slate-950 border-b border-slate-800">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-500" data-icon="terminal">terminal</span>
+<span class="text-lg font-black tracking-tighter text-slate-100">GARAGE v0.1</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-['Work_Sans'] font-medium tracking-tight uppercase text-blue-500 text-[10px] bg-blue-500/10 px-2 py-0.5 rounded-sm border border-blue-500/20">
+            [ MODE: LIVE ]
+        </span>
+<button class="text-slate-500 hover:bg-slate-900 transition-colors p-1 rounded">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</header>
+<main class="flex-grow pt-16 pb-16 lg:pb-0 px-4 w-full max-w-[1440px] mx-auto overflow-hidden">
+<div class="h-full py-lg grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- LEFT COLUMN: Grid Layout -->
+<div class="lg:col-span-8 flex flex-col gap-gutter">
+<!-- Top Grid: Walkie Talkie & Local Identity -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter shrink-0">
+<!-- Walkie Talkie Tool -->
+<section class="space-y-sm">
+<div class="flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="settings_voice">settings_voice</span>
+<h2 class="font-section-header text-section-header text-on-surface-variant uppercase tracking-widest">Walkie Talkie</h2>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden flex flex-col">
+<div class="p-md space-y-md flex-grow">
+<div class="space-y-xs">
+<label class="font-data-mono text-[10px] text-outline uppercase tracking-tighter">Mission Query</label>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant focus:border-secondary focus:ring-1 focus:ring-secondary rounded-sm p-3 font-data-mono text-data-mono text-on-surface placeholder:text-slate-600 h-24 lg:h-32 resize-none" placeholder="Enter transmission parameters..."></textarea>
+</div>
+<button class="w-full h-12 bg-slate-800 text-slate-500 font-data-mono font-bold uppercase tracking-widest cursor-not-allowed border border-slate-700 flex items-center justify-center gap-2" disabled="">
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+                                Send Query
+                            </button>
+</div>
+<div class="bg-surface-container-low px-md py-2 border-t border-outline-variant flex items-center justify-between">
+<span class="font-data-mono text-[10px] text-outline">CHANNEL: 01-ALPHA</span>
+<span class="font-data-mono text-[10px] text-secondary">READY</span>
+</div>
+</div>
+</section>
+<!-- Local Garage Identity -->
+<section class="space-y-sm">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-section-header text-section-header text-on-surface-variant uppercase tracking-widest">Local Identity</h2>
+<span class="flex h-2 w-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(137,206,255,0.8)]"></span>
+</div>
+<div class="bg-surface-container border border-outline-variant p-md rounded-lg relative overflow-hidden h-full min-h-[220px]">
+<div class="absolute top-0 left-0 w-1 h-full bg-secondary"></div>
+<div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-4 font-data-mono text-data-mono pt-2">
+<span class="text-outline uppercase">Node ID:</span>
+<span class="text-secondary font-bold">node-772</span>
+<span class="text-outline uppercase">Alias:</span>
+<span class="text-on-surface">Ernest-Local</span>
+<span class="text-outline uppercase">Address:</span>
+<span class="text-on-surface opacity-80 break-all">local://garage/ernest</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom: Whiteboard Section -->
+<section class="space-y-sm flex-grow">
+<div class="flex items-center gap-2 px-1">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="edit_note">edit_note</span>
+<h2 class="font-section-header text-section-header text-on-surface-variant uppercase tracking-widest">Whiteboard</h2>
+</div>
+<div class="bg-surface-container-low border border-outline-variant border-dashed p-xl rounded-lg flex flex-col items-center justify-center text-center space-y-sm h-full min-h-[200px]">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-2xl" data-icon="layers_clear">layers_clear</span>
+</div>
+<p class="font-data-mono text-data-mono text-outline max-w-[240px]">No agents saved to whiteboard yet.</p>
+</div>
+</section>
+</div>
+<!-- RIGHT COLUMN: Network Activity Panel -->
+<div class="lg:col-span-4 h-full">
+<section class="space-y-sm h-full flex flex-col">
+<div class="flex items-center gap-2 px-1 shrink-0">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="lan">lan</span>
+<h2 class="font-section-header text-section-header text-on-surface-variant uppercase tracking-widest">Network Activity</h2>
+</div>
+<div class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden flex flex-col flex-grow">
+<div class="bg-surface-container-lowest p-md space-y-3 font-data-mono text-[11px] leading-relaxed flex-grow overflow-y-auto">
+<div class="flex gap-3">
+<span class="text-slate-500 shrink-0">[10:05:22]</span>
+<div class="space-x-2">
+<span class="text-tertiary">garage.started</span>
+<span class="text-on-surface-variant">Local node initialized.</span>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="text-slate-500 shrink-0">[10:05:23]</span>
+<div class="space-x-2">
+<span class="text-secondary">peer.discovery</span>
+<span class="text-on-surface-variant">Found peer at address <span class="underline decoration-secondary/30">local://peer/alpha</span>.</span>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="text-slate-500 shrink-0">[10:05:25]</span>
+<div class="space-x-2">
+<span class="text-primary">system.ready</span>
+<span class="text-on-surface-variant">All systems green.</span>
+</div>
+</div>
+<!-- Mock data for fill -->
+<div class="flex gap-3">
+<span class="text-slate-500 shrink-0">[10:12:44]</span>
+<div class="space-x-2">
+<span class="text-outline">socket.heartbeat</span>
+<span class="text-on-surface-variant">Pulse acknowledged by relay.</span>
+</div>
+</div>
+</div>
+<div class="px-md py-3 flex items-center justify-between bg-surface-container border-t border-outline-variant shrink-0">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-data-mono text-[10px] text-outline uppercase">Live Stream Active</span>
+</div>
+<button class="font-data-mono text-[10px] text-secondary uppercase hover:underline">Clear Logs</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Visible only on mobile/tablet) -->
+<nav class="fixed bottom-0 w-full z-50 flex lg:hidden justify-around items-center h-16 px-2 bg-slate-900 border-t border-slate-800">
+<!-- DASHBOARD (Active) -->
+<a class="flex flex-col items-center justify-center text-blue-400 border-t-2 border-blue-500 pt-2 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-['Work_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">DASHBOARD</span>
+</a>
+<!-- WALKIE -->
+<a class="flex flex-col items-center justify-center text-slate-500 pt-2 hover:text-slate-300 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings_voice">settings_voice</span>
+<span class="font-['Work_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">WALKIE</span>
+</a>
+<!-- WHITEBOARD -->
+<a class="flex flex-col items-center justify-center text-slate-500 pt-2 hover:text-slate-300 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span>
+<span class="font-['Work_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">WHITEBOARD</span>
+</a>
+<!-- NETWORK -->
+<a class="flex flex-col items-center justify-center text-slate-500 pt-2 hover:text-slate-300 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="lan">lan</span>
+<span class="font-['Work_Sans'] text-[10px] font-bold uppercase tracking-widest mt-1">NETWORK</span>
+</a>
+</nav>
+</body></html>
