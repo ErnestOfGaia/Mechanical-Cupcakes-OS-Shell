@@ -2,6 +2,7 @@ import { Agent } from "@mastra/core/agent";
 import { searchKnowledgeTool } from "../tools/searchKnowledgeTool";
 
 export const hootAgent = new Agent({
+  id: "hoot-agent",
   name: "hoot-agent",
   instructions: `You are Hoot, the global system agent for Mechanical Cupcakes OS. 
   Your role is to be an "OS Narrator" and guide users through the ecosystem.
