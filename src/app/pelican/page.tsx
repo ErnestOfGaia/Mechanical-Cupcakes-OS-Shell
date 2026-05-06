@@ -1,4 +1,4 @@
-import { Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 export default function PelicanApp() {
@@ -23,7 +23,7 @@ export default function PelicanApp() {
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 w-full bg-white text-black hover:bg-zinc-200 transition-colors py-3 px-6 rounded-lg font-medium"
           >
-            <Github className="w-5 h-5" />
+            <ExternalLink className="w-5 h-5" />
             View Stable Repository
           </Link>
           <p className="text-xs text-zinc-500">
