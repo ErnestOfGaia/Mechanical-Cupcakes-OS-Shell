@@ -1,0 +1,134 @@
+﻿
+> pellito-deckhand@0.1.0 build
+> next build
+
+Γû▓ Next.js 16.2.1 (Turbopack)
+- Environments: .env
+
+node.exe : ΓÜá The "middleware" file 
+convention is deprecated. Please use 
+"proxy" instead. Learn more: https://next
+js.org/docs/messages/middleware-to-proxy
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifi 
+   ed: (ΓÜá The "middle...leware-to-pro  
+  xy:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComm 
+   andError
+ 
+  Creating an optimized production build ...
+Turbopack build encountered 1 warnings:
+./src/lib/auth.ts:17:1
+A Node.js module is loaded ('crypto' at 
+line 17) which is not supported in the 
+Edge Runtime.
+    Learn More: https://nextjs.org/docs/m
+essages/node-module-in-edge-runtime
+  [90m15 |[0m  */
+  [90m16 |[0m
+[31m[1m>[0m [90m17 |[0m 
+[36mimport[0m crypto [36mfrom[0m 
+[32m'crypto'[0m;
+  [90m   |[0m 
+[31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m18 |[0m
+  [90m19 |[0m [90m// ΓöÇΓöÇ 
+Credential map ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö
+ÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓ
+öÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓö
+ÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ[0m
+  [90m20 |[0m
+
+Ecmascript file had an error
+
+Import traces:
+  App Route:
+    ./src/lib/auth.ts
+    ./src/app/api/auth/logout/route.ts
+
+  Edge Middleware:
+    ./src/lib/auth.ts
+    ./src/middleware.ts
+
+
+
+> Build error occurred
+Error: Turbopack build failed with 2 
+errors:
+./src/lib/mastra/tools/analyzeKitchenDocs
+.ts:3:1
+Module not found: Can't resolve 'ai'
+  [90m1 |[0m [36mimport[0m { 
+createTool } [36mfrom[0m 
+[32m'@mastra/core/tools'[0m;
+  [90m2 |[0m [36mimport[0m { z } 
+[36mfrom[0m [32m'zod'[0m;
+[31m[1m>[0m [90m3 |[0m 
+[36mimport[0m { generateText } 
+[36mfrom[0m [32m'ai'[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m [36mimport[0m { aiModel 
+} [36mfrom[0m [32m'@/lib/ai'[0m;
+  [90m5 |[0m [36mimport[0m { prisma 
+} [36mfrom[0m [32m'@/lib/prisma'[0m;
+  [90m6 |[0m
+
+
+
+Import trace:
+  App Route:
+    ./src/lib/mastra/tools/analyzeKitchen
+Docs.ts
+    ./src/mastra/agents/pellito.ts
+    ./src/app/api/agent/route.ts
+
+https://nextjs.org/docs/messages/module-n
+ot-found
+
+
+./src/lib/mastra/tools/generateMultilingu
+alQuiz.ts:3:1
+Module not found: Can't resolve 'ai'
+  [90m1 |[0m [36mimport[0m { 
+createTool } [36mfrom[0m 
+[32m'@mastra/core/tools'[0m;
+  [90m2 |[0m [36mimport[0m { z } 
+[36mfrom[0m [32m'zod'[0m;
+[31m[1m>[0m [90m3 |[0m 
+[36mimport[0m { generateText } 
+[36mfrom[0m [32m'ai'[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m [36mimport[0m { aiModel 
+} [36mfrom[0m [32m'@/lib/ai'[0m;
+  [90m5 |[0m [36mimport[0m { prisma 
+} [36mfrom[0m [32m'@/lib/prisma'[0m;
+  [90m6 |[0m
+
+
+
+Import trace:
+  App Route:
+    ./src/lib/mastra/tools/generateMultil
+ingualQuiz.ts
+    ./src/mastra/agents/pellito.ts
+    ./src/app/api/agent/route.ts
+
+https://nextjs.org/docs/messages/module-n
+ot-found
+
+
+    at <unknown> (./src/lib/mastra/tools/
+analyzeKitchenDocs.ts:3:1)
+    at <unknown> (https://nextjs.org/docs
+/messages/module-not-found)
+    at <unknown> (./src/lib/mastra/tools/
+generateMultilingualQuiz.ts:3:1)
+    at <unknown> (https://nextjs.org/docs
+/messages/module-not-found)
