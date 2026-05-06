@@ -1,7 +1,6 @@
-"use client";
-
 export default function OchiApp() {
-  const url = process.env.NEXT_PUBLIC_OCHI_URL || "http://localhost:3003";
+  // Evaluated at runtime on the server, avoiding build-time Next.js env issues
+  const url = process.env.OCHI_URL || "https://ochi.mechanicalcupcakes.fun";
   
   return (
     <iframe 
