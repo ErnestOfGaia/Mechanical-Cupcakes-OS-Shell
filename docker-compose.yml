@@ -20,10 +20,14 @@ services:
     restart: unless-stopped
     ports:
       - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgrespassword@db-postcards:5432/love_mailbox?connect_timeout=15
     env_file:
       - ./apps/postcards/.env
     networks:
       - nginx-proxy
+    depends_on:
+      - db-postcards
 
   mcos-pelican:
     build:
@@ -32,8 +36,12 @@ services:
     restart: unless-stopped
     ports:
       - "3002:3002"
+    environment:
+      - DATABASE_URL=postgresql://pelican_admin:pelicanpassword@db-pelican:5432/pellito_recipes?schema=public
     networks:
       - nginx-proxy
+    depends_on:
+      - db-pelican
 
   mcos-ochi:
     build:
@@ -55,6 +63,36 @@ services:
     networks:
       - nginx-proxy
 
+  db-postcards:
+    image: postgres:15-alpine
+    container_name: db-postcards
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: love_mailbox
+    volumes:
+      - postcards_data:/var/lib/postgresql/data
+    networks:
+      - nginx-proxy
+
+  db-pelican:
+    image: postgres:15-alpine
+    container_name: db-pelican
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pelican_admin
+      POSTGRES_PASSWORD: pelicanpassword
+      POSTGRES_DB: pellito_recipes
+    volumes:
+      - pelican_data:/var/lib/postgresql/data
+    networks:
+      - nginx-proxy
+
 networks:
   nginx-proxy:
     external: true
+
+volumes:
+  postcards_data:
+  pelican_data:
