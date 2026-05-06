@@ -7,17 +7,18 @@
     "build": "next build",
     "start": "next start -p 3004",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "node:start": "ts-node src/main/node.ts"
   },
   "dependencies": {
-    "next": "15.3.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "next": "15.2.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "lucide-react": "latest",
     "ethers": "^6.0.0",
     "clsx": "^2.1.1",
     "tailwind-merge": "^2.5.2",
-    "framer-motion": "^10.18.0"
+    "framer-motion": "latest"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
