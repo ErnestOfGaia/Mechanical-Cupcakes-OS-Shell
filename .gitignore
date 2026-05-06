@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# RAG knowledge base (generated — run npm run ingest to rebuild)
+public/brain.json
+
+# Local issue drafts
+draft_issues.js
+issue_draft_*.md
+
+# Build logs
+*.log
