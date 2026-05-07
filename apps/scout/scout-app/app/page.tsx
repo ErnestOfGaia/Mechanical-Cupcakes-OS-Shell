@@ -1,12 +1,47 @@
+"use client";
+
+import { useState } from "react";
 import {
   MOCK_GARAGE_IDENTITY,
   MOCK_PEER_NODE,
-  MOCK_AGENT_CANDIDATES,
   MOCK_NETWORK_EVENTS,
 } from "../src/mock/scoutData";
 import { NetworkActivityLog } from "../src/components/scout/NetworkActivityLog";
+import { WalkieTalkie } from "../src/components/scout/WalkieTalkie";
+import { AgentCandidate } from "../src/types/scout";
+import { ScoutEnvelope } from "../src/lib/envelope";
+
+import { NetworkEvent } from "../src/types/scout";
 
 export default function GaragePage() {
+  const [events, setEvents] = useState<NetworkEvent[]>(MOCK_NETWORK_EVENTS);
+  const [candidates, setCandidates] = useState<AgentCandidate[]>([]);
+
+  const handleQuerySent = (envelope: ScoutEnvelope<Record<string, unknown>>) => {
+    const newEvent: NetworkEvent = {
+      id: envelope.id,
+      timestamp: envelope.timestamp,
+      type: envelope.type,
+      direction: "outbound" as const,
+      summary: `Query sent for mission: "${envelope.payload.mission}"`,
+      payload: envelope.payload,
+    };
+    setEvents((prev) => [newEvent, ...prev]);
+  };
+
+  const handleResultsReceived = (results: AgentCandidate[]) => {
+    setCandidates(results);
+    const newEvent: NetworkEvent = {
+      id: crypto.randomUUID(),
+      timestamp: new Date().toISOString(),
+      type: "walkie.response.received",
+      direction: "inbound" as const,
+      summary: `Received ${results.length} candidates.`,
+      payload: { candidateCount: results.length },
+    };
+    setEvents((prev) => [newEvent, ...prev]);
+  };
+
   return (
     <>
       <header className="top-bar">
@@ -57,6 +92,17 @@ export default function GaragePage() {
             </div>
           </div>
 
+          {/* Walkie Talkie */}
+          <div className="module">
+            <div className="module-heading">
+              <h2>Walkie Talkie</h2>
+            </div>
+            <WalkieTalkie
+              onQuerySent={handleQuerySent}
+              onResultsReceived={handleResultsReceived}
+            />
+          </div>
+
           {/* Agent Candidates */}
           <div className="module">
             <div className="module-heading split-heading">
@@ -64,8 +110,13 @@ export default function GaragePage() {
             </div>
             <div className="console-card">
               <div className="console-body">
-                {MOCK_AGENT_CANDIDATES.map((candidate) => (
-                  <div key={candidate.id}>
+                {candidates.length === 0 && (
+                  <p style={{ color: "var(--muted)", fontSize: "13px", fontStyle: "italic" }}>
+                    No candidates found. Transmit a query to begin discovery.
+                  </p>
+                )}
+                {candidates.map((candidate) => (
+                  <div key={candidate.id} style={{ marginBottom: "1rem" }}>
                     <p className="field-label">Agent</p>
                     <p style={{ color: "var(--blue)", fontWeight: 700, marginTop: "12px" }}>
                       {candidate.name}
@@ -91,9 +142,9 @@ export default function GaragePage() {
             <h2>Network Activity</h2>
           </div>
           <div className="console-card activity-card">
-            <NetworkActivityLog events={MOCK_NETWORK_EVENTS} />
+            <NetworkActivityLog events={events} />
             <footer className="activity-footer">
-              <span>{MOCK_NETWORK_EVENTS.length} events</span>
+              <span>{events.length} events</span>
             </footer>
           </div>
         </div>
