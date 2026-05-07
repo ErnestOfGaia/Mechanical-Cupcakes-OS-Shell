@@ -13,10 +13,6 @@ export const searchKnowledgeTool = createTool({
     required: ["query"],
   },
   execute: async ({ context }) => {
-    // Mastra typically passes inputs in context or as a direct argument depending on version
-    // Based on preflight: execute: async ({ query }) => { ... }
-    // However, createTool often uses { context } or just the props.
-    // I'll use the preflight's destructuring if it works.
     const { query } = context as any; 
     const queryEmbeddings = await embed([query]);
     const results = brain.search(queryEmbeddings[0], { topK: 5 });

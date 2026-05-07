@@ -5,13 +5,6 @@ export async function POST(req: Request) {
   try {
     const { message } = await req.json();
 
-    // In a multi-agent setup, we'd route here. 
-    // For now, everything goes to hootAgent.
-    
-    // Mastra agent generation
-    // Based on preflight, the router forwards to a local Mastra server usually.
-    // However, we can call it directly if it's in the same process.
-    
     const result = await hootAgent.generate(message);
     
     return NextResponse.json({ text: result.text });

@@ -39,9 +39,6 @@ async function ingestBrain() {
   const docs = await loadMarkdownDocs();
 
   console.log("Chunking documents...");
-  // MDocument.fromMarkdown is static in some versions, or instance based. 
-  // Based on preflight: MDocument.fromMarkdown(docs, { ... })
-  // Assuming 'docs' is a string or array of strings for content
   
   const allEmbedded = [];
 
