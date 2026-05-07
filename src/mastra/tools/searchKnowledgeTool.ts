@@ -13,7 +13,6 @@ export const searchKnowledgeTool = createTool({
     required: ["query"],
   },
   execute: async ({ query }: any) => {
-    // Mastra passes the input data directly as the first argument in this version. 
     const queryEmbeddings = await embed([query]);
     const results = brain.search(queryEmbeddings[0], { topK: 5 });
     return results.map((r) => r.text).join("\n---\n");

@@ -17,16 +17,6 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Auto-open logic
-  useEffect(() => {
-    const hasVisited = localStorage.getItem(`mcos_visited_${appName}`);
-    if (!hasVisited && !isOpen) {
-      setTimeout(() => {
-        // We'd call parent to open, but for now we just handle it here if it's open
-      }, 1000);
-    }
-  }, [appName, isOpen]);
-
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
