@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.className} bg-[#F8F9FA] text-[#1A1A1A] antialiased`}>
         {/* MCOS Shell will be injected here during build/deployment */}
-        <main className="min-h-screen">
+        <main className="min-h-screen pt-[48px]">
           {children}
         </main>
       </body>
