@@ -41,15 +41,15 @@ export default function InboxView() {
   useEffect(() => { fetchMail(); }, []);
 
   const markAsRead = async (id: string) => {
+    setPostcards((prev: PostcardData[]) =>
+      (prev ?? []).map((pc: PostcardData) => pc?.id === id ? { ...pc, isRead: true } : pc)
+    );
     try {
       await fetch(`/api/postcards/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isRead: true }),
       });
-      setPostcards((prev: PostcardData[]) =>
-        (prev ?? []).map((pc: PostcardData) => pc?.id === id ? { ...pc, isRead: true } : pc)
-      );
     } catch (e: any) { console.error(e); }
   };
 
