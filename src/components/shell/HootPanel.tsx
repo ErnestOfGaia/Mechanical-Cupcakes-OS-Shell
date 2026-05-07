@@ -3,11 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Send, X, Bot, User, Sparkles } from "lucide-react";
-
-interface Message {
-  role: "assistant" | "user";
-  content: string;
-}
+import { useHoot } from "./HootProvider";
 
 interface HootPanelProps {
   isOpen: boolean;
@@ -16,7 +12,7 @@ interface HootPanelProps {
 }
 
 export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName = "Hoot Dashboard" }) => {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const { messages, addMessage } = useHoot();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -42,7 +38,7 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
 
     const userMsg = input.trim();
     setInput("");
-    setMessages((prev) => [...prev, { role: "user", content: userMsg }]);
+    addMessage({ role: "user", content: userMsg });
     setIsLoading(true);
 
     try {
@@ -52,9 +48,9 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
         body: JSON.stringify({ message: userMsg }),
       });
       const data = await response.json();
-      setMessages((prev) => [...prev, { role: "assistant", content: data.text }]);
+      addMessage({ role: "assistant", content: data.text });
     } catch (error) {
-      setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, I'm having trouble connecting right now." }]);
+      addMessage({ role: "assistant", content: "Sorry, I'm having trouble connecting right now." });
     } finally {
       setIsLoading(false);
     }

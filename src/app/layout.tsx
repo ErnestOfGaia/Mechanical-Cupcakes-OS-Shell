@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { TopBar } from "@/components/shell/TopBar";
 import { HootPanel } from "@/components/shell/HootPanel";
 import { DirectoryDropdown } from "@/components/shell/DirectoryDropdown";
+import { HootProvider } from "@/components/shell/HootProvider";
 import "./globals.css";
 
 export default function RootLayout({
@@ -42,27 +43,29 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased bg-dot-pattern min-h-screen">
-        <div className="scanline-overlay" />
-        <TopBar
-          appName={appName}
-          onOpenDirectory={() => setIsDirectoryOpen(!isDirectoryOpen)}
-          onOpenHoot={() => setIsHootOpen(!isHootOpen)}
-        />
-        
-        <DirectoryDropdown 
-          isOpen={isDirectoryOpen} 
-          onClose={() => setIsDirectoryOpen(false)} 
-        />
-        
-        <HootPanel 
-          isOpen={isHootOpen} 
-          onClose={() => setIsHootOpen(false)} 
-          appName={appName}
-        />
+        <HootProvider>
+          <div className="scanline-overlay" />
+          <TopBar
+            appName={appName}
+            onOpenDirectory={() => setIsDirectoryOpen(!isDirectoryOpen)}
+            onOpenHoot={() => setIsHootOpen(!isHootOpen)}
+          />
 
-        <main className="pt-12 min-h-screen relative z-0">
-          {children}
-        </main>
+          <DirectoryDropdown
+            isOpen={isDirectoryOpen}
+            onClose={() => setIsDirectoryOpen(false)}
+          />
+
+          <HootPanel
+            isOpen={isHootOpen}
+            onClose={() => setIsHootOpen(false)}
+            appName={appName}
+          />
+
+          <main className="pt-12 min-h-screen relative z-0">
+            {children}
+          </main>
+        </HootProvider>
       </body>
     </html>
   );
