@@ -37,6 +37,17 @@ export default function Home() {
       bg: "bg-blue-400/10",
       border: "border-blue-400/20",
       href: "/ochi"
+    },
+    {
+      id: "scout",
+      name: "SCOUT",
+      icon: Search,
+      description: "Interstellar Agent Discovery",
+      status: "Early Stage",
+      color: "text-slate-400",
+      bg: "bg-slate-400/10",
+      border: "border-slate-400/20",
+      href: "/scout"
     }
   ];
 
@@ -66,7 +77,7 @@ export default function Home() {
         </div>
 
         {/* App Selection Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {APPS.map((app) => (
             <Link 
               key={app.id}
