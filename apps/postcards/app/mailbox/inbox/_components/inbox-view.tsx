@@ -54,18 +54,31 @@ export default function InboxView() {
   };
 
   const toggleSave = async (id: string, current: boolean) => {
+    const nextState = !current;
+
+    // Optimistic update
+    setPostcards((prev: PostcardData[]) =>
+      (prev ?? []).map((pc: PostcardData) => (pc?.id === id ? { ...pc, isSaved: nextState } : pc))
+    );
+    setSelectedCard((prev) => (prev?.id === id ? { ...prev, isSaved: nextState } : prev));
+
     try {
-      await fetch(`/api/postcards/${id}`, {
+      const res = await fetch(`/api/postcards/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ isSaved: !current }),
+        body: JSON.stringify({ isSaved: nextState }),
       });
-      setPostcards((prev: PostcardData[]) =>
-        (prev ?? []).map((pc: PostcardData) => pc?.id === id ? { ...pc, isSaved: !current } : pc)
-      );
-      toast.success(current ? "Removed from saved" : "Postcard saved!");
+
+      if (!res.ok) throw new Error("Failed to update");
+
+      toast.success(nextState ? "Postcard saved!" : "Removed from saved");
     } catch (e: any) {
       console.error(e);
+      // Rollback on failure
+      setPostcards((prev: PostcardData[]) =>
+        (prev ?? []).map((pc: PostcardData) => (pc?.id === id ? { ...pc, isSaved: current } : pc))
+      );
+      setSelectedCard((prev) => (prev?.id === id ? { ...prev, isSaved: current } : prev));
       toast.error("Failed to update");
     }
   };
