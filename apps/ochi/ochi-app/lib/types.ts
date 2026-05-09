@@ -1,16 +1,28 @@
-export type SignalStatus = "HIGH" | "MODERATE" | "LOW";
+export type GatekeeperStatus = 'OPEN' | 'ADVISORY' | 'RESTRICTED' | 'HIGH' | 'MODERATE' | 'LOW'
+export type RefreshCadence = 'realtime' | 'daily' | 'weekly' | 'monthly' | 'quarterly'
 
-export interface SignalData {
-  id: string;
-  label: string;
-  value: string;
-  status: SignalStatus;
-  trend?: "UP" | "DOWN" | "FLAT";
+export interface GatekeeperMetric {
+  id: string
+  label: string
+  value: string
+  status: GatekeeperStatus
+  lastUpdated: string
 }
 
-export interface MultiplierData {
-  value: number;
-  label: string;
-  status: SignalStatus;
-  description: string;
+export interface MasterMultiplierData {
+  score: number
+  label: 'HIGH VOL' | 'MODERATE' | 'LOW VOL'
+  color: 'green' | 'amber' | 'red'
+  barWidthPercent: number
+}
+
+export interface ForecastAnnotationData {
+  paragraphs: string[]
+  recommendation: string
+}
+
+export interface SignalFreshness {
+  lastUpdated: string
+  cadence: RefreshCadence
+  isStale: boolean
 }

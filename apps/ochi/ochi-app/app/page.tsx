@@ -6,9 +6,10 @@ import { PrimaryIndicator } from "../components/PrimaryIndicator";
 import { SignalGrid } from "../components/SignalGrid";
 import { LogicAnnotation } from "../components/LogicAnnotation";
 import { buildMultiplierData } from "../lib/multiplier";
+import { ACTIVE_TENANT } from '../lib/tenant.config'
 
 export default function OchiDashboard() {
-  const multiplierData = buildMultiplierData();
+  const multiplierData = buildMultiplierData(0.82, ACTIVE_TENANT.multiplierThresholds);
 
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-8 flex flex-col min-h-screen">
