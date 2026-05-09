@@ -1,5 +1,14 @@
 {
-  "name": "OCHI",
-  "description": "Oregon Coastal Hospitality Intelligence",
-  "version": "1.0.0"
+  "id": "ochi",
+  "name": "OCHI Dashboard",
+  "subdomain": "ochi.mechanicalcupcakes.fun",
+  "description": "Oregon Coastal Hospitality Intelligence — a predictive dashboard for Pacific City coastal tourism.",
+  "purpose": "Monitor five Gatekeeper signals and a Master Multiplier score to forecast daily tourism volume and make smart operational decisions.",
+  "wing": "The Telemetry Station",
+  "primaryActions": ["Read the Master Multiplier score", "Check the Gatekeeper signals", "Read the Forecast Annotation"],
+  "hasLocalAgent": false,
+  "welcomeScript": "Welcome to OCHI — Oregon Coastal Hospitality Intelligence. This is a raw, utilitarian instrument of prediction. Five Gatekeeper signals feed a single Master Multiplier score between 0.00 and 1.00. Above 0.70 is high volume. Below 0.40 means stay lean. The Forecast Annotation explains why.",
+  "suggestedPrompts": ["What is the Master Multiplier?", "What does a High Volume reading mean?", "What is the Hwy 6 signal?"],
+  "status": "pilot",
+  "tenant": "Pacific City, Tillamook County OR"
 }
