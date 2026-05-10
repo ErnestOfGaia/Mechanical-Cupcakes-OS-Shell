@@ -1,0 +1,15 @@
+{
+  "id": "scout",
+  "name": "Scout Protocol",
+  "subdomain": "scout.mechanicalcupcakes.fun",
+  "description": "A local-first agent coordination system — the Garage is where you query the network, send missions, and manage agent candidates.",
+  "purpose": "Let Ernest explore and prototype the Scout Protocol interaction loop: send a mission via Walkie Talkie, receive deterministic mock candidates, and save them to the Whiteboard.",
+  "wing": "The Interstellar Garage",
+  "primaryActions": ["Send a mission query", "Review agent candidates", "Save a candidate to the Whiteboard"],
+  "hasLocalAgent": false,
+  "welcomeScript": "Welcome to the Scout Protocol Garage. This is a local prototype — all interactions are simulated. Send a mission to query the mock peer network and receive agent candidates.",
+  "suggestedPrompts": ["What is Scout Protocol?", "What is the Garage?", "What is a Walkie Talkie query?"],
+  "status": "dev",
+  "tenant": null,
+  "note": "Local prototype only. All data is mock. No real network connections are made."
+}

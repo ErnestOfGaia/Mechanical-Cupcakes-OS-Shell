@@ -1,0 +1,14 @@
+{
+  "id": "postcards",
+  "name": "Postcards",
+  "subdomain": "postcards.mechanicalcupcakes.fun",
+  "description": "A digital postcard gallery — browse saved postcards, create new ones, and share visual messages.",
+  "purpose": "Give users a visual, tactile way to save and share moments as postcard-style images.",
+  "wing": "The Gallery",
+  "primaryActions": ["Browse the postcard gallery", "Save a postcard to your collection", "View a postcard"],
+  "hasLocalAgent": false,
+  "welcomeScript": "Welcome to Postcards. Browse the gallery or save a card to your collection. Each postcard is a moment worth keeping.",
+  "suggestedPrompts": ["How do I create a postcard?", "Can I share postcards?", "What is in the gallery?"],
+  "status": "standby",
+  "tenant": null
+}
