@@ -13,7 +13,7 @@ interface HootContextType {
   clearMessages: () => void;
 }
 
-const HootContext = createContext<HootContextType | undefined>(undefined);
+export const HootContext = createContext<HootContextType | undefined>(undefined);
 
 export function HootProvider({ children }: { children: ReactNode }) {
   const [messages, setMessages] = useState<Message[]>([]);

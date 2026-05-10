@@ -8,9 +8,11 @@ import { MOCK_AGENT_CANDIDATES } from "../../mock/scoutData";
 interface WalkieTalkieProps {
   onQuerySent: (envelope: ScoutEnvelope<Record<string, unknown>>) => void;
   onResultsReceived: (candidates: AgentCandidate[]) => void;
+  candidates?: AgentCandidate[];
+  onSaveCandidate?: (candidate: AgentCandidate) => void;
 }
 
-export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ onQuerySent, onResultsReceived }) => {
+export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ onQuerySent, onResultsReceived, candidates = [], onSaveCandidate }) => {
   const [mission, setMission] = useState("");
 
   const handleSend = (e: React.FormEvent) => {
@@ -55,6 +57,47 @@ export const WalkieTalkie: React.FC<WalkieTalkieProps> = ({ onQuerySent, onResul
           </div>
         </form>
       </div>
+
+      {candidates.length > 0 && (
+        <div style={{ marginTop: "2rem" }}>
+          <div className="module-heading split-heading">
+            <h2>Agent Candidates</h2>
+          </div>
+          <div className="console-card">
+            <div className="console-body">
+              {candidates.map((candidate) => (
+                <div key={candidate.id} style={{ marginBottom: "1rem" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                    <div>
+                      <p className="field-label">Agent</p>
+                      <p style={{ color: "var(--blue)", fontWeight: 700, marginTop: "12px" }}>
+                        {candidate.name}
+                      </p>
+                    </div>
+                    {onSaveCandidate && (
+                      <button
+                        className="send-button"
+                        style={{ padding: "4px 8px", fontSize: "11px", marginTop: "12px" }}
+                        onClick={() => onSaveCandidate(candidate)}
+                      >
+                        Save
+                      </button>
+                    )}
+                  </div>
+                  <p style={{ color: "var(--text-soft)", fontSize: "13px", marginTop: "6px" }}>
+                    {candidate.summary}
+                  </p>
+                  <p style={{ color: "var(--muted)", fontSize: "12px", marginTop: "4px" }}>
+                    Reputation: {candidate.reputation} &nbsp;·&nbsp;{" "}
+                    {candidate.priceGaiaPerCall} GAIA/call &nbsp;·&nbsp;{" "}
+                    {candidate.averageLatencyMs}ms avg
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

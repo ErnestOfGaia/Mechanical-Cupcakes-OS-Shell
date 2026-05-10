@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { cn } from "@/lib/utils";
 import { Send, X, Bot, User, Sparkles } from "lucide-react";
-import { useHoot } from "./HootProvider";
+import { HootContext } from "./HootProvider";
 
 interface HootPanelProps {
   isOpen: boolean;
@@ -12,7 +12,7 @@ interface HootPanelProps {
 }
 
 export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName = "Hoot Dashboard" }) => {
-  const { messages, addMessage } = useHoot();
+  const { messages, addMessage } = useContext(HootContext)!;
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
