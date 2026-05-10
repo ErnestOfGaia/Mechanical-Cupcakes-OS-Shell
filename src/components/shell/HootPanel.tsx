@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Send, X, Bot, User, Sparkles } from "lucide-react";
 import { useHoot } from "./HootProvider";
+import { getAppByRoute } from "@/lib/appRegistry";
 
 interface HootPanelProps {
   isOpen: boolean;
@@ -16,6 +18,7 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const appEntry = getAppByRoute(usePathname());
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -78,14 +81,7 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
               </div>
               
               <div className="grid grid-cols-1 gap-2">
-                {(appName === "Pelican" 
-                  ? ["What recipes are here?", "How do I use the Pelican agent?", "Show other tools"]
-                  : appName === "Postcards"
-                  ? ["How do I create a postcard?", "Can I share these?", "Show other tools"]
-                  : appName === "OCHI Dashboard"
-                  ? ["What is the Master Multiplier?", "How is data collected?", "Show other tools"]
-                  : ["What is this app?", "How do I use this?", "Show other tools"]
-                ).map((prompt) => (
+                {appEntry.suggestedPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     onClick={() => { setInput(prompt); }}

@@ -6,6 +6,7 @@ import { TopBar } from "@/components/shell/TopBar";
 import { HootPanel } from "@/components/shell/HootPanel";
 import { DirectoryDropdown } from "@/components/shell/DirectoryDropdown";
 import { HootProvider } from "@/components/shell/HootProvider";
+import { getAppByRoute } from "@/lib/appRegistry";
 import "./globals.css";
 
 export default function RootLayout({
@@ -16,17 +17,9 @@ export default function RootLayout({
   const pathname = usePathname();
   const [isHootOpen, setIsHootOpen] = useState(false);
   const [isDirectoryOpen, setIsDirectoryOpen] = useState(false);
-  
-  // Map path to App Name
-  const getAppName = (path: string) => {
-    if (path === "/") return "Hoot Dashboard";
-    if (path.includes("/ochi")) return "OCHI Dashboard";
-    if (path.includes("/pelican")) return "Pelican";
-    if (path.includes("/postcards")) return "Postcards";
-    return "MCOS Shell";
-  };
 
-  const appName = getAppName(pathname);
+  const appEntry = getAppByRoute(pathname);
+  const appName = appEntry.name;
 
   // Auto-open logic for Hoot
   useEffect(() => {
