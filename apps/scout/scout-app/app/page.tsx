@@ -8,14 +8,16 @@ import {
 } from "../src/mock/scoutData";
 import { NetworkActivityLog } from "../src/components/scout/NetworkActivityLog";
 import { WalkieTalkie } from "../src/components/scout/WalkieTalkie";
+import { Whiteboard } from "../src/components/scout/Whiteboard";
 import { AgentCandidate } from "../src/types/scout";
-import { ScoutEnvelope } from "../src/lib/envelope";
+import { ScoutEnvelope, createScoutEnvelope } from "../src/lib/envelope";
 
 import { NetworkEvent } from "../src/types/scout";
 
 export default function GaragePage() {
   const [events, setEvents] = useState<NetworkEvent[]>(MOCK_NETWORK_EVENTS);
   const [candidates, setCandidates] = useState<AgentCandidate[]>([]);
+  const [savedCandidates, setSavedCandidates] = useState<AgentCandidate[]>([]);
 
   const handleQuerySent = (envelope: ScoutEnvelope<Record<string, unknown>>) => {
     const newEvent: NetworkEvent = {
@@ -26,6 +28,31 @@ export default function GaragePage() {
       summary: `Query sent for mission: "${envelope.payload.mission}"`,
       payload: envelope.payload,
     };
+    setEvents((prev) => [newEvent, ...prev]);
+  };
+
+  const handleSaveCandidate = (candidate: AgentCandidate) => {
+    if (savedCandidates.some(c => c.id === candidate.id)) {
+      return;
+    }
+    setSavedCandidates(prev => [...prev, candidate]);
+
+    const envelope = createScoutEnvelope({
+      type: "whiteboard.agent.saved",
+      sender: "loc_01HQX7ZK8P4F2T9B5X5W0A3V8N",
+      recipient: "local",
+      payload: { agentId: candidate.id, agentName: candidate.name },
+    });
+
+    const newEvent: NetworkEvent = {
+      id: envelope.id,
+      timestamp: envelope.timestamp,
+      type: envelope.type,
+      direction: "local" as const,
+      summary: `Saved candidate: ${candidate.name}`,
+      payload: envelope.payload,
+    };
+
     setEvents((prev) => [newEvent, ...prev]);
   };
 
@@ -100,40 +127,12 @@ export default function GaragePage() {
             <WalkieTalkie
               onQuerySent={handleQuerySent}
               onResultsReceived={handleResultsReceived}
+              candidates={candidates}
+              onSaveCandidate={handleSaveCandidate}
             />
           </div>
 
-          {/* Agent Candidates */}
-          <div className="module">
-            <div className="module-heading split-heading">
-              <h2>Agent Candidates</h2>
-            </div>
-            <div className="console-card">
-              <div className="console-body">
-                {candidates.length === 0 && (
-                  <p style={{ color: "var(--muted)", fontSize: "13px", fontStyle: "italic" }}>
-                    No candidates found. Transmit a query to begin discovery.
-                  </p>
-                )}
-                {candidates.map((candidate) => (
-                  <div key={candidate.id} style={{ marginBottom: "1rem" }}>
-                    <p className="field-label">Agent</p>
-                    <p style={{ color: "var(--blue)", fontWeight: 700, marginTop: "12px" }}>
-                      {candidate.name}
-                    </p>
-                    <p style={{ color: "var(--text-soft)", fontSize: "13px", marginTop: "6px" }}>
-                      {candidate.summary}
-                    </p>
-                    <p style={{ color: "var(--muted)", fontSize: "12px", marginTop: "4px" }}>
-                      Reputation: {candidate.reputation} &nbsp;·&nbsp;{" "}
-                      {candidate.priceGaiaPerCall} GAIA/call &nbsp;·&nbsp;{" "}
-                      {candidate.averageLatencyMs}ms avg
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <Whiteboard candidates={savedCandidates} />
         </div>
 
         {/* Network Activity */}

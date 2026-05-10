@@ -23,6 +23,7 @@ export default function InboxView() {
   const [postcards, setPostcards] = useState<PostcardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCard, setSelectedCard] = useState<PostcardData | null>(null);
+  const [savingIds, setSavingIds] = useState<Set<string>>(new Set());
 
   const fetchMail = async () => {
     setLoading(true);
@@ -54,6 +55,9 @@ export default function InboxView() {
   };
 
   const toggleSave = async (id: string, current: boolean) => {
+    if (savingIds.has(id)) return;
+    setSavingIds((prev) => new Set(prev).add(id));
+
     const nextState = !current;
 
     setPostcards((prev: PostcardData[]) =>
@@ -70,8 +74,10 @@ export default function InboxView() {
 
       if (!res.ok) throw new Error("Failed to update");
 
+      setSavingIds((prev) => { const next = new Set(prev); next.delete(id); return next; });
       toast.success(nextState ? "Postcard saved!" : "Removed from saved");
     } catch (e: any) {
+      setSavingIds((prev) => { const next = new Set(prev); next.delete(id); return next; });
       console.error(e);
       setPostcards((prev: PostcardData[]) =>
         (prev ?? []).map((pc: PostcardData) => (pc?.id === id ? { ...pc, isSaved: current } : pc))
@@ -147,7 +153,8 @@ export default function InboxView() {
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <button
                       onClick={(e: React.MouseEvent) => { e?.stopPropagation?.(); toggleSave(pc?.id ?? "", pc?.isSaved ?? false); }}
-                      className="p-1 rounded hover:bg-rose-100 transition-colors"
+                      disabled={savingIds.has(pc?.id ?? "")}
+                      className={`p-1 rounded hover:bg-rose-100 transition-colors ${savingIds.has(pc?.id ?? "") ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
                       {pc?.isSaved ? (
                         <BookmarkCheck className="w-4 h-4 text-amber-500" />
@@ -194,7 +201,8 @@ export default function InboxView() {
                   variant="secondary"
                   size="sm"
                   onClick={() => toggleSave(selectedCard?.id ?? "", selectedCard?.isSaved ?? false)}
-                  className="bg-white/80"
+                  disabled={savingIds.has(selectedCard?.id ?? "")}
+                  className={`bg-white/80 ${savingIds.has(selectedCard?.id ?? "") ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   {selectedCard?.isSaved ? (
                     <><BookmarkCheck className="w-4 h-4 mr-1 text-amber-500" /> Saved</>
