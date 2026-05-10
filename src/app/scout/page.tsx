@@ -1,40 +1,21 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-
 export default function ScoutApp() {
-  const url = process.env.NEXT_PUBLIC_SCOUT_URL || "http://localhost:3004";
-  
   return (
-    <div className="relative w-full h-[calc(100vh-48px)] mt-12 flex flex-col items-center justify-center animate-in fade-in duration-500 overflow-hidden">
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/interstellar_garage.png"
-          alt="Interstellar Garage"
-          fill
-          className="object-cover opacity-30"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-base-bg via-base-bg/80 to-transparent" />
-      </div>
+    <div className="w-full h-[calc(100vh-48px)] flex flex-col items-center justify-center bg-zinc-950 text-white p-6 animate-in fade-in duration-500">
+      <div className="max-w-md w-full space-y-6 text-center">
+        <div className="mx-auto w-24 h-24 bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-800 shadow-2xl">
+          <span className="text-4xl">📡</span>
+        </div>
 
-      <div className="relative z-10 flex flex-col items-center justify-center space-y-6 text-center p-8 glass-panel rounded-3xl max-w-2xl w-full mx-4">
-        <h1 className="text-4xl md:text-5xl font-black text-warm-white tracking-tight">SCOUT PROTOCOL</h1>
-        <p className="text-lg text-warm-white/70 font-medium">Garage v0.1 — Interstellar Agent Discovery</p>
+        <div className="space-y-2">
+          <h1 className="text-3xl font-medium tracking-tight">Scout Protocol</h1>
+          <p className="text-zinc-400">
+            The Interstellar Garage is currently in active development.
+          </p>
+        </div>
 
-        <Link
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            "mt-8 px-8 py-4 rounded-xl font-bold tracking-wide transition-all",
-            "bg-violet hover:bg-violet/80 text-white shadow-lg shadow-violet/20 hover:shadow-violet/40 hover:-translate-y-1"
-          )}
-        >
-          Open Local Garage
-        </Link>
+        <p className="text-xs text-zinc-500 pt-2">
+          All interactions are simulated. No real network connections are made.
+        </p>
       </div>
     </div>
   );
