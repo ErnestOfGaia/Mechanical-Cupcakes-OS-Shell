@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { BarChart3, Activity, Users, Zap, Search, ArrowUpRight, Sparkles, ChefHat, Heart, Terminal } from "lucide-react";
+import { BarChart3, Search, Sparkles, ChefHat, Newspaper, Terminal } from "lucide-react";
 
 export default function Home() {
   const APPS = [
     {
       id: "pelican",
-      name: "PELICAN",
+      name: "PELLITO HUB",
       icon: ChefHat,
       description: "Interactive Recipe Library",
       status: "Operational",
@@ -17,15 +17,15 @@ export default function Home() {
       href: "/pelican"
     },
     {
-      id: "postcards",
-      name: "POSTCARDS",
-      icon: Heart,
-      description: "Creative Visual Messages",
-      status: "Standby",
+      id: "newshub",
+      name: "News Hub World",
+      icon: Newspaper,
+      description: "Newsy's Comic Book of Comic Strips",
+      status: "Operational",
       color: "text-violet",
       bg: "bg-violet/10",
       border: "border-violet/20",
-      href: "/postcards"
+      href: "/newshub"
     },
     {
       id: "ochi",
