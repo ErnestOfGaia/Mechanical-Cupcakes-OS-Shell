@@ -1,4 +1,4 @@
-import { type LucideIcon, Terminal, ChefHat, Heart, BarChart3, Radio } from "lucide-react";
+import { type LucideIcon, Terminal, ChefHat, Heart, Newspaper, BarChart3, Radio } from "lucide-react";
 
 export interface AppRegistryEntry {
   id: string;
@@ -37,7 +37,7 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
   },
   {
     id: "pellito",
-    name: "Pelican",
+    name: "Pellito Hub",
     icon: ChefHat,
     description: "Interactive Recipe Library",
     route: "/pelican",
@@ -48,11 +48,11 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     border: "border-teal/20",
     suggestedPrompts: [
       "What recipes are here?",
-      "How do I use the Pelican agent?",
+      "How do I use the Pellito Hub agent?",
       "Show other tools",
     ],
     welcomeScript:
-      "Welcome to Pelican — the interactive recipe library. Ask me about available recipes or how the agent works.",
+      "Welcome to Pellito Hub — the interactive recipe library. Ask me about available recipes or how the agent works.",
   },
   {
     id: "postcards",
@@ -72,6 +72,25 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     ],
     welcomeScript:
       "Welcome to Postcards. Browse the gallery or save a card to your collection. Each postcard is a moment worth keeping.",
+  },
+  {
+    id: "newshub",
+    name: "News Hub World",
+    icon: Newspaper,
+    description: "Newsy's Comic Book of Comic Strips",
+    route: "/newshub",
+    isExternal: false,
+    status: "operational",
+    color: "text-violet",
+    bg: "bg-violet/10",
+    border: "border-violet/20",
+    suggestedPrompts: [
+      "What is News Hub World?",
+      "Who is Newsy?",
+      "Show other tools",
+    ],
+    welcomeScript:
+      "Welcome to News Hub World — Newsy's Comic Book of Comic Strips. Ask me what's new or how the comic works.",
   },
   {
     id: "ochi",

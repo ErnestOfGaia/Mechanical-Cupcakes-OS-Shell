@@ -22,15 +22,6 @@ services:
     networks:
       - nginx-proxy
 
-  mcos-pelican:
-    image: ghcr.io/ernestofgaia/mcos-pelican:latest
-    container_name: mcos-pelican
-    restart: unless-stopped
-    ports:
-      - "3002:3002"
-    networks:
-      - nginx-proxy
-
   mcos-ochi:
     image: ghcr.io/ernestofgaia/mcos-ochi:latest
     container_name: mcos-ochi

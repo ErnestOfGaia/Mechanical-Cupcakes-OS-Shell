@@ -20,7 +20,6 @@ Mechanical Cupcakes OS (MCOS) is a Next.js 16 monorepo shell that unifies multip
     mastra/                      — Hoot agent + RAG tools
     lib/                         — brain.ts (RAG search), embedding.ts, utils.ts
   apps/
-    pelican/                     — Kitchen intelligence platform (port 3002)
     postcards/                   — Visual messaging app (port 3001)
     ochi/ochi-app/               — Hospitality dashboard (port 3003)
     scout/scout-app/             — P2P agent discovery prototype (port 3004)
@@ -66,16 +65,20 @@ This app has strict constraints unique to its v0.1 prototype scope:
 - Session cookies must use `sameSite: "lax"` (not `"none"`).
 - S3-backed file storage. Prisma + PostgreSQL for data.
 
-### Pelican App (`apps/pelican/`)
+### Pellito Hub (external — formerly `apps/pelican/`)
 
-- Role-based kitchen AI (prep, cook, server).
-- Mastra agents, Prisma + PostgreSQL.
-- Accessible at port 3002. The shell `/pelican` route links to the external repo.
+- Interactive recipe library / role-based kitchen AI (prep, cook, server).
+- Deployed independently (Next.js 15 + SQLite) at `https://pelican.mechanicalcupcakes.fun`. Not built into the shell.
+- The shell `/pelican` route embeds it via iframe (`PELICAN_URL` env var, falling back to the live subdomain). Follows the OCHI pattern below.
 
 ### Ochi App (`apps/ochi/ochi-app/`)
 
 - Hospitality intelligence dashboard.
-- The shell `/ochi` route embeds it via iframe (external URL or port 3003).
+- The shell `/ochi` route embeds it via iframe (`OCHI_URL` env var, or port 3003).
+
+### Embedded mini-app convention
+
+Mini-apps render inside the shell at their route via an `<iframe>` to the standalone deployment — see `src/app/ochi/page.tsx` (the reference) and `src/app/pelican/page.tsx`. Each embed reads a per-app `<APP>_URL` env var (e.g. `OCHI_URL`, `PELICAN_URL`) evaluated at runtime on the server, falling back to the live `*.mechanicalcupcakes.fun` subdomain when unset. These vars live in the shell's runtime `.env` (`env_file: .env`, gitignored) — not in the compose files. New mini-apps should follow this same pattern.
 
 ---
 
@@ -117,10 +120,11 @@ In v0.1 simulated mode, `signature` is always `null`. Use `createScoutEnvelope()
 
 | Route | Behavior |
 |-------|----------|
-| `/` | Landing grid — Pelican, Postcards, Ochi, Scout cards |
-| `/pelican` | Link-out page to Pelican GitHub repo |
-| `/postcards` | iframe to port 3001 (postcards app) |
-| `/ochi` | iframe to port 3003 or external OCHI URL |
+| `/` | Landing grid — Pellito Hub, News Hub World, Ochi, Scout cards |
+| `/pelican` | iframe to external Pellito Hub URL (`PELICAN_URL`) |
+| `/newshub` | iframe to external News Hub World URL (`NEWSHUB_URL`) |
+| `/postcards` | iframe to port 3001 (postcards app) — directory-only, not featured on landing |
+| `/ochi` | iframe to port 3003 or external OCHI URL (`OCHI_URL`) |
 | `/scout` | Splash page with `interstellar_garage.png` hero + link to localhost:3004 |
 
 ---

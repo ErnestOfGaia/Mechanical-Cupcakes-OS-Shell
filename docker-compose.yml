@@ -29,20 +29,6 @@ services:
     depends_on:
       - db-postcards
 
-  mcos-pelican:
-    build:
-      context: ./apps/pelican
-    container_name: mcos-pelican
-    restart: unless-stopped
-    ports:
-      - "3002:3002"
-    environment:
-      - DATABASE_URL=postgresql://pelican_admin:pelicanpassword@db-pelican:5432/pellito_recipes?schema=public
-    networks:
-      - nginx-proxy
-    depends_on:
-      - db-pelican
-
   mcos-ochi:
     build:
       context: ./apps/ochi/ochi-app
@@ -76,23 +62,9 @@ services:
     networks:
       - nginx-proxy
 
-  db-pelican:
-    image: postgres:15-alpine
-    container_name: db-pelican
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: pelican_admin
-      POSTGRES_PASSWORD: pelicanpassword
-      POSTGRES_DB: pellito_recipes
-    volumes:
-      - pelican_data:/var/lib/postgresql/data
-    networks:
-      - nginx-proxy
-
 networks:
   nginx-proxy:
     external: true
 
 volumes:
   postcards_data:
-  pelican_data:

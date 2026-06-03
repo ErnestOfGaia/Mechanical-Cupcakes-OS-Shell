@@ -23,9 +23,6 @@ jobs:
           - service: mcos-postcards
             context: ./apps/postcards
             file: ./apps/postcards/Dockerfile
-          - service: mcos-pelican
-            context: ./apps/pelican
-            file: ./apps/pelican/Dockerfile
           - service: mcos-ochi
             context: ./apps/ochi/ochi-app
             file: ./apps/ochi/ochi-app/Dockerfile
