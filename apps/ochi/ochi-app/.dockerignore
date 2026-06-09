@@ -1,0 +1,12 @@
+# Keep host build artifacts out of the image — `COPY . .` would otherwise drop
+# Windows/host node_modules + .next into the Linux container and break the build.
+node_modules
+.next
+.git
+*.log
+build_output.log
+tsconfig.tsbuildinfo
+.env.local
+Dockerfile
+.dockerignore
+docker-compose*.yml

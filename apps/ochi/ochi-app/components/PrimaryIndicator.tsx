@@ -1,34 +1,50 @@
 import React from "react";
-import { MasterMultiplierData } from "../lib/types";
+import type { HeroView } from "../lib/dashboardView";
+import { Eyebrow, MultiplierScale } from "./ochi/primitives";
 
 interface PrimaryIndicatorProps {
-  data: MasterMultiplierData;
+  hero: HeroView;
 }
 
-export function PrimaryIndicator({ data }: PrimaryIndicatorProps) {
+// Hero — Master Multiplier. A humble synthesis of the four gatekeepers, not an
+// oracle. Number accent in terracotta; band pill + scale marker keyed to tone.
+export function PrimaryIndicator({ hero }: PrimaryIndicatorProps) {
+  const pill = {
+    background: `var(--band-${hero.bandTone})`,
+    color: `var(--band-${hero.bandTone}-ink)`,
+  };
   return (
-    <section className="bg-black text-white p-8 space-y-6" aria-labelledby="primary-indicator-title">
-      <div className="flex justify-between items-start">
-        <div>
-          <p id="primary-indicator-title" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Master Multiplier</p>
-          <h2 className="text-7xl font-black mt-2" aria-label={`Multiplier value ${data.score}`}>{data.score}</h2>
-        </div>
-        <div className={`text-black px-3 py-1 text-[10px] font-black uppercase ${data.color === 'green' ? 'bg-green-500' : data.color === 'amber' ? 'bg-amber-500' : 'bg-red-500'}`}>
-          {data.label}
-        </div>
+    <section className="ochi-card" style={{ padding: "20px 20px 22px", position: "relative" }}
+      aria-labelledby="primary-indicator-title">
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+        <Eyebrow><span id="primary-indicator-title">Master Multiplier</span></Eyebrow>
       </div>
-      <div className="space-y-2">
-        <div className="w-full h-2 bg-gray-800 overflow-hidden" aria-hidden="true">
-          <div
-            className={`h-full ${data.color === 'green' ? 'bg-green-500' : data.color === 'amber' ? 'bg-amber-500' : 'bg-red-500'}`}
-            style={{ width: `${data.barWidthPercent}%` }}
-            role="progressbar"
-            aria-valuenow={data.barWidthPercent}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          />
+
+      <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginTop: 12 }}>
+        <div style={{
+          fontSize: 52, lineHeight: 0.92, fontWeight: 700, color: "var(--terracotta)",
+          letterSpacing: "-.02em", fontVariantNumeric: "tabular-nums", flex: "none",
+        }} aria-label={`Multiplier value ${hero.scoreText}`}>
+          {hero.scoreText}
         </div>
-        <p className="text-[10px] text-gray-500 font-medium italic">Forecasting {data.barWidthPercent}% efficiency for the current period.</p>
+        <span style={{
+          padding: "4px 11px", borderRadius: 6, whiteSpace: "nowrap",
+          fontSize: 13, fontWeight: 700, letterSpacing: ".04em", ...pill,
+        }}>{hero.band}</span>
+      </div>
+
+      <MultiplierScale value={hero.score} tone={hero.bandTone} />
+
+      <p style={{ margin: "18px 0 0", fontSize: 16.5, fontWeight: 600, color: "var(--ink)", letterSpacing: "-.01em" }}>
+        {hero.headline}
+      </p>
+
+      <div style={{
+        marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--hairline)",
+        display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--taupe)",
+      }}>
+        <span style={{ width: 6, height: 6, borderRadius: 999, background: "var(--st-good)", flex: "none" }} />
+        A synthesis of the four gatekeepers below — not an oracle.
       </div>
     </section>
   );

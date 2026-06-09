@@ -31,6 +31,51 @@ services:
     networks:
       - nginx-proxy
 
+  # ─── OCHI data stack (added 2026-06-08) ──────────────────────────────────────
+  # Replaces the Google stack. Internal-only: NO host ports — a published DB port
+  # is a security risk. Both reachable on the shared network by container name.
+  # Setup guide: A Priori/Preflight Checklists/POSTGRES_METABASE_PREFLIGHT.md
+  ochi-postgres:
+    image: postgres:16-alpine
+    container_name: ochi-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ochi
+      POSTGRES_USER: ochi
+      POSTGRES_PASSWORD: ${OCHI_PG_PASSWORD}   # set in root .env
+    volumes:
+      - ochi_pgdata:/var/lib/postgresql/data
+      - ./apps/ochi/ochi-app/db/init:/docker-entrypoint-initdb.d:ro  # *.sql run once on first init
+    networks:
+      - nginx-proxy
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ochi -d ochi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ochi-metabase:
+    image: metabase/metabase:latest
+    container_name: ochi-metabase
+    restart: unless-stopped
+    environment:
+      MB_DB_TYPE: postgres        # store Metabase's own settings in Postgres, not its H2 file
+      MB_DB_DBNAME: metabase
+      MB_DB_HOST: ochi-postgres   # by container name, not localhost
+      MB_DB_PORT: 5432
+      MB_DB_USER: ochi
+      MB_DB_PASS: ${OCHI_PG_PASSWORD}
+      JAVA_TIMEZONE: America/Los_Angeles
+    depends_on:
+      ochi-postgres:
+        condition: service_healthy
+    networks:
+      - nginx-proxy
+    # No host ports — NPM proxies ochi-metabase.mechanicalcupcakes.fun → ochi-metabase:3000
+
 networks:
   nginx-proxy:
     external: true
+
+volumes:
+  ochi_pgdata:

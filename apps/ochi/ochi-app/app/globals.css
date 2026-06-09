@@ -1,13 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700&display=swap');
 @import "tailwindcss";
 
-@theme {
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-alert: #ef4444;
+/* ── OCHI design tokens (ported from the Claude design prototype) ──────────
+   Color carries MEANING, never decoration, and is ALWAYS paired with a text
+   label in the UI. */
+:root {
+  /* surfaces */
+  --canvas: #FAF8F5;          /* warm off-white page */
+  --card: #EFEAE3;            /* sand cards */
+  --ink: #33312E;             /* warm near-black text */
+  --taupe: #6B6256;           /* secondary text / borders */
+  /* brand */
+  --navy: #1E3A5F;            /* headers */
+  --action: #2C5282;          /* actions / links */
+  --action2: #3B6EA5;
+  --softfill: #A8C5DD;
+  --terracotta: #C2703D;      /* reserved accent */
+  /* status */
+  --st-good: #3E7C5A;   --st-good-soft: #E4EDE6;  --st-good-soft2: #BcD3C4; --st-good-ink: #2E5C43; --st-good-ring: rgba(62,124,90,.16);
+  --st-watch: #C99A3B;  --st-watch-soft: #F4ECD9; --st-watch-soft2: #E2CFA0;--st-watch-ink: #8A6817; --st-watch-ring: rgba(201,154,59,.18);
+  --st-risk: #B5483D;   --st-risk-soft: #F3E2DF;  --st-risk-soft2: #E0B2AC; --st-risk-ink: #8E372F;  --st-risk-ring: rgba(181,72,61,.16);
+  --st-nodata: #9A938A; --st-nodata-soft: #ECE8E2;--st-nodata-soft2: #CFC8BE;--st-nodata-ink: #6B6256;--st-nodata-ring: rgba(154,147,138,0);
+  /* hairlines / fills */
+  --hairline: rgba(107,98,86,.18);
+  --hairline-strong: rgba(107,98,86,.34);
+  --soft-navy: #E7EEF4;
+  --soft-navy-line: #D2E0EC;
+  --track: rgba(107,98,86,.16);
+  /* hero scale zones (calm, low-sat) */
+  --zone-low: #DDE6DE;
+  --zone-mid: #ECE2CC;
+  --zone-high: #E7CFC8;
+  /* band pills */
+  --band-low: var(--soft-navy);   --band-low-ink: var(--navy);
+  --band-mid: #F4ECD9;            --band-mid-ink: #8A6817;
+  --band-high: #F3E2DF;          --band-high-ink: #8E372F;
+  --card-shadow: 0 1px 2px rgba(51,49,46,.05), 0 1px 1px rgba(51,49,46,.04);
 }
 
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; }
 body {
-  background-color: #F8F9FA;
-  color: #1A1A1A;
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: 'Source Sans 3', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* responsive full-bleed: centered mobile column on a calm warm field */
+.ochi-app { min-height: 100vh; }
+.ochi-col {
+  width: 100%; max-width: 440px; margin: 0 auto;
+  padding: 18px 16px calc(28px + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; gap: 16px;
+}
+@media (min-width: 600px) {
+  .ochi-app {
+    background: radial-gradient(120% 80% at 50% -10%, #F4F0EA 0%, var(--canvas) 60%);
+    padding: 22px 0;
+  }
+  .ochi-col {
+    background: var(--canvas);
+    border: 1px solid var(--hairline);
+    border-radius: 18px;
+    box-shadow: 0 1px 1px rgba(51,49,46,.04), 0 18px 50px -28px rgba(30,58,95,.22);
+    padding: 22px 20px 26px;
+    margin-top: 8px; margin-bottom: 8px;
+  }
+}
+
+.ochi-card {
+  background: var(--card);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+}
+
+.ochi-tap { transition: transform .12s ease, border-color .18s ease, background .18s ease; }
+.ochi-tap:active { transform: scale(.992); }
+@media (hover: hover) {
+  button.ochi-card.ochi-tap:hover { border-color: var(--hairline-strong); }
+  .ochi-tap:hover { background: #EAE4DC; }
+}
+button.ochi-card.ochi-tap:hover { background: var(--card); }
+
+@keyframes ochi-spin { to { transform: rotate(360deg); } }
+
+:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; border-radius: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ochi-tap { transition: none; }
+  svg[style*="ochi-spin"] { animation: none !important; }
 }

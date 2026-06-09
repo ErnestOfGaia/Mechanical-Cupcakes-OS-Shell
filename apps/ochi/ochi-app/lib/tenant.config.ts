@@ -1,4 +1,4 @@
-import type { RefreshCadence } from './types'
+import type { RefreshCadence, LodgingSource } from './types'
 
 export type DataSourceType = 'manual' | 'scraper' | 'api'
 
@@ -8,6 +8,9 @@ export interface GatekeeperDefinition {
   loudAiAnnotation: string
   icon: string
   unit?: string
+  // Lodging only: which source currently feeds this indicator (tlt | client).
+  // The baseline is `tlt` (public, lagging); a client upgrade swaps it to `client`.
+  source?: LodgingSource
   dataSource: {
     type: DataSourceType
     refreshCadence: RefreshCadence
@@ -21,6 +24,25 @@ export interface MultiplierThresholds {
   low: number
 }
 
+// How much each gatekeeper contributes to the weighted score. Must sum to 1.0.
+// `lodging` is the Transient-Lodging indicator; its baseline source (public TLT)
+// lags, so it sits at 0.10 here. A client-sourced tenant carries a *calibrated*
+// lodging weight (tuned against their real sales via the G6 backtest), not 0.10.
+export interface MultiplierWeights {
+  hwy6: number
+  gas: number
+  search: number
+  lodging: number
+}
+
+// A critical-signal rule: when a gatekeeper hits `condition`, the final score
+// is capped at `capScore` regardless of how strong the other signals are.
+export interface HardOverride {
+  gatekeeperId: string
+  condition: string
+  capScore: number
+}
+
 export interface TenantConfig {
   id: string
   name: string
@@ -29,6 +51,8 @@ export interface TenantConfig {
   criticalGatekeeperId: string
   criticalGatekeeperImpact: string
   multiplierThresholds: MultiplierThresholds
+  multiplierWeights: MultiplierWeights
+  hardOverrides: HardOverride[]
   gatekeepers: GatekeeperDefinition[]
 }
 
@@ -40,6 +64,11 @@ export const PACIFIC_CITY_CONFIG: TenantConfig = {
   criticalGatekeeperId: 'hwy6',
   criticalGatekeeperImpact: 'Restricted status projects volume at 40% of normal, even on sunny weekends.',
   multiplierThresholds: { high: 0.70, low: 0.40 },
+  // v1 weights — Hwy6-dominant prior (see OCHI_GRILL_2026-06-08_DECISIONS.md G3).
+  multiplierWeights: { hwy6: 0.40, gas: 0.20, search: 0.30, lodging: 0.10 },
+  // The highway is king: a RESTRICTED Wilson River corridor caps volume at 40%
+  // of normal no matter how strong gas, search, and lodging look.
+  hardOverrides: [{ gatekeeperId: 'hwy6', condition: 'RESTRICTED', capScore: 0.40 }],
   gatekeepers: [
     {
       id: 'hwy6',
@@ -64,11 +93,14 @@ export const PACIFIC_CITY_CONFIG: TenantConfig = {
       dataSource: { type: 'api', refreshCadence: 'weekly', sourceLabel: 'Google Trends' },
     },
     {
-      id: 'tlt',
-      label: 'TLT Pulse',
-      loudAiAnnotation: 'Tillamook County Transient Lodging Tax collections reflect actual overnight stays. IMPORTANT: This is a lagging indicator — data is approximately 90 days behind the current date. Use it as a seasonal baseline, not a real-time read.',
+      id: 'lodging',
+      label: 'Lodging Pulse',
+      // The indicator is lodging occupancy. Its baseline source is the public
+      // Transient Lodging Tax, which lags ~90 days — hence the client-data upgrade.
+      source: 'tlt',
+      loudAiAnnotation: 'Tillamook County Transient Lodging Tax collections reflect actual overnight stays. IMPORTANT: on its public source this is a lagging indicator — data is approximately 90 days behind the current date. Use it as a seasonal baseline, not a real-time read (connecting a property’s own weekly lodging data makes it live).',
       icon: 'Activity',
-      dataSource: { type: 'api', refreshCadence: 'quarterly', sourceLabel: 'Tillamook County TLT Reports' },
+      dataSource: { type: 'api', refreshCadence: 'quarterly', sourceLabel: 'Tillamook County TLT (public)' },
     },
   ],
 }

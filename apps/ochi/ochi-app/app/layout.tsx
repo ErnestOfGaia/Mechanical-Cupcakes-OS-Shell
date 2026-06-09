@@ -1,8 +1,5 @@
 import React from "react";
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "OCHI Dashboard | Pacific City",
@@ -12,11 +9,12 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-[#F8F9FA] text-[#1A1A1A] antialiased`}>
-        {/* MCOS Shell will be injected here during build/deployment */}
-        <main className="min-h-screen pt-[48px]">
+      {/* font + canvas come from globals.css (.ochi-app / Source Sans 3) */}
+      <body>
+        {/* pt reserves space for the MCOS Shell bar injected at build/deploy */}
+        <div className="pt-[48px]">
           {children}
-        </main>
+        </div>
       </body>
     </html>
   );

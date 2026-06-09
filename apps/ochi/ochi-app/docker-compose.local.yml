@@ -1,0 +1,44 @@
+# LOCAL-ONLY stack for testing the OCHI data pipeline (Postgres + Metabase).
+# NOT for production — prod services live in the MCOS docker-compose.prod.yml
+# (internal-only, NPM-fronted, secret password). Here we expose ports and use a
+# throwaway password because it's localhost-only.
+services:
+  ochi-postgres-local:
+    image: postgres:16-alpine
+    container_name: ochi-postgres-local
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ochi
+      POSTGRES_USER: ochi
+      POSTGRES_PASSWORD: localdev
+    ports:
+      - "5433:5432"          # host 5433 → container 5432 (avoids clashing with any local pg)
+    volumes:
+      - ochi_pgdata_local:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ochi -d ochi"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ochi-metabase-local:
+    image: metabase/metabase:latest
+    container_name: ochi-metabase-local
+    restart: unless-stopped
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_HOST: ochi-postgres-local
+      MB_DB_PORT: 5432
+      MB_DB_USER: ochi
+      MB_DB_PASS: localdev
+      JAVA_TIMEZONE: America/Los_Angeles
+    ports:
+      - "3030:3000"          # Metabase UI at http://localhost:3030
+    depends_on:
+      ochi-postgres-local:
+        condition: service_healthy
+
+volumes:
+  ochi_pgdata_local:
