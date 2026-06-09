@@ -1,4 +1,4 @@
-import type { RawGatekeeperInputs, WeatherReading } from './types'
+import type { RawGatekeeperInputs, WeatherReading, WeatherCondition } from './types'
 
 // ─── The data seam ────────────────────────────────────────────────────────────
 // This is the ONE place the dashboard learns "what are the conditions right now."
@@ -24,15 +24,55 @@ export function getCurrentInputs(): RawGatekeeperInputs {
   return MOCK_INPUTS
 }
 
-// Same seam, for weather. Today: a clear 68°F day, so the open road reads as a
-// genuine surge. In Phase 2 this becomes a read from the NWS/weather.gov forecast
-// API for Pacific City (no key required) — and nothing else in the app changes.
-const MOCK_WEATHER: WeatherReading = {
-  condition: 'clear',
-  tempF: 68,
-  summary: 'Sunny',
+// ─── Live weather (NWS / weather.gov) ──────────────────────────────────────────
+// The weather modulator runs on REAL conditions for Pacific City, OR. NWS is free
+// and needs no API key, but requires a descriptive User-Agent. Responses are cached
+// 30 min (Next data cache). On ANY failure we fall back to a clear day so the
+// dashboard never breaks. (Coords are Pacific City; move to tenant.config when a
+// second tenant needs its own location.)
+const PACIFIC_CITY = { lat: 45.2021, lon: -123.9618 }
+const NWS_UA = 'OCHI Dashboard (ochi.mechanicalcupcakes.fun, eog@ernestofgaia.xyz)'
+const WEATHER_FALLBACK: WeatherReading = { condition: 'clear', tempF: 68, summary: 'Sunny' }
+
+function mapNwsCondition(short: string): WeatherCondition {
+  const s = short.toLowerCase()
+  if (/(thunder|storm|tornado|hurricane)/.test(s)) return 'storm'
+  if (/(snow|sleet|ice|blizzard|flurr)/.test(s)) return 'snow'
+  if (/(rain|shower|drizzle)/.test(s)) return 'rain'
+  if (/(partly|mostly sunny|partly sunny|few clouds)/.test(s)) return 'partly_cloudy'
+  if (/(cloud|overcast|fog|haze)/.test(s)) return 'cloudy'
+  if (/(clear|sunny|fair)/.test(s)) return 'clear'
+  return 'partly_cloudy'
 }
 
-export function getCurrentWeather(): WeatherReading {
-  return MOCK_WEATHER
+export async function getCurrentWeather(): Promise<WeatherReading> {
+  const headers = { 'User-Agent': NWS_UA, Accept: 'application/geo+json' }
+  try {
+    // 1) resolve the gridpoint → forecast URL
+    const ptRes = await fetch(
+      `https://api.weather.gov/points/${PACIFIC_CITY.lat},${PACIFIC_CITY.lon}`,
+      { headers, next: { revalidate: 1800 } },
+    )
+    if (!ptRes.ok) return WEATHER_FALLBACK
+    const forecastUrl = (await ptRes.json())?.properties?.forecast
+    if (!forecastUrl) return WEATHER_FALLBACK
+
+    // 2) fetch the forecast, read the current/next period
+    const fRes = await fetch(forecastUrl, { headers, next: { revalidate: 1800 } })
+    if (!fRes.ok) return WEATHER_FALLBACK
+    const period = (await fRes.json())?.properties?.periods?.[0]
+    if (!period) return WEATHER_FALLBACK
+
+    const tempF = period.temperatureUnit === 'F'
+      ? period.temperature
+      : Math.round((period.temperature ?? 20) * 9 / 5 + 32)
+
+    return {
+      condition: mapNwsCondition(String(period.shortForecast ?? '')),
+      tempF: typeof tempF === 'number' ? tempF : WEATHER_FALLBACK.tempF,
+      summary: String(period.shortForecast ?? 'Current conditions'),
+    }
+  } catch {
+    return WEATHER_FALLBACK
+  }
 }

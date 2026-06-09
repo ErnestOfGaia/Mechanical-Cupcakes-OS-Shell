@@ -33,7 +33,7 @@ export function Header() {
           <span style={{ fontSize: 18, fontWeight: 700, color: "var(--navy)", letterSpacing: ".02em" }}>OCHI</span>
         </div>
         <div style={{ fontSize: 12.5, color: "var(--taupe)", marginTop: 3, marginLeft: 17 }}>
-          Pacific City, OR · staffing read
+          Pacific City, OR · Coastal Hospitality Index
         </div>
       </div>
       <button className="ochi-tap" onClick={handleRefresh}

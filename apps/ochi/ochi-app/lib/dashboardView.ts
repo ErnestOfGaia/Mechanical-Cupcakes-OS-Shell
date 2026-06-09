@@ -133,7 +133,7 @@ function formatValue(id: string, inputs: RawGatekeeperInputs): string {
     case 'hwy6': return inputs.hwy6Status
     case 'gas': return `$${inputs.gasPrice.toFixed(2)}`
     case 'search': return String(inputs.searchInterest)
-    case 'lodging': return 'Lagging'
+    case 'lodging': return 'Actual Overnight Stays'
     default: return '—'
   }
 }
@@ -177,11 +177,12 @@ function weatherNoteOf(weather: WeatherReading): string {
     `The road is the gate; weather decides how many actually make the drive.`
 }
 
-export function buildDashboardView(
+export async function buildDashboardView(
   tenant: TenantConfig = ACTIVE_TENANT,
   inputs: RawGatekeeperInputs = getCurrentInputs(),
-  weather: WeatherReading = getCurrentWeather(),
-): DashboardView {
+  weatherOverride?: WeatherReading,
+): Promise<DashboardView> {
+  const weather = weatherOverride ?? await getCurrentWeather()
   const score = deriveMultiplierScore(inputs, tenant, weather)
   const data = buildMultiplierData(score, tenant.multiplierThresholds)
   const bandTone = bandToneOf(data.label)

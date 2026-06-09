@@ -13,7 +13,7 @@ import { Eyebrow } from "../../components/ochi/primitives";
 
 // A richer in-browser sample so a curious lead can see the teaser without a file.
 const SAMPLE_CSV =
-  "week_ending,occupancy_pct,revenue\n" +
+  "week_ending,occupancy_pct,sales\n" +
   [
     ["2025-01-11", 28, 6100], ["2025-01-18", 31, 6650], ["2025-02-15", 44, 9200],
     ["2025-03-22", 52, 11800], ["2025-04-19", 61, 14100], ["2025-05-10", 58, 13200],
@@ -60,11 +60,12 @@ export default function AddYourData() {
             ← OCHI dashboard
           </Link>
           <h1 style={{ margin: "10px 0 0", fontSize: 25, fontWeight: 700, color: "var(--navy)", letterSpacing: "-.02em", lineHeight: 1.1 }}>
-            Make the Lodging Pulse <span style={{ color: "var(--terracotta)" }}>live</span>.
+            See OCHI&apos;s read on <span style={{ color: "var(--terracotta)" }}>your</span> numbers.
           </h1>
           <p style={{ margin: "8px 0 0", fontSize: 15, lineHeight: 1.55, color: "var(--taupe)", textWrap: "pretty" }}>
-            The public lodging-tax figure runs ~90 days behind. Your own weekly numbers turn that lagging
-            baseline into a real-time occupancy read — and a Multiplier tuned to <em>your</em> business.
+            Run a <strong>rental property</strong>? Bring your <strong>occupancy rate</strong> by season. Run a{" "}
+            <strong>restaurant</strong>? Bring your <strong>weekly sales</strong> from past years. OCHI reads your own
+            history and turns the lagging public baseline into a read tuned to <em>your</em> business.
           </p>
         </header>
 
@@ -79,7 +80,8 @@ export default function AddYourData() {
         <Card>
           <Eyebrow>How to format it</Eyebrow>
           <p style={{ margin: "8px 0 10px", fontSize: 13.5, lineHeight: 1.5, color: "var(--taupe)" }}>
-            A simple weekly CSV. One row per week, with a header row. <strong>Revenue is optional.</strong>
+            A simple weekly CSV — one row per week, with a header row. Give us{" "}
+            <strong>occupancy, sales, or both</strong>; include whichever you track.
           </p>
           <div style={{ overflowX: "auto", border: "1px solid var(--hairline)", borderRadius: 8 }}>
             <table style={{ borderCollapse: "collapse", width: "100%", fontSize: 12.5, fontVariantNumeric: "tabular-nums" }}>
@@ -87,7 +89,7 @@ export default function AddYourData() {
                 <tr style={{ background: "var(--soft-navy)", color: "var(--navy)", textAlign: "left" }}>
                   <th style={{ padding: "8px 11px", fontWeight: 700 }}>week_ending</th>
                   <th style={{ padding: "8px 11px", fontWeight: 700 }}>occupancy_pct</th>
-                  <th style={{ padding: "8px 11px", fontWeight: 700 }}>revenue <span style={{ fontWeight: 500, color: "var(--taupe)" }}>(optional)</span></th>
+                  <th style={{ padding: "8px 11px", fontWeight: 700 }}>sales</th>
                 </tr>
               </thead>
               <tbody style={{ color: "var(--ink)" }}>
@@ -101,10 +103,11 @@ export default function AddYourData() {
           </div>
           <ul style={{ margin: "11px 0 0", paddingLeft: 18, fontSize: 12.5, lineHeight: 1.6, color: "var(--taupe)" }}>
             <li><strong>week_ending</strong> — the date the week ends (any clear date format)</li>
-            <li><strong>occupancy_pct</strong> — average occupancy that week, 0–100</li>
-            <li><strong>revenue</strong> — optional; helps tune the read but isn't required</li>
+            <li><strong>occupancy_pct</strong> — average occupancy that week, 0–100 (what rental properties track by season)</li>
+            <li><strong>sales</strong> — total sales for the week, in dollars (what restaurants track year over year)</li>
+            <li>Include <strong>at least one</strong> of occupancy or sales — both is even better.</li>
           </ul>
-          <a href={TEMPLATE_HREF} download="ochi-lodging-template.csv"
+          <a href={TEMPLATE_HREF} download="ochi-data-template.csv"
             style={{ display: "inline-block", marginTop: 12, fontSize: 13, color: "var(--action)", fontWeight: 600, textDecoration: "none" }}>
             ↓ Download a blank template
           </a>
@@ -118,7 +121,7 @@ export default function AddYourData() {
           <input ref={fileRef} type="file" accept=".csv,text/csv" onChange={onFile} style={{ display: "none" }} />
           <button onClick={() => fileRef.current?.click()}
             style={{ width: "100%", padding: "12px 14px", borderRadius: 8, background: "var(--action)", color: "#fff", border: "none", font: "inherit", fontSize: 14.5, fontWeight: 700, cursor: "pointer" }}>
-            Choose your lodging CSV
+            Add CSV Data Now
           </button>
           <button onClick={() => ingest(SAMPLE_CSV)}
             style={{ width: "100%", marginTop: 9, padding: "9px 14px", borderRadius: 8, background: "transparent", color: "var(--action)", border: "1px solid var(--soft-navy-line)", font: "inherit", fontSize: 13, fontWeight: 600, cursor: "pointer" }}>

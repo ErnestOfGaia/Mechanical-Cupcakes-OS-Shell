@@ -13,7 +13,8 @@ export function LogicAnnotation({ view }: { view: DashboardView }) {
   const ordered = view.weights.slice().sort((a, b) => b.percent - a.percent);
 
   return (
-    <section className="ochi-card" style={{ padding: "18px 18px 16px" }} aria-labelledby="logic-annotation-title">
+    <div style={{ marginTop: 16, paddingTop: 16, borderTop: "1px solid var(--hairline)" }}
+      aria-labelledby="logic-annotation-title">
       <Eyebrow><span id="logic-annotation-title">Today&apos;s read</span></Eyebrow>
       <p style={{ margin: "10px 0 0", fontSize: 14.5, lineHeight: 1.6, color: "var(--ink)", textWrap: "pretty" }}>
         {view.summary}
@@ -66,6 +67,6 @@ export function LogicAnnotation({ view }: { view: DashboardView }) {
           </div>
         </div>
       </Collapse>
-    </section>
+    </div>
   );
 }

@@ -14,8 +14,7 @@ export function PrimaryIndicator({ hero }: PrimaryIndicatorProps) {
     color: `var(--band-${hero.bandTone}-ink)`,
   };
   return (
-    <section className="ochi-card" style={{ padding: "20px 20px 22px", position: "relative" }}
-      aria-labelledby="primary-indicator-title">
+    <div style={{ position: "relative" }} aria-labelledby="primary-indicator-title">
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
         <Eyebrow><span id="primary-indicator-title">Master Multiplier</span></Eyebrow>
       </div>
@@ -38,14 +37,6 @@ export function PrimaryIndicator({ hero }: PrimaryIndicatorProps) {
       <p style={{ margin: "18px 0 0", fontSize: 16.5, fontWeight: 600, color: "var(--ink)", letterSpacing: "-.01em" }}>
         {hero.headline}
       </p>
-
-      <div style={{
-        marginTop: 16, paddingTop: 14, borderTop: "1px solid var(--hairline)",
-        display: "flex", alignItems: "center", gap: 8, fontSize: 12.5, color: "var(--taupe)",
-      }}>
-        <span style={{ width: 6, height: 6, borderRadius: 999, background: "var(--st-good)", flex: "none" }} />
-        A synthesis of the four gatekeepers below — not an oracle.
-      </div>
-    </section>
+    </div>
   );
 }
