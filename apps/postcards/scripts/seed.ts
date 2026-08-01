@@ -1,50 +1,56 @@
+// Dev seed — run via `npx prisma db seed` (wrapped by scripts/safe-seed.ts).
+// Passwords come from the env, never hardcoded: this repo is public, and
+// safe-seed.ts warns the dev and production databases may be the same one.
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
+const SEEDS = [
+  {
+    envVar: "SEED_ERNEST_PASSWORD",
+    email: "lotusfuugle@gmail.com",
+    username: "ernest",
+    mailboxScene: "oregon",
+    birdImage: "/images/ernest-bird.png",
+  },
+  {
+    envVar: "SEED_KATRINA_PASSWORD",
+    email: "Katrew@gmail.com",
+    username: "katrina",
+    mailboxScene: "penrith",
+    birdImage: "/images/katrina-bird.png",
+  },
+];
+
 async function main() {
-  const ernestPass = await bcrypt.hash("ernest", 10);
-  const katrinaPass = await bcrypt.hash("katrina", 10);
-  const johnPass = await bcrypt.hash("johndoe123", 10);
+  const missing = SEEDS
+    .filter((s) => !(process.env[s.envVar] || "").trim())
+    .map((s) => s.envVar);
 
-  await prisma.user.upsert({
-    where: { email: "lotusfuugle@gmail.com" },
-    update: {},
-    create: {
-      username: "ernest",
-      email: "lotusfuugle@gmail.com",
-      password: ernestPass,
-      mailboxScene: "oregon",
-      birdImage: "/images/ernest-bird.png",
-    },
-  });
+  if (missing.length > 0) {
+    console.error(
+      `Seed aborted: missing required env var(s): ${missing.join(", ")}.`
+    );
+    process.exit(1);
+  }
 
-  await prisma.user.upsert({
-    where: { email: "Katrew@gmail.com" },
-    update: {},
-    create: {
-      username: "katrina",
-      email: "Katrew@gmail.com",
-      password: katrinaPass,
-      mailboxScene: "penrith",
-      birdImage: "/images/katrina-bird.png",
-    },
-  });
+  for (const s of SEEDS) {
+    const password = await bcrypt.hash(process.env[s.envVar]!, 10);
+    await prisma.user.upsert({
+      where: { email: s.email },
+      update: { password },
+      create: {
+        username: s.username,
+        email: s.email,
+        password,
+        mailboxScene: s.mailboxScene,
+        birdImage: s.birdImage,
+      },
+    });
+  }
 
-  await prisma.user.upsert({
-    where: { email: "john@doe.com" },
-    update: {},
-    create: {
-      username: "admin",
-      email: "john@doe.com",
-      password: johnPass,
-      mailboxScene: "oregon",
-      birdImage: "/images/ernest-bird.png",
-    },
-  });
-
-  console.log("Seeded users: ernest, katrina, admin");
+  console.log(`Seeded users: ${SEEDS.map((s) => s.username).join(", ")}`);
 }
 
 main()
