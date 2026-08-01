@@ -1,4 +1,7 @@
+export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 import { readFile } from "fs/promises";
 import path from "path";
 
@@ -18,6 +21,11 @@ export async function GET(
   { params }: { params: { filename: string } }
 ) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const filename = params.filename;
 
     // Prevent path traversal
@@ -39,7 +47,11 @@ export async function GET(
     return new NextResponse(buffer, {
       headers: {
         "Content-Type": contentType,
-        "Cache-Control": "public, max-age=31536000, immutable",
+        // Private postcards: never let a shared cache (nginx-proxy-manager's
+        // "Cache Assets" matches on the .jpg/.png suffix) hold a copy served
+        // to an authorized session and hand it to an anonymous requester.
+        "Cache-Control": "private, no-store",
+        Vary: "Cookie",
       },
     });
   } catch (e: any) {
