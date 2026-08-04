@@ -7,6 +7,7 @@ import {
   nudge, openBlockers, setVerdict, settle, slug, toMarkdown,
 } from "@/lib/board";
 import { checkPlacement, noteBlockerNudge, placement, placementNudge } from "@/lib/rule";
+import ReadmePanel from "./ReadmePanel";
 import type { Board, BoardKind, Person, Verdict, Workspace } from "@/lib/types";
 
 const KEY = "mcos-workshop-v1";
@@ -16,7 +17,7 @@ const STAGES: Record<string, string> = {
 };
 const CHANNELS = ["Blog", "LinkedIn", "YouTube", "Medium", "X", "Facebook", "Google Business"];
 
-type Tab = "pitch" | "bench" | "arc" | "gate" | "handoff";
+type Tab = "pitch" | "bench" | "arc" | "gate" | "handoff" | "readme";
 
 interface Props {
   initialBoards: Board[];
@@ -219,7 +220,7 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
         </div>
 
         <nav style={{ display: "flex", flexDirection: "column", gap: 1 }} aria-label="Sections">
-          {(["pitch", "bench", "arc", "gate", "handoff"] as Tab[]).map((t) => (
+          {(["pitch", "bench", "arc", "gate", "handoff", "readme"] as Tab[]).map((t) => (
             <button
               key={t}
               type="button"
@@ -227,7 +228,7 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               onClick={() => setTab(t)}
               style={{ ...S.tab, ...(tab === t ? S.tabOn : {}) }}
             >
-              {t === "arc" ? K.arcTitle.replace("The ", "") : t[0].toUpperCase() + t.slice(1)}
+              {t === "arc" ? K.arcTitle.replace("The ", "") : t === "readme" ? "README" : t[0].toUpperCase() + t.slice(1)}
               <span className="mono" style={{ fontSize: 11, color: "var(--ink-faint)" }}>
                 {t === "bench" ? cur.ideas.length : t === "arc" ? cur.arc.length
                   : t === "gate" ? `${cur.gate.filter((g) => g.d).length}/${cur.gate.length}` : ""}
@@ -638,6 +639,8 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
             }} />
           </section>
         )}
+
+        {tab === "readme" && <ReadmePanel kind={cur.kind} />}
       </main>
     </div>
   );
