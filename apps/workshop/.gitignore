@@ -5,3 +5,5 @@ out
 .env.local
 next-env.d.ts
 *.tsbuildinfo
+# Built by `npm run mcp:build` — a bundle, not source.
+mcp/dist

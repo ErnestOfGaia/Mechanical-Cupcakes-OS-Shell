@@ -9,3 +9,8 @@
 .git
 apps/workshop/lib/*.test.ts
 apps/workshop/vitest.config.ts
+# The MCP server and the migration script are local dev tools. They reach the vault
+# directly, so they must never be inside a deployed image — the deployed copy is the
+# browser-only client build and has no vault to reach.
+apps/workshop/mcp
+apps/workshop/scripts
