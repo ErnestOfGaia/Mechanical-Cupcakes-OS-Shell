@@ -37,8 +37,17 @@ export async function PUT(request: Request) {
   if (!raw || typeof raw !== "object") {
     return Response.json({ ok: false, error: "expected { board: … }" }, { status: 400 });
   }
+  const force = (body as { force?: unknown })?.force === true;
   const board: Board = normalise(raw as Partial<Board>);
-  const result = await saveBoard(board);
-  if (!result.ok) return Response.json(result, { status: 409 });
-  return Response.json(result);
+  const result = await saveBoard(board, { expectedMtimeMs: board.mtimeMs, force });
+
+  if (result.ok) return Response.json(result);
+
+  /**
+   * 409 means one specific thing — the file changed underneath you — so the client can
+   * offer "reload" or "overwrite". Everything else is a plain failure and must not wear
+   * the same status code, or the UI ends up offering to overwrite its way out of a
+   * permissions error.
+   */
+  return Response.json(result, { status: result.conflict ? 409 : 500 });
 }

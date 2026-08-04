@@ -107,6 +107,13 @@ export interface Board {
   gate: GateItem[];
   /** Set by the vault adapter so a save knows where it came from. Never invented. */
   sourcePath?: string;
+  /**
+   * The file's modified time when this board was read. Carried back on save so the
+   * vault can refuse to overwrite an edit the caller never saw — the app and the MCP
+   * server can both be writing. Transport only: never written into the file, and
+   * ignored when comparing two boards (see lib/compare.ts).
+   */
+  mtimeMs?: number;
 }
 
 export interface Workspace {

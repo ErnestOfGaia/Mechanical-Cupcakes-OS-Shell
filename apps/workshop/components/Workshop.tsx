@@ -52,6 +52,8 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
   const [tab, setTab] = useState<Tab>("pitch");
   const [filter, setFilter] = useState("all");
   const [msg, setMsg] = useState("");
+  /** Set when a save was refused because the file moved underneath us. */
+  const [conflict, setConflict] = useState<string | null>(null);
 
   const persist = useCallback((next: Workspace) => {
     setWs(next);
@@ -88,19 +90,53 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
     return true;
   });
 
-  async function saveToVault() {
+  async function saveToVault(force = false) {
     setMsg("Saving…");
+    setConflict(null);
     try {
       const res = await fetch("/api/boards", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ board: cur }),
+        body: JSON.stringify({ board: cur, force }),
       });
       const data = await res.json();
       // Check ok before trusting the body — a 409 still parses as JSON.
-      setMsg(res.ok && data.ok ? `Saved to ${data.path}` : `Not saved — ${data.error ?? res.status}`);
+      if (res.ok && data.ok) {
+        // Carry the new mtime so the next save can prove which version it edited.
+        update((b) => { b.mtimeMs = data.mtimeMs; });
+        setMsg(`Saved to ${data.path}${data.backup ? " — previous version copied aside" : ""}`);
+        return;
+      }
+      if (res.status === 409 && data.conflict) {
+        setConflict(data.error ?? "that board changed on disk");
+        setMsg("");
+        return;
+      }
+      setMsg(`Not saved — ${data.error ?? res.status}`);
     } catch (e) {
       setMsg(`Not saved — ${e instanceof Error ? e.message : "request failed"}`);
+    }
+  }
+
+  /**
+   * Re-read the vault. Needed because this app is no longer the only writer — the MCP
+   * server edits the same board.json from a Claude session — so "what is on screen" and
+   * "what is on disk" can drift while the page sits open.
+   */
+  async function reloadFromVault() {
+    setMsg("Re-reading the vault…");
+    try {
+      const res = await fetch("/api/boards");
+      const data = await res.json();
+      if (!data.enabled) { setMsg(`Not reloaded — ${data.reason ?? "the vault is off"}`); return; }
+      const fresh = (data.boards as Board[]).map((b) => normalise(b));
+      if (!fresh.length) { setMsg("Not reloaded — the vault returned no boards."); return; }
+      const keep = fresh.some((b) => b.id === ws.activeId) ? ws.activeId : fresh[0].id;
+      persist({ ...ws, campaigns: fresh, activeId: keep });
+      setConflict(null);
+      setMsg(`Re-read ${fresh.length} board(s) from the vault.`);
+    } catch (e) {
+      setMsg(`Not reloaded — ${e instanceof Error ? e.message : "request failed"}`);
     }
   }
 
@@ -204,6 +240,11 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
           )}
           {loadErrors.length > 0 && (
             <div style={{ color: "var(--cut)", marginTop: 6 }}>{loadErrors.length} scan problem(s)</div>
+          )}
+          {vault.enabled && (
+            <button type="button" style={{ ...S.mini, width: "100%", marginTop: 8 }} onClick={reloadFromVault}>
+              Re-read the vault
+            </button>
           )}
         </div>
       </aside>
@@ -476,9 +517,27 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                 : "The vault is off, so saving to disk is unavailable. Download the files and file them by hand."}
             </p>
 
+            {conflict && (
+              <div style={S.conflict} role="alert">
+                <b style={{ color: "var(--ink)" }}>Not saved — {conflict}.</b>
+                <span>
+                  Something else wrote this board since you opened it: a Claude session through
+                  the MCP server, another tab, or an edit made by hand. Nothing has been
+                  overwritten. Re-read the vault to pick up their version and lose your unsaved
+                  edits, or overwrite theirs with what is on screen.
+                </span>
+                <div style={{ display: "flex", gap: 9, flexWrap: "wrap", marginTop: 4 }}>
+                  <button type="button" style={S.btn} onClick={reloadFromVault}>Re-read the vault</button>
+                  <button type="button" style={S.btnGhostFlat} onClick={() => saveToVault(true)}>
+                    Overwrite what is on disk
+                  </button>
+                </div>
+              </div>
+            )}
+
             <div style={{ display: "flex", gap: 9, flexWrap: "wrap", margin: "16px 0" }}>
               {vault.enabled && vault.writable && (
-                <button type="button" style={S.btn} onClick={saveToVault}>Save to the vault</button>
+                <button type="button" style={S.btn} onClick={() => saveToVault()}>Save to the vault</button>
               )}
               <button type="button" style={S.btnGhost}
                 onClick={() => download(`${slug(cur.name) || "board"}-${today}.md`, toMarkdown(cur, today))}>
@@ -617,6 +676,11 @@ const styles: Record<string, React.CSSProperties> = {
     border: "1px solid var(--amber)", borderRadius: 3, cursor: "pointer" },
   btnGhost: { font: "inherit", fontSize: 13, padding: "8px 15px", background: "transparent",
     color: "var(--ink-soft)", border: "1px solid var(--rule)", borderRadius: 3, cursor: "pointer", marginTop: 14 },
+  btnGhostFlat: { font: "inherit", fontSize: 13, padding: "8px 15px", background: "transparent",
+    color: "var(--ink-soft)", border: "1px solid var(--rule)", borderRadius: 3, cursor: "pointer" },
+  conflict: { display: "flex", flexDirection: "column", gap: 7, border: "1px solid var(--cut)",
+    borderLeft: "3px solid var(--cut)", background: "var(--paper-raised)", padding: "13px 16px",
+    margin: "16px 0", fontSize: 13.5, color: "var(--ink-soft)", maxWidth: "78ch" },
   link: { font: "inherit", fontSize: 12, background: "none", border: 0, padding: 0, color: "var(--ink-faint)",
     cursor: "pointer", textDecoration: "underline", marginTop: 10 },
   pre: { fontFamily: "var(--mono)", fontSize: 11.5, lineHeight: 1.6, background: "var(--paper-sunk)",
