@@ -4,8 +4,9 @@ import { useCallback, useMemo, useState } from "react";
 import { KINDS, kindOf } from "@/lib/kinds";
 import {
   blankBoard, blocks, decided, flagged, mergeBoard, normalise,
-  nudge, openBlockers, settle, slug, toMarkdown,
+  nudge, openBlockers, setVerdict, settle, slug, toMarkdown,
 } from "@/lib/board";
+import { checkPlacement, noteBlockerNudge, placement, placementNudge } from "@/lib/rule";
 import type { Board, BoardKind, Person, Verdict, Workspace } from "@/lib/types";
 
 const KEY = "mcos-workshop-v1";
@@ -80,6 +81,11 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
   const other: Person = me === "E" ? "K" : "E";
   const [head, tail] = nudge(cur);
   const today = new Date().toISOString().slice(0, 10);
+
+  // Computed once per render rather than per card: the rule scans the whole board.
+  const placeState: Record<string, string> = Object.fromEntries(
+    checkPlacement(cur).rows.map((r) => [r.id, r.state]),
+  );
 
   const visible = cur.ideas.filter((i) => {
     if (filter === "all") return true;
@@ -329,6 +335,8 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
             <h1 className="display" style={S.h1}>The bench</h1>
             <p style={S.p}>{K.benchBlurb}</p>
 
+            <PlacementNudge board={cur} />
+
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "16px 0" }}>
               {["all", "undecided", "in", "cut", "flagged"].map((f) => (
                 <button
@@ -365,6 +373,29 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                       <span style={S.tagChip}>{idea.tag}</span>
                       {flagged(idea) && <span className="mono" style={{ fontSize: 10, color: "var(--amber)", textTransform: "uppercase" }}>Katrina differs — worth a read</span>}
                       {st === "input" && <span className="mono" style={{ fontSize: 10, color: "var(--teal)", textTransform: "uppercase" }}>her input, waiting on you</span>}
+                      {decided(idea) === "in" && (() => {
+                        const p = placement(idea, cur);
+                        if (p === "drop") return <span className="mono" style={{ fontSize: 10, color: "var(--in)", textTransform: "uppercase" }}>has a drop</span>;
+                        // Held by a seam is an answer, not a gap — saying "unplaced"
+                        // there would push Ernest to re-solve something already tracked.
+                        const held = placeState[idea.id] === "held";
+                        // A drop is derived from the arc, so it is not togglable here —
+                        // only the seed is, and only Ernest's column moves it.
+                        return (
+                          <button type="button" aria-pressed={p === "seed"}
+                            title={held
+                              ? "A seam names this idea, so it is accounted for. Click to send it to the seed bank instead."
+                              : "Seed bank: it ships, but inside another post or another campaign — not as its own drop."}
+                            style={{ ...S.chip, fontSize: 10, padding: "1px 8px",
+                              ...(p === "seed" ? S.chipOn : held ? { borderColor: "var(--amber-bright)", color: "var(--amber)" } : { borderColor: "var(--cut)", color: "var(--cut)" }) }}
+                            onClick={() => update((b) => {
+                              const t = b.ideas.findIndex((x) => x.id === idea.id);
+                              b.ideas[t] = { ...b.ideas[t], placed: b.ideas[t].placed === "seed" ? null : "seed" };
+                            })}>
+                            {p === "seed" ? "seed bank" : held ? "held by a seam" : "unplaced"}
+                          </button>
+                        );
+                      })()}
                     </div>
                     <textarea className="ed display" rows={1} style={{ fontSize: 18 }} value={idea.title}
                       onChange={(e) => update((b) => { b.ideas[idx].title = e.target.value; })} />
@@ -395,7 +426,11 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                             <button key={v} type="button" aria-pressed={idea.v[p] === v}
                               style={{ ...S.vbtn, ...(idea.v[p] === v ? vOn(v!) : {}) }}
                               onClick={() => update((b) => {
-                                b.ideas[idx] = { ...b.ideas[idx], v: { ...b.ideas[idx].v, [p]: b.ideas[idx].v[p] === v ? null : v } };
+                                // Placement moves with the verdict — see setVerdict:
+                                // the seed is created automatically, the drop never is.
+                                b.ideas = b.ideas.map((x) => (x.id === idea.id ? { ...x } : x));
+                                const warn = setVerdict(b, idea.id, p, v);
+                                setMsg(warn.join("  "));
                               })}>
                               {v === "in" ? "In" : v === "hold" ? "Not yet" : "Cut"}
                             </button>
@@ -428,6 +463,8 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
             <p className="eyebrow">{cur.kind === "channel" ? "Operating rhythm" : "Storyboard"}</p>
             <h1 className="display" style={S.h1}>{K.arcTitle}</h1>
             <p style={S.p}>{K.arcBlurb}</p>
+
+            <PlacementNudge board={cur} />
 
             {cur.arc.length === 0 && (
               <div style={{ ...S.empty, marginTop: 16 }}>
@@ -594,6 +631,23 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
 }
 
 /* ------------------------------------------------------------------ bits */
+
+/**
+ * Ernest's placement rule, run live on the board rather than as a report afterwards.
+ * It never fixes anything — it names what is unplaced and leaves the judgment where it
+ * belongs. Auto-creating would quietly decide.
+ */
+function PlacementNudge({ board }: { board: Board }) {
+  const unplaced = placementNudge(board);
+  const hidden = noteBlockerNudge(board);
+  if (!unplaced && !hidden) return null;
+  return (
+    <div style={{ ...styles.nudge, borderLeftColor: unplaced ? "var(--cut)" : "var(--amber-bright)", flexDirection: "column", gap: 5 }}>
+      {unplaced && <span><b style={{ color: "var(--ink)" }}>{unplaced}</b></span>}
+      {hidden && <span>{hidden}</span>}
+    </div>
+  );
+}
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (

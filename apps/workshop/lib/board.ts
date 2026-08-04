@@ -1,4 +1,5 @@
 import { kindOf } from "./kinds";
+import { checkPlacement, placement } from "./rule";
 import type { Board, Idea, Person, Verdict, Workspace } from "./types";
 
 /* ------------------------------------------------------------------ verdicts */
@@ -33,6 +34,53 @@ export const openBlockers = (b: Board): number =>
 
 export const openOptional = (b: Board): number =>
   b.gate.filter((g) => !g.d && !blocks(g)).length;
+
+/**
+ * Record a verdict, and keep placement honest alongside it.
+ *
+ * Ernest asked why the drop isn't just created when IN is clicked. The answer is that
+ * a seed and a drop cost completely different things:
+ *
+ *   a SEED costs nothing — no slot, no order, no date. Safe to create automatically.
+ *   a DROP costs a Wednesday. At one post a week the drop count IS the campaign length.
+ *
+ * So this auto-creates the seed and never the drop, for three reasons: `in` does not
+ * mean "gets a Wednesday" (an idea may be the promo hook on every post, or a paragraph
+ * inside another one); arc order would end up following click order rather than
+ * campaign order; and because these buttons toggle, auto-create paired with auto-delete
+ * would silently bin a drop whose title, story and promo hook had already been written.
+ *
+ * Leaving `in` therefore clears the seed — which is safe, because an auto-seed holds no
+ * authored content — but never touches the arc. It warns instead. Making Ernest decide
+ * is what the workshop is for; auto-creating quietly decides.
+ */
+export function setVerdict(b: Board, ideaId: string, person: Person, verdict: Verdict): string[] {
+  const idea = b.ideas.find((i) => i.id === ideaId);
+  if (!idea) return [`no idea with id ${ideaId}`];
+  const warnings: string[] = [];
+
+  // The buttons toggle: clicking the verdict an idea already has clears it.
+  const next: Verdict = idea.v[person] === verdict ? null : verdict;
+  idea.v = { ...idea.v, [person]: next };
+
+  // Katrina's column is input. It never moves placement, which is Ernest's to decide.
+  if (person !== "E") return warnings;
+
+  const hasDrop = b.arc.some((d) => (d.ref ?? "").includes(ideaId));
+  if (next === "in") {
+    if (!hasDrop && idea.placed !== "seed") {
+      idea.placed = "seed";
+      warnings.push(`${ideaId} went to the seed bank — add a drop, or write the seam that holds it, if it belongs somewhere else.`);
+    }
+  } else if (idea.placed === "seed") {
+    idea.placed = null;
+  }
+
+  if (next !== "in" && hasDrop) {
+    warnings.push(`${ideaId} still has a drop in the arc. Nothing was removed — take it out there if that is what you mean.`);
+  }
+  return warnings;
+}
 
 /* ------------------------------------------------------------------ normalise */
 
@@ -174,7 +222,16 @@ export function toMarkdown(b: Board, today: string): string {
   }
 
   if (b.ideas.length) {
-    L.push("## The bench", "", "| ID | Item | Decision | Katrina (input) | Note |", "|---|---|---|---|---|");
+    L.push("## The bench", "");
+    const pl = checkPlacement(b);
+    if (pl.rows.length) {
+      L.push(`**${pl.rows.length} IN** — ${pl.placed.length} placed, ${pl.seeded.length} in the seed bank, ` +
+        `${pl.heldBySeam.length} held by a seam, ${pl.violations.length} unaccounted for.`, "");
+      if (pl.violations.length) {
+        L.push(`> ⚠️ ${pl.violations.map((v) => v.id).join(", ")} — marked IN but landing nowhere. Each needs a drop, a seed, or a seam that says why.`, "");
+      }
+    }
+    L.push("| ID | Item | Decision | Katrina (input) | Note |", "|---|---|---|---|---|");
     b.ideas.forEach((i) => {
       const d = decided(i);
       const note = !d && i.v.K ? "her input in, awaiting Ernest"
@@ -187,6 +244,10 @@ export function toMarkdown(b: Board, today: string): string {
       L.push(`### ${i.id} — ${i.title}  \`${i.tag}\``, "", i.story, "");
       if (i.asset) L.push(`- **Asset:** \`${i.asset}\``);
       if (i.proves) L.push(`- **Proves:** ${i.proves}`);
+      if (i.v.E === "in") {
+        const p = placement(i, b);
+        L.push(`- **Placement:** ${p === "drop" ? "has a drop in the arc" : p === "seed" ? "seed bank" : "**UNPLACED** — needs a drop, a seed, or a seam"}`);
+      }
       if (i.n.E) L.push(`- **Ernest:** ${i.n.E}`);
       if (i.n.K) L.push(`- **Katrina:** ${i.n.K}`);
       L.push("");
