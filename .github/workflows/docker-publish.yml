@@ -26,6 +26,9 @@ jobs:
           - service: mcos-ochi
             context: ./apps/ochi/ochi-app
             file: ./apps/ochi/ochi-app/Dockerfile
+          - service: mcos-pennypost
+            context: ./apps/pennypost
+            file: ./apps/pennypost/Dockerfile
 
     steps:
       - name: Checkout repository

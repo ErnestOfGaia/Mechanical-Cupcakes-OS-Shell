@@ -1,0 +1,210 @@
+@import "tailwindcss";
+
+/* ============================================================================
+   THE PENNY POST — 1840s broadsheet
+   Two inks and a paper, not a colour scheme. Black for the engraving, a single
+   Victorian red for the cancellation mark, cream laid stock underneath.
+
+   Fonts are SYSTEM STACKS on purpose. This app makes exactly zero network
+   requests at runtime, and that claim is verified by a DevTools check — a web
+   font would silently falsify the whole premise. Palatino / Book Antiqua /
+   Georgia are period-adjacent enough to carry the look without downloading a
+   byte.
+   ========================================================================== */
+
+:root {
+  --paper: #f2ebdb;
+  --paper-raised: #f8f3e7;
+  --paper-sunk: #e6dcc6;
+  --ink: #1a1512;
+  --ink-soft: #4a4038;
+  --ink-faint: #7d7062;
+  --rule: #b9ab92;
+  --rule-soft: #d5c9b3;
+  --cancel: #8c2318;
+  --cancel-soft: #a8443a;
+
+  --display: "Bookman Old Style", "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
+  --body: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
+  --script: "Segoe Script", "Bradley Hand", "Snell Roundhand", "Apple Chancery", cursive;
+
+  --flip-duration: 0.7s;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--body);
+  background-color: var(--paper);
+  /* Paper grain: a faint two-tone speckle under the text, never over it. Pure CSS,
+     no image asset, no request. */
+  background-image:
+    radial-gradient(rgba(90, 70, 45, 0.035) 1px, transparent 1px),
+    radial-gradient(rgba(90, 70, 45, 0.025) 1px, transparent 1px);
+  background-size: 13px 13px, 7px 7px;
+  background-position: 0 0, 4px 6px;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------------- broadsheet */
+
+.masthead {
+  font-family: var(--display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+/* The double rule under a Victorian masthead: one heavy, one hair. */
+.rule-double {
+  border-top: 3px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  height: 4px;
+}
+
+.rule-hair {
+  border-top: 1px solid var(--rule);
+}
+
+.smallcaps {
+  font-variant-caps: small-caps;
+  letter-spacing: 0.14em;
+  text-transform: lowercase;
+}
+
+/* Dateline strip — how a Victorian paper carried issue number and price. */
+.dateline {
+  font-variant-caps: small-caps;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.dropcap::first-letter {
+  font-family: var(--display);
+  font-weight: 700;
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.82;
+  padding: 0.05em 0.09em 0 0;
+  color: var(--ink);
+}
+
+/* Columns for the About page. Single column on small screens — Victorian measure
+   at 375px is unreadable. */
+.broadsheet-columns {
+  column-count: 1;
+  column-gap: 2.25rem;
+}
+
+@media (min-width: 900px) {
+  .broadsheet-columns {
+    column-count: 2;
+  }
+  .broadsheet-columns > * {
+    break-inside: avoid-column;
+  }
+}
+
+.script {
+  font-family: var(--script);
+}
+
+/* ------------------------------------------------------------ postcard flip */
+/* Ported VERBATIM from apps/postcards/app/globals.css:89-118 — the one thing
+   this app takes from the private original. If you change the 3D behaviour here,
+   the same block lives there.
+   (Border radius softened from 12px to 2px: 1840s stationery was cut square.) */
+
+.postcard-flip {
+  perspective: 1200px;
+}
+
+.postcard-inner {
+  transition: transform var(--flip-duration) cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.postcard-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.postcard-front,
+.postcard-back {
+  backface-visibility: hidden;
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.postcard-back {
+  transform: rotateY(180deg);
+}
+
+/* -------------------------------------------------------------- choreography */
+
+@keyframes stamp-strike {
+  0% { transform: scale(2.4) rotate(-18deg); opacity: 0; }
+  60% { transform: scale(0.94) rotate(-11deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-11deg); opacity: 1; }
+}
+
+@keyframes card-post {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(120px) rotate(-6deg) scale(0.86); opacity: 0; }
+}
+
+@keyframes flag-drop {
+  0% { transform: rotate(0deg); }
+  70% { transform: rotate(-84deg); }
+  100% { transform: rotate(-78deg); }
+}
+
+@keyframes fade-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.anim-stamp { animation: stamp-strike 620ms cubic-bezier(0.2, 1.3, 0.4, 1) both; }
+.anim-post { animation: card-post 900ms cubic-bezier(0.5, 0, 0.75, 0) both; }
+.anim-flag { animation: flag-drop 700ms cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+.anim-rise { animation: fade-rise 420ms ease-out both; }
+
+/* -------------------------------------------------------- reduced motion */
+/* Every beat collapses to a cross-fade. Delivery still happens — the arrival is
+   the point of the app, so it must never be the thing that gets disabled. */
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --flip-duration: 0.01ms; }
+
+  .anim-stamp,
+  .anim-post,
+  .anim-flag,
+  .anim-rise {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  .postcard-inner { transition-duration: 0.01ms !important; }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------ focus */
+
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--cancel);
+  outline-offset: 2px;
+}

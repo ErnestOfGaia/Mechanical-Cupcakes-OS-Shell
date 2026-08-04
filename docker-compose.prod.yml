@@ -31,6 +31,21 @@ services:
     networks:
       - nginx-proxy
 
+  # Static export served by nginx — no env vars, no secrets, no database. No host
+  # port for the same reason as ochi-metabase below: NPM proxies mcos-pennypost:80
+  # by container name on the shared network; ports 80/443 stay NPM-only.
+  mcos-pennypost:
+    image: ghcr.io/ernestofgaia/mcos-pennypost:latest
+    container_name: mcos-pennypost
+    restart: unless-stopped
+    networks:
+      - nginx-proxy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
   # ─── OCHI data stack (added 2026-06-08) ──────────────────────────────────────
   # Replaces the Google stack. Internal-only: NO host ports — a published DB port
   # is a security risk. Both reachable on the shared network by container name.
