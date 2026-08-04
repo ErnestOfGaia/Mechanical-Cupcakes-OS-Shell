@@ -230,7 +230,10 @@ export function mergeBoard(mine: Board, theirs: Board, me: Person, takeText: boo
     if (ti.v?.[other] !== undefined && ti.v[other] !== local.v[other]) { local.v[other] = ti.v[other]; changed += 1; }
     if (ti.n?.[other] && ti.n[other] !== local.n[other]) { local.n[other] = ti.n[other]; changed += 1; }
     if (takeText) {
-      (["title", "story", "asset", "proves", "tag"] as const).forEach((f) => {
+      // Text they may have written, including the cover seed. `yt` and `placed` are
+      // deliberately absent: those are Ernest's editorial calls, not prose, and
+      // `placed` is governed by the placement rule — a merge must never set it.
+      (["title", "story", "asset", "proves", "tag", "cover"] as const).forEach((f) => {
         if (ti[f] && ti[f] !== local[f]) { local[f] = ti[f]; changed += 1; }
       });
     }

@@ -169,6 +169,26 @@ describe("merge keeps your own column", () => {
     mergeBoard(mine, theirs, "E", false);
     expect(mine.ideas).toHaveLength(2);
   });
+
+  it("takes a cover seed they wrote, but never their yt flag or placement", () => {
+    const mine = normalise({ id: "b1", ideas: [idea("in", null)] });
+    const theirs = normalise({
+      id: "b1",
+      ideas: [{ ...idea(null, null), cover: "their cover seed", yt: true, placed: "seed" }],
+    });
+    mergeBoard(mine, theirs, "E", true);
+    expect(mine.ideas[0].cover).toBe("their cover seed");
+    // Editorial calls, not prose — a merge must not decide these on Ernest's behalf.
+    expect(mine.ideas[0].yt).toBe(false);
+    expect(mine.ideas[0].placed).toBeNull();
+  });
+
+  it("carries the strip across when taking their text", () => {
+    const mine = normalise({ id: "b1" });
+    const theirs = normalise({ id: "b1", strip: [{ k: "Cadence", v: "Weekly" }] });
+    mergeBoard(mine, theirs, "E", true);
+    expect(mine.strip).toEqual([{ k: "Cadence", v: "Weekly" }]);
+  });
 });
 
 describe("normalise is safe on junk", () => {

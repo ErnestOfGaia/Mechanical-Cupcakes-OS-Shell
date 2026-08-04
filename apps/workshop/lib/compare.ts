@@ -14,6 +14,12 @@ const TRANSPORT_KEYS = ["sourcePath", "mtimeMs"];
  * didn't yet, one carries a transport field the other doesn't, one has `undefined`
  * where the other has an absent key. `canon` collapses all three before anything is
  * compared, so `fieldIdentical` is only ever looking at content.
+ *
+ * ⚠️ A board with no `id` gets a freshly minted one from `normalise`, so canonicalising
+ * the same id-less board twice yields two different results and `fieldIdentical` will
+ * report false. That is intentional — an id-less board isn't a board yet, and quietly
+ * treating two of them as equal would be the comparator lying. Every real caller
+ * (verified save, migration, MCP) compares boards that already have ids.
  */
 export function canon(b: Partial<Board>): unknown {
   const n = normalise(b) as unknown as Record<string, unknown>;
