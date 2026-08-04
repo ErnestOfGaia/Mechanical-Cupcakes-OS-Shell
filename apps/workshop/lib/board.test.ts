@@ -8,6 +8,7 @@ import type { Board, Idea, Verdict } from "./types";
 
 const idea = (E: Verdict, K: Verdict, id = "IDEA-01"): Idea => ({
   id, tag: "post", title: "t", story: "a story long enough to be real, honestly", asset: "", proves: "",
+  cover: "", yt: false, placed: null,
   v: { E, K }, n: { E: "", K: "" },
 });
 

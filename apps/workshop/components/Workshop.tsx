@@ -376,7 +376,8 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               let n = b.ideas.length + 1; let id = "";
               do { id = `IDEA-${String(n).padStart(2, "0")}`; n += 1; } while (b.ideas.some((x) => x.id === id));
               b.ideas.push({ id, tag: cur.kind === "channel" ? "format" : "post", title: "Untitled",
-                story: "", asset: "", proves: "", v: { E: null, K: null }, n: { E: "", K: "" } });
+                story: "", asset: "", proves: "", cover: "", yt: false, placed: null,
+                v: { E: null, K: null }, n: { E: "", K: "" } });
             })}>Add {cur.kind === "channel" ? "a format" : "an idea"}</button>
           </section>
         )}

@@ -45,12 +45,18 @@ export function newId(prefix = "b"): string {
 export function normalise(b: Partial<Board> & { id?: string }): Board {
   const kind = b.kind === "channel" ? "channel" : "campaign";
   const out: Board = {
+    // Spread first so a field this app doesn't know about yet — the way `strip`
+    // arrived before its type did — survives a load/save cycle instead of being
+    // silently dropped. Every field below is re-asserted explicitly and wins over
+    // the spread; this only preserves what normalise has no opinion about.
+    ...(b as Board),
     id: b.id ?? newId(),
     kind,
     name: b.name ?? "Untitled",
     tagline: b.tagline ?? "",
     stage: b.stage ?? "spark",
     channels: Array.isArray(b.channels) ? b.channels : ["Blog"],
+    strip: Array.isArray(b.strip) ? b.strip : [],
     seams: Array.isArray(b.seams) ? b.seams : [],
     roles: Array.isArray(b.roles) ? b.roles : [],
     ideas: Array.isArray(b.ideas) ? b.ideas : [],
@@ -59,7 +65,12 @@ export function normalise(b: Partial<Board> & { id?: string }): Board {
     sourcePath: b.sourcePath,
   };
   out.ideas = out.ideas.map((i) => ({
+    // Same reasoning as above, at idea level — a field like a future "priority" tag
+    // added by the skill before this app knows about it must not vanish on save.
     ...i,
+    cover: typeof i.cover === "string" ? i.cover : "",
+    yt: i.yt === true,
+    placed: i.placed === "seed" ? "seed" : null,
     v: { E: i.v?.E ?? null, K: i.v?.K ?? null },
     n: { E: i.n?.E ?? "", K: i.n?.K ?? "" },
   }));
@@ -227,6 +238,7 @@ export function mergeBoard(mine: Board, theirs: Board, me: Person, takeText: boo
   if (takeText) {
     mine.name = theirs.name; mine.tagline = theirs.tagline; mine.stage = theirs.stage;
     mine.arc = theirs.arc; mine.gate = theirs.gate; mine.seams = theirs.seams; mine.roles = theirs.roles;
+    mine.strip = theirs.strip;
   } else {
     theirs.gate.forEach((g, i) => {
       if (mine.gate[i] && g.d && !mine.gate[i].d) { mine.gate[i].d = true; changed += 1; }

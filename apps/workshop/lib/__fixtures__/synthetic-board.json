@@ -1,0 +1,73 @@
+{
+  "version": 3,
+  "identity": "E",
+  "activeId": "synthetic-demo",
+  "campaigns": [
+    {
+      "id": "synthetic-demo",
+      "kind": "campaign",
+      "name": "Synthetic Demo Campaign",
+      "tagline": "Invented content for round-trip tests only — never a real campaign.",
+      "stage": "shaping",
+      "channels": ["Blog", "LinkedIn"],
+      "strip": [
+        { "k": "Cadence", "v": "Weekly — Wednesday" },
+        { "k": "First drop", "v": "Not set yet", "flag": true }
+      ],
+      "seams": [
+        {
+          "tag": "Open",
+          "cls": "",
+          "h": "SEAM-01 — a made-up open question",
+          "p": "Body text for the synthetic seam."
+        }
+      ],
+      "roles": [
+        { "f": "made-up-source.md", "role": "Source material", "pl": "this folder", "why": "Fixture only." }
+      ],
+      "ideas": [
+        {
+          "id": "IDEA-01",
+          "tag": "post",
+          "title": "A synthetic idea with every new field set",
+          "story": "Exists only to prove cover/yt/placed/strip survive a normalise round-trip.",
+          "asset": "none",
+          "proves": "That the schema additions round-trip losslessly.",
+          "cover": "A quiet workshop desk, no figures, no logos, generic and calm.",
+          "yt": true,
+          "placed": "seed",
+          "v": { "E": "in", "K": null },
+          "n": { "E": "synthetic note", "K": "" },
+          "futureField": "unknown-to-this-app-but-must-survive"
+        },
+        {
+          "id": "IDEA-02",
+          "tag": "post",
+          "title": "A plain idea with no new fields set",
+          "story": "Exercises the defaulting path, not the passthrough path.",
+          "asset": "",
+          "proves": "",
+          "v": { "E": null, "K": "in" },
+          "n": { "E": "", "K": "her note" }
+        }
+      ],
+      "arc": [
+        {
+          "slot": "Drop 1",
+          "ref": "IDEA-01",
+          "title": "Synthetic drop",
+          "story": "s",
+          "track": "",
+          "songs": "",
+          "promo": "p",
+          "note": ""
+        }
+      ],
+      "gate": [
+        { "t": "A synthetic gate item", "o": "E", "d": false, "blocking": true, "n": "" },
+        { "t": "A Katrina-owned item", "o": "K", "d": false, "n": "advisory only" }
+      ],
+      "futureBoardField": "unknown-to-this-app-but-must-survive"
+    }
+  ]
+}
