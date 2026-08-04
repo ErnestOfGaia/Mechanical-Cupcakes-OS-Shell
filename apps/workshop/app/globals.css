@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* Weathered marine neutrals with one amber accent — the workshop's own identity,
+   distinct from the OCHI dashboard and the shell chrome. */
+:root {
+  --paper: #eef1f0;
+  --paper-raised: #f7f9f8;
+  --paper-sunk: #e3e8e6;
+  --ink: #12171a;
+  --ink-soft: #45524f;
+  --ink-faint: #7b8a86;
+  --rule: #c9d2cf;
+  --rule-soft: #dce3e1;
+  --amber: #b46e22;
+  --amber-bright: #d98a3d;
+  --teal: #2f6f6b;
+  --in: #3f7a4d;
+  --hold: #8f6a16;
+  --cut: #9a3f42;
+  --in-wash: #e4efe6;
+  --hold-wash: #f5eeda;
+  --cut-wash: #f5e4e4;
+
+  --display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --body: "Segoe UI", -apple-system, BlinkMacSystemFont, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Cascadia Mono", Consolas, "SF Mono", ui-monospace, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #12171a;
+    --paper-raised: #1a2124;
+    --paper-sunk: #0d1113;
+    --ink: #e7ecea;
+    --ink-soft: #a3b0ac;
+    --ink-faint: #6e7c78;
+    --rule: #2c3639;
+    --rule-soft: #222b2e;
+    --amber: #d98a3d;
+    --amber-bright: #e8a15c;
+    --teal: #63afa9;
+    --in: #6fb27e;
+    --hold: #d0a340;
+    --cut: #d4787a;
+    --in-wash: #1b2a20;
+    --hold-wash: #2a2318;
+    --cut-wash: #2b1c1d;
+  }
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.display { font-family: var(--display); letter-spacing: -0.015em; }
+.mono { font-family: var(--mono); }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.ed {
+  display: block;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 4px 6px;
+  resize: vertical;
+}
+.ed:hover { border-color: var(--rule-soft); }
+.ed:focus { outline: none; border-color: var(--amber-bright); background: var(--paper-raised); }
+
+:is(button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--amber-bright);
+  outline-offset: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

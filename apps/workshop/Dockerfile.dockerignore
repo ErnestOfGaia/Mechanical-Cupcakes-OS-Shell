@@ -1,0 +1,11 @@
+# BuildKit reads <dockerfile>.dockerignore when the context is the repo root.
+# Paths are relative to the CONTEXT (repo root), not to this file.
+**/node_modules
+**/.next
+**/out
+**/.env
+**/.env.local
+**/*.tsbuildinfo
+.git
+apps/workshop/lib/*.test.ts
+apps/workshop/vitest.config.ts
