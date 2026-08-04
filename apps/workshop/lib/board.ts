@@ -241,8 +241,9 @@ export function toMarkdown(b: Board, today: string): string {
     });
     L.push("");
     b.ideas.forEach((i) => {
-      L.push(`### ${i.id} — ${i.title}  \`${i.tag}\``, "", i.story, "");
+      L.push(`### ${i.id} — ${i.title}  \`${i.tag}\`${i.yt ? "  · **YT seed**" : ""}`, "", i.story, "");
       if (i.asset) L.push(`- **Asset:** \`${i.asset}\``);
+      if (i.cover) L.push(`- **Cover seed:** ${i.cover}`);
       if (i.proves) L.push(`- **Proves:** ${i.proves}`);
       if (i.v.E === "in") {
         const p = placement(i, b);
@@ -271,7 +272,16 @@ export function toMarkdown(b: Board, today: string): string {
   L.push("Ernest is they/them · Katrina is she/her · sole approval gate, edits = approval ·");
   L.push("scheduled-state only, never publish-now · no hype vocabulary, small numbers stay small ·");
   L.push("AI tools named specifically (Claude, ChatGPT, Google AI) · never invent prices or costs ·");
-  L.push("contact hierarchy only in designated CTAs · `seo_title` ≤ 42 characters · #ernestGoesToAI.", "");
+  L.push("contact hierarchy only in designated CTAs · `seo_title` ≤ 42 characters · #ernestGoesToAI.");
+  /**
+   * Derived per campaign, never hardcoded. The mockup printed the music rules into
+   * every export, so the Last Mile plan — which ships no tracks and claims no lineage —
+   * carried a disclosure rule belonging to a different campaign entirely.
+   */
+  if (b.ideas.some((i) => ["music", "av", "both"].includes(i.tag))) {
+    L.push("Tracks disclosed as AI-generated · lineage credited as kinship, not membership.");
+  }
+  L.push("");
   return L.join("\n");
 }
 

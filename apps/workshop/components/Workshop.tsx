@@ -371,6 +371,14 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                     <div style={{ display: "flex", gap: 10, alignItems: "baseline", flexWrap: "wrap" }}>
                       <span className="mono" style={{ fontSize: 10.5, color: "var(--ink-faint)" }}>{idea.id}</span>
                       <span style={S.tagChip}>{idea.tag}</span>
+                      {/* Flags one idea as screen-recording material without claiming
+                          YouTube as a channel for the whole campaign. */}
+                      <button type="button" aria-pressed={idea.yt}
+                        title="Good YouTube material — a demonstration beat that is a screen recording by nature."
+                        style={{ ...S.chip, fontSize: 10, padding: "1px 8px", ...(idea.yt ? S.chipOn : {}) }}
+                        onClick={() => update((b) => { b.ideas[idx] = { ...b.ideas[idx], yt: !b.ideas[idx].yt }; })}>
+                        YT seed
+                      </button>
                       {flagged(idea) && <span className="mono" style={{ fontSize: 10, color: "var(--amber)", textTransform: "uppercase" }}>Katrina differs — worth a read</span>}
                       {st === "input" && <span className="mono" style={{ fontSize: 10, color: "var(--teal)", textTransform: "uppercase" }}>her input, waiting on you</span>}
                       {decided(idea) === "in" && (() => {
@@ -410,6 +418,11 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                     <Field label="What it proves">
                       <textarea className="ed" rows={2} style={{ fontSize: 13 }} value={idea.proves}
                         onChange={(e) => update((b) => { b.ideas[idx].proves = e.target.value; })} />
+                    </Field>
+                    <Field label="Cover image seed">
+                      <textarea className="ed" rows={2} style={{ fontSize: 13 }} value={idea.cover}
+                        placeholder="What the cover shows. No figures, no third-party marks — and keep anything that will date out of the image."
+                        onChange={(e) => update((b) => { b.ideas[idx].cover = e.target.value; })} />
                     </Field>
                     <button type="button" style={S.link}
                       onClick={() => update((b) => { b.ideas.splice(idx, 1); })}>Remove</button>
