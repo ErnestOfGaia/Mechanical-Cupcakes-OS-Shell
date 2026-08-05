@@ -23,9 +23,19 @@ Mechanical Cupcakes OS (MCOS) is a Next.js 16 monorepo shell that unifies multip
     pennypost/                   — The Penny Post public demo (static export, nginx container, port 3006 dev)
     ochi/ochi-app/               — Hospitality dashboard (port 3003)
     scout/scout-app/             — P2P agent discovery prototype (port 3004)
+    workshop/                    — Campaign Workshop (port 3005). In this repo but NOT a gallery exhibit:
+                                   it belongs to the EOG marketing backoffice, has no shell route, no
+                                   appRegistry entry, and Hoot does not present it. Unlike its siblings it
+                                   reads the FILESYSTEM (a notes vault), and its vault is deliberately
+                                   refused in production unless WORKSHOP_ALLOW_VAULT_IN_PROD=1 — the
+                                   fail-safe in apps/workshop/lib/vault.ts is a feature, not a bug.
+                                   Deliberately absent from CI and both compose files until the
+                                   client-facing storage decision (backlog W3) is made.
   public/
-    brain.json                   — Generated RAG embeddings (NOT committed to git)
-    interstellar_garage.png      — Scout splash page hero image
+    brain.json                   — Generated RAG embeddings (NOT committed to git — which also means the
+                                   published image has never contained it; CI builds from checkout)
+    interstellar_garage.png      — ⚠️ orphaned: referenced by no code path since /scout became a flat
+                                   holding page. Delete or re-wire.
 ```
 
 ---
@@ -130,7 +140,7 @@ In v0.1 simulated mode, `signature` is always `null`. Use `createScoutEnvelope()
 | `/newshub` | iframe to external News Hub World URL (`NEWSHUB_URL`) |
 | `/postcards` | iframe to The Penny Post (`POSTCARDS_URL`, falls back to pennypost.mechanicalcupcakes.fun). The private postcards app (port 3001) is login-gated and deliberately NOT linked from the gallery — decision 2026-08-01 |
 | `/ochi` | iframe to port 3003 or external OCHI URL (`OCHI_URL`) |
-| `/scout` | Splash page with `interstellar_garage.png` hero + link to localhost:3004 |
+| `/scout` | Flat holding page — 📡 emoji + text only, no image, no link (the old `interstellar_garage.png` hero + localhost:3004 link this row used to describe no longer exists) |
 
 ---
 

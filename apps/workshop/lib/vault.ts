@@ -322,7 +322,21 @@ export async function saveBoard(board: Board, opts: SaveOpts = {}): Promise<Save
     return { ok: true, path: rel, verified: true, mtimeMs, backup };
   } catch (e) {
     await fs.rm(tmp, { force: true }).catch(() => {});
-    return { ok: false, error: e instanceof Error ? e.message : "write failed", step: "write" };
+    // Never return e.message: a Node fs error embeds the ABSOLUTE vault path, and
+    // app/api/boards/route.ts serializes this verbatim into the PUT 500 body and
+    // into the UI. This app has no auth of its own, so on any vault-enabled
+    // instance a failed write disclosed the host filesystem layout — contradicting
+    // the no-path-leak rule already enforced for the MCP server (mcp/server.test.ts)
+    // and stated at app/health/route.ts. Log the real error server-side; return the
+    // errno code plus the vault-RELATIVE path, as the step-5/step-7 verify branches
+    // already do.
+    console.error("[vault] saveBoard failed:", e);
+    const code = (e as NodeJS.ErrnoException)?.code;
+    return {
+      ok: false,
+      error: code ? `write failed (${code}) at ${rel}` : `write failed at ${rel}`,
+      step: "write",
+    };
   }
 }
 
