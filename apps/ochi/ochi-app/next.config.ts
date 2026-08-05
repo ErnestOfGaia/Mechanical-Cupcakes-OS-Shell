@@ -1,9 +1,23 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 
+// Two build environments, two roots. In the monorepo the workspace root is three
+// levels up (Next warns and mis-traces otherwise). In the Docker build the
+// context IS this app — there is no monorepo above /app — and pointing the root
+// above the project would make `output: "standalone"` nest its tree by the app's
+// repo path, so the Dockerfile sets NEXT_DOCKER_BUILD=1 and gets the app dir.
+const inDockerBuild = process.env.NEXT_DOCKER_BUILD === "1";
+const workspaceRoot = inDockerBuild ? __dirname : path.resolve(__dirname, "../../..");
+
 const nextConfig: NextConfig = {
+  // Standalone only in the image: it is what lets the runtime stage carry
+  // server.js + traced node_modules instead of the full source tree and
+  // devDependencies (audit finding, 2026-08-04). Not set locally — `next start`
+  // does not serve a standalone build, and dev flow is unchanged.
+  ...(inDockerBuild ? { output: "standalone" as const } : {}),
+  outputFileTracingRoot: workspaceRoot,
   turbopack: {
-    root: path.resolve(__dirname, "../../.."),
+    root: workspaceRoot,
   },
   async headers() {
     return [
