@@ -8,6 +8,7 @@
     "start": "next start -p 3004",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "node:start": "ts-node src/main/node.ts"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "@types/react-dom": "^19.0.0",
     "postcss": "^8.0.0",
     "tailwindcss": "^4.0.0",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "vitest": "^4.1.5"
   }
 }
