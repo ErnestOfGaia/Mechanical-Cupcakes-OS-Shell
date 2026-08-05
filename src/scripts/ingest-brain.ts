@@ -3,8 +3,16 @@ import { embed } from "../lib/embedding";
 import fs from "fs";
 import path from "path";
 
+// Where Hoot's exhibit copy lives. Defaults to Ernest's vault for local runs;
+// HOOT_CONTENT_DIR overrides it so a CI runner (which has no C:\Users\Owner) can
+// point at a checked-out copy. Until that copy exists, CI cannot run this script
+// at all — see the zero-document guard below, which is what makes that failure
+// loud instead of silent.
+const DEFAULT_CONTENT_DIR =
+  "C:\\Users\\Owner\\.claude\\Ideas & Projects\\Projects Management\\Product Projects\\Mechanical Cupcakes OS";
+
 async function loadMarkdownDocs() {
-  const baseDir = "C:\\Users\\Owner\\.claude\\Ideas & Projects\\Projects Management\\Product Projects\\Mechanical Cupcakes OS";
+  const baseDir = process.env.HOOT_CONTENT_DIR || DEFAULT_CONTENT_DIR;
   const projectDirs = [
     "OS Notes",
     "Pellito Hub",
@@ -38,6 +46,20 @@ async function loadMarkdownDocs() {
 async function ingestBrain() {
   console.log("Loading documents...");
   const docs = await loadMarkdownDocs();
+
+  // Every source path is an existsSync away from silently vanishing — a moved
+  // vault, a renamed folder, or a CI runner with no C:\ drive all produce zero
+  // documents, and without this the script would write an EMPTY brain.json and
+  // exit 0. That is the worst possible outcome: green build, shipped image, Hoot
+  // knows nothing, and nothing anywhere reports a problem.
+  if (docs.length === 0) {
+    throw new Error(
+      `No exhibit documents found under ${process.env.HOOT_CONTENT_DIR || DEFAULT_CONTENT_DIR}. ` +
+        `Refusing to write an empty brain.json. Set HOOT_CONTENT_DIR to a directory ` +
+        `containing the per-app HOOT_EXHIBIT_NOTES.md files and OS Notes/HOOT_MUSEUM_GUIDE.md.`,
+    );
+  }
+  console.log(`Loaded ${docs.length} document(s): ${docs.map((d) => d.id).join(", ")}`);
 
   console.log("Chunking documents...");
 
@@ -83,4 +105,9 @@ async function ingestBrain() {
   console.log("Ingestion complete!");
 }
 
-ingestBrain().catch(console.error);
+// `.catch(console.error)` alone still exits 0, so a failed embed call or a missing
+// API key would log a stack trace into a green build. Fail loudly instead.
+ingestBrain().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

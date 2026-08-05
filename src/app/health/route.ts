@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 
 /**
@@ -17,11 +17,24 @@ export async function GET() {
   // resolves it through process.cwd() on every lookup). A missing brain.json does
   // not stop the OS serving, so it must not fail the check — but it degrades Hoot
   // silently, which is exactly the failure worth surfacing here.
-  const knowledge = existsSync(path.join(process.cwd(), "public", "brain.json"))
-    ? "loaded"
-    : "missing";
+  //
+  // Count the chunks rather than test existence: the ingest script's failure mode
+  // is writing a well-formed EMPTY array (every source path is an existsSync away
+  // from vanishing), and an existence check reports that as "loaded" — a check
+  // that cannot fail in the one way this thing actually breaks.
+  let knowledge: string;
+  let chunks = 0;
+  try {
+    const parsed = JSON.parse(
+      readFileSync(path.join(process.cwd(), "public", "brain.json"), "utf-8"),
+    );
+    chunks = Array.isArray(parsed) ? parsed.length : 0;
+    knowledge = chunks > 0 ? "loaded" : "empty";
+  } catch {
+    knowledge = "missing";
+  }
 
   // Report the STATE, never the path. A filesystem location has no business in an
   // unauthenticated HTTP response (same rule as apps/workshop/app/health/route.ts).
-  return Response.json({ ok: true, app: "mcos-shell", knowledge });
+  return Response.json({ ok: true, app: "mcos-shell", knowledge, chunks });
 }
