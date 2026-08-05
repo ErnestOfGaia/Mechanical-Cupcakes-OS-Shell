@@ -10,6 +10,15 @@ services:
       - .env
     networks:
       - nginx-proxy
+    # `restart: unless-stopped` covers a crash; it does not cover a hang, and a
+    # hung Next process still accepts connections so NPM keeps routing to it.
+    # Container listens on 3000 (8080 is the host side). wget is busybox's, present
+    # in node:22-alpine — verified, not assumed.
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   # Love Mailbox is NOT deployed from this repo. It runs from
   # github.com/ErnestOfGaia/postcards, deployed at /docker/postcards on the VPS
@@ -25,6 +34,11 @@ services:
       - "3003:3003"
     networks:
       - nginx-proxy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:3003/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
   # Static export served by nginx — no env vars, no secrets, no database. No host
   # port for the same reason as ochi-metabase below: NPM proxies mcos-pennypost:80
