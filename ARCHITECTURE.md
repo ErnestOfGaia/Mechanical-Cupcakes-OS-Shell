@@ -20,7 +20,6 @@ Mechanical Cupcakes OS (MCOS) is a Next.js 16 monorepo shell that unifies multip
     mastra/                      — Hoot agent + RAG tools
     lib/                         — brain.ts (RAG search), embedding.ts, utils.ts
   apps/
-    postcards/                   — Private Love Mailbox app (port 3001, login-gated, NOT in the gallery)
     pennypost/                   — The Penny Post public demo (static export, nginx container, port 3006 dev)
     ochi/ochi-app/               — Hospitality dashboard (port 3003)
     scout/scout-app/             — P2P agent discovery prototype (port 3004)
