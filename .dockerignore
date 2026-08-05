@@ -42,6 +42,9 @@ Dockerfile
 Dockerfile.*
 !Dockerfile.node
 nginx.conf
+# Untracked local scratch (gitignored, so CI never sees it — this line keeps
+# LOCAL builds equally clean; found riding into the image at the review gate)
+draft_issues*.js
 
 # ⚠️ public/brain.json is NOT excluded, deliberately.
 # It is Hoot's RAG index and is read at RUNTIME, not just at build:
