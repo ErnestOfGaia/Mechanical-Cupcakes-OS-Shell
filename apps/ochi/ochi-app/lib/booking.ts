@@ -20,9 +20,20 @@ export interface BookingResult {
   message: string
 }
 
-// Where the Secretary Agent accepts booking requests. Set via env when wired;
-// until then the submit is stubbed (below) so the funnel is fully clickable.
-const SECRETARY_BOOKING_URL = process.env.NEXT_PUBLIC_SECRETARY_BOOKING_URL
+// The browser always POSTs to the same-origin proxy — a constant, not an env
+// read. The old NEXT_PUBLIC_SECRETARY_BOOKING_URL was inlined at BUILD time and
+// was never set in any published image (no Dockerfile ARG, no CI build-arg), so
+// production permanently took a stub branch that fabricated success without a
+// network call and dropped the lead (audit [HIGH], 2026-08-04). A same-origin
+// constant has no build-time coupling to go wrong; the real wiring decision
+// (upstream URL + secret) lives server-side in app/api/book/route.ts.
+const BOOKING_ENDPOINT = '/api/book'
+
+// Explicit dev-only stub for exercising the confirm → success flow without a
+// backend: NEXT_PUBLIC_BOOKING_STUB=1 in .env.local. Deliberately NOT set by the
+// Dockerfile or CI — unset-in-prod now means "make the real call", the safe
+// direction, where the old flag's unset-in-prod meant "fake it".
+const STUB = process.env.NEXT_PUBLIC_BOOKING_STUB === '1'
 
 export function bookingRequestIsValid(r: Partial<BookingRequest>): boolean {
   return Boolean(
@@ -32,22 +43,25 @@ export function bookingRequestIsValid(r: Partial<BookingRequest>): boolean {
   )
 }
 
-// Submits the booking request. STUB until the Secretary Agent endpoint is wired:
-// with no NEXT_PUBLIC_SECRETARY_BOOKING_URL set, it resolves success locally so
-// the confirm → success flow works end to end without a backend.
+// Submits the booking request to the same-origin proxy. The proxy owns the
+// truth about whether an upstream exists — this function just reports what the
+// proxy says, honestly, and never invents a success.
 export async function submitBookingRequest(req: BookingRequest): Promise<BookingResult> {
-  if (!SECRETARY_BOOKING_URL) {
-    // TODO(secretary-agent): POST `req` to the Mastra secretaryAgent booking tool
-    // (Google Calendar) once that service is stable. See project memory:
-    // project_ernestofgaia_google_workspace.
+  if (STUB) {
     return { ok: true, message: "Sent — Ernest's assistant will reach out to confirm your time." }
   }
   try {
-    const res = await fetch(SECRETARY_BOOKING_URL, {
+    const res = await fetch(BOOKING_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(req),
     })
+    // The route answers {ok, message} on every path, including 400/502/503 —
+    // prefer its message (it names the text/email fallback) over a generic one.
+    const data = (await res.json().catch(() => null)) as BookingResult | null
+    if (data && typeof data.ok === 'boolean' && typeof data.message === 'string') {
+      return data
+    }
     if (!res.ok) throw new Error(`status ${res.status}`)
     return { ok: true, message: "Sent — Ernest's assistant will reach out to confirm your time." }
   } catch {

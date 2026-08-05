@@ -32,13 +32,20 @@ export async function POST(req: Request) {
     return Response.json({ ok: false, message: "Missing required details." }, { status: 400 });
   }
 
-  // Not wired (local/preview): soft success, fallbacks still on the page.
+  // Not wired: tell the visitor the truth. The old soft-success here told a
+  // stranger their request was sent and then dropped it — combined with the
+  // client stub, production fabricated success end to end with zero network
+  // calls (audit [HIGH], 2026-08-04). The text/email fallbacks the message
+  // points at stay visible on the page and ARE the real path until the
+  // Secretary Agent upstream exists. Whoever eventually sets these two vars in
+  // the VPS .env turns the proxy on with no code change — and until then every
+  // miss is visible in the container log instead of silent.
   if (!UPSTREAM || !SECRET) {
-    console.warn("[api/book] SECRETARY_BOOKING_URL / OCHI_BOOKING_SECRET unset — soft success");
-    return Response.json({
-      ok: true,
-      message: "Sent — Ernest's assistant will reach out to confirm your time.",
-    });
+    console.warn("[api/book] SECRETARY_BOOKING_URL / OCHI_BOOKING_SECRET unset — refusing honestly");
+    return Response.json(
+      { ok: false, message: "Booking isn't wired up yet — please text or email Ernest instead." },
+      { status: 503 },
+    );
   }
 
   try {

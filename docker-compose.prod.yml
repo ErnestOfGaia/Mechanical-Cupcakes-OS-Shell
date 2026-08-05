@@ -32,6 +32,13 @@ services:
     restart: unless-stopped
     ports:
       - "3003:3003"
+    # Server-side booking vars (SECRETARY_BOOKING_URL, OCHI_BOOKING_SECRET) reach
+    # the container from the root .env. Until they are set there, /api/book
+    # refuses honestly (503 + "text or email instead") — it no longer fabricates
+    # a success. Setting both vars turns the proxy on with no code change.
+    # env_file passes ${}-style values — no empty-literal trap (see AGENTS doc).
+    env_file:
+      - .env
     networks:
       - nginx-proxy
     healthcheck:
