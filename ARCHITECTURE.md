@@ -60,11 +60,16 @@ This app has strict constraints unique to its v0.1 prototype scope:
 - **`[MODE: SIMULATED]` badge must always be visible** — apply `.mode-badge` class.
 - **Message envelope** — all inter-node messages must use `ScoutEnvelope<TPayload>` from `src/lib/envelope.ts`.
 
-### Postcards App (`apps/postcards/`)
+### Love Mailbox (external — formerly `apps/postcards/`)
 
-- Next.js with NextAuth for authentication.
-- Session cookies must use `sameSite: "lax"` (not `"none"`).
-- S3-backed file storage. Prisma + PostgreSQL for data.
+- **Not in this repo.** Lives in `github.com/ErnestOfGaia/postcards` (app at
+  `love_mailbox/nextjs_space/`), deployed independently at `/docker/postcards` on the VPS as
+  `postcards-app-1` + `postcards-db-1`. The shell reaches it by URL, never by import.
+- The `apps/postcards/` copy here was removed 2026-08-05. It had diverged (local-disk uploads instead
+  of S3) and its `mcos-postcards` container had crash-looped since ~May without ever serving a request,
+  so every commit made to it went into an image nobody ran.
+- Next.js with NextAuth. Session cookies use `sameSite: "lax"` (not `"none"`), and `secure: true` is
+  hardcoded — so browser login over `http://localhost` is impossible. Prisma + PostgreSQL.
 
 ### Pellito Hub (external — formerly `apps/pelican/`)
 

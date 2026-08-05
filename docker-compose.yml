@@ -13,21 +13,9 @@ services:
     networks:
       - nginx-proxy
 
-  mcos-postcards:
-    build:
-      context: ./apps/postcards
-    container_name: mcos-postcards
-    restart: unless-stopped
-    ports:
-      - "3001:3001"
-    environment:
-      - DATABASE_URL=postgresql://postgres:postgrespassword@db-postcards:5432/love_mailbox?connect_timeout=15
-    env_file:
-      - ./apps/postcards/.env
-    networks:
-      - nginx-proxy
-    depends_on:
-      - db-postcards
+  # mcos-postcards removed 2026-08-05 — see docker-compose.prod.yml for why.
+  # Love Mailbox lives in github.com/ErnestOfGaia/postcards and has its own
+  # dev stack (app + db) in that repo.
 
   mcos-ochi:
     build:
@@ -65,22 +53,10 @@ services:
       timeout: 5s
       retries: 3
 
-  db-postcards:
-    image: postgres:15-alpine
-    container_name: db-postcards
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgrespassword
-      POSTGRES_DB: love_mailbox
-    volumes:
-      - postcards_data:/var/lib/postgresql/data
-    networks:
-      - nginx-proxy
+  # db-postcards removed 2026-08-05 with mcos-postcards — it existed only to back
+  # that service. The live Love Mailbox has its own Postgres (postcards-db-1) in
+  # github.com/ErnestOfGaia/postcards. Nothing here ever wrote to this one.
 
 networks:
   nginx-proxy:
     external: true
-
-volumes:
-  postcards_data:

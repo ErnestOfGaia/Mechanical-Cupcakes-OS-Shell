@@ -20,9 +20,9 @@ jobs:
           - service: mcos-shell
             context: .
             file: Dockerfile.node
-          - service: mcos-postcards
-            context: ./apps/postcards
-            file: ./apps/postcards/Dockerfile
+          # mcos-postcards removed 2026-08-05. Love Mailbox builds from its own
+          # repo (github.com/ErnestOfGaia/postcards) — this entry published an
+          # image whose container had never successfully started.
           - service: mcos-ochi
             context: ./apps/ochi/ochi-app
             file: ./apps/ochi/ochi-app/Dockerfile

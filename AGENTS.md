@@ -27,7 +27,7 @@ Everything lives under the project root folder
 | `OCHI Dashboard\` | OCHI (`apps/ochi/`) | `00_INDEX.md`, `Project DNA Brief.md`, `HOOT_EXHIBIT_NOTES.md`, `UX\`, `research\` |
 | `Pellito Hub\` | Pellito Hub (external app, iframed) | `PROJECT_BRIEF.md`, `ops\`, `releases\`, `pelican.mechanicalcupcakes.fun.md` |
 | `Scout Protocol Prototype\` | Scout (`apps/scout/`) | `PROJECT_BRIEF.md`, `Scout Protocol Chain\` |
-| `love.postcards\` | Postcards (`apps/postcards/`) | `PROJECT_BRIEF.md`, `love.mechanicalcupcakes.fun.md` |
+| `love.postcards\` | Love Mailbox (**external repo** — `github.com/ErnestOfGaia/postcards`, not this one) | `PROJECT_BRIEF.md`, `love.mechanicalcupcakes.fun.md` |
 
 Before touching a sub-app, read its `PROJECT_BRIEF.md` (OCHI: `Project DNA Brief.md`). Each app's `HOOT_EXHIBIT_NOTES.md` defines how Hoot presents it — keep Hoot copy consistent with those when editing `hootAgent.ts` or `appRegistry.ts`.
 
@@ -70,9 +70,10 @@ Ernest's preflight checklists at `C:\Users\Owner\.claude\Ideas & Projects\A Prio
 
 ## Deploy cautions
 
-- **Pushing to `main` publishes production images**: `.github/workflows/docker-publish.yml` builds `mcos-shell`, `mcos-postcards`, `mcos-ochi`, `mcos-pennypost` to GHCR; the VPS runs `docker-compose.prod.yml` pulling `:latest`. Don't push half-done work. (Scout is currently *missing* from this matrix — that's backlog task #2.)
+- **Pushing to `main` publishes production images**: `.github/workflows/docker-publish.yml` builds `mcos-shell`, `mcos-ochi`, `mcos-pennypost` to GHCR; the VPS runs `docker-compose.prod.yml` pulling `:latest`. Don't push half-done work. (Scout is currently *missing* from this matrix — that's backlog task #2.)
 - New env vars a change reads (`NEWSHUB_URL`, `PELICAN_URL`, …) must exist in the VPS `.env` **before** deploying the change.
-- `apps/pelican/` + `apps/pelican-broken/` are stale (old Postgres app). The live Pellito Hub is a separate SQLite deploy at `pelican.mechanicalcupcakes.fun` — never build or wire the stale folders back in.
+- **One app = one source repo = one image = one container.** Two apps here are deployed from *elsewhere* and must never be rebuilt from this repo: **Pellito Hub** (`apps/pelican/` + `apps/pelican-broken/` are stale; the live one is a separate SQLite deploy at `pelican.mechanicalcupcakes.fun`) and **Love Mailbox** (`apps/postcards/` + the `mcos-postcards` service were deleted 2026-08-05; the live one is `github.com/ErnestOfGaia/postcards`, deployed at `/docker/postcards`). Both times the duplicate went unnoticed for months and work was done against the dead copy. **Before editing any mini-app, confirm what actually runs:** `docker inspect <container> --format '{{index .Config.Labels "org.opencontainers.image.source"}}'`. Newer commits are not evidence of being live.
+- **Nothing signals deploy drift.** No auto-pull, no alert on a container stuck in `Restarting`. `mcos-postcards` crash-looped ~3 months unnoticed. Check the running container, not the repo.
 
 ## Current backlog snapshot (2026-07-05 — the backlog file is authoritative)
 

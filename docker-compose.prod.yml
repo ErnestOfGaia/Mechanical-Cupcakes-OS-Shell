@@ -11,16 +11,11 @@ services:
     networks:
       - nginx-proxy
 
-  mcos-postcards:
-    image: ghcr.io/ernestofgaia/mcos-postcards:latest
-    container_name: mcos-postcards
-    restart: unless-stopped
-    ports:
-      - "3001:3001"
-    env_file:
-      - ./apps/postcards/.env
-    networks:
-      - nginx-proxy
+  # Love Mailbox is NOT deployed from this repo. It runs from
+  # github.com/ErnestOfGaia/postcards, deployed at /docker/postcards on the VPS
+  # (containers postcards-app-1 + postcards-db-1). The mcos-postcards service
+  # that used to sit here crash-looped for ~3 months and served nothing.
+  # Removed 2026-08-05. Do not re-add it — see the repo AGENTS.md.
 
   mcos-ochi:
     image: ghcr.io/ernestofgaia/mcos-ochi:latest
