@@ -20,9 +20,26 @@ const MOCK_INPUTS: RawGatekeeperInputs = {
   lodgingMax: 100,
 }
 
+// Whether the gatekeeper readings above are demonstration values rather than
+// observations. The dashboard is PUBLIC and carries a lead-capture funnel, so it
+// must not describe constants as live signals — everything that renders a liveness
+// claim reads this flag rather than guessing from refresh cadence.
+//
+// ⚠️ Flip this to false in the SAME commit that makes getCurrentInputs() read from
+// Postgres — never before, never separately. `__tests__/demoDisclosure.test.ts`
+// asserts the coupling, so a flag that disagrees with the function fails the build.
+//
+// Note: weather is NOT covered by this flag. getCurrentWeather() below is a real
+// NWS call and stays live in both modes.
+export const GATEKEEPERS_ARE_DEMO_DATA = true
+
 export function getCurrentInputs(): RawGatekeeperInputs {
   return MOCK_INPUTS
 }
+
+// Exported for the coupling test only — lets it prove getCurrentInputs() is still
+// handing back the constant, which is what makes the flag above true.
+export const __MOCK_INPUTS_FOR_TESTS = MOCK_INPUTS
 
 // ─── Live weather (NWS / weather.gov) ──────────────────────────────────────────
 // The weather modulator runs on REAL conditions for Pacific City, OR. NWS is free

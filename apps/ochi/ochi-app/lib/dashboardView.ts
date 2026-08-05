@@ -1,5 +1,5 @@
 import type { MasterMultiplierData, RawGatekeeperInputs, WeatherReading, WeatherCondition } from './types'
-import { getCurrentInputs, getCurrentWeather } from './currentConditions'
+import { getCurrentInputs, getCurrentWeather, GATEKEEPERS_ARE_DEMO_DATA } from './currentConditions'
 import {
   deriveMultiplierScore,
   buildMultiplierData,
@@ -79,6 +79,9 @@ export interface DashboardView {
   confidence: string
   summary: string
   action: string
+  // True while the gatekeeper readings are sample values. Drives the visible
+  // demo banner; mirrors GATEKEEPERS_ARE_DEMO_DATA so the UI never has to guess.
+  isDemoData: boolean
 }
 
 const STATUS_LABEL: Record<StatusToken, string> = {
@@ -222,13 +225,23 @@ export async function buildDashboardView(
     lagging: g.source ? g.source === 'tlt' : g.dataSource.refreshCadence === 'quarterly',
   }))
 
+  // `lagging` is a property of a source's refresh CADENCE, not of whether the
+  // number in front of you was observed. While the gatekeepers are demo values,
+  // counting the non-lagging ones as "live" states something false on a public
+  // page — so the demo flag wins, and only weather may be called live.
   const liveCount = gatekeepers.filter((g) => !g.lagging).length
-  const confidence = `${liveCount} of ${gatekeepers.length} signals live`
+  const confidence = GATEKEEPERS_ARE_DEMO_DATA
+    ? 'Demonstration data — weather is the only live signal'
+    : `${liveCount} of ${gatekeepers.length} signals live`
 
-  const summary =
-    `Today reads ${data.label === 'HIGH VOL' ? 'high' : data.label === 'LOW VOL' ? 'low' : 'moderate'}. ` +
-    `The Master Multiplier sits at ${score.toFixed(2)} on a 0–1 scale — a weighted synthesis of the four gatekeepers below, ` +
-    `with the lodging pulse downweighted while its public source lags.`
+  const bandWord = data.label === 'HIGH VOL' ? 'high' : data.label === 'LOW VOL' ? 'low' : 'moderate'
+  const summary = GATEKEEPERS_ARE_DEMO_DATA
+    ? `This is a demonstration read. The Master Multiplier sits at ${score.toFixed(2)} on a 0–1 scale — ` +
+      `the real formula, run over sample gatekeeper values rather than observations. Live weather does move it. ` +
+      `Add your own numbers below to see the model run on something real.`
+    : `Today reads ${bandWord}. ` +
+      `The Master Multiplier sits at ${score.toFixed(2)} on a 0–1 scale — a weighted synthesis of the four gatekeepers below, ` +
+      `with the lodging pulse downweighted while its public source lags.`
 
   return {
     hero: {
@@ -243,5 +256,6 @@ export async function buildDashboardView(
     confidence,
     summary,
     action: actionOf(data.label),
+    isDemoData: GATEKEEPERS_ARE_DEMO_DATA,
   }
 }

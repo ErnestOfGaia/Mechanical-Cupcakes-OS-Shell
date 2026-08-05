@@ -6,14 +6,35 @@ import { SignalGrid } from "../components/SignalGrid";
 import { LogicAnnotation } from "../components/LogicAnnotation";
 import { buildDashboardView } from "../lib/dashboardView";
 
+// Re-derive hourly. The weather read is the only live input, and NWS itself is
+// cached 30 min upstream, so an hour is the honest ceiling on freshness.
+export const revalidate = 3600;
+
 export default async function OchiDashboard() {
-  // Full pipeline: live inputs + REAL weather → derived score → display view model.
+  // Full pipeline: gatekeeper inputs + REAL weather → derived score → view model.
   const view = await buildDashboardView();
 
   return (
     <div className="ochi-app">
       <main className="ochi-col">
         <Header />
+
+        {view.isDemoData && (
+          <div
+            role="note"
+            style={{
+              border: "1px solid var(--st-nodata)", borderRadius: 10,
+              padding: "10px 12px", fontSize: 12.5, lineHeight: 1.55,
+              color: "var(--ink)", background: "var(--card)",
+            }}
+          >
+            <strong style={{ fontWeight: 700 }}>Demonstration data.</strong>{" "}
+            The four gatekeeper readings below are sample values, not observations —
+            the formula is real and runs on them live, and the weather is a real
+            forecast, but the signals themselves are not yet wired to a data source.
+          </div>
+        )}
+
         {/* Master Multiplier + Today's Read share one card at the top */}
         <section className="ochi-card" style={{ padding: "20px 20px 18px" }}>
           <PrimaryIndicator hero={view.hero} />
@@ -39,7 +60,9 @@ export default async function OchiDashboard() {
           textAlign: "center", padding: "6px 0 4px", fontSize: 11.5,
           color: "var(--st-nodata)", lineHeight: 1.6,
         }}>
-          OCHI reads public signals on a regular cadence. A staffing aid, not a guarantee.
+          {view.isDemoData
+            ? "OCHI is designed to read public signals on a regular cadence; this preview runs the model on sample values. A staffing aid, not a guarantee."
+            : "OCHI reads public signals on a regular cadence. A staffing aid, not a guarantee."}
           <div style={{ marginTop: 5 }}>
             Built by Ernest of Gaia ·{" "}
             <a href="https://ernestofgaia.xyz" target="_blank" rel="noopener noreferrer"
