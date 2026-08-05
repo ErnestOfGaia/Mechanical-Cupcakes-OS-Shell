@@ -1,0 +1,65 @@
+# Build context for the mcos-shell image (Dockerfile.node, context `.`).
+#
+# Why this file exists: Dockerfile.node does `COPY . .`, so without it the shell
+# image baked the gitignored root `.env` — live ANTHROPIC_API_KEY and
+# VOYAGE_API_KEY — plus the host's Windows node_modules, a stale .next, .git and
+# every sub-app's source. CI was never exposed (actions/checkout carries no
+# .env), but any local `docker build` was. Audit finding [HIGH], 2026-08-04.
+#
+# Safe to exclude apps/ here: this is the ONLY build using context `.`. OCHI,
+# Penny Post and Scout each build from their own directory (see the CI matrix in
+# .github/workflows/docker-publish.yml and the compose build contexts), so their
+# sources are unaffected by this file.
+
+# Secrets — the reason this file exists. Never relax without re-reading the above.
+.env
+.env.*
+!.env*.example
+
+# Host build artifacts (Windows-native binaries would break the Linux image)
+node_modules
+.next
+*.tsbuildinfo
+*.log
+build_output.log
+
+# VCS + tooling
+.git
+.gitignore
+.github
+.claude
+.vscode
+
+# Sub-apps build from their own contexts, never from this one
+apps
+
+# Docs, design scratch and compose files are not inputs to the shell build
+docs
+*.md
+!README.md
+docker-compose*.yml
+Dockerfile
+Dockerfile.*
+!Dockerfile.node
+nginx.conf
+
+# ⚠️ public/brain.json is NOT excluded, deliberately.
+# It is Hoot's RAG index and is read at RUNTIME, not just at build:
+# src/lib/brain.ts:27 resolves it via process.cwd() on every knowledge lookup.
+# Excluding it produces an image that boots fine and then answers every question
+# with no knowledge ("brain.json not found"), which is worse than a hard failure
+# because nothing crashes. The 2026-08-04 audit's suggested exclude list named
+# this file; that recommendation is wrong and this comment is here so the next
+# person does not re-apply it.
+#
+# 🔴 KNOWN, UNFIXED (found 2026-08-04): the PUBLISHED image does not contain
+# brain.json anyway, and this file is not the reason. `.gitignore:45` ignores
+# public/brain.json, so it is untracked; CI builds from actions/checkout, which
+# carries only tracked files; and Dockerfile.node never runs `npm run ingest`.
+# So ghcr.io/…/mcos-shell has always shipped without a knowledge base and
+# production Hoot answers from the model alone. Keeping it un-excluded here fixes
+# LOCAL docker builds only. The real fix is a decision for Ernest — commit the
+# artifact, generate it in CI with VOYAGE_API_KEY from secrets, or mount it on the
+# VPS — so do not "fix" it by editing this file. Once the shell's /health route is
+# deployed, `curl https://mechanicalcupcakes.fun/health` reports
+# {"knowledge":"missing"} and will flip to "loaded" when it is genuinely solved.
