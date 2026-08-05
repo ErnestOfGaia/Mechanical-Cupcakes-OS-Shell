@@ -5,6 +5,10 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 interface Message {
   role: "assistant" | "user";
   content: string;
+  // Set only when the chat route reported an actual search_knowledge tool call
+  // for this answer. Never inferred — an unset flag means "we don't know", which
+  // renders as nothing rather than as a claim either way.
+  usedKnowledgeBase?: boolean;
 }
 
 interface HootContextType {

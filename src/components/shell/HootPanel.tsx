@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Send, X, Bot, User, Sparkles } from "lucide-react";
+import { Send, X, User, Sparkles, BookOpen } from "lucide-react";
 import { useHoot } from "./HootProvider";
 import { getAppByRoute } from "@/lib/appRegistry";
 
@@ -20,11 +20,14 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
   const scrollRef = useRef<HTMLDivElement>(null);
   const appEntry = getAppByRoute(usePathname());
 
+  // Scroll to the latest message on new messages AND when the panel opens —
+  // reopening a conversation should land on where it left off, not the top.
   useEffect(() => {
+    if (!isOpen) return;
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isOpen]);
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -40,10 +43,35 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg }),
       });
+
+      // A non-2xx used to fall through to `data.text === undefined`, rendering an
+      // empty bubble that read as Hoot having nothing to say. Fail loudly instead.
+      if (!response.ok) {
+        throw new Error(`Chat request failed: ${response.status}`);
+      }
+
       const data = await response.json();
-      addMessage({ role: "assistant", content: data.text });
+
+      if (typeof data?.text !== "string" || !data.text.trim()) {
+        throw new Error("Chat response contained no text");
+      }
+
+      const activity = Array.isArray(data.toolActivity) ? data.toolActivity : [];
+      const searched = activity.some(
+        (a: { tool?: string }) => a?.tool === "search_knowledge",
+      );
+
+      addMessage({
+        role: "assistant",
+        content: data.text,
+        ...(searched && { usedKnowledgeBase: true }),
+      });
     } catch (error) {
-      addMessage({ role: "assistant", content: "Sorry, I'm having trouble connecting right now." });
+      console.error("Hoot chat error:", error);
+      addMessage({
+        role: "assistant",
+        content: "Sorry, I'm having trouble connecting right now. Please try again in a moment.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -64,8 +92,12 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
               <p className="text-[10px] text-violet/70 font-bold uppercase tracking-widest">Global OS Agent</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1.5 hover:bg-black/5 rounded-md text-slate-400 hover:text-slate-900 transition-all">
-            <X className="w-4 h-4" />
+          <button
+            onClick={onClose}
+            aria-label="Close Hoot panel"
+            className="p-1.5 hover:bg-black/5 rounded-md text-slate-400 hover:text-slate-900 transition-all"
+          >
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
 
@@ -105,11 +137,19 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
               )}>
                 {msg.role === "assistant" ? "🦉" : <User className="w-4 h-4" />}
               </div>
-              <div className={cn(
-                "max-w-[80%] p-3 rounded-2xl text-sm leading-relaxed font-medium shadow-sm",
-                msg.role === "assistant" ? "bg-white text-slate-800 border border-black/5" : "bg-violet text-white"
-              )}>
-                {msg.content}
+              <div className="max-w-[80%] space-y-1">
+                <div className={cn(
+                  "p-3 rounded-2xl text-sm leading-relaxed font-medium shadow-sm",
+                  msg.role === "assistant" ? "bg-white text-slate-800 border border-black/5" : "bg-violet text-white"
+                )}>
+                  {msg.content}
+                </div>
+                {msg.usedKnowledgeBase && (
+                  <p className="flex items-center gap-1 px-1 text-[10px] font-bold uppercase tracking-wider text-violet/70">
+                    <BookOpen className="w-3 h-3" aria-hidden="true" />
+                    Answered from project knowledge
+                  </p>
+                )}
               </div>
             </div>
           ))}
@@ -141,9 +181,10 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
+              aria-label="Send message to Hoot"
               className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 bg-violet rounded-lg text-white hover:bg-violet/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md"
             >
-              <Send className="w-3.5 h-3.5" />
+              <Send className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
         </div>
