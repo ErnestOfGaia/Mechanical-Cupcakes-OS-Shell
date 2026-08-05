@@ -20,7 +20,8 @@ Mechanical Cupcakes OS (MCOS) is a Next.js 16 monorepo shell that unifies multip
     mastra/                      — Hoot agent + RAG tools
     lib/                         — brain.ts (RAG search), embedding.ts, utils.ts
   apps/
-    postcards/                   — Visual messaging app (port 3001)
+    postcards/                   — Private Love Mailbox app (port 3001, login-gated, NOT in the gallery)
+    pennypost/                   — The Penny Post public demo (static export, nginx container, port 3006 dev)
     ochi/ochi-app/               — Hospitality dashboard (port 3003)
     scout/scout-app/             — P2P agent discovery prototype (port 3004)
   public/
@@ -120,10 +121,10 @@ In v0.1 simulated mode, `signature` is always `null`. Use `createScoutEnvelope()
 
 | Route | Behavior |
 |-------|----------|
-| `/` | Landing grid — Pellito Hub, News Hub World, Ochi, Scout cards |
+| `/` | Landing grid — Pellito Hub, News Hub World, Ochi, The Penny Post, Scout cards |
 | `/pelican` | iframe to external Pellito Hub URL (`PELICAN_URL`) |
 | `/newshub` | iframe to external News Hub World URL (`NEWSHUB_URL`) |
-| `/postcards` | iframe to port 3001 (postcards app) — directory-only, not featured on landing |
+| `/postcards` | iframe to The Penny Post (`POSTCARDS_URL`, falls back to pennypost.mechanicalcupcakes.fun). The private postcards app (port 3001) is login-gated and deliberately NOT linked from the gallery — decision 2026-08-01 |
 | `/ochi` | iframe to port 3003 or external OCHI URL (`OCHI_URL`) |
 | `/scout` | Splash page with `interstellar_garage.png` hero + link to localhost:3004 |
 

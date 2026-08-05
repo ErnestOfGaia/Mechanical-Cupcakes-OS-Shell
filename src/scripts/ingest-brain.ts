@@ -10,7 +10,8 @@ async function loadMarkdownDocs() {
     "Pellito Hub",
     "love.postcards",
     "OCHI Dashboard",
-    "Scout Protocol Prototype"
+    "Scout Protocol Prototype",
+    "The Penny Post"
   ];
 
   const docs = [];

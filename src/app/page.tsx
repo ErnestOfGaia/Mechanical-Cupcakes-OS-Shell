@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { BarChart3, Search, Sparkles, ChefHat, Newspaper, Terminal } from "lucide-react";
+import { BarChart3, Search, Sparkles, ChefHat, Newspaper, Stamp, Terminal } from "lucide-react";
 
 export default function Home() {
   const APPS = [
@@ -14,6 +14,7 @@ export default function Home() {
       color: "text-teal",
       bg: "bg-teal/10",
       border: "border-teal/20",
+      dot: "bg-teal",
       href: "/pelican"
     },
     {
@@ -25,6 +26,7 @@ export default function Home() {
       color: "text-violet",
       bg: "bg-violet/10",
       border: "border-violet/20",
+      dot: "bg-violet",
       href: "/newshub"
     },
     {
@@ -36,7 +38,20 @@ export default function Home() {
       color: "text-blue-400",
       bg: "bg-blue-400/10",
       border: "border-blue-400/20",
+      dot: "bg-blue-400",
       href: "/ochi"
+    },
+    {
+      id: "pennypost",
+      name: "THE PENNY POST",
+      icon: Stamp,
+      description: "Write a postcard and watch it travel — nothing leaves your browser",
+      status: "Live Demo",
+      color: "text-amber-400",
+      bg: "bg-amber-400/10",
+      border: "border-amber-400/20",
+      dot: "bg-amber-400",
+      href: "/postcards"
     },
     {
       id: "scout",
@@ -47,6 +62,7 @@ export default function Home() {
       color: "text-slate-400",
       bg: "bg-slate-400/10",
       border: "border-slate-400/20",
+      dot: "bg-slate-400",
       href: "/scout"
     }
   ];
@@ -97,7 +113,7 @@ export default function Home() {
 
                 <div className="pt-4 mt-auto">
                   <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border", app.border, app.color)}>
-                    <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", app.id === 'pelican' ? 'bg-teal' : 'bg-violet')} />
+                    <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", app.dot)} />
                     {app.status}
                   </div>
                 </div>

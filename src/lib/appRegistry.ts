@@ -1,4 +1,4 @@
-import { type LucideIcon, Terminal, ChefHat, Heart, Newspaper, BarChart3, Radio } from "lucide-react";
+import { type LucideIcon, Terminal, ChefHat, Stamp, Newspaper, BarChart3, Radio } from "lucide-react";
 
 export interface AppRegistryEntry {
   id: string;
@@ -55,23 +55,26 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Welcome to Pellito Hub — the interactive recipe library. Ask me about available recipes or how the agent works.",
   },
   {
-    id: "postcards",
-    name: "Postcards",
-    icon: Heart,
-    description: "A digital postcard gallery — browse saved postcards, create new ones, and share visual messages.",
+    // The Penny Post keeps the /postcards gallery slot (decision 2026-08-01) —
+    // it is the public descendant of the private postcards app, which stays
+    // login-gated on its own subdomain and out of the gallery.
+    id: "pennypost",
+    name: "The Penny Post",
+    icon: Stamp,
+    description: "Write a postcard and watch it travel — stamp, cancellation, transit, arrival. Everything stays in your browser; nothing is sent or stored.",
     route: "/postcards",
     isExternal: false,
-    status: "standby",
-    color: "text-violet",
-    bg: "bg-violet/10",
-    border: "border-violet/20",
+    status: "pilot",
+    color: "text-amber-400",
+    bg: "bg-amber-400/10",
+    border: "border-amber-400/20",
     suggestedPrompts: [
-      "How do I create a postcard?",
-      "Can I share postcards?",
-      "What is in the gallery?",
+      "What is The Penny Post?",
+      "Why is it named after an 1840 reform?",
+      "Does it really send nothing?",
     ],
     welcomeScript:
-      "Welcome to Postcards. Browse the gallery or save a card to your collection. Each postcard is a moment worth keeping.",
+      "Welcome to The Penny Post. Write a postcard, stamp it, and watch it travel — then take your card home as a picture. It all happens in your own browser; open your developer tools and check for yourself.",
   },
   {
     id: "newshub",
