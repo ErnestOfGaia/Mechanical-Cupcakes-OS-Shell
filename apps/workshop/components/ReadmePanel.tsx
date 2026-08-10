@@ -95,7 +95,7 @@ function Figure({ caption, children, height }: { caption: string; children: Reac
 function Lifecycle() {
   return (
     <Figure caption="The campaign lifecycle, from a note to an archived board. It runs one way." height={188}>
-      <Box x={8} y={16} w={126} h={46} accent={C.teal} lines={["a note", "Potential Campaigns"]} />
+      <Box x={8} y={16} w={126} h={46} accent={C.teal} lines={["a note", "0 Potential Campaigns"]} />
       <Arrow d="M 138 39 H 176" />
       <Box x={180} y={16} w={132} h={46} accent={C.teal} lines={["campaign-workshop", "scaffolds board.json"]} />
       <Arrow d="M 316 39 H 354" />
@@ -104,7 +104,7 @@ function Lifecycle() {
       <Box x={564} y={16} w={148} h={46} accent={C.rule} lines={["Campaign Plan .md", "exported"]} />
 
       <Arrow d="M 638 66 V 96" />
-      <Box x={472} y={100} w={240} h={46} accent={C.in} lines={["01 Committed Blog Campaigns", "NN STATUS -Name"]} />
+      <Box x={472} y={100} w={240} h={46} accent={C.in} lines={["00 Committed Campaigns 2026", "stage folder · Name - Campaign"]} />
       <Arrow d="M 468 123 H 430" />
       <Box x={286} y={100} w={140} h={46} accent={C.faint} lines={["archived board", "historical record"]} />
 

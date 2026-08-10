@@ -34,7 +34,15 @@ export interface KindSpec {
     promo: string;
     note: string;
   };
-  /** Where a new board of this kind is filed in the vault, relative to the root. */
+  /**
+   * Where a NEW board of this kind is filed in the vault, relative to the root.
+   *
+   * ⚠️ Coupled to `CONTENT_ROOTS` in `lib/vault.ts` — that list is what the *scanner*
+   * accepts, this is what the *writer* uses. They must name the same folder or new
+   * boards land somewhere the scan will never look. Kept as a literal here because
+   * this module is client-safe and `vault.ts` is server-only; the 2026-08-09 reorg
+   * broke both at once, which is exactly why the coupling is written down.
+   */
   vaultDir: string;
   starterGate: () => GateItem[];
 }
@@ -64,7 +72,7 @@ export const KINDS: Record<BoardKind, KindSpec> = {
       promo: "Promo hook",
       note: "Watch out for",
     },
-    vaultDir: "Campaign Content/Potential Campaigns",
+    vaultDir: "Campaign, Channels, & Content/0 Potential Campaigns",
     starterGate: () => [
       { t: "Queue position agreed against the campaigns already committed", o: "both", d: false, blocking: true, n: "" },
       { t: "Every post has an seo_title of 42 characters or fewer", o: "E", d: false, blocking: true, n: "The layout appends the brand suffix." },
@@ -90,7 +98,7 @@ export const KINDS: Record<BoardKind, KindSpec> = {
       promo: "Hook pattern",
       note: "Watch out for",
     },
-    vaultDir: "Campaign Content",
+    vaultDir: "Campaign, Channels, & Content",
     starterGate: () => [
       { t: "Draft DNA written for this platform — voice, length, formatting", o: "E", d: false, blocking: true, n: "DNA never copies between platforms." },
       { t: "Cadence is one Ernest can hold on a restaurant week", o: "E", d: false, blocking: true, n: "A cadence promise is a commitment and commitments don't drift." },

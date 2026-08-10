@@ -16,7 +16,10 @@ import type { Board } from "./types";
 let tmp: string;
 let V: typeof import("./vault");
 
-const CAMPAIGNS = "Campaign Content/Potential Campaigns";
+// The temp vault mirrors the POST-reorg tree; one test below exercises the pre-reorg
+// fallback explicitly.
+const ROOT_DIR = "Campaign, Channels, & Content";
+const CAMPAIGNS = `${ROOT_DIR}/0 Potential Campaigns`;
 
 function boardAt(rel: string, over: Partial<Board> = {}): Board {
   return normalise({
@@ -51,8 +54,10 @@ beforeAll(async () => {
 });
 
 afterEach(() => {
-  const cc = path.join(tmp, "Campaign Content");
-  if (fsSync.existsSync(cc)) fsSync.rmSync(cc, { recursive: true, force: true });
+  for (const dir of ["Campaign, Channels, & Content", "Campaign Content"]) {
+    const cc = path.join(tmp, dir);
+    if (fsSync.existsSync(cc)) fsSync.rmSync(cc, { recursive: true, force: true });
+  }
 });
 
 afterAll(() => {
@@ -196,7 +201,7 @@ describe("what is being replaced is copied aside first", () => {
       // Timestamps are the sort key; keep them distinct.
       await new Promise((res) => setTimeout(res, 3));
     }
-    const dir = path.join(tmp, "Campaign Content/_workshop-backups/auto/test-board");
+    const dir = path.join(tmp, `${ROOT_DIR}/_workshop-backups/auto/test-board`);
     const kept = fsSync.readdirSync(dir).filter((n) => n.endsWith(".board.json"));
     console.log(`backups kept after 14 saves: ${kept.length}`);
     expect(kept.length).toBeLessThanOrEqual(10);
@@ -205,15 +210,50 @@ describe("what is being replaced is copied aside first", () => {
 });
 
 describe("the scanner finds every board the folder contract allows", () => {
-  it("finds a campaign, a channel, and a COMMITTED campaign one level deeper", async () => {
+  it("finds a campaign, a channel, and committed campaigns at BOTH depths", async () => {
     writeRaw(`${CAMPAIGNS}/Potential One/board.json`, { ...boardAt("x"), id: "potential-one", name: "Potential One" });
-    writeRaw("Campaign Content/02 LinkedIn Channel/board.json", { ...boardAt("x"), id: "channel-one", name: "Channel One", kind: "channel" });
-    writeRaw("Campaign Content/01 Committed Blog Campaigns 2026-W30/02 NEXT -Committed One/board.json", { ...boardAt("x"), id: "committed-one", name: "Committed One" });
+    writeRaw(`${ROOT_DIR}/02 LinkedIn Channel/board.json`, { ...boardAt("x"), id: "channel-one", name: "Channel One", kind: "channel" });
+    // Depth 2 — the post-reorg layout: stage folder, then the campaign folder.
+    writeRaw(`${ROOT_DIR}/00 Committed Campaigns 2026/02 NEXT/Committed One - Campaign/board.json`, { ...boardAt("x"), id: "committed-one", name: "Committed One" });
+    // Depth 1 — the pre-reorg layout, still readable so an old snapshot opens.
+    writeRaw(`${ROOT_DIR}/00 Committed Campaigns 2026/03 OLD -Committed Two/board.json`, { ...boardAt("x"), id: "committed-two", name: "Committed Two" });
 
     const { boards, scanned, errors } = await V.listBoards();
     console.log(`scanned ${scanned.length} paths, ${errors.length} errors, ${boards.length} boards: ${boards.map((b) => b.id).join(", ")}`);
     const ids = boards.map((b) => b.id).sort();
-    expect(ids).toEqual(["channel-one", "committed-one", "potential-one"]);
+    expect(ids).toEqual(["channel-one", "committed-one", "committed-two", "potential-one"]);
+  });
+
+  it("still reads a PRE-reorg vault through the fallback root", async () => {
+    // Only the old tree exists in this vault — the first CONTENT_ROOTS candidate is
+    // absent, so the scanner must fall back rather than report nothing.
+    writeRaw("Campaign Content/Potential Campaigns/Old World/board.json", { ...boardAt("x"), id: "old-world", name: "Old World" });
+    const { boards, errors } = await V.listBoards();
+    expect(errors).toEqual([]);
+    expect(boards.map((b) => b.id)).toContain("old-world");
+  });
+
+  it("REPORTS LOUDLY when no content root exists at all", async () => {
+    // The exact 2026-08-09 failure: the folder was renamed and the scan silently found
+    // nothing. An empty vault and a missing root must never read the same.
+    const { boards, errors } = await V.listBoards();
+    expect(boards).toEqual([]);
+    expect(errors.join(" ")).toMatch(/content root not found/);
+  });
+
+  it("WRITER and SCANNER stay coupled: a board saved with no sourcePath is findable", async () => {
+    // The bug class this file exists for: after the reorg, the scanner was patched and
+    // the writer default was not, so a new board would have been filed under a
+    // recreated dead tree the scanner never looks at.
+    fsSync.mkdirSync(path.join(tmp, CAMPAIGNS), { recursive: true });
+    const b = boardAt("", { sourcePath: undefined, name: "Fresh Board", id: "fresh-board" });
+    delete (b as { sourcePath?: string }).sourcePath;
+    const res = await V.saveBoard(b);
+    expect(res.ok, !res.ok ? res.error : "").toBe(true);
+    if (!res.ok) return;
+    expect(res.path.startsWith(CAMPAIGNS)).toBe(true);
+    const { boards } = await V.listBoards();
+    expect(boards.map((x) => x.id)).toContain("fresh-board");
   });
 
   it("attaches the file's mtime so a save can prove which version it edited", async () => {
@@ -223,7 +263,7 @@ describe("the scanner finds every board the folder contract allows", () => {
   });
 
   it("never scans the backups folder as if it held boards", async () => {
-    writeRaw("Campaign Content/_workshop-backups/auto/x/board.json", { ...boardAt("x"), id: "should-not-appear" });
+    writeRaw(`${ROOT_DIR}/_workshop-backups/auto/x/board.json`, { ...boardAt("x"), id: "should-not-appear" });
     const { boards, scanned } = await V.listBoards();
     expect(boards.map((b) => b.id)).not.toContain("should-not-appear");
     expect(scanned.some((s) => s.includes("_workshop-backups"))).toBe(false);

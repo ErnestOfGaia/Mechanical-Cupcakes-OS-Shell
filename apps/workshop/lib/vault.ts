@@ -8,6 +8,7 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { normalise, slug } from "./board";
 import { fieldIdentical } from "./compare";
+import { kindOf } from "./kinds";
 import type { Board } from "./types";
 
 /**
@@ -100,14 +101,41 @@ async function dirs(base: string): Promise<string[] | null> {
 const isPlumbing = (name: string): boolean => name.startsWith("_");
 
 /**
+ * The content root, relative to WORKSHOP_VAULT_ROOT. Candidates are tried in order and
+ * the first that exists on disk wins.
+ *
+ * ONE list, because this string used to be written out four times and the 2026-08-09
+ * reorg renamed the folder — every copy went stale at once, the scan found nothing, and
+ * the app silently fell back to browser storage. A folder that does not exist and a
+ * folder with no boards in it must never produce the same answer.
+ */
+const CONTENT_ROOTS = [
+  "Campaign, Channels, & Content", // current, since the 2026-08-09 reorg
+  "Campaign Content",              // pre-reorg; kept so an older vault still opens
+];
+
+const POTENTIAL_DIRS = ["0 Potential Campaigns", "Potential Campaigns"];
+
+/** The first candidate that is a readable directory under `root`, else null. */
+async function pickDir(root: string, candidates: string[], prefix = ""): Promise<string | null> {
+  for (const c of candidates) {
+    const rel = prefix ? path.posix.join(prefix, c) : c;
+    const full = resolveInRoot(root, rel);
+    if (full && (await dirs(full))) return rel;
+  }
+  return null;
+}
+
+/**
  * Scan the Marketing department for board.json files. Three places, matching the
  * folder contract:
  *   1. a campaign in its own folder under Potential Campaigns
- *   2. a channel in its numbered channel folder directly under Campaign Content
- *   3. a COMMITTED campaign, which sits one level deeper — inside the dated
- *      "01 Committed Blog Campaigns <week>" folder. A committed campaign has left the
- *      workshop, but the board stays readable as historical record, and Last Mile is a
- *      logged exception: a committed campaign still using the workshop as a tool.
+ *   2. a channel in its numbered channel folder directly under the content root
+ *   3. a COMMITTED campaign. Depth-flexible on purpose: pre-reorg the stage was baked
+ *      into the campaign folder name ("02 NEXT -Last Mile … Campaign") one level down;
+ *      the 2026-08-09 reorg split stage into its own folder ("00 Committed Campaigns
+ *      2026/02 NEXT/Last Mile … - Campaign"), making it two. Both are tried, so neither
+ *      layout is the only one that works.
  */
 export async function listBoards(): Promise<{ boards: Board[]; scanned: string[]; errors: string[] }> {
   const st = vaultStatus();
@@ -136,8 +164,17 @@ export async function listBoards(): Promise<{ boards: Board[]; scanned: string[]
     });
   }
 
+  const contentRoot = await pickDir(root, CONTENT_ROOTS);
+  if (!contentRoot) {
+    // Loud, not silent. This is the exact failure the 2026-08-09 reorg caused.
+    errors.push(`content root not found — tried: ${CONTENT_ROOTS.join(" | ")}`);
+    return { boards, scanned, errors };
+  }
+  const potentialRel = await pickDir(root, POTENTIAL_DIRS, contentRoot);
+
   // Tiers 1 and 2 — one level under each root.
-  for (const r of ["Campaign Content/Potential Campaigns", "Campaign Content"]) {
+  for (const r of [potentialRel, contentRoot]) {
+    if (!r) { errors.push(`potential-campaigns dir not found — tried: ${POTENTIAL_DIRS.join(" | ")}`); continue; }
     const full = resolveInRoot(root, r);
     if (!full) { errors.push(`refused path: ${r}`); continue; }
     const names = await dirs(full);
@@ -148,19 +185,31 @@ export async function listBoards(): Promise<{ boards: Board[]; scanned: string[]
     }
   }
 
-  // Tier 3 — committed campaigns, one level deeper than the rest.
-  const ccFull = resolveInRoot(root, "Campaign Content");
+  // Tier 3 — committed campaigns. One level down (pre-reorg) OR two (post-reorg).
+  const ccFull = resolveInRoot(root, contentRoot);
   if (ccFull) {
     const top = (await dirs(ccFull)) ?? [];
     for (const name of top) {
       if (isPlumbing(name) || !/committed/i.test(name)) continue;
-      const inner = resolveInRoot(root, path.posix.join("Campaign Content", name));
+      const committedRel = path.posix.join(contentRoot, name);
+      const inner = resolveInRoot(root, committedRel);
       if (!inner) continue;
       const subs = await dirs(inner);
-      if (!subs) { errors.push(`unreadable: Campaign Content/${name}`); continue; }
+      if (!subs) { errors.push(`unreadable: ${committedRel}`); continue; }
       for (const sub of subs) {
         if (isPlumbing(sub)) continue;
-        await tryBoardAt(path.posix.join("Campaign Content", name, sub, "board.json"));
+        const subRel = path.posix.join(committedRel, sub);
+        // Depth 1 — the campaign folder itself carries the stage in its name.
+        await tryBoardAt(path.posix.join(subRel, "board.json"));
+        // Depth 2 — `sub` is a stage folder ("02 NEXT"), campaigns sit inside it.
+        const subFull = resolveInRoot(root, subRel);
+        if (!subFull) continue;
+        const deeper = await dirs(subFull);
+        if (!deeper) continue;
+        for (const d of deeper) {
+          if (isPlumbing(d)) continue;
+          await tryBoardAt(path.posix.join(subRel, d, "board.json"));
+        }
       }
     }
   }
@@ -196,8 +245,18 @@ export interface SaveOpts {
   force?: boolean;
 }
 
-const AUTO_BACKUP_DIR = "Campaign Content/_workshop-backups/auto";
 const KEEP_BACKUPS = 10;
+
+/**
+ * Backups live beside the boards they back up: `<content root>/_workshop-backups/auto`.
+ * The root is resolved live (same `CONTENT_ROOTS` candidates as the scanner) rather
+ * than hardcoded — a hardcoded "Campaign Content/…" here survived the 2026-08-09 reorg
+ * patch and would have quietly recreated the dead tree on the next overwrite-save.
+ */
+async function autoBackupDir(root: string): Promise<string> {
+  const contentRoot = (await pickDir(root, CONTENT_ROOTS)) ?? CONTENT_ROOTS[0];
+  return path.posix.join(contentRoot, "_workshop-backups", "auto");
+}
 
 /** Read a board file and hand back the board inside its envelope, or null. */
 async function readBoardFile(file: string): Promise<Partial<Board> | null> {
@@ -226,7 +285,7 @@ export async function verifyOnDisk(file: string, expected: Board): Promise<{ ok:
 
 /** Copy the current file aside before overwriting it, keeping the last KEEP_BACKUPS. */
 async function backupExisting(root: string, file: string, board: Board, stamp: string): Promise<string | undefined> {
-  const relDir = path.posix.join(AUTO_BACKUP_DIR, slug(board.name) || "untitled");
+  const relDir = path.posix.join(await autoBackupDir(root), slug(board.name) || "untitled");
   const dirFull = resolveInRoot(root, relDir);
   if (!dirFull) return undefined;
   try {
@@ -341,7 +400,15 @@ export async function saveBoard(board: Board, opts: SaveOpts = {}): Promise<Save
 }
 
 export function defaultPathFor(board: Board): string {
-  const dir = board.kind === "channel" ? "Campaign Content" : "Campaign Content/Potential Campaigns";
+  /**
+   * The writer's target comes from `KINDS[kind].vaultDir` — the single value the
+   * kinds.ts doc-comment declares coupled to this file's `CONTENT_ROOTS`. It used to be
+   * duplicated here as its own literal, which is how the 2026-08-09 reorg produced the
+   * worst version of the bug: the scanner was patched, this wasn't, and a new board
+   * would have been filed under a recreated `Campaign Content/` tree that the scanner —
+   * preferring the new root — would never look at again.
+   */
+  const dir = kindOf(board.kind).vaultDir;
   const name = board.name.replace(/[\\/:*?"<>|]/g, "").trim() || "Untitled";
   return path.posix.join(dir, name, "board.json");
 }

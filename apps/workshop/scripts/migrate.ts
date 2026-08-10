@@ -49,9 +49,11 @@ function loadEnvLocal(): void {
  */
 const MAPPING: Record<string, string> = {
   "last-mile-value-propositions":
-    "Campaign Content/01 Committed Blog Campaigns 2026-W30/02 NEXT -Last Mile Value Propositions Campaign/board.json",
+    // Post-reorg address (2026-08-09): stage folders under "00 Committed Campaigns 2026".
+    "Campaign, Channels, & Content/00 Committed Campaigns 2026/02 NEXT/Last Mile Value Propositions - Campaign/board.json",
   "av-unfinished-loop":
-    "Campaign Content/Potential Campaigns/The Unfinished Loop/board.json",
+    // The Unfinished Loop was promoted into 05 Needs Workshopped during the reorg.
+    "Campaign, Channels, & Content/00 Committed Campaigns 2026/05 Needs Workshopped/Learning to Make AV Content - Campaign/board.json",
 };
 
 /* ------------------------------------------------------------------ report */
@@ -85,7 +87,7 @@ async function main() {
     process.exit(1);
   }
 
-  const fixturePath = path.join(st.root, "Campaign Content", "_workshop-backups", "workshop-2026-08-03.json");
+  const fixturePath = path.join(st.root, "Campaign, Channels, & Content", "_workshop-backups", "workshop-2026-08-03.json");
   if (!fs.existsSync(fixturePath)) {
     console.error(`REFUSED — the migration payload is missing:\n  ${fixturePath}`);
     process.exit(1);
@@ -99,7 +101,7 @@ async function main() {
 
   say(`# Campaign Workshop — migration report`);
   say();
-  say(`Payload: \`Campaign Content/_workshop-backups/workshop-2026-08-03.json\` (${ws.campaigns.length} campaigns)`);
+  say(`Payload: \`Campaign, Channels, & Content/_workshop-backups/workshop-2026-08-03.json\` (${ws.campaigns.length} campaigns)`);
   say(`Mode: **${write ? "WRITE — files will be changed" : "report only — nothing will be written"}**`);
   say();
 
@@ -207,7 +209,7 @@ async function main() {
   say(`**${toWrite.length} of ${plans.length} board(s) would change.**`);
   say();
 
-  const reportRel = path.join("Campaign Content", "_workshop-backups", `migration-report-${new Date().toISOString().slice(0, 10)}.md`);
+  const reportRel = path.join("Campaign, Channels, & Content", "_workshop-backups", `migration-report-${new Date().toISOString().slice(0, 10)}.md`);
   fs.writeFileSync(path.join(st.root, reportRel), L.join("\n"), "utf8");
   console.log(`\nReport written to: ${reportRel}`);
 
@@ -222,7 +224,7 @@ async function main() {
 
   // Snapshot both files before touching either, so one bad write is recoverable.
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const snapDir = path.join(st.root, "Campaign Content", "_workshop-backups", `pre-migration-${stamp}`);
+  const snapDir = path.join(st.root, "Campaign, Channels, & Content", "_workshop-backups", `pre-migration-${stamp}`);
   fs.mkdirSync(snapDir, { recursive: true });
   for (const p of plans) {
     const src = path.join(st.root, p.rel);

@@ -21,7 +21,7 @@ const ROOT = process.env.WORKSHOP_VAULT_ROOT;
 const maybe = ROOT ? describe : describe.skip;
 
 maybe("the real migration fixture round-trips losslessly", () => {
-  const fixturePath = path.join(ROOT ?? "", "Campaign Content", "_workshop-backups", "workshop-2026-08-03.json");
+  const fixturePath = path.join(ROOT ?? "", "Campaign, Channels, & Content", "_workshop-backups", "workshop-2026-08-03.json");
 
   function load(): Workspace {
     const raw = fs.readFileSync(fixturePath, "utf8");

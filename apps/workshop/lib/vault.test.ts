@@ -28,12 +28,12 @@ describe("the vault refuses to leave its root", () => {
 describe("default filing follows the folder contract", () => {
   it("puts a campaign in its own folder under Potential Campaigns", () => {
     const p = defaultPathFor(blankBoard("The Unfinished Loop", "campaign"));
-    expect(p).toBe("Campaign Content/Potential Campaigns/The Unfinished Loop/board.json");
+    expect(p).toBe("Campaign, Channels, & Content/0 Potential Campaigns/The Unfinished Loop/board.json");
   });
 
   it("puts a channel beside the other channel folders, not among campaigns", () => {
     const p = defaultPathFor(blankBoard("02 LinkedIn Channel", "channel"));
-    expect(p).toBe("Campaign Content/02 LinkedIn Channel/board.json");
+    expect(p).toBe("Campaign, Channels, & Content/02 LinkedIn Channel/board.json");
     expect(p).not.toContain("Potential Campaigns");
   });
 

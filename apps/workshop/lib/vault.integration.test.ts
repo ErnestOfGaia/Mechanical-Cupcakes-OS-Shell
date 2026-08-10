@@ -32,7 +32,10 @@ maybe("the real vault", () => {
     expect(loop!.ideas.length).toBe(18);
     expect(loop!.arc.length).toBe(6);
     expect(loop!.kind).toBe("campaign");
-    expect(loop!.sourcePath).toContain("Potential Campaigns");
+    // Promoted into the committed pipeline during the 2026-08-09 reorg — it now sits
+    // in the Workshop's work queue, inside the renamed campaign folder.
+    expect(loop!.sourcePath).toContain("05 Needs Workshopped");
+    expect(loop!.sourcePath).toContain("Learning to Make AV Content - Campaign");
   });
 
   it("holds the invariant against real data: no Katrina item can block", async () => {
@@ -44,6 +47,6 @@ maybe("the real vault", () => {
   it("refuses to escape the real root", () => {
     const root = vaultStatus().root!;
     expect(resolveInRoot(root, "../../../../../Windows/System32/config/board.json")).toBeNull();
-    expect(resolveInRoot(root, "Campaign Content/Potential Campaigns/The Unfinished Loop/board.json")).toBeTruthy();
+    expect(resolveInRoot(root, "Campaign, Channels, & Content/0 Potential Campaigns/X/board.json")).toBeTruthy();
   });
 });
