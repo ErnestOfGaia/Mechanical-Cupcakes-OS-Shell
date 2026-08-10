@@ -73,8 +73,35 @@ server.tool("gate_list",
   { board }, wrap(({ board: b }: { board: string }) => T.gateList(b)));
 
 server.tool("export_markdown",
-  "The campaign plan as markdown, exactly as the app's Handoff tab exports it.",
+  "The campaign plan as markdown, exactly as the app's Handoff tab exports it. A voice-gate warning block is prepended when the export contains masculine pronouns (Ernest is they/them) — warn-first, the export itself is never blocked.",
   { board }, wrap(({ board: b }: { board: string }) => T.exportMarkdown(b)));
+
+server.tool("get_calendar",
+  "The month-view PROJECTION: what the month looks like if the vault's boards run at their cadences — dated arc slots + typed cadences + slot rules, arithmetic only. Flags channel collisions (two things on one channel on one day) and lists undated work rather than guessing. This is NOT what is actually scheduled in Postiz or the blog admin.",
+  { month: z.string().optional().describe("YYYY-MM. Defaults to the current month.") },
+  wrap(({ month }: { month?: string }) => T.getCalendar(month)));
+
+server.tool("set_cadence",
+  "Record a board's commitment fields: typed cadence (days + start date + everyWeeks), UTM token, and utm_content prefix. The Workshop is the commitment gate and approving a campaign approves its cadence — but ONLY record what Ernest has stated; recording is not deciding. Tokens validate on entry (lowercase kebab, ≤24 chars, no underscores; one campaign, one token — sharing one is unrecoverable). Cadence is internal-only: it may live in vault docs in full, never in published copy.",
+  {
+    board,
+    days: z.array(z.enum(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])).optional().describe("Posting days, e.g. [\"Wed\"]."),
+    start: z.string().optional().describe("First drop date, YYYY-MM-DD. Empty string = not yet dated."),
+    every_weeks: z.number().optional().describe("1 = weekly (default), 2 = every second week."),
+    note: z.string().optional().describe("Free-text qualifier, rendered but never parsed."),
+    clear: z.boolean().optional().describe("true removes the cadence entirely."),
+    token: z.string().optional().describe("utm_campaign value. Empty string clears it."),
+    content_prefix: z.string().optional().describe("utm_content prefix; posts become <prefix>-NN."),
+  },
+  wrap((a: Record<string, unknown>) => T.setCadence(a.board as string, {
+    days: a.days as import("../lib/types").Weekday[] | undefined,
+    start: a.start as string | undefined,
+    everyWeeks: a.every_weeks as number | undefined,
+    note: a.note as string | undefined,
+    clear: a.clear as boolean | undefined,
+    token: a.token as string | undefined,
+    contentPrefix: a.content_prefix as string | undefined,
+  })));
 
 /* ------------------------------------------------------------------ write */
 
@@ -112,7 +139,7 @@ server.tool("seam_resolve",
   wrap(({ board: b, index, note }: { board: string; index: number; note?: string }) => T.seamResolve(b, index, note)));
 
 server.tool("idea_update",
-  "Edit a bench idea's text, its cover seed, its YouTube flag, or either person's note. Verdicts are set with set_verdict, not here.",
+  "Edit a bench idea's text, its cover seed, its YouTube flag, either person's note, or where it landed. Verdicts are set with set_verdict, not here. placed_in_ref records the §9 case — the idea ships INSIDE another drop or idea (a recurring frame, a paragraph, an opening) rather than getting its own slot; the placement rule then counts it as placed and the export says why.",
   {
     board, idea_id: z.string(),
     title: z.string().optional(), story: z.string().optional(),
@@ -121,6 +148,8 @@ server.tool("idea_update",
     tag: z.string().optional(),
     yt: z.boolean().optional().describe("Flag as good YouTube material."),
     placed: z.enum(["seed", "none"]).optional().describe("'seed' sends it to the seed bank; 'none' clears that."),
+    placed_in_ref: z.string().optional().describe("The drop/idea id this lives inside, e.g. IDEA-04. Empty string clears it."),
+    placed_in_role: z.string().optional().describe("Its role there: frame · paragraph · opening · promo hook."),
     note_ernest: z.string().optional(), note_katrina: z.string().optional(),
   },
   wrap((a: Record<string, unknown>) => T.ideaUpdate(a.board as string, a.idea_id as string, {
@@ -129,6 +158,8 @@ server.tool("idea_update",
     cover: a.cover as string | undefined, tag: a.tag as string | undefined,
     yt: a.yt as boolean | undefined,
     placed: a.placed === undefined ? undefined : a.placed === "seed" ? "seed" : null,
+    placedInRef: a.placed_in_ref as string | undefined,
+    placedInRole: a.placed_in_role as string | undefined,
     noteE: a.note_ernest as string | undefined, noteK: a.note_katrina as string | undefined,
   })));
 

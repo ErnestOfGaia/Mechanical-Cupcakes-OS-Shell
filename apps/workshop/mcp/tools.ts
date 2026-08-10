@@ -10,10 +10,13 @@
  * decides, Katrina advises" logic and the verified save behave identically whether a
  * click or a Claude session triggered them, because they are the same functions.
  */
+import { formatMonth, projectMonth } from "../lib/calendar";
 import { checkPlacement, formatPlacementReport, placement } from "../lib/rule";
-import { setVerdict, toMarkdown } from "../lib/board";
+import { cadenceLine, setVerdict, toMarkdown } from "../lib/board";
+import { prefixError, tokenError } from "../lib/token";
+import { voiceWarning } from "../lib/voice";
 import { listBoards, saveBoard, vaultStatus } from "../lib/vault";
-import type { Board, Person, Verdict } from "../lib/types";
+import type { Board, Cadence, Person, Verdict, Weekday } from "../lib/types";
 
 export class ToolError extends Error {}
 
@@ -150,7 +153,71 @@ export async function runPlacementCheck(ref: string): Promise<string> {
 }
 
 export async function exportMarkdown(ref: string): Promise<string> {
-  return toMarkdown(await findBoard(ref), today());
+  const md = toMarkdown(await findBoard(ref), today());
+  // The voice gate (§8), warn-first: the export is never blocked, but a session must
+  // see the flags — this is the boundary misgendering shipped through.
+  const warn = voiceWarning(md);
+  return warn ? `${warn}\n\n---\n\n${md}` : md;
+}
+
+/**
+ * The §5.8 month projection over every board the vault holds. Arithmetic only — this
+ * is NOT what is scheduled in Postiz or the blog admin (the reality view is a
+ * different, deliberately deferred thing).
+ */
+export async function getCalendar(month?: string): Promise<string> {
+  const { boards, errors } = await listBoards();
+  if (!boards.length) {
+    throw new ToolError(`No boards found.${errors.length ? ` Scan problems: ${errors.join("; ")}` : ""}`);
+  }
+  const m = month?.trim() || new Date().toISOString().slice(0, 7);
+  if (!/^\d{4}-\d{2}$/.test(m)) throw new ToolError(`"${month}" is not a month — use YYYY-MM, e.g. 2026-08.`);
+  return formatMonth(projectMonth(boards, m));
+}
+
+/**
+ * Record the commitment fields the gate approves: typed cadence, UTM token, content
+ * prefix. Recording is not deciding — set these only to what Ernest has stated.
+ */
+export async function setCadence(
+  ref: string,
+  patch: { days?: Weekday[]; start?: string; everyWeeks?: number; note?: string; clear?: boolean; token?: string; contentPrefix?: string },
+): Promise<string> {
+  return mutate(ref, (b) => {
+    const changed: string[] = [];
+    if (patch.token !== undefined) {
+      const err = tokenError(patch.token);
+      if (err) throw new ToolError(`token "${patch.token}" refused — ${err}`);
+      b.token = patch.token;
+      changed.push(`token=${patch.token || "(cleared)"}`);
+    }
+    if (patch.contentPrefix !== undefined) {
+      const err = prefixError(patch.contentPrefix);
+      if (err) throw new ToolError(`contentPrefix "${patch.contentPrefix}" refused — ${err}`);
+      b.contentPrefix = patch.contentPrefix;
+      changed.push(`contentPrefix=${patch.contentPrefix || "(cleared)"}`);
+    }
+    if (patch.clear) {
+      b.cadence = null;
+      changed.push("cadence cleared");
+    } else if (patch.days || patch.start !== undefined || patch.everyWeeks !== undefined || patch.note !== undefined) {
+      const base: Cadence = b.cadence ?? { days: [], start: "" };
+      const next: Cadence = {
+        days: patch.days ?? base.days,
+        start: patch.start ?? base.start,
+      };
+      const every = patch.everyWeeks ?? base.everyWeeks;
+      if (every && every > 1) next.everyWeeks = every;
+      const note = patch.note ?? base.note;
+      if (note) next.note = note;
+      if (!next.days.length) throw new ToolError("a cadence needs at least one day — pass days, or clear:true to unset");
+      if (next.start && !/^\d{4}-\d{2}-\d{2}$/.test(next.start)) throw new ToolError(`start "${next.start}" is not a date — use YYYY-MM-DD`);
+      b.cadence = next;
+      changed.push(`cadence: ${cadenceLine(next)}`);
+    }
+    if (!changed.length) throw new ToolError("nothing to change — pass days/start/everyWeeks/note, clear, token, or contentPrefix");
+    return changed.join("\n");
+  });
 }
 
 export async function gateList(ref: string): Promise<string> {
@@ -195,7 +262,13 @@ export async function seamResolve(ref: string, index: number, note?: string): Pr
 
 export async function ideaUpdate(
   ref: string, ideaId: string,
-  patch: { title?: string; story?: string; asset?: string; proves?: string; cover?: string; tag?: string; yt?: boolean; placed?: "seed" | null; noteE?: string; noteK?: string },
+  patch: {
+    title?: string; story?: string; asset?: string; proves?: string; cover?: string; tag?: string;
+    yt?: boolean; placed?: "seed" | null;
+    /** §9: the idea ships INSIDE this drop/idea, in this role. Pass ref:"" to clear. */
+    placedInRef?: string; placedInRole?: string;
+    noteE?: string; noteK?: string;
+  },
 ): Promise<string> {
   return mutate(ref, (b) => {
     const i = idea(b, ideaId);
@@ -205,6 +278,16 @@ export async function ideaUpdate(
     }
     if (patch.yt !== undefined) { i.yt = patch.yt; changed.push("yt"); }
     if (patch.placed !== undefined) { i.placed = patch.placed; changed.push("placed"); }
+    if (patch.placedInRef !== undefined) {
+      if (patch.placedInRef.trim() === "") {
+        i.placedIn = null;
+        changed.push("placedIn cleared");
+      } else {
+        i.placedIn = { ref: patch.placedInRef.trim(), role: (patch.placedInRole ?? "").trim() };
+        i.placed = null; // it landed inside something; the seed flag would be a second answer
+        changed.push(`placedIn=${i.placedIn.ref}${i.placedIn.role ? ` (${i.placedIn.role})` : ""}`);
+      }
+    }
     if (patch.noteE !== undefined) { i.n = { ...i.n, E: patch.noteE }; changed.push("Ernest's note"); }
     if (patch.noteK !== undefined) { i.n = { ...i.n, K: patch.noteK }; changed.push("Katrina's note"); }
     if (!changed.length) throw new ToolError("Nothing to change — pass at least one field.");

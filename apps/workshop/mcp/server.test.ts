@@ -23,7 +23,7 @@ const maybe = fsSync.existsSync(BUNDLE) ? describe : describe.skip;
 let tmp: string;
 let client: Client;
 
-const CAMPAIGNS = "Campaign Content/Potential Campaigns/Demo Campaign";
+const CAMPAIGNS = "Campaign, Channels, & Content/0 Potential Campaigns/Demo Campaign";
 
 function seed() {
   const dir = path.join(tmp, CAMPAIGNS);
@@ -35,8 +35,8 @@ function seed() {
       channels: ["Blog"], strip: [], roles: [],
       seams: [{ tag: "Open", cls: "", h: "SEAM-01 — an open question", p: "needs settling" }],
       ideas: [
-        { id: "IDEA-01", tag: "post", title: "First", story: "s", asset: "", proves: "", cover: "", yt: false, placed: null, v: { E: null, K: null }, n: { E: "", K: "" } },
-        { id: "IDEA-02", tag: "post", title: "Second", story: "s", asset: "", proves: "", cover: "", yt: false, placed: null, v: { E: null, K: null }, n: { E: "", K: "" } },
+        { id: "IDEA-01", tag: "post", title: "First", story: "s", asset: "", proves: "", cover: "", yt: false, placed: null, placedIn: null, v: { E: null, K: null }, n: { E: "", K: "" } },
+        { id: "IDEA-02", tag: "post", title: "Second", story: "s", asset: "", proves: "", cover: "", yt: false, placed: null, placedIn: null, v: { E: null, K: null }, n: { E: "", K: "" } },
       ],
       arc: [], gate: [{ t: "a gate item", o: "E", d: false, blocking: true, n: "" }],
     }],
@@ -77,6 +77,7 @@ maybe("the MCP server, over a real stdio connection", () => {
       "workshop_status", "list_boards", "get_board", "seams_list", "ideas_list", "get_idea",
       "run_placement_check", "gate_list", "export_markdown",
       "set_verdict", "seam_add", "seam_update", "seam_resolve", "idea_update", "arc_add_drop", "gate_tick",
+      "get_calendar", "set_cadence",
     ]));
   });
 
@@ -155,6 +156,37 @@ maybe("the MCP server, over a real stdio connection", () => {
     const { text, isError } = await call("get_board", { board: "Does Not Exist" });
     expect(isError).toBe(true);
     expect(text).toMatch(/No board matches/);
+  });
+
+  it("records a typed cadence + token, and the calendar projects it", async () => {
+    const set = await call("set_cadence", { board: "Demo", days: ["Wed"], start: "2026-08-12", token: "demo-campaign", content_prefix: "demo" });
+    expect(set.isError, set.text).toBe(false);
+    const b = onDisk();
+    expect(b.cadence).toEqual({ days: ["Wed"], start: "2026-08-12" });
+    expect(b.token).toBe("demo-campaign");
+
+    const cal = await call("get_calendar", { month: "2026-08" });
+    expect(cal.isError, cal.text).toBe(false);
+    expect(cal.text).toContain("MONTH PROJECTION — 2026-08");
+    expect(cal.text).toContain("2026-08-12");
+    expect(cal.text).toContain("not the reality view");
+  });
+
+  it("REFUSES a malformed token with the reason", async () => {
+    const r = await call("set_cadence", { board: "Demo", token: "Bad_Token" });
+    expect(r.isError).toBe(true);
+    expect(r.text).toMatch(/lowercase|underscore/);
+    expect(onDisk().token).toBe("demo-campaign"); // unchanged on disk
+  });
+
+  it("records the §9 placed-inside state and the rule counts it as placed", async () => {
+    // IDEA-02 was left IN and unplaced by the earlier violation test.
+    const r = await call("idea_update", { board: "Demo", idea_id: "IDEA-02", placed_in_ref: "IDEA-01", placed_in_role: "frame" });
+    expect(r.isError, r.text).toBe(false);
+    expect(onDisk().ideas[1].placedIn).toEqual({ ref: "IDEA-01", role: "frame" });
+    const check = await call("run_placement_check", { board: "Demo" });
+    expect(check.text).toContain("inside IDEA-01 (frame)");
+    expect(check.text).toContain("0 unaccounted for");
   });
 
   it("REFUSES to overwrite a board something else changed", async () => {
