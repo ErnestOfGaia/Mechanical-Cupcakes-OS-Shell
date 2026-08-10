@@ -8,7 +8,7 @@ import {
 } from "@/lib/board";
 import { prefixError, tokenError } from "@/lib/token";
 import { voiceWarning } from "@/lib/voice";
-import { projectMonth } from "@/lib/calendar";
+import { parseSlotDate, projectMonth, withSlotDate } from "@/lib/calendar";
 import { checkPlacement, noteBlockerNudge, placement, placementNudge } from "@/lib/rule";
 import CalendarPanel from "./CalendarPanel";
 import ReadmePanel from "./ReadmePanel";
@@ -601,6 +601,29 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                 <div>
                   <textarea className="ed display" rows={1} style={{ fontSize: 18 }} value={d.title}
                     onChange={(e) => update((b) => { b.arc[i].title = e.target.value; })} />
+
+                  {/* The date is not a field of its own — it lives inside the slot label,
+                      which is what the calendar parses. So this edits that string
+                      surgically and shows what the calendar will read back, because
+                      "did this land on the 11th?" was previously unanswerable in the app. */}
+                  <Field label={cur.kind === "channel" ? "Which day this slot runs" : "When it lands"}>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                      <input type="date" className="ed mono" style={{ fontSize: 12.5, width: 155 }}
+                        aria-label={`Date for ${d.slot || `drop ${i + 1}`}`}
+                        value={parseSlotDate(d.slot ?? "", new Date().getUTCFullYear()) ?? ""}
+                        onChange={(e) => update((b) => { b.arc[i].slot = withSlotDate(b.arc[i].slot ?? "", e.target.value); })} />
+                      <span className="mono" style={{ fontSize: 11, color: "var(--ink-faint)" }}>
+                        {parseSlotDate(d.slot ?? "", new Date().getUTCFullYear())
+                          ? `on the calendar as ${parseSlotDate(d.slot ?? "", new Date().getUTCFullYear())}`
+                          : "no date — this one is listed as unplaced, not shown on the calendar"}
+                      </span>
+                    </div>
+                    <input className="ed mono" style={{ fontSize: 12, marginTop: 4 }} value={d.slot}
+                      aria-label="Slot label"
+                      placeholder={`${K.arcNoun} ${i + 1}`}
+                      onChange={(e) => update((b) => { b.arc[i].slot = e.target.value; })} />
+                  </Field>
+
                   {(["story", "track", "songs", "promo", "note"] as const).map((f) => (
                     <Field key={f} label={K.fields[f]}>
                       <textarea className="ed" rows={f === "story" ? 2 : 1}

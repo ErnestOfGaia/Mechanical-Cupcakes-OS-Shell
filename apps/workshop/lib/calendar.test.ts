@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cadenceDates, formatMonth, parseSlotDate, projectMonth, slotQualifier } from "./calendar";
+import { cadenceDates, formatMonth, parseSlotDate, projectMonth, slotQualifier, withSlotDate } from "./calendar";
 import { normalise } from "./board";
 import type { Board, Entry, Weekday } from "./types";
 
@@ -30,6 +30,47 @@ describe("parseSlotDate — real slot strings, never guessed", () => {
   it("keeps the conditional qualifier verbatim", () => {
     expect(slotQualifier("Drop 5 — Thu 20 Aug  ⏳ CONDITIONAL")).toBe("⏳ CONDITIONAL");
     expect(slotQualifier("Drop 1 — Wed 12 Aug")).toBeUndefined();
+  });
+});
+
+describe("withSlotDate — editing a date that lives inside free text", () => {
+  it("replaces the date in a real slot and leaves the label and time alone", () => {
+    expect(withSlotDate("Drop 1 — Tue 11 Aug, 9:00 AM PT", "2026-08-18"))
+      .toBe("Drop 1 — Tue 18 Aug, 9:00 AM PT");
+  });
+
+  it("recomputes the weekday rather than carrying the old one", () => {
+    // Moving Tue 11 → 12 Aug must not leave a slot claiming "Tue 12 Aug", or the label
+    // and the calendar it feeds would disagree.
+    expect(withSlotDate("Drop 1 — Tue 11 Aug", "2026-08-12")).toBe("Drop 1 — Wed 12 Aug");
+  });
+
+  it("appends a date to an undated slot", () => {
+    expect(withSlotDate("Drop 1", "2026-08-11")).toBe("Drop 1 — Tue 11 Aug");
+    expect(withSlotDate("Drop 6", "2026-09-02")).toBe("Drop 6 — Wed 2 Sep");
+  });
+
+  it("keeps a ⏳ qualifier when the date changes", () => {
+    const out = withSlotDate("Drop 5 — Thu 20 Aug  ⏳ CONDITIONAL", "2026-08-27");
+    expect(out).toContain("Thu 27 Aug");
+    expect(out).toContain("⏳ CONDITIONAL");
+  });
+
+  it("round-trips: what it writes, parseSlotDate reads back", () => {
+    for (const iso of ["2026-08-11", "2026-08-12", "2026-09-02", "2026-12-31"]) {
+      const slot = withSlotDate("Drop 1", iso);
+      expect(parseSlotDate(slot, Number(iso.slice(0, 4))), `round-trip failed for ${iso}`).toBe(iso);
+    }
+  });
+
+  it("clearing the date leaves the label rather than an orphan dash", () => {
+    const out = withSlotDate("Drop 1 — Tue 11 Aug", "");
+    expect(out).toBe("Drop 1");
+    expect(parseSlotDate(out, 2026)).toBeNull();
+  });
+
+  it("is a no-op on an undated slot asked to clear", () => {
+    expect(withSlotDate("Drop 1", "")).toBe("Drop 1");
   });
 });
 

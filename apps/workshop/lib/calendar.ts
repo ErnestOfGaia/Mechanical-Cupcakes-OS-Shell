@@ -118,6 +118,44 @@ export function parseSlotDate(slot: string, yearHint: number): string | null {
   return iso(new Date(Date.UTC(yearHint, month, day)));
 }
 
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"] as const;
+
+/** "2026-08-11" → "Tue 11 Aug", the shape real slots already use. */
+export function formatSlotDate(isoDate: string): string {
+  const d = new Date(`${isoDate}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return "";
+  return `${DAY_NAMES[d.getUTCDay()]} ${d.getUTCDate()} ${MONTH_NAMES[d.getUTCMonth()]}`;
+}
+
+/**
+ * Put a date INTO a slot string without disturbing anything else in it.
+ *
+ * The date is not a field of its own — it lives inside free text like
+ * `"Drop 1 — Tue 11 Aug, 9:00 AM PT"`, and the calendar reads it back out. So a date
+ * picker has to edit that string surgically: replace the date where one exists, append
+ * where none does, and leave the label, the time and any ⏳ qualifier untouched. The
+ * weekday is always recomputed rather than carried, or moving Tue 11 → 12 Aug would
+ * leave a slot that says "Tue 12 Aug" and disagrees with the calendar it feeds.
+ *
+ * Passing an empty date removes the date and leaves the rest of the label.
+ */
+export function withSlotDate(slot: string, isoDate: string): string {
+  const existing = /\b(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun)?\s*\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/;
+  const label = (slot ?? "").trim();
+
+  if (!isoDate) {
+    if (!existing.test(label)) return label;
+    // Drop the date and any now-dangling separator or empty time fragment.
+    return label.replace(existing, "").replace(/\s*—\s*,?\s*/g, " — ").replace(/—\s*$/, "").replace(/\s{2,}/g, " ").trim().replace(/[—,]\s*$/, "").trim();
+  }
+
+  const stamp = formatSlotDate(isoDate);
+  if (!stamp) return label;
+  if (existing.test(label)) return label.replace(existing, stamp);
+  return label ? `${label} — ${stamp}` : stamp;
+}
+
 /** The ⏳/⚠️ tail of a slot string, kept verbatim so the calendar never re-judges it. */
 export function slotQualifier(slot: string): string | undefined {
   const m = /(⏳[^—·]*|⚠️[^—·]*)\s*$/u.exec(slot);
