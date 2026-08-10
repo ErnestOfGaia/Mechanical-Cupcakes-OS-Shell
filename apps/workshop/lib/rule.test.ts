@@ -5,7 +5,7 @@ import type { Board, Entry, Idea, Seam, Verdict } from "./types";
 
 const idea = (id: string, E: Verdict = "in", over: Partial<Idea> = {}): Idea => ({
   id, tag: "post", title: `title ${id}`, story: "s", asset: "", proves: "",
-  cover: "", yt: false, placed: null, v: { E, K: null }, n: { E: "", K: "" }, ...over,
+  cover: "", yt: false, placed: null, placedIn: null, v: { E, K: null }, n: { E: "", K: "" }, ...over,
 });
 
 const drop = (ref: string): Entry =>
@@ -94,6 +94,31 @@ describe("the rule sorts every IN idea into exactly one state", () => {
     expect(r.ok).toBe(true);
   });
 
+  it("counts an idea living INSIDE another drop as placed — the §9 branch", () => {
+    // The real 2026-08-09 case: IDEA-06 became the recurring frame across all four
+    // drops. Not a drop of its own, not back in the bank — placed, not dropped.
+    // Without this state the banner cries wolf forever and gets ignored.
+    const b = board({ ideas: [idea("IDEA-06", "in", { placedIn: { ref: "IDEA-01", role: "frame" } })] });
+    const r = checkPlacement(b);
+    expect(r.placedInside.map((x) => x.id)).toEqual(["IDEA-06"]);
+    expect(r.violations).toEqual([]);
+    expect(r.ok).toBe(true);
+    expect(placement(b.ideas[0], b)).toBe("placedIn");
+  });
+
+  it("shows WHERE a placed-in idea lives in the report", () => {
+    const b = board({ ideas: [idea("IDEA-07", "in", { placedIn: { ref: "IDEA-04", role: "paragraph" } })] });
+    expect(formatPlacementReport(b)).toContain("inside IDEA-04 (paragraph)");
+  });
+
+  it("a drop still wins over placedIn — the arc is the truth", () => {
+    const b = board({
+      ideas: [idea("IDEA-01", "in", { placedIn: { ref: "IDEA-02", role: "frame" } })],
+      arc: [drop("IDEA-01")],
+    });
+    expect(placement(b.ideas[0], b)).toBe("drop");
+  });
+
   it("derives a drop from the arc rather than trusting a stored flag", () => {
     const b = board({ ideas: [idea("IDEA-01", "in", { placed: "seed" })], arc: [drop("IDEA-01")] });
     // Even though it is marked seed, the arc is the truth: it has a drop.
@@ -165,6 +190,19 @@ describe("setVerdict — auto-create the seed, never the drop", () => {
     expect(b.ideas[0].placed).toBe("seed");
     setVerdict(b, "IDEA-01", "E", "hold");
     expect(b.ideas[0].placed).toBeNull();
+  });
+
+  it("does NOT seed an idea that already lives inside another drop", () => {
+    const b = board({ ideas: [idea("IDEA-06", null, { placedIn: { ref: "IDEA-01", role: "frame" } })] });
+    setVerdict(b, "IDEA-06", "E", "in");
+    expect(b.ideas[0].placed).toBeNull();
+  });
+
+  it("never auto-deletes a placedIn when the verdict is taken back — it warns instead", () => {
+    const b = board({ ideas: [idea("IDEA-06", "in", { placedIn: { ref: "IDEA-01", role: "frame" } })] });
+    const w = setVerdict(b, "IDEA-06", "E", "cut");
+    expect(b.ideas[0].placedIn).toEqual({ ref: "IDEA-01", role: "frame" });
+    expect(w.join(" ")).toMatch(/still marked as living inside/i);
   });
 
   it("toggles off when the same verdict is clicked twice", () => {

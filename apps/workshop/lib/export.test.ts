@@ -4,7 +4,7 @@ import type { Board, Idea, Verdict } from "./types";
 
 const idea = (id: string, over: Partial<Idea> = {}): Idea => ({
   id, tag: "post", title: `t ${id}`, story: "s", asset: "", proves: "",
-  cover: "", yt: false, placed: null, v: { E: null, K: null }, n: { E: "", K: "" }, ...over,
+  cover: "", yt: false, placed: null, placedIn: null, v: { E: null, K: null }, n: { E: "", K: "" }, ...over,
 });
 
 const board = (over: Partial<Board> = {}): Board => normalise({ id: "b1", name: "B", ...over });
@@ -67,9 +67,34 @@ describe("the export states where every IN idea landed", () => {
       arc: [{ slot: "Drop 1", ref: "IDEA-01", title: "t", story: "", track: "", songs: "", promo: "", note: "" }],
     });
     const out = md(b);
-    expect(out).toContain("**3 IN** — 1 placed, 1 in the seed bank, 0 held by a seam, 1 unaccounted for.");
+    expect(out).toContain("**3 IN** — 1 placed, 0 inside other drops, 1 in the seed bank, 0 held by a seam, 1 unaccounted for.");
     expect(out).toContain("IDEA-03");
     expect(out).toMatch(/marked IN but landing nowhere/);
+  });
+
+  it("says WHY a placed-in idea has no drop — the §9 export requirement", () => {
+    const b = board({
+      ideas: [idea("IDEA-06", { v: { E: "in" as Verdict, K: null }, placedIn: { ref: "IDEA-01", role: "frame" } })],
+      arc: [{ slot: "Drop 1", ref: "IDEA-01", title: "t", story: "", track: "", songs: "", promo: "", note: "" }],
+    });
+    const out = md(b);
+    expect(out).toContain("**Placement:** inside IDEA-01 — frame");
+    expect(out).not.toMatch(/landing nowhere/);
+  });
+
+  it("carries the commitment block when token or cadence are set", () => {
+    const b = board({
+      token: "last-mile-value-props", contentPrefix: "lmvp",
+      cadence: { days: ["Wed" as const], start: "2026-08-12" },
+    });
+    const out = md(b);
+    expect(out).toContain("utm_campaign=last-mile-value-props");
+    expect(out).toContain("utm_content=lmvp-NN");
+    expect(out).toContain("**Cadence (internal only — rule 11):** Wed, weekly from 2026-08-12");
+  });
+
+  it("omits the commitment block entirely when nothing is set", () => {
+    expect(md(board({}))).not.toContain("## Commitment");
   });
 
   it("says nothing about placement for ideas that are not IN", () => {

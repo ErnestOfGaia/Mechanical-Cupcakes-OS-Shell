@@ -76,7 +76,9 @@ export const KINDS: Record<BoardKind, KindSpec> = {
     starterGate: () => [
       { t: "Queue position agreed against the campaigns already committed", o: "both", d: false, blocking: true, n: "" },
       { t: "Every post has an seo_title of 42 characters or fewer", o: "E", d: false, blocking: true, n: "The layout appends the brand suffix." },
-      { t: "UTM confirmed — eog-launch-2026 plus a per-post utm_content", o: "E", d: false, blocking: true, n: "Keeps the single launch scoreboard whole." },
+      // 2026-08-09 UTM ruling: eog-launch-2026 is CLOSED to new links. One campaign,
+      // one token; minting it and declaring it in the register are the same act.
+      { t: "UTM minted and declared — a per-campaign utm_campaign token + utm_content prefix, in the register", o: "E", d: false, blocking: true, n: "One campaign, one token. The token register (weekly analytics digest skill) is its single home." },
       ...UNIVERSAL.map((g) => ({ ...g })),
     ],
   },

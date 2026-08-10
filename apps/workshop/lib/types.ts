@@ -15,6 +15,29 @@ export type Verdict = "in" | "hold" | "cut" | null;
 
 export type Person = "E" | "K";
 
+export type Weekday = "Mon" | "Tue" | "Wed" | "Thu" | "Fri" | "Sat" | "Sun";
+
+/**
+ * A campaign's posting rhythm, typed. The strip carried this as free text
+ * ("Cadence = Weekly — Wednesday, 9:00 AM Pacific") and it went stale silently — on
+ * 2026-08-09 a strip still advertised a first drop four days in the past. Typed, it can
+ * be computed with (the §5.8 month projection is "committed campaigns × cadence × slot
+ * rules") and staleness is detectable. The free-text strip row renders FROM this.
+ *
+ * ⚠️ Internal-only (rule 11): a cadence is an intention until the rate has been
+ * demonstrated. It may appear in vault docs in full; never in published copy.
+ */
+export interface Cadence {
+  /** Which days a drop lands, e.g. ["Wed"] or ["Tue", "Wed", "Thu"]. */
+  days: Weekday[];
+  /** ISO date (YYYY-MM-DD) of the first drop. Empty string = not yet dated. */
+  start: string;
+  /** 1 = weekly (default), 2 = every second week, … */
+  everyWeeks?: number;
+  /** Free-text qualifier. Rendered beside the computed line, never parsed. */
+  note?: string;
+}
+
 /**
  * A row in the board's header fact strip (cadence, first drop, anchor asset — whatever
  * the campaign needs stated up top). `flag` marks a fact that is still unresolved, the
@@ -49,6 +72,15 @@ export interface Idea {
    * so a "drop" status is derived, never duplicated. See lib/rule.ts.
    */
   placed: "seed" | null;
+  /**
+   * The third landing place (Round 2 §9): the idea ships INSIDE another drop or idea in
+   * THIS campaign — a recurring frame, a paragraph, an opening. Not a drop (no slot of
+   * its own) and not a seed (it did not go back to the bank). Without this the rule
+   * reads such ideas as unplaced forever, and a nudge that cries wolf gets ignored.
+   * `ref` names the idea or drop it lives in; `role` says what it does there
+   * (frame · paragraph · opening · promo hook — free text).
+   */
+  placedIn: { ref: string; role: string } | null;
 }
 
 /**
@@ -100,6 +132,21 @@ export interface Board {
   /** The header fact strip. Real boards have carried this since before the app's own
    *  types did — it was silently dropped on every save until it was added here. */
   strip: StripRow[];
+  /**
+   * Commitment fields (Round 2 §10). The Workshop is the commitment gate — it approves
+   * a campaign AND its cadence — and per AGENTS - Marketing rule 10(d), minting a UTM
+   * token and declaring it are the same act. Two campaigns sharing a token is
+   * unrecoverable, so the token gets a typed home instead of living in a gate row's
+   * prose (where the stale eog-launch-2026 text sat until 2026-08-09).
+   *
+   * `token` — the utm_campaign value: lowercase kebab, ≤24 chars, no underscores.
+   * `contentPrefix` — the utm_content prefix; posts are `<prefix>-NN` by arc position.
+   * The single home for the declared-token REGISTER is the weekly analytics digest
+   * skill — the board holds only its own token, never the table.
+   */
+  token: string;
+  contentPrefix: string;
+  cadence: Cadence | null;
   seams: Seam[];
   roles: AssetRow[];
   ideas: Idea[];

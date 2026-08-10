@@ -1,6 +1,6 @@
 import { kindOf } from "./kinds";
 import { checkPlacement, placement } from "./rule";
-import type { Board, Idea, Person, Verdict, Workspace } from "./types";
+import type { Board, Cadence, Idea, Person, Verdict, Weekday, Workspace } from "./types";
 
 /* ------------------------------------------------------------------ verdicts */
 
@@ -68,7 +68,9 @@ export function setVerdict(b: Board, ideaId: string, person: Person, verdict: Ve
 
   const hasDrop = b.arc.some((d) => (d.ref ?? "").includes(ideaId));
   if (next === "in") {
-    if (!hasDrop && idea.placed !== "seed") {
+    // placedIn counts as landed (Round 2 §9) — don't shove an idea that already lives
+    // inside another drop back into the seed bank.
+    if (!hasDrop && !idea.placedIn && idea.placed !== "seed") {
       idea.placed = "seed";
       warnings.push(`${ideaId} went to the seed bank — add a drop, or write the seam that holds it, if it belongs somewhere else.`);
     }
@@ -79,6 +81,10 @@ export function setVerdict(b: Board, ideaId: string, person: Person, verdict: Ve
   if (next !== "in" && hasDrop) {
     warnings.push(`${ideaId} still has a drop in the arc. Nothing was removed — take it out there if that is what you mean.`);
   }
+  if (next !== "in" && idea.placedIn) {
+    // Authored content, like a drop — never auto-deleted, only pointed at.
+    warnings.push(`${ideaId} is still marked as living inside ${idea.placedIn.ref}. Clear that yourself if it no longer does.`);
+  }
   return warnings;
 }
 
@@ -88,6 +94,30 @@ let seq = 0;
 export function newId(prefix = "b"): string {
   seq += 1;
   return `${prefix}${Date.now().toString(36)}${seq.toString(36)}`;
+}
+
+const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as const;
+
+/** A cadence survives normalise only if its shape is real; junk becomes null, loudly absent. */
+function normaliseCadence(c: unknown): Cadence | null {
+  if (!c || typeof c !== "object") return null;
+  const raw = c as Partial<Cadence>;
+  const days = Array.isArray(raw.days)
+    ? raw.days.filter((d): d is Weekday => (WEEKDAYS as readonly string[]).includes(d))
+    : [];
+  if (!days.length) return null;
+  const out: Cadence = { days, start: typeof raw.start === "string" ? raw.start : "" };
+  if (typeof raw.everyWeeks === "number" && raw.everyWeeks >= 1) out.everyWeeks = Math.floor(raw.everyWeeks);
+  if (typeof raw.note === "string" && raw.note) out.note = raw.note;
+  return out;
+}
+
+/** The human-readable line a cadence renders to — what the strip used to hold as free text. */
+export function cadenceLine(c: Cadence | null): string {
+  if (!c) return "not set";
+  const every = (c.everyWeeks ?? 1) > 1 ? `every ${c.everyWeeks} weeks` : "weekly";
+  const from = c.start ? ` from ${c.start}` : " — not yet dated";
+  return `${c.days.join(" · ")}, ${every}${from}${c.note ? ` (${c.note})` : ""}`;
 }
 
 export function normalise(b: Partial<Board> & { id?: string }): Board {
@@ -105,6 +135,9 @@ export function normalise(b: Partial<Board> & { id?: string }): Board {
     stage: b.stage ?? "spark",
     channels: Array.isArray(b.channels) ? b.channels : ["Blog"],
     strip: Array.isArray(b.strip) ? b.strip : [],
+    token: typeof b.token === "string" ? b.token : "",
+    contentPrefix: typeof b.contentPrefix === "string" ? b.contentPrefix : "",
+    cadence: normaliseCadence(b.cadence),
     seams: Array.isArray(b.seams) ? b.seams : [],
     roles: Array.isArray(b.roles) ? b.roles : [],
     ideas: Array.isArray(b.ideas) ? b.ideas : [],
@@ -119,6 +152,10 @@ export function normalise(b: Partial<Board> & { id?: string }): Board {
     cover: typeof i.cover === "string" ? i.cover : "",
     yt: i.yt === true,
     placed: i.placed === "seed" ? "seed" : null,
+    placedIn:
+      i.placedIn && typeof i.placedIn.ref === "string" && i.placedIn.ref.trim()
+        ? { ref: i.placedIn.ref, role: typeof i.placedIn.role === "string" ? i.placedIn.role : "" }
+        : null,
     v: { E: i.v?.E ?? null, K: i.v?.K ?? null },
     n: { E: i.n?.E ?? "", K: i.n?.K ?? "" },
   }));
@@ -202,6 +239,15 @@ export function toMarkdown(b: Board, today: string): string {
   L.push("whenever it arrives, never required, never blocking.", "");
   if (b.tagline) L.push(b.tagline, "");
 
+  if (b.token || b.contentPrefix || b.cadence) {
+    // Vault-side detail is allowed in full (intentions live in the vault; promises live
+    // in published copy) — but cadence stays marked internal per rule 11.
+    L.push("## Commitment", "");
+    if (b.token) L.push(`- **UTM:** \`utm_campaign=${b.token}\`${b.contentPrefix ? ` · \`utm_content=${b.contentPrefix}-NN\` by arc position` : ""}`);
+    if (b.cadence) L.push(`- **Cadence (internal only — rule 11):** ${cadenceLine(b.cadence)}`);
+    L.push("");
+  }
+
   if (b.seams.length) {
     L.push("## Seams — open, flagged not hidden", "");
     b.seams.forEach((s) => L.push(`- **${s.tag.toUpperCase()} — ${s.h}** — ${s.p}`));
@@ -225,8 +271,8 @@ export function toMarkdown(b: Board, today: string): string {
     L.push("## The bench", "");
     const pl = checkPlacement(b);
     if (pl.rows.length) {
-      L.push(`**${pl.rows.length} IN** — ${pl.placed.length} placed, ${pl.seeded.length} in the seed bank, ` +
-        `${pl.heldBySeam.length} held by a seam, ${pl.violations.length} unaccounted for.`, "");
+      L.push(`**${pl.rows.length} IN** — ${pl.placed.length} placed, ${pl.placedInside.length} inside other drops, ` +
+        `${pl.seeded.length} in the seed bank, ${pl.heldBySeam.length} held by a seam, ${pl.violations.length} unaccounted for.`, "");
       if (pl.violations.length) {
         L.push(`> ⚠️ ${pl.violations.map((v) => v.id).join(", ")} — marked IN but landing nowhere. Each needs a drop, a seed, or a seam that says why.`, "");
       }
@@ -247,7 +293,11 @@ export function toMarkdown(b: Board, today: string): string {
       if (i.proves) L.push(`- **Proves:** ${i.proves}`);
       if (i.v.E === "in") {
         const p = placement(i, b);
-        L.push(`- **Placement:** ${p === "drop" ? "has a drop in the arc" : p === "seed" ? "seed bank" : "**UNPLACED** — needs a drop, a seed, or a seam"}`);
+        L.push(`- **Placement:** ${
+          p === "drop" ? "has a drop in the arc"
+          : p === "placedIn" ? `inside ${i.placedIn!.ref}${i.placedIn!.role ? ` — ${i.placedIn!.role}` : ""}`
+          : p === "seed" ? "seed bank"
+          : "**UNPLACED** — needs a drop, a seed, or a seam"}`);
       }
       if (i.n.E) L.push(`- **Ernest:** ${i.n.E}`);
       if (i.n.K) L.push(`- **Katrina:** ${i.n.K}`);

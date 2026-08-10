@@ -32,7 +32,7 @@ function boardAt(rel: string, over: Partial<Board> = {}): Board {
     strip: [{ k: "Cadence", v: "Weekly" }],
     ideas: [{
       id: "IDEA-01", tag: "post", title: "one", story: "a story", asset: "", proves: "",
-      cover: "", yt: false, placed: null, v: { E: "in", K: null }, n: { E: "", K: "" },
+      cover: "", yt: false, placed: null, placedIn: null, v: { E: "in", K: null }, n: { E: "", K: "" },
     }],
     sourcePath: rel,
     ...over,

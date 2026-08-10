@@ -5,7 +5,7 @@ import type { Board, Idea, Verdict } from "./types";
 
 const idea = (id: string, over: Partial<Idea> = {}): Idea => ({
   id, tag: "post", title: `title ${id}`, story: "s", asset: "", proves: "",
-  cover: "", yt: false, placed: null, v: { E: null, K: null }, n: { E: "", K: "" },
+  cover: "", yt: false, placed: null, placedIn: null, v: { E: null, K: null }, n: { E: "", K: "" },
   ...over,
 });
 

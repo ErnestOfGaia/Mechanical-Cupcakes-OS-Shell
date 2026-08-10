@@ -3,12 +3,14 @@
 import { useCallback, useMemo, useState } from "react";
 import { KINDS, kindOf } from "@/lib/kinds";
 import {
-  blankBoard, blocks, decided, flagged, mergeBoard, normalise,
+  blankBoard, blocks, cadenceLine, decided, flagged, mergeBoard, normalise,
   nudge, openBlockers, setVerdict, settle, slug, toMarkdown,
 } from "@/lib/board";
+import { prefixError, tokenError } from "@/lib/token";
+import { voiceWarning } from "@/lib/voice";
 import { checkPlacement, noteBlockerNudge, placement, placementNudge } from "@/lib/rule";
 import ReadmePanel from "./ReadmePanel";
-import type { Board, BoardKind, Person, Verdict, Workspace } from "@/lib/types";
+import type { Board, BoardKind, Person, Verdict, Weekday, Workspace } from "@/lib/types";
 
 const KEY = "mcos-workshop-v1";
 const WHO: Record<Person, string> = { E: "Ernest", K: "Katrina" };
@@ -316,6 +318,72 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               })}
             </div>
 
+            {cur.kind === "campaign" && (
+              <>
+                <h2 className="display" style={S.h2}>Commitment</h2>
+                <p style={S.p}>
+                  The Workshop is the commitment gate: approving a campaign approves its cadence
+                  too, and minting a UTM token and declaring it in the register are the same act.
+                  One campaign, one token — two campaigns sharing one is unrecoverable.
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 22px", maxWidth: 560, marginTop: 12 }}>
+                  <Field label="utm_campaign token">
+                    <input className="ed mono" style={{ fontSize: 13 }} value={cur.token}
+                      placeholder="lowercase-kebab, ≤24 chars"
+                      onChange={(e) => update((b) => { b.token = e.target.value; })} />
+                    {tokenError(cur.token) && <span style={{ fontSize: 11.5, color: "var(--cut)" }}>{tokenError(cur.token)}</span>}
+                  </Field>
+                  <Field label="utm_content prefix (posts become prefix-NN)">
+                    <input className="ed mono" style={{ fontSize: 13 }} value={cur.contentPrefix}
+                      placeholder="e.g. lmvp"
+                      onChange={(e) => update((b) => { b.contentPrefix = e.target.value; })} />
+                    {prefixError(cur.contentPrefix) && <span style={{ fontSize: 11.5, color: "var(--cut)" }}>{prefixError(cur.contentPrefix)}</span>}
+                  </Field>
+                </div>
+
+                <Field label="Cadence — internal only (rule 11): typed here, computed everywhere">
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                    {(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as Weekday[]).map((d) => {
+                      const on = cur.cadence?.days.includes(d) ?? false;
+                      return (
+                        <button key={d} type="button" aria-pressed={on}
+                          style={{ ...S.chip, fontSize: 11, padding: "3px 9px", ...(on ? S.chipOn : {}) }}
+                          onClick={() => update((b) => {
+                            const days = new Set(b.cadence?.days ?? []);
+                            if (on) days.delete(d); else days.add(d);
+                            const ordered = (["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as Weekday[]).filter((x) => days.has(x));
+                            b.cadence = ordered.length ? { ...(b.cadence ?? { start: "" }), days: ordered } : null;
+                          })}>
+                          {d}
+                        </button>
+                      );
+                    })}
+                    <select
+                      value={String(cur.cadence?.everyWeeks ?? 1)}
+                      disabled={!cur.cadence}
+                      aria-label="How often"
+                      style={S.stagePick}
+                      onChange={(e) => update((b) => {
+                        if (b.cadence) b.cadence = { ...b.cadence, everyWeeks: Number(e.target.value) };
+                      })}>
+                      <option value="1">weekly</option>
+                      <option value="2">every 2 weeks</option>
+                    </select>
+                    <input type="date" className="ed mono" aria-label="First drop date"
+                      style={{ fontSize: 12.5, width: 150 }}
+                      value={cur.cadence?.start ?? ""}
+                      disabled={!cur.cadence}
+                      onChange={(e) => update((b) => {
+                        if (b.cadence) b.cadence = { ...b.cadence, start: e.target.value };
+                      })} />
+                  </div>
+                  <span className="mono" style={{ fontSize: 11.5, color: "var(--ink-faint)" }}>
+                    {cadenceLine(cur.cadence)}
+                  </span>
+                </Field>
+              </>
+            )}
+
             {cur.seams.length > 0 && (
               <>
                 <h2 className="display" style={S.h2}>Seams — open, flagged not hidden</h2>
@@ -385,6 +453,20 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                       {decided(idea) === "in" && (() => {
                         const p = placement(idea, cur);
                         if (p === "drop") return <span className="mono" style={{ fontSize: 10, color: "var(--in)", textTransform: "uppercase" }}>has a drop</span>;
+                        if (p === "placedIn") return (
+                          <button type="button" aria-pressed
+                            title={`Lives inside ${idea.placedIn!.ref}${idea.placedIn!.role ? ` as its ${idea.placedIn!.role}` : ""}. Click to clear.`}
+                            style={{ ...S.chip, fontSize: 10, padding: "1px 8px", borderColor: "var(--in)", color: "var(--in)" }}
+                            onClick={() => {
+                              if (!window.confirm(`${idea.id} is marked as living inside ${idea.placedIn!.ref}. Clear that?`)) return;
+                              update((b) => {
+                                const t = b.ideas.findIndex((x) => x.id === idea.id);
+                                b.ideas[t] = { ...b.ideas[t], placedIn: null };
+                              });
+                            }}>
+                            inside {idea.placedIn!.ref}{idea.placedIn!.role ? ` · ${idea.placedIn!.role}` : ""}
+                          </button>
+                        );
                         // Held by a seam is an answer, not a gap — saying "unplaced"
                         // there would push Ernest to re-solve something already tracked.
                         const held = placeState[idea.id] === "held";
@@ -405,6 +487,22 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                           </button>
                         );
                       })()}
+                      {decided(idea) === "in" && placement(idea, cur) !== "drop" && placement(idea, cur) !== "placedIn" && (
+                        <button type="button"
+                          title="This idea ships INSIDE another drop or idea — a frame, a paragraph, an opening — rather than getting its own slot or going back to the bank."
+                          style={{ ...S.chip, fontSize: 10, padding: "1px 8px" }}
+                          onClick={() => {
+                            const ref = window.prompt(`${idea.id} lives inside which drop or idea? (e.g. IDEA-04)`, "");
+                            if (!ref?.trim()) return;
+                            const role = window.prompt("Its role there (frame · paragraph · opening · promo hook):", "") ?? "";
+                            update((b) => {
+                              const t = b.ideas.findIndex((x) => x.id === idea.id);
+                              b.ideas[t] = { ...b.ideas[t], placedIn: { ref: ref.trim(), role: role.trim() }, placed: null };
+                            });
+                          }}>
+                          place inside…
+                        </button>
+                      )}
                     </div>
                     <textarea className="ed display" rows={1} style={{ fontSize: 18 }} value={idea.title}
                       onChange={(e) => update((b) => { b.ideas[idx].title = e.target.value; })} />
@@ -466,7 +564,7 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               let n = b.ideas.length + 1; let id = "";
               do { id = `IDEA-${String(n).padStart(2, "0")}`; n += 1; } while (b.ideas.some((x) => x.id === id));
               b.ideas.push({ id, tag: cur.kind === "channel" ? "format" : "post", title: "Untitled",
-                story: "", asset: "", proves: "", cover: "", yt: false, placed: null,
+                story: "", asset: "", proves: "", cover: "", yt: false, placed: null, placedIn: null,
                 v: { E: null, K: null }, n: { E: "", K: "" } });
             })}>Add {cur.kind === "channel" ? "a format" : "an idea"}</button>
           </section>
@@ -612,6 +710,15 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
             <p className="mono" style={{ fontSize: 12.5, color: msg.startsWith("Not saved") ? "var(--cut)" : "var(--teal)", minHeight: "1.4em" }}>{msg}</p>
 
             <h2 className="display" style={S.h2}>Preview</h2>
+            {(() => {
+              const w = voiceWarning(toMarkdown(cur, today));
+              if (!w) return null;
+              return (
+                <div style={{ ...S.nudge, borderLeftColor: "var(--cut)", flexDirection: "column", gap: 4 }} role="alert">
+                  <pre style={{ margin: 0, font: "inherit", whiteSpace: "pre-wrap" }}>{w}</pre>
+                </div>
+              );
+            })()}
             <pre style={S.pre}>{toMarkdown(cur, today)}</pre>
 
             <h2 className="display" style={S.h2}>Bring a board in</h2>

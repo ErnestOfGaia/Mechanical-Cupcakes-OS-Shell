@@ -50,14 +50,17 @@ export function placedInArc(b: Board): Set<string> {
   return ids;
 }
 
-export type Placement = "drop" | "seed" | null;
+export type Placement = "drop" | "seed" | "placedIn" | null;
 
 /**
  * Where an idea landed. A drop is DERIVED from the arc rather than stored, so the two
- * can never disagree; only the seed is a stored field.
+ * can never disagree; the seed and the inside-another-post cases are stored fields.
+ * Round 2 §9 added the third landing place: an idea can ship INSIDE a drop — a frame,
+ * a paragraph, an opening — which is placed, not dropped, and not back in the bank.
  */
 export function placement(idea: Idea, b: Board): Placement {
   if (placedInArc(b).has(idea.id)) return "drop";
+  if (idea.placedIn) return "placedIn";
   return idea.placed === "seed" ? "seed" : null;
 }
 
@@ -73,11 +76,14 @@ export interface RuleRow {
   title: string;
   hasDrop: boolean;
   seeded: boolean;
+  /** Set when the idea lives inside another drop/idea — "IDEA-04 · frame". */
+  insideRef: string;
+  insideRole: string;
   heldBySeam: boolean;
   noteBlocker: boolean;
   /** The note itself, so a report can show WHY rather than only that there is a why. */
   noteText: string;
-  state: "placed" | "seeded" | "held" | "hidden" | "violation";
+  state: "placed" | "placed-in" | "seeded" | "held" | "hidden" | "violation";
 }
 
 export interface RuleResult {
@@ -86,6 +92,7 @@ export interface RuleResult {
   heldBySeam: RuleRow[];
   noteBlockers: RuleRow[];
   placed: RuleRow[];
+  placedInside: RuleRow[];
   seeded: RuleRow[];
   /** True when every `in` idea is accounted for. */
   ok: boolean;
@@ -99,16 +106,22 @@ export function checkPlacement(b: Board): RuleResult {
     .filter((i) => i.v.E === "in")
     .map((i) => {
       const hasDrop = inArc.has(i.id);
+      const inside = i.placedIn;
       const seeded = i.placed === "seed";
       const heldBySeam = named.has(i.id);
       const noteText = i.n.E ?? "";
       const noteBlocker = NOTE_BLOCKER.test(noteText);
       const state: RuleRow["state"] = hasDrop ? "placed"
+        : inside ? "placed-in"
         : seeded ? "seeded"
         : heldBySeam ? "held"
         : noteBlocker ? "hidden"
         : "violation";
-      return { id: i.id, title: i.title, hasDrop, seeded, heldBySeam, noteBlocker, noteText, state };
+      return {
+        id: i.id, title: i.title, hasDrop, seeded,
+        insideRef: inside?.ref ?? "", insideRole: inside?.role ?? "",
+        heldBySeam, noteBlocker, noteText, state,
+      };
     });
 
   const by = (s: RuleRow["state"]) => rows.filter((r) => r.state === s);
@@ -119,6 +132,7 @@ export function checkPlacement(b: Board): RuleResult {
     heldBySeam: by("held"),
     noteBlockers: by("hidden"),
     placed: by("placed"),
+    placedInside: by("placed-in"),
     seeded: by("seeded"),
     ok: violations.length === 0,
   };
@@ -164,6 +178,7 @@ export function formatPlacementReport(b: Board): string {
   if (!r.rows.length) L.push("  (no ideas are marked IN)");
   for (const row of r.rows) {
     const verdict = row.state === "placed" ? "OK   -> has a drop"
+      : row.state === "placed-in" ? `OK   -> inside ${row.insideRef}${row.insideRole ? ` (${row.insideRole})` : ""}`
       : row.state === "seeded" ? "OK   -> in the seed bank"
       : row.state === "held" ? "HELD -> a seam names it"
       : row.state === "hidden" ? "HIDDEN -> blocker is in the NOTE, not a seam"
@@ -176,8 +191,8 @@ export function formatPlacementReport(b: Board): string {
     for (const row of r.noteBlockers) L.push(`   ${row.id} — ${row.noteText}`);
   }
   L.push("");
-  L.push(`${r.rows.length} IN  ·  ${r.placed.length} placed  ·  ${r.seeded.length} seeded  ·  ` +
-    `${r.heldBySeam.length} held by a seam  ·  ${r.violations.length} unaccounted for`);
+  L.push(`${r.rows.length} IN  ·  ${r.placed.length} placed  ·  ${r.placedInside.length} inside other drops  ·  ` +
+    `${r.seeded.length} seeded  ·  ${r.heldBySeam.length} held by a seam  ·  ${r.violations.length} unaccounted for`);
   if (r.violations.length) {
     L.push("");
     L.push("Each of these needs one of three things:");
