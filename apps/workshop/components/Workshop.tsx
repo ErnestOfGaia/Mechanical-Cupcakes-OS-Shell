@@ -8,7 +8,9 @@ import {
 } from "@/lib/board";
 import { prefixError, tokenError } from "@/lib/token";
 import { voiceWarning } from "@/lib/voice";
+import { projectMonth } from "@/lib/calendar";
 import { checkPlacement, noteBlockerNudge, placement, placementNudge } from "@/lib/rule";
+import CalendarPanel from "./CalendarPanel";
 import ReadmePanel from "./ReadmePanel";
 import type { Board, BoardKind, Person, Verdict, Weekday, Workspace } from "@/lib/types";
 
@@ -19,7 +21,7 @@ const STAGES: Record<string, string> = {
 };
 const CHANNELS = ["Blog", "LinkedIn", "YouTube", "Medium", "X", "Facebook", "Google Business"];
 
-type Tab = "pitch" | "bench" | "arc" | "gate" | "handoff" | "readme";
+type Tab = "pitch" | "bench" | "arc" | "gate" | "handoff" | "calendar" | "readme";
 
 interface Props {
   initialBoards: Board[];
@@ -84,6 +86,10 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
   const other: Person = me === "E" ? "K" : "E";
   const [head, tail] = nudge(cur);
   const today = new Date().toISOString().slice(0, 10);
+
+  // This month, for the calendar tab badge — the projection runs over ALL boards.
+  const thisMonth = today.slice(0, 7);
+  const monthCollisions = projectMonth(ws.campaigns, thisMonth).collisions.length;
 
   // Computed once per render rather than per card: the rule scans the whole board.
   const placeState: Record<string, string> = Object.fromEntries(
@@ -222,7 +228,7 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
         </div>
 
         <nav style={{ display: "flex", flexDirection: "column", gap: 1 }} aria-label="Sections">
-          {(["pitch", "bench", "arc", "gate", "handoff", "readme"] as Tab[]).map((t) => (
+          {(["pitch", "bench", "arc", "gate", "handoff", "calendar", "readme"] as Tab[]).map((t) => (
             <button
               key={t}
               type="button"
@@ -233,7 +239,8 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               {t === "arc" ? K.arcTitle.replace("The ", "") : t === "readme" ? "README" : t[0].toUpperCase() + t.slice(1)}
               <span className="mono" style={{ fontSize: 11, color: "var(--ink-faint)" }}>
                 {t === "bench" ? cur.ideas.length : t === "arc" ? cur.arc.length
-                  : t === "gate" ? `${cur.gate.filter((g) => g.d).length}/${cur.gate.length}` : ""}
+                  : t === "gate" ? `${cur.gate.filter((g) => g.d).length}/${cur.gate.length}`
+                  : t === "calendar" ? (monthCollisions ? `⚠️${monthCollisions}` : "") : ""}
               </span>
             </button>
           ))}
@@ -746,6 +753,8 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
             }} />
           </section>
         )}
+
+        {tab === "calendar" && <CalendarPanel boards={ws.campaigns} initialMonth={thisMonth} />}
 
         {tab === "readme" && <ReadmePanel kind={cur.kind} />}
       </main>
