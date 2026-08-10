@@ -111,6 +111,19 @@ describe("the rule sorts every IN idea into exactly one state", () => {
     expect(formatPlacementReport(b)).toContain("inside IDEA-04 (paragraph)");
   });
 
+  it("keeps the columns apart when the role is long", () => {
+    // The real IDEA-05 role ("merged — the axe half of the two-tool comparison in
+    // Drop 4") overran its column and collided with the title: padEnd does not clip.
+    const b = board({
+      ideas: [idea("IDEA-05", "in", {
+        title: "Close: watch me run axe on my own site",
+        placedIn: { ref: "IDEA-04", role: "merged — the axe half of the two-tool comparison in Drop 4" },
+      })],
+    });
+    const line = formatPlacementReport(b).split("\n").find((l) => l.includes("IDEA-05"))!;
+    expect(line).toMatch(/\s{2,}Close: watch me run axe/);
+  });
+
   it("a drop still wins over placedIn — the arc is the truth", () => {
     const b = board({
       ideas: [idea("IDEA-01", "in", { placedIn: { ref: "IDEA-02", role: "frame" } })],

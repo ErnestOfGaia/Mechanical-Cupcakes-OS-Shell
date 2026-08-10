@@ -183,7 +183,9 @@ export function formatPlacementReport(b: Board): string {
       : row.state === "held" ? "HELD -> a seam names it"
       : row.state === "hidden" ? "HIDDEN -> blocker is in the NOTE, not a seam"
       : "****  VIOLATION: no drop, no seed, no seam";
-    L.push(`  ${row.id.padEnd(9)}${verdict.padEnd(46)}${row.title.slice(0, 46)}`);
+    // padEnd alone does not TRUNCATE, so a long "inside X (role…)" verdict used to run
+    // straight into the title with no gap. Clip, then pad.
+    L.push(`  ${row.id.padEnd(9)}${verdict.slice(0, 44).padEnd(46)}${row.title.slice(0, 46)}`);
   }
   if (r.noteBlockers.length) {
     L.push("");
