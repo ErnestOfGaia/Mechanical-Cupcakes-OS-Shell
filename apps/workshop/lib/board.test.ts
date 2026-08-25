@@ -57,7 +57,7 @@ describe("her availability can never block a board", () => {
     // every blocking item ticked, and Katrina has never opened it.
     const b = normalise({
       ideas: Array.from({ length: 6 }, (_, i) => idea("in", null, `IDEA-0${i}`)),
-      arc: [{ slot: "1", ref: "", title: "one", story: "", track: "", songs: "", promo: "", note: "" }],
+      arc: [{ slot: "1", date: "", ref: "", title: "one", story: "", track: "", songs: "", promo: "", note: "" }],
       gate: [
         { t: "his", o: "E", d: true, n: "" },
         { t: "shared", o: "both", d: true, n: "" },
@@ -125,7 +125,7 @@ describe("one app, two kinds", () => {
 
   it("exports a channel board with channel vocabulary", () => {
     const b = blankBoard("LinkedIn", "channel");
-    b.arc.push({ slot: "s", ref: "", title: "Monday", story: "x", track: "y", songs: "z", promo: "p", note: "n" });
+    b.arc.push({ slot: "s", date: "", ref: "", title: "Monday", story: "x", track: "y", songs: "z", promo: "p", note: "n" });
     const md = toMarkdown(b, "2026-07-31");
     expect(md).toContain("kind: channel");
     expect(md).toContain("## The rhythm");

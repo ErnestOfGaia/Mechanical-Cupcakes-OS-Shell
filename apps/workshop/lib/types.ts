@@ -89,6 +89,20 @@ export interface Idea {
  * is the same — only the labels differ, and those come from the kind (see kinds.ts).
  */
 export interface Entry {
+  /**
+   * WHEN THIS DROP DROPS — the one place a date lives, ruled 2026-08-24.
+   *
+   * ISO `YYYY-MM-DD`, or "" for a drop Ernest has not dated yet (never guessed, never
+   * inherited from a cadence). It is the ONLY date source the calendar reads.
+   *
+   * ⚖️ It used to live inside `slot`'s free text and be re-parsed by regex on every
+   * render, which cost the year: `"Drop 6 — Thu 7 Jan"` came back as *this* January,
+   * so a campaign crossing New Year silently moved twelve months. It also trusted
+   * `"31 Feb"` (rolled to 3 Mar) and a hand-typed weekday that disagreed with the date.
+   * A typed field ends all three: stored once, read back exactly, weekday rendered.
+   */
+  date: string;
+  /** The drop's LABEL — "Drop 1", "Drop 3 ⏳ CONDITIONAL". No longer carries the date. */
   slot: string;
   ref: string;
   title: string;

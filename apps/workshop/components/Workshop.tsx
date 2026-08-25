@@ -3,16 +3,16 @@
 import { useCallback, useMemo, useState } from "react";
 import { KINDS, kindOf } from "@/lib/kinds";
 import {
-  blankBoard, blocks, cadenceLine, decided, flagged, mergeBoard, normalise,
+  blankBoard, blocks, cadenceLine, decided, dropDateLabel, flagged, mergeBoard, normalise,
   nudge, openBlockers, setVerdict, settle, slug, toMarkdown,
 } from "@/lib/board";
 import { prefixError, tokenError } from "@/lib/token";
 import { voiceWarning } from "@/lib/voice";
-import { parseSlotDate, projectMonth, withSlotDate } from "@/lib/calendar";
+import { projectMonth } from "@/lib/calendar";
 import { checkPlacement, noteBlockerNudge, placement, placementNudge } from "@/lib/rule";
 import CalendarPanel from "./CalendarPanel";
 import ReadmePanel from "./ReadmePanel";
-import type { Board, BoardKind, Person, Verdict, Weekday, Workspace } from "@/lib/types";
+import type { Board, BoardKind, Person, Verdict, Workspace } from "@/lib/types";
 
 const KEY = "mcos-workshop-v1";
 const WHO: Record<Person, string> = { E: "Ernest", K: "Katrina" };
@@ -60,6 +60,10 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
   const [msg, setMsg] = useState("");
   /** Set when a save was refused because the file moved underneath us. */
   const [conflict, setConflict] = useState<string | null>(null);
+  /** Arc reorder-by-number: typed target positions, keyed by CURRENT index. Nothing
+   *  moves until "Reorder" is clicked, so indices stay valid while typing. Cleared
+   *  after every reorder since the numbers just typed are now spent. */
+  const [orderDraft, setOrderDraft] = useState<Record<number, string>>({});
 
   const persist = useCallback((next: Workspace) => {
     setWs(next);
@@ -300,6 +304,31 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               <span>{tail}</span>
             </div>
 
+            {conflict && (
+              <div style={S.conflict} role="alert">
+                <b style={{ color: "var(--ink)" }}>Not saved — {conflict}.</b>
+                <span>
+                  Something else wrote this board since you opened it: a Claude session through
+                  the MCP server, another tab, or an edit made by hand. Nothing has been
+                  overwritten. Re-read the vault to pick up their version and lose your unsaved
+                  edits, or overwrite theirs with what is on screen.
+                </span>
+                <div style={{ display: "flex", gap: 9, flexWrap: "wrap", marginTop: 4 }}>
+                  <button type="button" style={S.btn} onClick={reloadFromVault}>Re-read the vault</button>
+                  <button type="button" style={S.btnGhostFlat} onClick={() => saveToVault(true)}>
+                    Overwrite what is on disk
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {vault.enabled && vault.writable && (
+              <div style={{ display: "flex", gap: 9, alignItems: "baseline", flexWrap: "wrap", margin: "16px 0 0" }}>
+                <button type="button" style={S.btn} onClick={() => saveToVault()}>Save to the vault</button>
+                <p className="mono" style={{ fontSize: 12.5, color: msg.startsWith("Not saved") ? "var(--cut)" : "var(--teal)", minHeight: "1.4em", margin: 0 }}>{msg}</p>
+              </div>
+            )}
+
             <h2 className="display" style={S.h2}>Channels it will need</h2>
             <p style={S.p}>
               Channels are not campaigns — they are the machinery a campaign pulls in when it needs
@@ -348,46 +377,19 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
                   </Field>
                 </div>
 
-                <Field label="Cadence — internal only (rule 11): typed here, computed everywhere">
-                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-                    {(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as Weekday[]).map((d) => {
-                      const on = cur.cadence?.days.includes(d) ?? false;
-                      return (
-                        <button key={d} type="button" aria-pressed={on}
-                          style={{ ...S.chip, fontSize: 11, padding: "3px 9px", ...(on ? S.chipOn : {}) }}
-                          onClick={() => update((b) => {
-                            const days = new Set(b.cadence?.days ?? []);
-                            if (on) days.delete(d); else days.add(d);
-                            const ordered = (["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] as Weekday[]).filter((x) => days.has(x));
-                            b.cadence = ordered.length ? { ...(b.cadence ?? { start: "" }), days: ordered } : null;
-                          })}>
-                          {d}
-                        </button>
-                      );
-                    })}
-                    <select
-                      value={String(cur.cadence?.everyWeeks ?? 1)}
-                      disabled={!cur.cadence}
-                      aria-label="How often"
-                      style={S.stagePick}
-                      onChange={(e) => update((b) => {
-                        if (b.cadence) b.cadence = { ...b.cadence, everyWeeks: Number(e.target.value) };
-                      })}>
-                      <option value="1">weekly</option>
-                      <option value="2">every 2 weeks</option>
-                    </select>
-                    <input type="date" className="ed mono" aria-label="First drop date"
-                      style={{ fontSize: 12.5, width: 150 }}
-                      value={cur.cadence?.start ?? ""}
-                      disabled={!cur.cadence}
-                      onChange={(e) => update((b) => {
-                        if (b.cadence) b.cadence = { ...b.cadence, start: e.target.value };
-                      })} />
-                  </div>
-                  <span className="mono" style={{ fontSize: 11.5, color: "var(--ink-faint)" }}>
-                    {cadenceLine(cur.cadence)}
-                  </span>
-                </Field>
+                {/* The cadence EDITOR is gone from this tab (2026-08-24). It read as the
+                    place you scheduled a campaign, and the calendar backed that up by
+                    generating a drop on every matching day — a rate the board had merely
+                    stated became a schedule nobody agreed to. Drops are dated one at a
+                    time on the Arc tab now. What a board already states is shown here,
+                    read-only, because it is still what the commitment gate approves. */}
+                {cur.cadence && (
+                  <Field label="Cadence — internal only (rule 11): a stated intention, not a schedule">
+                    <span className="mono" style={{ fontSize: 11.5, color: "var(--ink-faint)" }}>
+                      {cadenceLine(cur.cadence)} · nothing is placed from this — date each drop on the {K.arcNoun} tab
+                    </span>
+                  </Field>
+                )}
               </>
             )}
 
@@ -412,6 +414,31 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
             <p style={S.p}>{K.benchBlurb}</p>
 
             <PlacementNudge board={cur} />
+
+            {conflict && (
+              <div style={S.conflict} role="alert">
+                <b style={{ color: "var(--ink)" }}>Not saved — {conflict}.</b>
+                <span>
+                  Something else wrote this board since you opened it: a Claude session through
+                  the MCP server, another tab, or an edit made by hand. Nothing has been
+                  overwritten. Re-read the vault to pick up their version and lose your unsaved
+                  edits, or overwrite theirs with what is on screen.
+                </span>
+                <div style={{ display: "flex", gap: 9, flexWrap: "wrap", marginTop: 4 }}>
+                  <button type="button" style={S.btn} onClick={reloadFromVault}>Re-read the vault</button>
+                  <button type="button" style={S.btnGhostFlat} onClick={() => saveToVault(true)}>
+                    Overwrite what is on disk
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {vault.enabled && vault.writable && (
+              <div style={{ display: "flex", gap: 9, alignItems: "baseline", flexWrap: "wrap", margin: "16px 0 0" }}>
+                <button type="button" style={S.btn} onClick={() => saveToVault()}>Save to the vault</button>
+                <p className="mono" style={{ fontSize: 12.5, color: msg.startsWith("Not saved") ? "var(--cut)" : "var(--teal)", minHeight: "1.4em", margin: 0 }}>{msg}</p>
+              </div>
+            )}
 
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "16px 0" }}>
               {["all", "undecided", "in", "cut", "flagged"].map((f) => (
@@ -592,31 +619,64 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               </div>
             )}
 
+            {(() => {
+              const unplaced = checkPlacement(cur).seeded;
+              if (!unplaced.length) return null;
+              return (
+                <div style={{ margin: "12px 0" }}>
+                  <button type="button" style={S.btn}
+                    title="Adds one drop per seeded idea with no drop yet, in bench order. Titles and stories carry over as-is — order and hooks are yours to refine after."
+                    onClick={() => update((b) => {
+                      for (const row of checkPlacement(b).seeded) {
+                        const idea = b.ideas.find((x) => x.id === row.id);
+                        if (!idea) continue;
+                        b.arc.push({ slot: `${K.arcNoun} ${b.arc.length + 1}`, date: "", ref: idea.id, title: idea.title,
+                          story: idea.story, track: "", songs: "", promo: "", note: "" });
+                      }
+                    })}>
+                    Build the arc — add {unplaced.length} seeded idea{unplaced.length === 1 ? "" : "s"} as {unplaced.length === 1 ? `a ${K.arcNoun}` : `${K.arcNoun}s`}
+                  </button>
+                </div>
+              );
+            })()}
+
             {cur.arc.map((d, i) => (
               <div key={i} style={S.drop}>
                 <div className="mono" style={{ fontSize: 11, color: "var(--ink-faint)", textTransform: "uppercase" }}>
                   <b className="display" style={{ display: "block", fontSize: 30, color: "var(--amber)", fontWeight: 400 }}>{i + 1}</b>
                   {K.arcNoun}
+                  <div style={{ marginTop: 8 }}>
+                    <input type="number" min={1} className="ed mono"
+                      style={{ width: 46, fontSize: 12.5, textAlign: "center" }}
+                      placeholder={String(i + 1)}
+                      aria-label={`Move ${d.title || `${K.arcNoun} ${i + 1}`} to position`}
+                      value={orderDraft[i] ?? ""}
+                      onChange={(e) => setOrderDraft((m) => ({ ...m, [i]: e.target.value }))} />
+                  </div>
                 </div>
                 <div>
                   <textarea className="ed display" rows={1} style={{ fontSize: 18 }} value={d.title}
                     onChange={(e) => update((b) => { b.arc[i].title = e.target.value; })} />
 
-                  {/* The date is not a field of its own — it lives inside the slot label,
-                      which is what the calendar parses. So this edits that string
-                      surgically and shows what the calendar will read back, because
-                      "did this land on the 11th?" was previously unanswerable in the app. */}
-                  <Field label={cur.kind === "channel" ? "Which day this slot runs" : "When it lands"}>
+                  {/* Assigning this date is how a campaign gets onto the calendar —
+                      the only way, since 2026-08-24. Nothing infers it from a cadence.
+                      The weekday beside it is RENDERED from the date, never typed, so
+                      the label can't end up disagreeing with the day it lands on. */}
+                  <Field label={cur.kind === "channel" ? "Which day this slot runs" : "When it drops"}>
                     <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
                       <input type="date" className="ed mono" style={{ fontSize: 12.5, width: 155 }}
                         aria-label={`Date for ${d.slot || `drop ${i + 1}`}`}
-                        value={parseSlotDate(d.slot ?? "", new Date().getUTCFullYear()) ?? ""}
-                        onChange={(e) => update((b) => { b.arc[i].slot = withSlotDate(b.arc[i].slot ?? "", e.target.value); })} />
-                      <span className="mono" style={{ fontSize: 11, color: "var(--ink-faint)" }}>
-                        {parseSlotDate(d.slot ?? "", new Date().getUTCFullYear())
-                          ? `on the calendar as ${parseSlotDate(d.slot ?? "", new Date().getUTCFullYear())}`
-                          : "no date — this one is listed as unplaced, not shown on the calendar"}
+                        value={d.date ?? ""}
+                        onChange={(e) => update((b) => { b.arc[i].date = e.target.value; })} />
+                      <span className="mono" style={{ fontSize: 11, color: d.date ? "var(--teal)" : "var(--ink-faint)" }}>
+                        {d.date
+                          ? `drops ${dropDateLabel(d.date)}`
+                          : "not dated — listed as unplaced, and it stays off the calendar until you set it"}
                       </span>
+                      {d.date && (
+                        <button type="button" style={{ ...S.btnGhost, fontSize: 11, padding: "2px 8px" }}
+                          onClick={() => update((b) => { b.arc[i].date = ""; })}>Clear</button>
+                      )}
                     </div>
                     <input className="ed mono" style={{ fontSize: 12, marginTop: 4 }} value={d.slot}
                       aria-label="Slot label"
@@ -644,8 +704,41 @@ export default function Workshop({ initialBoards, vault, loadErrors }: Props) {
               </div>
             ))}
 
-            <button type="button" style={S.btnGhost} onClick={() => update((b) => {
-              b.arc.push({ slot: `${K.arcNoun} ${b.arc.length + 1}`, ref: "", title: "Untitled",
+            <div style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap" }}>
+              <button type="button" style={S.btn} disabled={cur.arc.length < 2 || Object.keys(orderDraft).length === 0}
+                title="Give any drops a new position number above, then click this to apply them all at once. Drops left blank keep their current position."
+                onClick={() => {
+                  update((b) => {
+                    /**
+                     * "Move this to 3" means it ENDS UP third. Sorting everything by a
+                     * typed rank does not do that: the drops above it shift up as it
+                     * leaves, so it lands one short every time. So pull the movers out
+                     * first, then insert each at its target index in the gap that leaves.
+                     */
+                    const movers = Object.entries(orderDraft)
+                      .map(([i, raw]) => ({ i: Number(i), to: Number(raw) }))
+                      .filter((m) => b.arc[m.i] && Number.isFinite(m.to) && m.to >= 1)
+                      .sort((a, b2) => a.to - b2.to || a.i - b2.i);
+                    if (!movers.length) return;
+                    const moving = new Set(movers.map((m) => m.i));
+                    const rest = b.arc.filter((_, i) => !moving.has(i));
+                    for (const m of movers) {
+                      const at = Math.min(Math.max(m.to - 1, 0), rest.length);
+                      rest.splice(at, 0, b.arc[m.i]);
+                    }
+                    b.arc = rest;
+                  });
+                  setOrderDraft({});
+                }}>Reorder</button>
+              {Object.keys(orderDraft).length > 0 && (
+                <span className="mono" style={{ fontSize: 11.5, color: "var(--ink-faint)" }}>
+                  {Object.keys(orderDraft).length} position{Object.keys(orderDraft).length === 1 ? "" : "s"} typed, not applied yet
+                </span>
+              )}
+            </div>
+
+            <button type="button" style={{ ...S.btnGhost, marginTop: 10 }} onClick={() => update((b) => {
+              b.arc.push({ slot: `${K.arcNoun} ${b.arc.length + 1}`, date: "", ref: "", title: "Untitled",
                 story: "", track: "", songs: "", promo: "", note: "" });
             })}>Add a {K.arcNoun}</button>
           </section>

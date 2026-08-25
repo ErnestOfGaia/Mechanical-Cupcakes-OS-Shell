@@ -82,7 +82,7 @@ server.tool("get_calendar",
   wrap(({ month }: { month?: string }) => T.getCalendar(month)));
 
 server.tool("set_cadence",
-  "Record a board's commitment fields: typed cadence (days + start date + everyWeeks), UTM token, and utm_content prefix. The Workshop is the commitment gate and approving a campaign approves its cadence — but ONLY record what Ernest has stated; recording is not deciding. Tokens validate on entry (lowercase kebab, ≤24 chars, no underscores; one campaign, one token — sharing one is unrecoverable). Cadence is internal-only: it may live in vault docs in full, never in published copy.",
+  "Record a board's commitment fields: typed cadence (days + start date + everyWeeks), UTM token, and utm_content prefix. The Workshop is the commitment gate and approving a campaign approves its cadence — but ONLY record what Ernest has stated; recording is not deciding. NOTE (2026-08-24): a cadence is a STATED INTENTION and places nothing on the calendar. It never dates a drop, and recording one is not a licence to date the arc from it — use arc_set_date per drop, on Ernest's word. Tokens validate on entry (lowercase kebab, ≤24 chars, no underscores; one campaign, one token — sharing one is unrecoverable). Cadence is internal-only: it may live in vault docs in full, never in published copy.",
   {
     board,
     days: z.array(z.enum(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])).optional().describe("Posting days, e.g. [\"Wed\"]."),
@@ -168,13 +168,25 @@ server.tool("arc_add_drop",
   {
     board, idea_id: z.string(),
     title: z.string().describe("The drop's title, which is usually not the bench idea's title."),
-    slot: z.string().optional().describe("e.g. 'Drop 3 — Wed'"),
+    slot: z.string().optional().describe("The drop's LABEL only — 'Drop 3'. Never put a date in here; dates go in `date`."),
+    date: z.string().optional().describe("YYYY-MM-DD, the day this drop drops. Omit unless Ernest has named a day — an undated drop is honest, an invented one puts a campaign on a day nobody picked."),
     story: z.string().optional(), promo: z.string().optional(), note: z.string().optional(),
   },
   wrap((a: Record<string, unknown>) => T.arcAddDrop(a.board as string, a.idea_id as string, a.title as string, {
-    slot: a.slot as string | undefined, story: a.story as string | undefined,
+    slot: a.slot as string | undefined, date: a.date as string | undefined,
+    story: a.story as string | undefined,
     promo: a.promo as string | undefined, note: a.note as string | undefined,
   })));
+
+server.tool("arc_set_date",
+  "Put a drop on a day, or clear its date by passing an empty string. This is the ONLY thing that puts a campaign on the calendar — cadence does not, by ruling 2026-08-24. Set a date only when Ernest has named the day; never derive one from the campaign's stated cadence or from where the drop sits in the arc.",
+  {
+    board,
+    index: z.number().describe("Position in the arc, 0-based — as listed by get_board."),
+    date: z.string().describe("YYYY-MM-DD, or \"\" to take the drop off the calendar."),
+  },
+  wrap(({ board: b, index, date }: { board: string; index: number; date: string }) =>
+    T.arcSetDate(b, index, date)));
 
 server.tool("gate_tick",
   "Tick or un-tick a commit-gate item. Only tick when the thing is actually true — an unticked gate item is a way the campaign embarrasses itself in public.",

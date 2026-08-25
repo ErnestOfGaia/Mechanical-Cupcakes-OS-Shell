@@ -64,7 +64,7 @@ describe("the export states where every IN idea landed", () => {
         idea("IDEA-02", { v: { E: "in" as Verdict, K: null }, placed: "seed" }),
         idea("IDEA-03", { v: { E: "in" as Verdict, K: null } }),
       ],
-      arc: [{ slot: "Drop 1", ref: "IDEA-01", title: "t", story: "", track: "", songs: "", promo: "", note: "" }],
+      arc: [{ slot: "Drop 1", date: "", ref: "IDEA-01", title: "t", story: "", track: "", songs: "", promo: "", note: "" }],
     });
     const out = md(b);
     expect(out).toContain("**3 IN** — 1 placed, 0 inside other drops, 1 in the seed bank, 0 held by a seam, 1 unaccounted for.");
@@ -75,7 +75,7 @@ describe("the export states where every IN idea landed", () => {
   it("says WHY a placed-in idea has no drop — the §9 export requirement", () => {
     const b = board({
       ideas: [idea("IDEA-06", { v: { E: "in" as Verdict, K: null }, placedIn: { ref: "IDEA-01", role: "frame" } })],
-      arc: [{ slot: "Drop 1", ref: "IDEA-01", title: "t", story: "", track: "", songs: "", promo: "", note: "" }],
+      arc: [{ slot: "Drop 1", date: "", ref: "IDEA-01", title: "t", story: "", track: "", songs: "", promo: "", note: "" }],
     });
     const out = md(b);
     expect(out).toContain("**Placement:** inside IDEA-01 — frame");

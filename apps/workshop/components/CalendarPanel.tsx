@@ -9,7 +9,8 @@ import type { Board } from "@/lib/types";
  * no live integrations, deliberately: the reality view (blog + Postiz + manual
  * channels) is a different, deferred thing, and Seasonal Sprint Work is a third thing
  * that is research-gated. This answers exactly one question: "what would the month
- * look like if I commit this campaign at this cadence?"
+ * look like if I commit this campaign on these days?" Cadence stopped feeding it on
+ * 2026-08-24 — see lib/calendar.ts.
  */
 
 const CHANNEL_COLOUR: Record<string, string> = {
@@ -54,10 +55,12 @@ export default function CalendarPanel({ boards, initialMonth }: { boards: Board[
       <p className="eyebrow">Month projection</p>
       <h1 className="display" style={{ fontSize: 34, margin: "0 0 6px" }}>The calendar</h1>
       <p style={{ fontSize: 15, color: "var(--ink-soft)", maxWidth: "70ch", margin: 0 }}>
-        What the month looks like if these boards run at these cadences — arithmetic on the
-        boards, nothing else. It is <em>not</em> what is actually scheduled in Postiz or the
-        blog admin (that is the deferred reality view), and dates here are internal —
-        intentions live in the vault; promises live in published copy.
+        Every drop that has been given a day, and nothing else. A campaign appears here
+        because someone dated it on the {" "}<em>arc</em>, never because it stated a cadence —
+        undated drops are listed below as undated rather than spread across the weeks. It is
+        also <em>not</em> what is actually scheduled in Postiz or the blog admin (that is the
+        deferred reality view), and dates here are internal — intentions live in the vault;
+        promises live in published copy.
       </p>
 
       <div style={{ display: "flex", gap: 10, alignItems: "baseline", margin: "18px 0 10px" }}>
@@ -99,7 +102,6 @@ export default function CalendarPanel({ boards, initialMonth }: { boards: Board[
                         ...ui.item,
                         borderLeftColor: CHANNEL_COLOUR[it.channel] ?? "var(--rule)",
                         ...(hot ? { borderColor: "var(--cut)", background: "var(--cut-wash, var(--paper-raised))" } : {}),
-                        ...(it.source === "cadence" ? { opacity: 0.72, fontStyle: "italic" } : {}),
                       }}>
                       <span className="mono" style={{ fontSize: 8.5, textTransform: "uppercase", color: "var(--ink-faint)" }}>
                         {it.channel}{it.kind === "promo" ? " promo" : ""}{hot ? " ⚠️" : ""}
@@ -121,8 +123,8 @@ export default function CalendarPanel({ boards, initialMonth }: { boards: Board[
           <h2 className="display" style={{ fontSize: 18, margin: "22px 0 6px" }}>Not placed — no date to put them on</h2>
           <p style={{ fontSize: 13, color: "var(--ink-faint)", maxWidth: "70ch", margin: "0 0 8px" }}>
             Listed rather than guessed: an empty-looking calendar with silent omissions would
-            read as free time. Set a typed cadence on the Pitch tab, or date the arc slots, and
-            these move onto the grid.
+            read as free time. Give a drop a date on the <em>arc</em> tab and it moves onto the
+            grid — that is the only thing that puts it there.
           </p>
           {p.undated.map((u, i) => (
             <div key={i} style={{ fontSize: 13, color: "var(--ink-soft)", padding: "3px 0" }}>
@@ -136,8 +138,8 @@ export default function CalendarPanel({ boards, initialMonth }: { boards: Board[
         Standing streams without a fixed day are not drawn:{" "}
         {STANDING_STREAMS.filter((s) => !s.day).map((s) => `${s.label} (${s.note})`).join("; ")}.
         Blog slots are Tue · Wed · Thu 9:00 AM PT; a blog drop generates its LinkedIn promo at
-        10:30 when the campaign declares LinkedIn. Solid items carry authored dates; italic
-        ones are projected from a cadence.
+        10:30 when the campaign declares LinkedIn. Every item here carries a date somebody
+        assigned; nothing on this grid was derived from a campaign&rsquo;s stated cadence.
       </p>
     </section>
   );

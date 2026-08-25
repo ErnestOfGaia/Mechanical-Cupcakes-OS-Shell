@@ -1,6 +1,7 @@
+import { formatSlotDate, parseSlotDate, withSlotDate } from "./calendar";
 import { kindOf } from "./kinds";
 import { checkPlacement, placement } from "./rule";
-import type { Board, Cadence, Idea, Person, Verdict, Weekday, Workspace } from "./types";
+import type { Board, Cadence, Entry, Idea, Person, Verdict, Weekday, Workspace } from "./types";
 
 /* ------------------------------------------------------------------ verdicts */
 
@@ -120,6 +121,47 @@ export function cadenceLine(c: Cadence | null): string {
   return `${c.days.join(" · ")}, ${every}${from}${c.note ? ` (${c.note})` : ""}`;
 }
 
+/** A stored date survives only if it is a real calendar day. "2026-02-31" is not one. */
+function validDate(v: unknown): string {
+  if (typeof v !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return "";
+  const [y, m, d] = v.split("-").map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d));
+  return t.getUTCFullYear() === y && t.getUTCMonth() === m - 1 && t.getUTCDate() === d ? v : "";
+}
+
+/**
+ * Give every drop its typed `date`, migrating boards written before 2026-08-24 — when
+ * the date lived inside `slot`'s free text and was re-parsed on every render.
+ *
+ * Two things happen, once, on read:
+ *   1. LIFT — a date found in the label becomes the typed field.
+ *   2. STRIP — and is removed from the label, so the two can never disagree. Leaving
+ *      "Drop 1 — Tue 11 Aug" beside a typed 18 Aug would put a contradiction on screen.
+ *
+ * ⚠️ The lift has to GUESS A YEAR, because the old format never stored one — that being
+ * the defect this migration exists to end. It takes the year from the board's cadence
+ * start when there is one (the campaign's own frame of reference) and the current year
+ * otherwise, which is exactly what the calendar was already assuming every render. The
+ * guess now happens once and is visible in the date picker, instead of silently every
+ * January. A wrong one is a two-second fix on the drop; before, it could not be fixed.
+ */
+export function normaliseArc(arc: Entry[], cadence: Cadence | null): Entry[] {
+  const yearHint = Number(cadence?.start?.slice(0, 4)) || new Date().getUTCFullYear();
+  return arc.map((d) => {
+    // Same spread-first reasoning as ideas: an unknown field must survive the cycle.
+    const out: Entry = { ...d, slot: typeof d.slot === "string" ? d.slot : "", date: validDate(d.date) };
+    if (out.date) return { ...out, slot: withSlotDate(out.slot, "") };
+    const lifted = parseSlotDate(out.slot, yearHint);
+    return lifted ? { ...out, date: lifted, slot: withSlotDate(out.slot, "") } : out;
+  });
+}
+
+/** "2026-08-11" → "Tue 11 Aug 2026" — rendered from the date, never typed beside it. */
+export function dropDateLabel(date: string): string {
+  const stamp = formatSlotDate(date);
+  return stamp ? `${stamp} ${date.slice(0, 4)}` : "";
+}
+
 export function normalise(b: Partial<Board> & { id?: string }): Board {
   const kind = b.kind === "channel" ? "channel" : "campaign";
   const out: Board = {
@@ -159,6 +201,7 @@ export function normalise(b: Partial<Board> & { id?: string }): Board {
     v: { E: i.v?.E ?? null, K: i.v?.K ?? null },
     n: { E: i.n?.E ?? "", K: i.n?.K ?? "" },
   }));
+  out.arc = normaliseArc(out.arc, out.cadence);
   // Backfill blocking AFTER any merge, or an item added later blocks by accident.
   out.gate = out.gate.map((g) => ({ ...g, blocking: g.blocking ?? g.o !== "K" }));
   return out;
@@ -258,6 +301,9 @@ export function toMarkdown(b: Board, today: string): string {
     L.push(`## ${k.arcTitle}`, "");
     b.arc.forEach((d, i) => {
       L.push(`### ${k.arcNoun.replace(/^./, (c) => c.toUpperCase())} ${i + 1} — “${d.title}”${d.ref ? `  *(${d.ref})*` : ""}`);
+      // Stated either way. An undated drop reads as undated, never as "sometime" —
+      // the export is what leaves the app, so silence here would read as scheduled.
+      L.push(d.date ? `- **Drops:** ${dropDateLabel(d.date)}` : `- **Drops:** not dated yet`);
       if (d.story) L.push(`- **${k.fields.story}:** ${d.story}`);
       if (d.track) L.push(`- **${k.fields.track}:** \`${d.track}\``);
       if (d.songs) L.push(`- **${k.fields.songs}:** ${d.songs}`);

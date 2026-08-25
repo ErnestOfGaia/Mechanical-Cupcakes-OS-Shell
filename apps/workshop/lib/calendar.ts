@@ -5,11 +5,23 @@
  *   — computed from committed campaigns × cadence × slot rules, needing NO live
  *   integrations, because it is arithmetic on data the Workshop already holds.
  *
- * ⚖️ Deliberately NOT the reality view (what is actually approved and scheduled across
- * blog + Postiz + the manual channels — live reads, explicitly deferred: "it can stay a
- * generated vault doc until something forces it live"). And deliberately not Seasonal
- * Sprint Work, which the 2026-08-09 interview separated into strategic business
- * planning with a memory-holdable constraint — research-gated, not built.
+ * ⚖️ The projection was deliberately NOT the reality view — live reads were explicitly
+ * deferred: "it can stay a generated vault doc until something forces it live."
+ *
+ * 🔴 SOMETHING FORCED IT, 2026-08-09. The projection said Tue 11 Aug 10:30 was the Penny
+ * Post's LinkedIn slot. In Postiz that slot was already held by the MCOS Last Mile promo,
+ * and the projection could not know: it reasons from board cadence, and the MCOS promo
+ * lives in Postiz and in no board's arc. The collision was caught by querying Postiz by
+ * hand — exactly the check §5.8 says this calendar exists to run. A projection that
+ * reports "no collision" because it cannot see half the channel is worse than no check.
+ *
+ * So the calendar now takes an OPTIONAL reality layer: scheduled posts read from Postiz,
+ * passed in as plain data. ⚖️ The split that keeps this file honest — everything here is
+ * still pure functions, no fetch and no fs; the caller does the reading. See `Reality`.
+ *
+ * And deliberately still not Seasonal Sprint Work, which the 2026-08-09 interview
+ * separated into strategic business planning with a memory-holdable constraint —
+ * research-gated, not built.
  *
  * The projection's first real job (quoted in both Strategy §5.8 and AGENTS -
  * Marketing): Wednesday's blog post generates a LinkedIn promo at 10:30, and any other
@@ -64,13 +76,110 @@ export interface CalendarItem {
   /** ISO date YYYY-MM-DD. */
   date: string;
   channel: string;
-  kind: "drop" | "promo" | "stream";
+  kind: "drop" | "promo" | "stream" | "scheduled";
   campaign: string;
   label: string;
   /** e.g. "⏳ CONDITIONAL" — carried from the slot text, never interpreted. */
   qualifier?: string;
   /** Which data produced it, so a surprising item can be traced. */
-  source: "arc-date" | "cadence" | "stream";
+  source: "arc-date" | "cadence" | "stream" | "postiz";
+  /** Postiz post id — present only on `source: "postiz"` items, so one can be pulled. */
+  postId?: string;
+}
+
+/* ------------------------------------------------------------------ reality layer */
+
+/**
+ * One post that ACTUALLY exists in Postiz. Plain data: this file never fetches it.
+ * The caller (the MCP tool, an API route) reads Postiz and hands the rows in.
+ */
+export interface ScheduledPost {
+  /** Postiz `publishDate`, an ISO-8601 UTC instant. Converted to a PT day here. */
+  publishDate: string;
+  /** Provider id as Postiz reports it — "linkedin", "x", "youtube". */
+  provider: string;
+  /** QUEUE | PUBLISHED | ERROR | DRAFT. */
+  state: string;
+  id: string;
+  /** Full post text; only the first line is shown. */
+  content: string;
+}
+
+/**
+ * The result of trying to read reality. ⚠️ `ok: false` is NOT the same as "nothing
+ * scheduled" and must never render as an empty, reassuring calendar — a silent failure
+ * here would report "no collision" on a day that has one, which is the exact defect
+ * this layer was added to catch.
+ */
+export interface Reality {
+  ok: boolean;
+  posts: ScheduledPost[];
+  /** Why the read failed. Rendered loudly when `ok` is false. */
+  error?: string;
+}
+
+/** Postiz provider id → the channel names the boards and slot rules use. */
+export const PROVIDER_TO_CHANNEL: Record<string, string> = {
+  linkedin: "LinkedIn",
+  x: "X",
+  youtube: "YouTube",
+  mastodon: "Mastodon",
+  threads: "Threads",
+};
+
+/**
+ * Postiz stores UTC instants; the whole department reasons in Pacific ("10:30 AM PT").
+ * A post at 2026-08-12T02:00Z is 7 PM PT on the 11th — bucketing it by its UTC date
+ * would put it on the wrong day and miss a real collision. Uses the IANA zone rather
+ * than a fixed offset so it stays correct across the PDT/PST boundary.
+ */
+const PT_DAY = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "America/Los_Angeles",
+  year: "numeric", month: "2-digit", day: "2-digit",
+});
+const PT_TIME = new Intl.DateTimeFormat("en-US", {
+  timeZone: "America/Los_Angeles",
+  hour: "numeric", minute: "2-digit", hour12: true,
+});
+
+/** ISO-8601 UTC instant → "YYYY-MM-DD" in Pacific time. Empty string if unparseable. */
+export function ptDay(utcIso: string): string {
+  const d = new Date(utcIso);
+  if (Number.isNaN(d.getTime())) return "";
+  return PT_DAY.format(d);
+}
+
+/** ISO-8601 UTC instant → "2:30 PM PT". */
+export function ptTime(utcIso: string): string {
+  const d = new Date(utcIso);
+  if (Number.isNaN(d.getTime())) return "";
+  return `${PT_TIME.format(d)} PT`;
+}
+
+/** First line of a post, trimmed for a calendar row. */
+export function postSummary(content: string, max = 58): string {
+  const first = (content ?? "").split("\n").find((l) => l.trim()) ?? "";
+  const t = first.trim();
+  return t.length > max ? `${t.slice(0, max - 1)}…` : t;
+}
+
+/** Scheduled Postiz rows → calendar items, for the month asked for. */
+export function scheduledItems(posts: ScheduledPost[], month: string): CalendarItem[] {
+  return posts
+    .filter((p) => p.state !== "DRAFT")
+    .map((p) => {
+      const date = ptDay(p.publishDate);
+      return {
+        date,
+        channel: PROVIDER_TO_CHANNEL[p.provider] ?? p.provider,
+        kind: "scheduled" as const,
+        campaign: p.state === "PUBLISHED" ? "PUBLISHED" : "in Postiz",
+        label: `${ptTime(p.publishDate)} · ${postSummary(p.content)}`,
+        source: "postiz" as const,
+        postId: p.id,
+      };
+    })
+    .filter((i) => i.date.startsWith(month));
 }
 
 export interface UndatedNote {
@@ -92,6 +201,12 @@ export interface MonthProjection {
   collisions: Collision[];
   /** What could NOT be placed, listed rather than guessed — silence would read as "free". */
   undated: UndatedNote[];
+  /**
+   * Whether the Postiz reality layer was merged in. `false` means the calendar is
+   * projection-only and its collision list is INCOMPLETE — rendered loudly, never
+   * silently, because a quiet fallback reports a free slot that is actually taken.
+   */
+  reality: { ok: boolean; error?: string; count: number };
 }
 
 /* ------------------------------------------------------------------ date helpers */
@@ -115,7 +230,25 @@ export function parseSlotDate(slot: string, yearHint: number): string | null {
   const day = Number(m[1]);
   const month = MONTHS[m[2]];
   if (day < 1 || day > 31) return null;
-  return iso(new Date(Date.UTC(yearHint, month, day)));
+  const d = new Date(Date.UTC(yearHint, month, day));
+  // `Date.UTC(2026, 1, 31)` does not fail — it rolls forward to 3 Mar. A slot that
+  // says "31 Feb" is a typo, and answering it with a real-looking March date is worse
+  // than answering nothing: the drop lands on a day nobody chose. Reject the rollover.
+  if (d.getUTCMonth() !== month || d.getUTCDate() !== day) return null;
+  return iso(d);
+}
+
+/**
+ * The date of one drop. The typed `date` field is the answer whenever it is set.
+ *
+ * The `slot` fallback exists only for boards written before 2026-08-24, when the date
+ * lived in the label's free text — `normalise()` lifts those into `date` on read, so
+ * this branch is a safety net for a board that reaches the calendar unnormalised, not
+ * a second source of truth. It is the branch that loses the year; the typed one cannot.
+ */
+export function entryDate(d: { date?: string; slot?: string }, yearHint: number): string | null {
+  if (d.date && /^\d{4}-\d{2}-\d{2}$/.test(d.date)) return d.date;
+  return parseSlotDate(d.slot ?? "", yearHint);
 }
 
 const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
@@ -162,7 +295,14 @@ export function slotQualifier(slot: string): string | undefined {
   return m ? m[1].trim() : undefined;
 }
 
-/** Every date of `cadence` that falls inside [from, to), anchored on its start date. */
+/**
+ * Every date of `cadence` that falls inside [from, to), anchored on its start date.
+ *
+ * ⚖️ 2026-08-24: this NO LONGER FEEDS THE CALENDAR. A cadence is a stated intention
+ * (rule 11, and the thing the commitment gate approves) — it is not permission to put
+ * drops on days Ernest never picked. `projectMonth` places typed drop dates only.
+ * Kept, and kept correct, because the cadence itself is still a record on the board.
+ */
 export function cadenceDates(c: Cadence, from: Date, to: Date): string[] {
   if (!c.start || !/^\d{4}-\d{2}-\d{2}$/.test(c.start)) return [];
   const start = new Date(`${c.start}T00:00:00Z`);
@@ -172,30 +312,48 @@ export function cadenceDates(c: Cadence, from: Date, to: Date): string[] {
 
   // Walk day by day; a date belongs to the cadence when its weekday is listed and its
   // week distance from the start week is a multiple of everyWeeks.
-  const startWeek = Math.floor(start.getTime() / (7 * 86_400_000));
+  //
+  // Weeks are counted from the MONDAY on or before the start date. Bucketing by
+  // `time / 7 days` instead counts from the epoch, which was a Thursday: a Tue/Wed/Thu
+  // fortnightly cadence starting Tue 4 Aug then had Thursday fall in the *next* bucket
+  // and drop out, projecting Tue 4, Wed 5, Thu 13 — a week split down the middle.
+  const startWeekMonday = mondayOf(start);
   for (let t = new Date(from); t < to; t = new Date(t.getTime() + 86_400_000)) {
     if (t < start) continue;
     const weekday = (Object.keys(DAY_TO_INDEX) as Weekday[]).find((d) => DAY_TO_INDEX[d] === t.getUTCDay())!;
     if (!c.days.includes(weekday)) continue;
-    const week = Math.floor(t.getTime() / (7 * 86_400_000));
-    if ((week - startWeek) % every !== 0) continue;
+    const week = Math.round((mondayOf(t) - startWeekMonday) / (7 * 86_400_000));
+    if (week % every !== 0) continue;
     out.push(iso(t));
   }
   return out;
 }
 
+/** Epoch ms of the Monday on or before `d` — the start of the week `d` belongs to. */
+function mondayOf(d: Date): number {
+  const back = (d.getUTCDay() + 6) % 7; // Mon=0 … Sun=6
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() - back);
+}
+
 /* ------------------------------------------------------------------ projection */
 
 /**
- * Project one month. Sources, in order of authority:
- *   1. DATED ARC SLOTS — a date written on a drop is a decision; it always wins.
- *   2. TYPED CADENCE — projects future drops for boards whose arc is undated. When a
- *      board has BOTH, cadence fills only dates the arc doesn't already claim.
- *   3. STANDING STREAMS — fixed-weekday ones only.
+ * Project one month. Sources:
+ *   1. DATED DROPS — the `date` Ernest assigned while reviewing the arc. The only
+ *      thing that puts a campaign on a day.
+ *   2. STANDING STREAMS — fixed-weekday ones only.
+ *   3. REALITY — what is actually in Postiz, when the caller could read it.
+ *
+ * ⚖️ CADENCE IS NOT A SOURCE (ruled 2026-08-24). It used to generate `source: "cadence"`
+ * drops for any board whose arc was undated, so a board inherited a schedule from a rate
+ * it had merely stated — Ernest read that, correctly, as the app forcing a cadence rule
+ * on him. An undated drop is now listed as undated. A drop lands on a day because
+ * somebody put it there.
+ *
  * Every blog-channel item generates its LinkedIn promo when the campaign declares
  * LinkedIn — that is the rule the collision check exists to run.
  */
-export function projectMonth(boards: Board[], month: string): MonthProjection {
+export function projectMonth(boards: Board[], month: string, reality?: Reality): MonthProjection {
   const [y, mo] = month.split("-").map(Number);
   const from = new Date(Date.UTC(y, mo - 1, 1));
   const to = new Date(Date.UTC(y, mo, 1));
@@ -208,15 +366,13 @@ export function projectMonth(boards: Board[], month: string): MonthProjection {
     if (b.stage === "archived") continue;
     const isBlog = b.channels.includes("Blog");
     const promo = b.channels.includes(SLOT_RULES.promoChannel);
-    const claimed = new Set<string>();
 
     b.arc.forEach((d) => {
-      const when = parseSlotDate(d.slot ?? "", y);
-      if (when) claimed.add(when);
+      const when = entryDate(d, y);
       if (inMonth(when)) {
         items.push({
           date: when, channel: isBlog ? "Blog" : b.channels[0] ?? "—", kind: "drop",
-          campaign: b.name, label: `${d.slot?.split("—")[0]?.trim() || "Drop"} · ${d.title}`,
+          campaign: b.name, label: `${dropLabel(d)} · ${d.title}`,
           qualifier: slotQualifier(d.slot ?? ""), source: "arc-date",
         });
         if (promo && isBlog) {
@@ -226,27 +382,9 @@ export function projectMonth(boards: Board[], month: string): MonthProjection {
           });
         }
       } else if (!when && (d.ref || d.title !== "Untitled")) {
-        undated.push({ campaign: b.name, label: d.slot || d.title, why: "no parseable date in the slot text" });
+        undated.push({ campaign: b.name, label: dropLabel(d) || d.title, why: "no date assigned yet — set it on the drop" });
       }
     });
-
-    if (b.cadence) {
-      for (const when of cadenceDates(b.cadence, from, to)) {
-        if (claimed.has(when)) continue; // an authored drop date beats a projected one
-        items.push({
-          date: when, channel: isBlog ? "Blog" : b.channels[0] ?? "—", kind: "drop",
-          campaign: b.name, label: `projected (${cadenceKey(b.cadence)})`, source: "cadence",
-        });
-        if (promo && isBlog) {
-          items.push({
-            date: when, channel: SLOT_RULES.promoChannel, kind: "promo",
-            campaign: b.name, label: `promo ${SLOT_RULES.promoTime} (projected)`, source: "cadence",
-          });
-        }
-      }
-    } else if (!b.arc.some((d) => parseSlotDate(d.slot ?? "", y)) && b.arc.length) {
-      undated.push({ campaign: b.name, label: `${b.arc.length} drops`, why: "no typed cadence and no dated slots — set the cadence to project it" });
-    }
   }
 
   for (const s of STANDING_STREAMS) {
@@ -257,6 +395,12 @@ export function projectMonth(boards: Board[], month: string): MonthProjection {
       }
     }
   }
+
+  // The reality layer, merged before collisions are computed — that ordering IS the
+  // feature. Projected-vs-projected clashes were always visible; the one that shipped
+  // wrong was projected-vs-actually-scheduled.
+  const real = reality?.ok ? scheduledItems(reality.posts, month) : [];
+  items.push(...real);
 
   items.sort((a, b2) => a.date.localeCompare(b2.date) || a.channel.localeCompare(b2.channel));
 
@@ -270,29 +414,57 @@ export function projectMonth(boards: Board[], month: string): MonthProjection {
     .filter(([, list]) => list.length > 1)
     .map(([k, list]) => ({ date: k.split("|")[0], channel: k.split("|")[1], items: list }));
 
-  return { month, items, collisions, undated };
+  return {
+    month, items, collisions, undated,
+    reality: { ok: !!reality?.ok, error: reality?.error, count: real.length },
+  };
 }
 
-const cadenceKey = (c: Cadence): string =>
-  `${c.days.join("/")}${(c.everyWeeks ?? 1) > 1 ? ` ×${c.everyWeeks}wk` : ""}`;
+/**
+ * The drop's label for a calendar row. Slots are plain labels now ("Drop 1"), but a
+ * pre-2026-08-24 board may still read through here with a date in its text, so the
+ * leading segment is taken and the date stripped rather than shown twice.
+ */
+const dropLabel = (d: { slot?: string; date?: string }): string =>
+  withSlotDate(d.slot?.split("·")[0]?.trim() || "Drop", "");
 
 /** Plain-text rendering, for the MCP tool and for tests to read like a human would. */
 export function formatMonth(p: MonthProjection): string {
   const L: string[] = [];
-  L.push(`MONTH PROJECTION — ${p.month}  (arithmetic on board data; not the reality view)`);
+  L.push(
+    p.reality.ok
+      ? `MONTH — ${p.month}  (board projection ● merged with ${p.reality.count} post(s) actually in Postiz)`
+      : `MONTH PROJECTION — ${p.month}  (arithmetic on board data; not the reality view)`,
+  );
+
+  // Loud, first, and impossible to skim past. A projection-only calendar cannot see
+  // anything scheduled outside a board's arc, so its "no collision" means nothing.
+  if (!p.reality.ok) {
+    L.push("");
+    L.push("⛔ REALITY LAYER UNAVAILABLE — this is a PROJECTION ONLY.");
+    L.push(`   ${p.reality.error ?? "Postiz could not be read."}`);
+    L.push("   Anything scheduled in Postiz but not written on a board is INVISIBLE here,");
+    L.push("   so the collision list below is incomplete. Do not read a free slot as free.");
+  }
+
   L.push("");
   if (!p.items.length) L.push("  (nothing lands this month)");
   let lastDate = "";
   for (const it of p.items) {
     const day = it.date === lastDate ? "          " : it.date;
     lastDate = it.date;
-    L.push(`  ${day}  ${it.channel.padEnd(9)} ${it.kind.padEnd(6)} ${it.campaign} — ${it.label}${it.qualifier ? `  ${it.qualifier}` : ""}`);
+    // ● is real, · is projected. One glance has to separate them.
+    const mark = it.source === "postiz" ? "●" : "·";
+    L.push(`  ${day} ${mark} ${it.channel.padEnd(9)} ${it.kind.padEnd(9)} ${it.campaign} — ${it.label}${it.qualifier ? `  ${it.qualifier}` : ""}`);
   }
   if (p.collisions.length) {
     L.push("");
     L.push(`⚠️ ${p.collisions.length} CHANNEL COLLISION${p.collisions.length === 1 ? "" : "S"} — two things on one channel on one day:`);
     for (const c of p.collisions) {
-      L.push(`  ${c.date} on ${c.channel}: ${c.items.map((i) => `${i.campaign} (${i.kind})`).join("  +  ")}`);
+      const real = c.items.filter((i) => i.source === "postiz").length;
+      const tag = real && real < c.items.length ? "  ← projected vs ACTUALLY SCHEDULED" : real ? "  ← both already in Postiz" : "";
+      L.push(`  ${c.date} on ${c.channel}: ${c.items.map((i) => `${i.campaign} (${i.kind})`).join("  +  ")}${tag}`);
+      for (const i of c.items.filter((x) => x.postId)) L.push(`      postiz id=${i.postId} — pull with: postiz posts:delete ${i.postId}`);
     }
   }
   if (p.undated.length) {

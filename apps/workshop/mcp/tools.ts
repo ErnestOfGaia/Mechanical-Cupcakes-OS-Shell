@@ -11,8 +11,9 @@
  * click or a Claude session triggered them, because they are the same functions.
  */
 import { formatMonth, projectMonth } from "../lib/calendar";
+import { readPostizMonth } from "../lib/postiz";
 import { checkPlacement, formatPlacementReport, placement } from "../lib/rule";
-import { cadenceLine, setVerdict, toMarkdown } from "../lib/board";
+import { cadenceLine, dropDateLabel, setVerdict, toMarkdown } from "../lib/board";
 import { prefixError, tokenError } from "../lib/token";
 import { voiceWarning } from "../lib/voice";
 import { listBoards, saveBoard, vaultStatus } from "../lib/vault";
@@ -172,7 +173,11 @@ export async function getCalendar(month?: string): Promise<string> {
   }
   const m = month?.trim() || new Date().toISOString().slice(0, 7);
   if (!/^\d{4}-\d{2}$/.test(m)) throw new ToolError(`"${month}" is not a month — use YYYY-MM, e.g. 2026-08.`);
-  return formatMonth(projectMonth(boards, m));
+  // The reality layer. readPostizMonth never throws — a failed read comes back as
+  // { ok: false, error } and formatMonth says so loudly rather than quietly degrading
+  // to a projection that would report a taken slot as free.
+  const reality = await readPostizMonth(m);
+  return formatMonth(projectMonth(boards, m, reality));
 }
 
 /**
@@ -304,18 +309,53 @@ export async function setVerdictTool(ref: string, ideaId: string, person: Person
   });
 }
 
-export async function arcAddDrop(ref: string, ideaRef: string, title: string, opts: { slot?: string; story?: string; promo?: string; note?: string } = {}): Promise<string> {
+export async function arcAddDrop(ref: string, ideaRef: string, title: string, opts: { slot?: string; date?: string; story?: string; promo?: string; note?: string } = {}): Promise<string> {
   return mutate(ref, (b) => {
     const i = idea(b, ideaRef);
     if (b.arc.some((d) => (d.ref ?? "").includes(i.id))) throw new ToolError(`${i.id} already has a drop in the arc.`);
     b.arc.push({
       slot: opts.slot ?? `Drop ${b.arc.length + 1}`,
+      date: checkDropDate(opts.date),
       ref: i.id, title, story: opts.story ?? "", track: "", songs: "",
       promo: opts.promo ?? "", note: opts.note ?? "",
     });
     // It has a slot now, so the seed flag would be a second answer to a settled question.
     if (i.placed === "seed") i.placed = null;
-    return `Added ${opts.slot ?? `Drop ${b.arc.length}`} for ${i.id}: ${title}`;
+    return `Added ${opts.slot ?? `Drop ${b.arc.length}`} for ${i.id}: ${title}${opts.date ? ` — drops ${dropDateLabel(opts.date)}` : " — NOT DATED (it stays off the calendar until Ernest picks a day)"}`;
+  });
+}
+
+/**
+ * A date is only accepted if it is a real calendar day. Refusing beats rounding:
+ * "2026-02-31" silently became 3 March under the old free-text parser, and a drop
+ * landing on a day nobody chose is the whole failure this typed field exists to end.
+ */
+function checkDropDate(v: string | undefined): string {
+  if (!v) return "";
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) throw new ToolError(`date "${v}" is not a date — use YYYY-MM-DD`);
+  const [y, m, d] = v.split("-").map(Number);
+  const t = new Date(Date.UTC(y, m - 1, d));
+  if (t.getUTCFullYear() !== y || t.getUTCMonth() !== m - 1 || t.getUTCDate() !== d)
+    throw new ToolError(`date "${v}" is not a real day on the calendar.`);
+  return v;
+}
+
+/**
+ * Put a drop on a day, or take it off one. This is how a campaign gets onto the
+ * calendar — the ONLY way, since 2026-08-24. Nothing is inferred from a cadence.
+ */
+export async function arcSetDate(ref: string, index: number, date: string): Promise<string> {
+  return mutate(ref, (b) => {
+    const d = b.arc[index];
+    if (!d) throw new ToolError(`No drop at index ${index}. This board has ${b.arc.length}.`);
+    const was = d.date;
+    d.date = checkDropDate(date);
+    if (!d.date) return `${d.slot || `Drop ${index + 1}`} — “${d.title}” is no longer dated${was ? ` (was ${dropDateLabel(was)})` : ""}. It drops off the calendar.`;
+    const clash = b.arc.filter((x, n) => n !== index && x.date === d.date);
+    return [
+      `${d.slot || `Drop ${index + 1}`} — “${d.title}” drops ${dropDateLabel(d.date)}${was ? ` (was ${dropDateLabel(was)})` : ""}.`,
+      ...(clash.length ? [`⚠️ ${clash.length} other drop(s) on this board share that day: ${clash.map((x) => `“${x.title}”`).join(", ")}.`] : []),
+    ].join("\n");
   });
 }
 

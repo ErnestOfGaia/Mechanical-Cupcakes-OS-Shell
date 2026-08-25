@@ -16,7 +16,7 @@ describe('fieldIdentical — the definition of "same board" for round-trip proof
   });
 
   it("is sensitive to array order — arc and idea order is meaningful content", () => {
-    const entry = (title: string) => ({ slot: "1", ref: "", title, story: "", track: "", songs: "", promo: "", note: "" });
+    const entry = (title: string) => ({ slot: "1", date: "", ref: "", title, story: "", track: "", songs: "", promo: "", note: "" });
     const a = normalise({ arc: [entry("first"), entry("second")] });
     const b = normalise({ arc: [entry("second"), entry("first")] });
     expect(fieldIdentical(a, b)).toBe(false);

@@ -158,18 +158,43 @@ maybe("the MCP server, over a real stdio connection", () => {
     expect(text).toMatch(/No board matches/);
   });
 
-  it("records a typed cadence + token, and the calendar projects it", async () => {
+  it("records a typed cadence + token — and the calendar places NOTHING from it", async () => {
     const set = await call("set_cadence", { board: "Demo", days: ["Wed"], start: "2026-08-12", token: "demo-campaign", content_prefix: "demo" });
     expect(set.isError, set.text).toBe(false);
     const b = onDisk();
     expect(b.cadence).toEqual({ days: ["Wed"], start: "2026-08-12" });
     expect(b.token).toBe("demo-campaign");
+    // Recording the rate must not date the arc. Ruled 2026-08-24.
+    expect(b.arc.every((d: { date: string }) => !d.date), "a cadence dated the drops").toBe(true);
 
     const cal = await call("get_calendar", { month: "2026-08" });
     expect(cal.isError, cal.text).toBe(false);
-    expect(cal.text).toContain("MONTH PROJECTION — 2026-08");
+    // Either header is fine — whether Postiz was reachable is not what this asserts.
+    expect(cal.text).toMatch(/MONTH( PROJECTION)? — 2026-08/);
+    expect(cal.text, "Demo has a cadence but no dated drop; it must not appear as scheduled")
+      .toMatch(/NOT PLACED[\s\S]*Demo Campaign/);
+  });
+
+  it("arc_set_date is what puts a drop on a day — and takes it off again", async () => {
+    const set = await call("arc_set_date", { board: "Demo", index: 0, date: "2026-08-12" });
+    expect(set.isError, set.text).toBe(false);
+    expect(set.text).toContain("Wed 12 Aug 2026");
+    expect(onDisk().arc[0].date).toBe("2026-08-12");
+
+    const cal = await call("get_calendar", { month: "2026-08" });
     expect(cal.text).toContain("2026-08-12");
-    expect(cal.text).toContain("not the reality view");
+
+    const clear = await call("arc_set_date", { board: "Demo", index: 0, date: "" });
+    expect(clear.isError, clear.text).toBe(false);
+    expect(clear.text).toMatch(/no longer dated/);
+    expect(onDisk().arc[0].date).toBe("");
+  });
+
+  it("arc_set_date REFUSES a day that is not on the calendar", async () => {
+    const r = await call("arc_set_date", { board: "Demo", index: 0, date: "2026-02-31" });
+    expect(r.isError).toBe(true);
+    expect(r.text).toMatch(/not a real day/);
+    expect(onDisk().arc[0].date, "nothing written on a refused date").toBe("");
   });
 
   it("REFUSES a malformed token with the reason", async () => {

@@ -9,7 +9,7 @@ const idea = (id: string, E: Verdict = "in", over: Partial<Idea> = {}): Idea => 
 });
 
 const drop = (ref: string): Entry =>
-  ({ slot: "Drop 1", ref, title: "t", story: "", track: "", songs: "", promo: "", note: "" });
+  ({ slot: "Drop 1", date: "", ref, title: "t", story: "", track: "", songs: "", promo: "", note: "" });
 
 const seam = (h: string, p = ""): Seam => ({ tag: "Open", cls: "", h, p });
 
