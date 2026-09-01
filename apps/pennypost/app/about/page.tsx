@@ -89,7 +89,7 @@ export default function About() {
 
           <p style={{ marginBottom: "1.1rem" }}>
             So people cheated, cleverly. Refusing a letter cost nothing, and enough people refused
-            that undelivered mail became a standing complaint of the Post Office's. Contemporary
+            that undelivered mail became a standing Post Office complaint. Contemporary
             accounts describe the trick that followed: a code agreed in advance and written on the
             <em> outside</em> — a particular mark, a way of addressing it, a deliberate slip of the
             pen. You read the cover on the doorstep, learned what you needed to know, and handed it
@@ -193,11 +193,20 @@ export default function About() {
           <h3 className="smallcaps mb-3" style={{ fontFamily: "var(--display)", fontSize: "1rem", color: "var(--ink-soft)" }}>
             how this was built
           </h3>
+          {/* ⛔ Architecture claims deliberately do NOT live here any more. They were
+              duplicated between this paragraph and the writeup, and two pages asserting
+              the same facts is how they end up contradicting each other. This page owns
+              WHY IT IS CALLED THAT; /under-the-hood/ owns HOW IT WAS MADE, rendered from
+              apps/pennypost/WRITEUP.md. The one fact kept here is the human one, because
+              it belongs beside the human story rather than beside the stack. */}
           <p style={{ color: "var(--ink)", lineHeight: 1.72 }}>
-            A static site — no backend, no framework of accounts, no analytics. The engravings are
-            drawn in code rather than photographed, which is cheaper and also happens to be the correct
-            idiom for 1840. It was built at nights and on days off, around a full-time restaurant job,
-            which is the honest answer to how most of my things get built.
+            It was built at nights and on days off, around a full-time restaurant job, which is the
+            honest answer to how most of my things get built. The full account of how it was made,
+            including the decisions that turned out to be wrong, is{" "}
+            <Link href="/under-the-hood/" style={{ color: "var(--ink)", fontFamily: "var(--display)" }}>
+              under the hood
+            </Link>
+            .
           </p>
           <p className="mt-4" style={{ color: "var(--ink-soft)", lineHeight: 1.72 }}>
             I teach people to use AI tools without the hype — mostly small businesses and people who

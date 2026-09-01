@@ -245,6 +245,9 @@ export function PennyPost() {
         <Link href="/about" className="inline-flex items-center px-4 py-2 text-[0.9rem] no-underline" style={{ color: "var(--ink-soft)", fontFamily: "var(--body)" }}>
           About
         </Link>
+        <Link href="/under-the-hood/" className="inline-flex items-center px-4 py-2 text-[0.9rem] no-underline" style={{ color: "var(--ink-soft)", fontFamily: "var(--body)" }}>
+          Under the Hood
+        </Link>
       </nav>
 
       <main className="mx-auto mt-6 max-w-5xl px-4">
@@ -732,6 +735,12 @@ function Footer() {
           Built in spare time around a full-time job.{" "}
           <Link href="/about" style={{ color: "var(--ink)" }}>
             Read why it is called The Penny Post →
+          </Link>
+        </p>
+        <p style={{ color: "var(--ink-soft)", fontSize: "0.9rem", lineHeight: 1.6 }}>
+          Or read how it was made, including what broke.{" "}
+          <Link href="/under-the-hood/" style={{ color: "var(--ink)" }}>
+            Under the Hood →
           </Link>
         </p>
         <p style={{ color: "var(--ink-faint)", fontSize: "0.86rem" }}>

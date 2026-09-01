@@ -27,6 +27,9 @@
   --display: "Bookman Old Style", "Book Antiqua", "Palatino Linotype", Palatino, Georgia, serif;
   --body: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, "Times New Roman", serif;
   --script: "Segoe Script", "Bradley Hand", "Snell Roundhand", "Apple Chancery", cursive;
+  /* Added for the Under the Hood page, which sets code. System stack like every
+     other font here — the zero-request rule has no exceptions. */
+  --mono: ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace;
 
   --flip-duration: 0.7s;
 }
@@ -113,6 +116,93 @@ body {
 
 .script {
   font-family: var(--script);
+}
+
+/* ------------------------------------------------------------------ writeup */
+/* The Under the Hood page renders WRITEUP.md through markdown-to-jsx. Block-level
+   elements that need the app's own furniture (headings, rules, tables) are mapped
+   to components in the page's `overrides`; everything flat lives here.
+
+   ⛔ Deliberately NOT `.broadsheet-columns`. A two-column Victorian measure is
+   right for the About page's narrative and wrong for technical prose carrying code
+   blocks and file trees — a `<pre>` cannot break across columns, so it either
+   overflows or strands a column. Single measure, wider leading. */
+
+.writeup {
+  line-height: 1.72;
+  color: var(--ink);
+}
+
+.writeup p {
+  margin-bottom: 1.1rem;
+}
+
+/* ⛔ No dropcap here, deliberately. The About page opens with one because its first
+   paragraph follows the headline directly. This page's first paragraph sits under a
+   section head, where a 3.6em initial reads as a mistake. (It would also not have
+   worked: markdown-to-jsx wraps its output in a div, so `.writeup > p` matches
+   nothing — checked in the browser, not assumed.) */
+
+.writeup ul,
+.writeup ol {
+  margin: 0 0 1.1rem 1.4rem;
+  padding-left: 0.4rem;
+}
+
+.writeup ul { list-style: disc; }
+.writeup ol { list-style: decimal; }
+
+.writeup li {
+  margin-bottom: 0.4rem;
+}
+
+.writeup li::marker {
+  color: var(--ink-faint);
+}
+
+.writeup strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.writeup a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+
+.writeup a:hover {
+  text-decoration-color: var(--cancel);
+}
+
+/* Set on the same stock, boxed with a hairline — what a Victorian printer would
+   have done with a set block. ⛔ Never a dark terminal panel: on cream laid paper
+   it reads as a hole punched in the page. */
+.writeup pre {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.1rem;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.writeup :not(pre) > code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--paper-sunk);
+  padding: 0.08em 0.32em;
+  border-radius: 2px;
+}
+
+.writeup pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
 }
 
 /* ------------------------------------------------------------ postcard flip */
