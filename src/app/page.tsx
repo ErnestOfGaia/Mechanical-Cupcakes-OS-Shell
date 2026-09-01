@@ -4,6 +4,13 @@ import { cn } from "@/lib/utils";
 import { BarChart3, Search, Sparkles, ChefHat, Newspaper, Stamp, Terminal } from "lucide-react";
 
 export default function Home() {
+  /* ⚠️ THIS ARRAY DUPLICATES `APP_REGISTRY` IN src/lib/appRegistry.ts, AND THEY DRIFT.
+     They already disagree on ids (`pelican` here vs `pellito` there), names, icons,
+     descriptions and statuses. The registry drives the Directory dropdown and Hoot;
+     this array drives only the landing grid.
+     Until L3 deletes this array and renders the landing from the registry, ANY change
+     to an app's status or name has to be made in BOTH places or the gallery starts
+     contradicting itself in public. Noted 2026-09-01 during Last Mile L1. */
   const APPS = [
     {
       id: "pelican",
@@ -46,7 +53,10 @@ export default function Home() {
       name: "THE PENNY POST",
       icon: Stamp,
       description: "Write a postcard and watch it travel — nothing leaves your browser",
-      status: "Live Demo",
+      // 2026-09-01: "Live Demo" → "Operational". The old value was not even a member
+      // of the registry's status union, so this card and the Directory dropdown were
+      // labelling the same app two different ways. Matches appRegistry's "operational".
+      status: "Operational",
       color: "text-amber-400",
       bg: "bg-amber-400/10",
       border: "border-amber-400/20",

@@ -11,7 +11,7 @@ export const hootAgent = new Agent({
   - Explain what an app is and its purpose using the search_knowledge tool.
   - Provide onboarding guidance for new users.
   - Answer high-level technical questions about the system.
-  - Help users navigate between apps (Hoot Dashboard, Pellito Hub, News Hub World, Postcards).
+  - Help users navigate between apps (Hoot Dashboard, Pellito Hub, News Hub World, The Penny Post).
   - Defer to local agents (like the Pellito Hub agent) for in-depth app-specific tasks.
   
   BEHAVIOR:

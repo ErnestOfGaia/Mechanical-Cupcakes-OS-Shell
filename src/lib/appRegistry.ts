@@ -58,13 +58,20 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     // The Penny Post keeps the /postcards gallery slot (decision 2026-08-01) —
     // it is the public descendant of the private postcards app, which stays
     // login-gated on its own subdomain and out of the gallery.
+    //
+    // 2026-09-01: status "pilot" → "operational" (Ernest's call, Last Mile L1).
+    // The app is live, complete, does everything it claims, and is one of the
+    // interim featured three (SEAM-16b). "pilot" understated a finished app, and
+    // the gallery's standing rule is that displayed status matches reality.
+    // ⚠️ The landing grid keeps its own copy of this in src/app/page.tsx — change
+    // both until L3 deletes that array.
     id: "pennypost",
     name: "The Penny Post",
     icon: Stamp,
     description: "Write a postcard and watch it travel — stamp, cancellation, transit, arrival. Everything stays in your browser; nothing is sent or stored.",
     route: "/postcards",
     isExternal: false,
-    status: "pilot",
+    status: "operational",
     color: "text-amber-400",
     bg: "bg-amber-400/10",
     border: "border-amber-400/20",
