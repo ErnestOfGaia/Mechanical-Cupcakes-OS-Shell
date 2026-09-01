@@ -9,24 +9,45 @@ export const metadata: Metadata = {
     "In 1840 the post stopped being a luxury. Here is what changed, and why a little postcard toy is named after it.",
 };
 
-/* ⚠️ FACT-CHECK BEFORE THIS GOES LIVE.
+/* FACT-CHECKED 2026-09-01, then adversarially re-checked — which caught two errors the
+ * first pass had itself introduced. Citations are in the commit carrying this change.
  *
- * Every date and name below is written from recall and ships publicly under
- * Ernest's name. Verify against a real source — the Postal Museum, the Royal Mail
- * archive, Britannica — and record the sources in the commit message.
+ * Corrected below:
  *
- * Specifically confirm: the 1837 pamphlet title; 10 January 1840 for the uniform
- * rate; 1 May / 6 May 1840 for the Penny Black's issue and validity; that the
- * Mulready was withdrawn rather than merely mocked.
+ *  - The Penny Black was called "the first adhesive postage stamp anywhere in the
+ *    world." The standard qualification is "issued by a public postal service." That
+ *    qualification exists NOT because of earlier private adhesives (there are none;
+ *    the first local-post adhesives are New York 1842 and Zurich 1843) but because
+ *    prepaid postal stationery (Sardinia 1819, New South Wales 1838) and adhesive
+ *    revenue stamps both predate 1840.
  *
- * Deliberately NOT included: the widely-repeated story of Rowland Hill watching a
- * young woman refuse a letter from her sweetheart. It is the best anecdote in the
- * whole subject and it is very probably apocryphal. A page whose entire premise is
- * "these are real facts" cannot afford it.
+ *  - The Mulready was "quietly dropped." It was called in from November 1842 by the
+ *    Board of Stamps and Taxes, and the returned stock destroyed.
+ *    ⚠️ NOT the Inland Revenue. That board did not exist until the Inland Revenue
+ *    Board Act 1849; several secondary sources use the name anachronistically here,
+ *    and this page repeated the mistake for one draft.
  *
- * Deliberately NOT included: any specific figure for how far letter volumes rose.
- * The direction is not in dispute; the number needs a citation nobody has supplied
- * yet. Add one, with a source, or leave the sentence as it is.
+ *  - Letter volumes said "Britain." The figures are United Kingdom, and they count
+ *    CHARGEABLE letters, so the 1839→1840 jump is flattered by the abolition of
+ *    parliamentary franking on 10 January 1840. Both facts now stated.
+ *
+ *  - "The sender did not pay" was absolute. Either party could pay; the recipient
+ *    usually did.
+ *
+ * STANDING EXCLUSIONS — editorial rules, not unfinished work. Do not "fix" these by
+ * adding the missing material.
+ *
+ * 1. The story of Rowland Hill watching a young woman refuse a letter from her
+ *    sweetheart. It is apocryphal AS TOLD ABOUT HILL, and the reason is worth keeping:
+ *    it is Coleridge's story, told first-person in his Table Talk (Moxon, 1836) — a
+ *    cottage at Keswick, a carter demanding a shilling, Coleridge paying, the woman
+ *    then showing him the sheet was blank because her son had a prearranged signal.
+ *    Correctly attributed to Coleridge it is citable, genuinely pre-1840, and the best
+ *    single support for the code paragraph below. Ernest's call whether to use it.
+ *    Never attribute it to Hill.
+ *
+ * 2. Any volume figure without a citation. The numbers now on the page have one;
+ *    anything added later needs the same.
  */
 
 function Rule() {
@@ -54,8 +75,8 @@ export default function About() {
         <div className="broadsheet-columns" style={{ color: "var(--ink)", lineHeight: 1.72 }}>
           <p className="dropcap" style={{ marginBottom: "1.1rem" }}>
             Before 1840, sending a letter in Britain worked backwards from the way you would expect.
-            The sender did not pay. The <em>recipient</em> did — on the doorstep, in cash, before
-            they were allowed to read a word. And the price was not flat. It climbed with the
+            The sender usually did not pay. The <em>recipient</em> did — on the doorstep, in cash,
+            before they were allowed to read a word. And the price was not flat. It climbed with the
             distance the letter had travelled, and again with every additional sheet of paper.
           </p>
 
@@ -67,12 +88,13 @@ export default function About() {
           </p>
 
           <p style={{ marginBottom: "1.1rem" }}>
-            So people cheated, cleverly. Since you could examine a letter before deciding whether to
-            pay for it, correspondents worked out codes in advance and wrote them on the
+            So people cheated, cleverly. Refusing a letter cost nothing, and enough people refused
+            that undelivered mail became a standing complaint of the Post Office's. Contemporary
+            accounts describe the trick that followed: a code agreed in advance and written on the
             <em> outside</em> — a particular mark, a way of addressing it, a deliberate slip of the
-            pen. You looked at the envelope on the doorstep, learned what you needed to know, and
-            refused it. An entire secret language, invented so that poor people could hear from each
-            other for nothing.
+            pen. You read the cover on the doorstep, learned what you needed to know, and handed it
+            back. The honest part: how common that was is not well documented, though the incentive
+            for it certainly was.
           </p>
 
           <p style={{ marginBottom: "1.1rem" }}>
@@ -94,7 +116,7 @@ export default function About() {
             The <strong>Uniform Penny Post</strong> began on <strong>10 January 1840</strong>. A few
             months later came the mechanism that made prepayment practical — a small gummed label you
             stuck to the letter yourself. The <strong>Penny Black</strong>, the first adhesive postage
-            stamp anywhere in the world.
+            stamp issued by a public postal service.
           </p>
 
           <p style={{ marginBottom: "1.1rem" }}>
@@ -108,14 +130,22 @@ export default function About() {
             Alongside the stamp the Post Office issued something it expected to be far more popular: an
             ornate illustrated envelope, designed by a Royal Academician, allegorical figures spilling
             across it, Britannia dispatching winged messengers to the corners of the earth. The public
-            thought it was ridiculous. It was caricatured mercilessly and quietly dropped. The
-            beautiful designed object lost; the plain sticky label won and is still winning.
+            thought it was ridiculous. It was caricatured mercilessly, and then it died slowly and
+            expensively: a replacement envelope went on sale in February 1841, the Board of Stamps
+            and Taxes began calling in the unsold stock in November 1842, and the returned sheets sat
+            in a warehouse while somebody worked out how to destroy them. Burning failed. A machine
+            was built to punch the centre out of every one. The beautiful designed object lost; the
+            plain sticky label won and is still winning.
           </p>
 
           <p style={{ marginBottom: "1.1rem" }}>
-            And the letters came. Volumes rose immediately and kept rising — not because anyone had
-            been persuaded to write more, but because writing had stopped being something you had to
-            be able to afford. The demand had been sitting there the whole time, priced out.
+            And the letters came. The United Kingdom posted 76 million chargeable letters in 1839 and
+            169 million in 1840, and the number kept climbing for decades. Some of that first jump is
+            bookkeeping: parliamentary free franking ended on the very day the penny post began, which
+            moved millions of previously free letters into the chargeable count. The rest is real. Not
+            because anyone had been persuaded to write more, but because writing had stopped being
+            something you had to be able to afford. The demand had been sitting there the whole time,
+            priced out.
           </p>
         </div>
 
