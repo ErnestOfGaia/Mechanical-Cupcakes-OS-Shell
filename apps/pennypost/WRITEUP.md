@@ -231,4 +231,4 @@ This file is also the page at `/under-the-hood/`. There is one copy of it, rende
 the page and the repo cannot drift apart.
 
 If you want to talk about building something like this, text 503-664-0546 or email
-eog@ernestofgaia.xyz.
+<eog@ernestofgaia.xyz>.
