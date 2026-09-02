@@ -15,37 +15,49 @@ making, and this document is the account of how it got built and what the decisi
 
 ## The private tier is the lab; the public tier is what it spawns
 
-This app has a parent. I built a private postcard app for myself and someone close to me, and it's
-still private, still password-gated, and deliberately not part of the gallery. I'm not going to
-describe its contents or link it, and that boundary is the point rather than an omission.
+This app has a parent. I built a private postcard app for myself and someone close to me, so we could
+send each other good-morning and good-evening notes with a picture attached. It's still private, still
+gated, and deliberately not part of the gallery. I'm not going to describe what's in it or link it,
+and that boundary is the point rather than an omission.
 
-What the private one proved is that the *arrival* is the good part. Not the writing, not the sending.
-The moment a card shows up and you get to open it. Once I knew that, a public version was worth
-building on its own merits, and it needed to be a different app rather than a login screen bolted onto
-the first one.
+It was a good little project and I wanted to show it off. That's the whole origin of this one. The
+problem is that showing off the original would mean either handing strangers a login to a private
+mailbox, or standing up something that sends real mail on behalf of anonymous people. I don't want to
+own either of those. So the question became: what's the smallest version of this that a stranger can
+actually use, that teaches the same thing, and that can't be turned into a spam cannon?
 
-That pattern has since repeated across the projects I keep in this repo: the private thing is where I
-find out whether an idea is any good, and the public thing is what I build once I know. The Penny Post
-is the first one to be finished and written up.
+That question is most of the design.
+
+There's a pattern underneath it that I follow on purpose, and it comes out of permaculture rather than
+software: **patterns to details.** Nearly everything I've built started as something for my own use,
+and some of them turn out to solve a problem other people have too. Working that way is a form of risk
+management as much as a creative method. You spend resources you already have, on a problem you
+already understand, before you spend resources you don't have on a guess. If it works for me it might
+work for somebody else, and if it doesn't, the only person who lost time is me.
+
+The other thing this one is meant to be is forkable. Somebody just starting out should be able to copy
+it and make their own version, for whoever's in their life, without asking anyone's permission and
+without a platform deciding that the only replies available are a heart and a thumbs up.
 
 ## Cutting the email killed 60% of the build and made the demo better
 
-The original design sent real postcards by email, gated behind a CAPTCHA. I killed it, and the reason
-is worth stating plainly because it wasn't a technical failure.
+The public version was going to send real postcards by email, gated behind a CAPTCHA. I killed it, and
+the reason is worth stating plainly because it wasn't a technical failure. The private original does
+send mail, and it works fine.
 
-There was no mail infrastructure to build on. Shipping the email version meant standing up a sending
-domain from scratch, and that domain's very first production traffic would have been anonymous
-strangers submitting arbitrary text, next door to the address I run a business from. The deliverability
-risk was real, the abuse surface was unbounded, and the whole thing existed to serve a toy.
+The difference is who it sends to. The original only ever mails people who already know each other, at
+addresses that were known in advance. Opening that up is a completely different piece of software: a
+sending domain standing up from scratch, whose first production traffic is anonymous strangers
+submitting arbitrary text, next door to the address I run a business from. That's an abuse vector with
+a toy attached to it. I don't like spam, and I'm not going to build something that makes it easier for
+somebody else to send.
 
-Cutting it removed roughly 60% of the remaining build and 100% of the abuse surface. What I didn't
-expect was that it produced a *better* exhibit. A real sending app can only ever show you the sending
-half. You compose, you hit send, and the story ends at your screen. The simulation can show you the
-card arriving, which is the half the private app is actually about and the half that makes anyone feel
-anything.
+Cutting it removed roughly 60% of the remaining build and 100% of the abuse surface.
 
-The honest part: I reached the better design by way of a constraint, not by insight. I'd have built the
-email version if the infrastructure had been sitting there.
+What I didn't expect was that it produced a *better* exhibit. A real sending app can only ever show you
+the sending half. You compose, you hit send, and the story ends at your screen. The simulation shows
+you the card arriving, which is the half the private app is actually about and the half that makes
+anyone feel anything.
 
 ## The theme is the thesis, not the decoration
 
@@ -182,14 +194,33 @@ so that token sits inert. It's harmless and it's untidy, and it's tracked.
 
 ## What it taught me
 
-The thing I keep relearning is that the constraint produced the better design. Not once, but at every
-level of this build: cutting email made the demo better, refusing dependencies made the privacy claim
-checkable, and prerendering forced a state model that survives a refresh mid-flight, which a
-`setTimeout` version never would have.
+Two things, and the first one is about design.
 
-It also settled something about documentation. This app was finished — in the sense that it worked —
-for four weeks before it was finished in the sense that anyone could read what it was. The gap between
-those two states is where most of my projects have historically died.
+Good design is produced by editing. A thing you imagine doesn't have much shape at first. It can be
+felt more easily than described, and most of the work is finding its edges. Constraints do that for
+you, which is why every good decision in this build came from one: cutting email made the demo better,
+refusing dependencies made the privacy claim checkable, and prerendering forced a state model that
+survives a refresh mid-flight, which a `setTimeout` version never would have. You can't build a thing
+that has everything for everybody. Working inside limits is what makes something useful to somebody in
+particular.
+
+The second is about documentation, and it took me longer to get to.
+
+Some of the most marketable things I have ever done are undocumented. They didn't need a bureaucracy at
+the time, so there isn't one, and that work is effectively invisible now. It matters more in this field
+than in most: if something happened on a computer, people reasonably assume a record of it exists, and
+when there isn't one the absence gets read as absence of work.
+
+For context on why that lands hard for me: most of the last twenty years I spent doing farm work, some
+disaster response, a bit of construction. I was using computers the whole time, because that's a thing
+I'd do whether anybody paid me for it or not, and some of it was genuinely useful — barcoding stock
+coming back from a processor so it could be tracked out through a farmers market, that kind of thing.
+Almost none of it left a record anybody can read. This does.
+
+So the writeup isn't overhead bolted onto the project. It's the part that survives. And the tools I
+teach are very good at exactly this, which means there's no longer much excuse for not having one.
+Documentation is also, in the plainest sense, an accessibility measure. It's how somebody who wasn't
+there gets in.
 
 ## Provenance
 
