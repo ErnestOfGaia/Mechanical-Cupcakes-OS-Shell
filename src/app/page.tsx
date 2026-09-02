@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { BarChart3, Search, Sparkles, ChefHat, Newspaper, Stamp, Terminal } from "lucide-react";
+import { BarChart3, Search, Sparkles, ChefHat, Newspaper, Stamp, Terminal, BookOpen } from "lucide-react";
 
 export default function Home() {
   /* ⚠️ THIS ARRAY DUPLICATES `APP_REGISTRY` IN src/lib/appRegistry.ts, AND THEY DRIFT.
@@ -62,6 +62,21 @@ export default function Home() {
       border: "border-amber-400/20",
       dot: "bg-amber-400",
       href: "/postcards"
+    },
+    {
+      // Registered 2026-09-02 (Last Mile L2). The public, account-free sibling of
+      // Pellito Hub — different product, different repo, different deployment.
+      // ⚠️ Mirrored in src/lib/appRegistry.ts; change both until L3 kills this array.
+      id: "recipes",
+      name: "THE FAMILY RECIPE APP",
+      icon: BookOpen,
+      description: "A bilingual recipe book you can fork and make your own — no account",
+      status: "Operational",
+      color: "text-sky-400",
+      bg: "bg-sky-400/10",
+      border: "border-sky-400/20",
+      dot: "bg-sky-400",
+      href: "/recipes"
     },
     {
       id: "scout",

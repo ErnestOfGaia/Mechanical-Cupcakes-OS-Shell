@@ -1,4 +1,4 @@
-import { type LucideIcon, Terminal, ChefHat, Stamp, Newspaper, BarChart3, Radio } from "lucide-react";
+import { type LucideIcon, Terminal, ChefHat, Stamp, Newspaper, BarChart3, Radio, BookOpen } from "lucide-react";
 
 export interface AppRegistryEntry {
   id: string;
@@ -82,6 +82,34 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     ],
     welcomeScript:
       "Welcome to The Penny Post. Write a postcard, stamp it, and watch it travel — then take your card home as a picture. It all happens in your own browser; open your developer tools and check for yourself.",
+  },
+  {
+    // Registered 2026-09-02 (Last Mile L2). Live at recipes.mechanicalcupcakes.fun.
+    //
+    // The public sibling of Pellito Hub: same codebase lineage, entirely different
+    // product. This one has NO auth at all — no login route, no session, no admin —
+    // and its recipes are invented, so it can be forked and made somebody's own.
+    // Pellito Hub itself stays login-gated, client-only, and off the gallery.
+    //
+    // ⚠️ Two copies again: the landing grid holds its own entry in src/app/page.tsx.
+    // Change both until L3 deletes that array.
+    id: "recipes",
+    name: "The Family Recipe App",
+    icon: BookOpen,
+    description: "A bilingual recipe book you can cook from and then take. Browse by station, drill into the steps, quiz yourself — in English or Spanish. No account, nothing stored.",
+    route: "/recipes",
+    isExternal: false,
+    status: "operational",
+    color: "text-sky-400",
+    bg: "bg-sky-400/10",
+    border: "border-sky-400/20",
+    suggestedPrompts: [
+      "What is The Family Recipe App?",
+      "Why are the recipes made up?",
+      "How do I make it my family's?",
+    ],
+    welcomeScript:
+      "Welcome to The Family Recipe App. Thirteen invented recipes from a coastal kitchen that does not exist, in English and Spanish, with a quiz on each one. There is no account here. The recipes are fictional on purpose — fork the repository and put your own family's in.",
   },
   {
     id: "newshub",
