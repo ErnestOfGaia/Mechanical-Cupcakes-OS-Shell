@@ -1,96 +1,38 @@
 import React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { BarChart3, Search, Sparkles, ChefHat, Newspaper, Stamp, Terminal, BookOpen } from "lucide-react";
+import { Sparkles, Terminal } from "lucide-react";
+import {
+  getFeaturedApps,
+  getAppsByTier,
+  getStatusLabel,
+  type AppRegistryEntry,
+} from "@/lib/appRegistry";
+import { getKnowledgeState, describeKnowledge } from "@/lib/knowledgeState";
+
+/**
+ * The landing grid.
+ *
+ * ⭐ L3 (2026-09-02) DELETED THE HARDCODED `APPS` ARRAY THAT USED TO LIVE HERE.
+ * It duplicated APP_REGISTRY and the two drifted: they disagreed on ids (`pelican`
+ * here vs `pellito` there), on names, on icons, on descriptions, and on statuses —
+ * one of which ("Live Demo") was not even a member of the registry's own type union.
+ * Registering an app is now one edit, which is exit criterion 2 of the Last Mile.
+ *
+ * Rendered per request so the HUD reports the RUNNING container rather than replaying
+ * a snapshot taken at image-build time — the same reasoning as /health, and the same
+ * trap that shipped a dead localhost iframe to production for weeks.
+ */
+export const dynamic = "force-dynamic";
 
 export default function Home() {
-  /* ⚠️ THIS ARRAY DUPLICATES `APP_REGISTRY` IN src/lib/appRegistry.ts, AND THEY DRIFT.
-     They already disagree on ids (`pelican` here vs `pellito` there), names, icons,
-     descriptions and statuses. The registry drives the Directory dropdown and Hoot;
-     this array drives only the landing grid.
-     Until L3 deletes this array and renders the landing from the registry, ANY change
-     to an app's status or name has to be made in BOTH places or the gallery starts
-     contradicting itself in public. Noted 2026-09-01 during Last Mile L1. */
-  const APPS = [
-    {
-      id: "pelican",
-      name: "PELLITO HUB",
-      icon: ChefHat,
-      description: "Interactive Recipe Library",
-      status: "Operational",
-      color: "text-teal",
-      bg: "bg-teal/10",
-      border: "border-teal/20",
-      dot: "bg-teal",
-      href: "/pelican"
-    },
-    {
-      id: "newshub",
-      name: "News Hub World",
-      icon: Newspaper,
-      description: "Newsy's Comic Book of Comic Strips",
-      status: "Operational",
-      color: "text-violet",
-      bg: "bg-violet/10",
-      border: "border-violet/20",
-      dot: "bg-violet",
-      href: "/newshub"
-    },
-    {
-      id: "ochi",
-      name: "OCHI",
-      icon: BarChart3,
-      description: "Hospitality Intelligence",
-      status: "Alpha-v2",
-      color: "text-blue-400",
-      bg: "bg-blue-400/10",
-      border: "border-blue-400/20",
-      dot: "bg-blue-400",
-      href: "/ochi"
-    },
-    {
-      id: "pennypost",
-      name: "THE PENNY POST",
-      icon: Stamp,
-      description: "Write a postcard and watch it travel — nothing leaves your browser",
-      // 2026-09-01: "Live Demo" → "Operational". The old value was not even a member
-      // of the registry's status union, so this card and the Directory dropdown were
-      // labelling the same app two different ways. Matches appRegistry's "operational".
-      status: "Operational",
-      color: "text-amber-400",
-      bg: "bg-amber-400/10",
-      border: "border-amber-400/20",
-      dot: "bg-amber-400",
-      href: "/postcards"
-    },
-    {
-      // Registered 2026-09-02 (Last Mile L2). The public, account-free sibling of
-      // Pellito Hub — different product, different repo, different deployment.
-      // ⚠️ Mirrored in src/lib/appRegistry.ts; change both until L3 kills this array.
-      id: "recipes",
-      name: "THE FAMILY RECIPE APP",
-      icon: BookOpen,
-      description: "A bilingual recipe book you can fork and make your own — no account",
-      status: "Operational",
-      color: "text-sky-400",
-      bg: "bg-sky-400/10",
-      border: "border-sky-400/20",
-      dot: "bg-sky-400",
-      href: "/recipes"
-    },
-    {
-      id: "scout",
-      name: "SCOUT",
-      icon: Search,
-      description: "Interstellar Agent Discovery",
-      status: "Early Stage",
-      color: "text-slate-400",
-      bg: "bg-slate-400/10",
-      border: "border-slate-400/20",
-      dot: "bg-slate-400",
-      href: "/scout"
-    }
-  ];
+  // Throws at build if this is not exactly three. See getFeaturedApps.
+  const featured = getFeaturedApps();
+  const directory = getAppsByTier("directory");
+  const priv = getAppsByTier("private");
+  const queued = directory.filter((a) => a.status === "queued");
+
+  const knowledge = getKnowledgeState();
 
   return (
     <div className="relative min-h-[calc(100vh-48px)] flex flex-col items-center justify-center p-8 overflow-hidden">
@@ -117,53 +59,57 @@ export default function Home() {
           </div>
         </div>
 
-        {/* App Selection Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {APPS.map((app) => (
-            <Link 
-              key={app.id}
-              href={app.href}
-              className="group relative"
-            >
-              <div className="absolute -inset-0.5 bg-gradient-to-b from-white/10 to-transparent rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative glass-panel rounded-[40px] p-10 h-full flex flex-col items-center text-center space-y-6 hover:bg-white/[0.03] transition-all-fast hover:-translate-y-2">
-                <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center border transition-all duration-500 group-hover:scale-110", app.bg, app.border)}>
-                  <app.icon className={cn("w-10 h-10", app.color)} />
-                </div>
-                
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-warm-white tracking-tight">{app.name}</h3>
-                  <p className="text-xs text-warm-white/40 font-medium leading-relaxed">{app.description}</p>
-                </div>
-
-                <div className="pt-4 mt-auto">
-                  <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border", app.border, app.color)}>
-                    <div className={cn("w-1.5 h-1.5 rounded-full animate-pulse", app.dot)} />
-                    {app.status}
-                  </div>
-                </div>
-              </div>
-            </Link>
+        {/* Featured — exactly three, by ruling */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {featured.map((app) => (
+            <AppCard key={app.id} app={app} />
           ))}
         </div>
 
+        {/* Everything else, honestly */}
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-warm-white/30 uppercase tracking-[0.25em]">
+            {directory.length} more in the directory
+            {queued.length > 0 && ` · ${queued.length} queued`}
+            {priv.length > 0 && ` · ${priv.length} private`}
+          </p>
+          <p className="text-[10px] text-warm-white/20 mt-1.5">
+            Open the Directory in the top bar to see them all, including the ones that are
+            parked, client-owned, or not built yet.
+          </p>
+        </div>
+
         {/* Footer HUD */}
+        {/*
+          ⭐ L3 HUD TRUTH PASS. This block used to show three things that were not true:
+            · "System Uptime  428:12:04:15" — a hardcoded string, not a counter
+            · "Active Agent   Hoot v1.0.4"  — a version number corresponding to nothing
+            · "Access Level: Administrator" — on a public, unauthenticated page
+
+          The third was the worst of them. Theme flavour that claims the visitor is
+          signed in as an admin reads as a lie about the system, on the one surface the
+          Last Mile plan says must never lie. All three are replaced by values derived
+          from the registry and from the real brain state, both of which can be wrong
+          out loud rather than plausible and fixed.
+        */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-12 border-t border-white/5">
           <div className="flex items-center gap-8">
             <div className="space-y-1">
-              <p className="text-[9px] font-bold text-warm-white/20 uppercase tracking-[0.2em]">System Uptime</p>
-              <p className="text-xs font-bold text-warm-white/60 font-mono tracking-tighter">428:12:04:15</p>
+              <p className="text-[9px] font-bold text-warm-white/20 uppercase tracking-[0.2em]">Exhibits</p>
+              <p className="text-xs font-bold text-warm-white/60 font-mono tracking-tighter">
+                {featured.length} featured · {directory.length} directory · {priv.length} private
+              </p>
             </div>
             <div className="space-y-1">
-              <p className="text-[9px] font-bold text-warm-white/20 uppercase tracking-[0.2em]">Active Agent</p>
+              <p className="text-[9px] font-bold text-warm-white/20 uppercase tracking-[0.2em]">Hoot</p>
               <p className="text-xs font-bold text-violet flex items-center gap-2">
-                <Sparkles className="w-3 h-3" /> Hoot v1.0.4
+                <Sparkles className="w-3 h-3" /> {describeKnowledge(knowledge)}
               </p>
             </div>
           </div>
 
           <div className="px-6 py-2 rounded-2xl bg-white/5 border border-white/10 text-[10px] font-bold text-warm-white/30 uppercase tracking-[0.3em]">
-            Access Level: <span className="text-teal">Administrator</span>
+            Public gallery · <span className="text-teal">no sign-in</span>
           </div>
         </div>
       </div>
@@ -171,3 +117,42 @@ export default function Home() {
   );
 }
 
+function AppCard({ app }: { app: AppRegistryEntry }) {
+  const inner = (
+    <>
+      <div className="absolute -inset-0.5 bg-gradient-to-b from-white/10 to-transparent rounded-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="relative glass-panel rounded-[40px] p-10 h-full flex flex-col items-center text-center space-y-6 hover:bg-white/[0.03] transition-all-fast hover:-translate-y-2">
+        <div className={cn("w-20 h-20 rounded-3xl flex items-center justify-center border transition-all duration-500 group-hover:scale-110", app.bg, app.border)}>
+          <app.icon className={cn("w-10 h-10", app.color)} />
+        </div>
+
+        <div className="space-y-2">
+          <h3 className="text-2xl font-black text-warm-white tracking-tight uppercase">{app.name}</h3>
+          <p className="text-xs text-warm-white/40 font-medium leading-relaxed">{app.description}</p>
+        </div>
+
+        <div className="pt-4 mt-auto space-y-2">
+          <div className={cn("inline-flex items-center gap-2 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border", app.border, app.color)}>
+            <div className={cn("w-1.5 h-1.5 rounded-full", app.status === "operational" ? "animate-pulse" : "", app.color.replace("text-", "bg-"))} />
+            {getStatusLabel(app.status)}
+          </div>
+          {app.note && (
+            <p className="text-[10px] text-warm-white/30 leading-relaxed max-w-[22rem]">{app.note}</p>
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  // A placard is a card, not a door. Rendering it as a link would promise a
+  // destination that does not exist.
+  if (!app.hasLiveApp) {
+    return <div className="group relative cursor-default">{inner}</div>;
+  }
+
+  return (
+    <Link href={app.route} className="group relative">
+      {inner}
+    </Link>
+  );
+}

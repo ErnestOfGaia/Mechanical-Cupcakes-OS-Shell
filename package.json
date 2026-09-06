@@ -11,7 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "ingest": "npx tsx --env-file=.env src/scripts/ingest-brain.ts"
+    "ingest": "npx tsx --env-file=.env src/scripts/ingest-brain.ts",
+    "check:registry": "tsx src/scripts/check-registry.ts",
+    "prebuild": "npm run check:registry"
   },
   "dependencies": {
     "@mastra/core": "latest",

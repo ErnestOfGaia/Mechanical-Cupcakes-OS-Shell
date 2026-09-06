@@ -8,6 +8,24 @@ services:
       - "4111:4111"
     env_file:
       - .env
+    # ⭐ The iframe destinations, declared explicitly (L3, 2026-09-02).
+    #
+    # Every one of these was previously read by the shell and defined NOWHERE — not
+    # here, not in .env, not in an example file. They worked purely because each
+    # code-side fallback happened to equal the production URL, which is a latent
+    # trap rather than configuration: the day a subdomain moves, the fallback keeps
+    # silently serving the old one and nothing reports it.
+    #
+    # `${VAR:-default}` interpolates from the VPS .env when set and falls back
+    # visibly when not, so the default lives in the deploy file where you can see it.
+    # ⛔ Do NOT write these as empty literals ("") — that is the /docker/postcards
+    # trap, where a "" in compose silently beats any value in .env.
+    environment:
+      - NEWSHUB_URL=${NEWSHUB_URL:-https://news.ernestofgaia.xyz}
+      - OCHI_URL=${OCHI_URL:-https://ochi.mechanicalcupcakes.fun}
+      - PELICAN_URL=${PELICAN_URL:-https://pelican.mechanicalcupcakes.fun}
+      - POSTCARDS_URL=${POSTCARDS_URL:-https://pennypost.mechanicalcupcakes.fun}
+      - RECIPES_URL=${RECIPES_URL:-https://recipes.mechanicalcupcakes.fun}
     networks:
       - nginx-proxy
     # `restart: unless-stopped` covers a crash; it does not cover a hang, and a
