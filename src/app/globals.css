@@ -142,3 +142,41 @@ body {
   opacity: 0.5;
   pointer-events: none;
 }
+
+/* ------------------------------------------------------------------ writeup */
+/* /under-the-hood renders WRITEUP.md through markdown-to-jsx. Headings are mapped
+   to components in the page's `overrides`; flat prose lives here. */
+
+.writeup { line-height: 1.75; color: rgba(245, 240, 232, 0.55); }
+.writeup p { margin-bottom: 1.15rem; }
+.writeup strong { color: rgba(245, 240, 232, 0.92); font-weight: 700; }
+.writeup em { font-style: italic; }
+
+.writeup ul, .writeup ol { margin: 0 0 1.15rem 1.4rem; padding-left: 0.4rem; }
+.writeup ul { list-style: disc; }
+.writeup ol { list-style: decimal; }
+.writeup li { margin-bottom: 0.5rem; }
+.writeup li::marker { color: rgba(245, 240, 232, 0.25); }
+
+.writeup a { color: rgb(167, 139, 250); text-decoration: underline; text-underline-offset: 2px; }
+
+.writeup code {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.88em;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  color: rgba(245, 240, 232, 0.8);
+}
+
+.writeup pre {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.15rem;
+  overflow-x: auto;
+}
+.writeup pre code { background: none; padding: 0; }

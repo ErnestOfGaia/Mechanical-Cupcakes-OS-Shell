@@ -37,6 +37,12 @@ apps
 docs
 *.md
 !README.md
+# ...and the writeup, which /under-the-hood renders at build time. Without this
+# negation `*.md` above keeps it out of the context entirely and the build dies on
+# ENOENT — the loader working as intended, but with the cause hiding in here rather
+# than in the code. The Penny Post and Family Recipe App .dockerignores carry the
+# same line for the same reason.
+!WRITEUP.md
 docker-compose*.yml
 Dockerfile
 Dockerfile.*

@@ -77,6 +77,14 @@ export default function Home() {
             Open the Directory in the top bar to see them all, including the ones that are
             parked, client-owned, or not built yet.
           </p>
+          <p className="mt-4">
+            <Link
+              href="/under-the-hood"
+              className="text-[10px] font-bold uppercase tracking-[0.25em] text-violet hover:text-warm-white transition-colors"
+            >
+              How the gallery is built →
+            </Link>
+          </p>
         </div>
 
         {/* Footer HUD */}

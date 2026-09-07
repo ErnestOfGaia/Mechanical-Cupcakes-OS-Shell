@@ -8,13 +8,26 @@ export default function ScoutApp() {
 
         <div className="space-y-2">
           <h1 className="text-3xl font-medium tracking-tight">Scout Protocol</h1>
+          {/* 2026-09-06: this said "currently in active development", which stopped
+              being true when SEAM-11 ruled the project deprecated. Development has
+              stopped on purpose; the prototype taught what it had to teach. Saying
+              "in development" about something being wound down is the kind of small
+              untruth the gallery is not allowed. */}
           <p className="text-zinc-400">
-            The Interstellar Garage is currently in active development.
+            A prototype about agent discovery, now being deprecated on purpose rather
+            than quietly abandoned.
           </p>
         </div>
 
+        <p className="text-sm text-zinc-400">
+          Development has stopped. What it taught is being written up, the work is
+          being archived, and then it will be removed — with the cleanup documented as
+          it happens.
+        </p>
+
         <p className="text-xs text-zinc-500 pt-2">
-          All interactions are simulated. No real network connections are made.
+          Everything here was always simulated. No real network connections were ever
+          made.
         </p>
       </div>
     </div>

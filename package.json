@@ -38,6 +38,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "jsdom": "^29.1.1",
+    "markdown-to-jsx": "9.10.2",
     "tailwindcss": "^4",
     "tsx": "latest",
     "typescript": "^5",
