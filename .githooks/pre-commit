@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+# Pre-commit guard for the MCOS shell repo.
+#
+# WHY THIS EXISTS. This repo carries five directories that are untracked ON PURPOSE
+# and have been for months: uncommitted app work, design artefacts, a local config,
+# and one full clone of another project. AGENTS.md and the L1 handoff both say not to
+# commit them blind. On 2026-09-06 a session that had read that warning, quoted it
+# back, and avoided `git add -A` correctly three times, then used `-A` on the fourth
+# and staged all five — including a gitlink to the embedded repo.
+#
+# It was caught by reading the staged list. That is judgement, and judgement had
+# already failed one step earlier. This hook does not depend on anyone remembering.
+#
+# INSTALL (once per clone — hooks are not cloned):
+#   git config core.hooksPath .githooks
+#
+# OVERRIDE, when you genuinely mean it:
+#   ALLOW_GUARDED_PATHS=1 git commit ...
+#
+# To prove it still bites:  git add -A && git commit -m test   (expect a refusal)
+
+set -e
+
+RED=''
+BOLD=''
+RESET=''
+if [ -t 2 ]; then RED='\033[31m'; BOLD='\033[1m'; RESET='\033[0m'; fi
+
+fail() {
+  printf "${RED}${BOLD}✗ pre-commit refused this commit${RESET}\n\n" >&2
+  printf "%b\n" "$1" >&2
+  printf "\nIf you genuinely mean it:  ALLOW_GUARDED_PATHS=1 git commit ...\n" >&2
+  exit 1
+}
+
+# --- 1. Gitlinks -------------------------------------------------------------
+# Mode 160000 is a submodule/embedded-repo pointer. Nothing in this repo is a
+# submodule, so a gitlink here always means somebody swept up a nested clone. It
+# commits a pointer rather than the files, which is worse than either extreme:
+# clones break and the contents are not actually there.
+GITLINKS=$(git diff --cached --raw | awk '$2 == "160000" { print $6 }')
+if [ -n "$GITLINKS" ]; then
+  fail "An embedded git repository is staged as a gitlink (mode 160000):\n\n$(printf '%s' "$GITLINKS" | sed 's/^/    /')\n\nThis repo has no submodules. Almost certainly \`git add -A\` swept up a nested\nclone. Unstage it:\n\n    git rm --cached -r <path>"
+fi
+
+# --- 2. Deliberately-untracked paths -----------------------------------------
+# Kept as a list rather than derived, so adding one is a decision someone makes on
+# purpose. If a path here becomes genuinely committable, delete its line in the same
+# commit that starts tracking it.
+GUARDED="
+apps/postcards-live
+apps/ocms
+apps/jukebox
+apps/ochi/Claude Design Files
+.claude
+"
+
+if [ -z "$ALLOW_GUARDED_PATHS" ]; then
+  STAGED=$(git diff --cached --name-only)
+  HITS=""
+  for path in $(printf '%s' "$GUARDED" | sed 's/ /\\ /g'); do
+    real=$(printf '%s' "$path" | sed 's/\\ / /g')
+    [ -z "$real" ] && continue
+    match=$(printf '%s\n' "$STAGED" | grep -F "$real" || true)
+    [ -n "$match" ] && HITS="$HITS$match
+"
+  done
+  if [ -n "$(printf '%s' "$HITS" | tr -d '[:space:]')" ]; then
+    fail "Files under a deliberately-untracked path are staged:\n\n$(printf '%s' "$HITS" | sed '/^$/d' | sed 's/^/    /')\n\nThese are untracked on purpose (see AGENTS.md). Stage by explicit filename\ninstead of \`git add -A\`, or unstage with:\n\n    git reset"
+  fi
+fi
+
+# --- 3. Obvious secrets ------------------------------------------------------
+# Not a scanner, just the two shapes that have actually bitten this project.
+if git diff --cached --name-only | grep -qE '(^|/)\.env($|\.)'; then
+  fail "A .env file is staged. Secrets do not go in git, and this project already\ncarries passwords in another repo's history permanently because of exactly this."
+fi
+
+exit 0

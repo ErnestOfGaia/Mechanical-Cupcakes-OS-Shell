@@ -49,6 +49,23 @@ Before touching a sub-app, read its `PROJECT_BRIEF.md` (OCHI: `Project DNA Brief
 - **Hoot auto-open** uses `localStorage` keys `mcos_visited_<app>` — preserve when touching HootPanel/layout.
 - See `ARCHITECTURE.md` for the full design contract; `CONTRIBUTING.md` for repo conventions.
 
+## Before you commit — install the hook (once per clone)
+
+```bash
+git config core.hooksPath .githooks
+```
+
+⛔ **Never `git add -A` in this repo.** Five directories here are untracked ON PURPOSE
+— `apps/postcards-live` (a full clone of another project), `apps/ocms`, `apps/jukebox`,
+`apps/ochi/Claude Design Files`, `.claude`. `-A` sweeps all of them, and
+`apps/postcards-live` goes in as a gitlink, which breaks clones and does not even carry
+the files. Stage by explicit filename.
+
+`.githooks/pre-commit` refuses gitlinks, guarded paths, and staged `.env` files.
+Override with `ALLOW_GUARDED_PATHS=1` when you genuinely mean it. Hooks are not cloned,
+so the `git config` line above is a per-clone step — if it was never run, the hook is
+not protecting you.
+
 ## Running & verifying
 
 ```bash
