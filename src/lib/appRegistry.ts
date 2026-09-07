@@ -202,7 +202,7 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     tier: "featured",
     hasLiveApp: true,
     note:
-      "Runs on demonstration data, and says so on the dashboard.",
+      "Reads real weekly signals since September 2026, collect-forward, one row a week. Writeup at /under-the-hood.",
     status: "pilot",
     color: "text-blue-400",
     bg: "bg-blue-400/10",

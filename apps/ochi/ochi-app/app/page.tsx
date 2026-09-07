@@ -101,7 +101,10 @@ export default async function OchiDashboard() {
               ? "OCHI's stored signals could not be read. Nothing above is a reading. A staffing aid, not a guarantee."
               : "OCHI shows stored weekly readings with the time they were recorded, and a live weather forecast. Compare against what you heard. A staffing aid, not a guarantee."}
           <div style={{ marginTop: 5 }}>
-            Built by Ernest of Gaia ·{" "}
+            <Link href="/under-the-hood" style={{ color: "var(--action)", textDecoration: "none", fontWeight: 600 }}>
+              Under the hood
+            </Link>
+            {" · "}Built by Ernest of Gaia ·{" "}
             <a href="https://ernestofgaia.xyz" target="_blank" rel="noopener noreferrer"
               style={{ color: "var(--action)", textDecoration: "none", fontWeight: 600 }}>
               ernestofgaia.xyz
