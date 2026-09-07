@@ -5,8 +5,33 @@
 CREATE DATABASE metabase;
 
 -- ─── Raw data: one row per week ───────────────────────────────────────────────
+--
+-- ⚠️ WEEK ANCHORING. This table is keyed on the MONDAY that starts the week. The
+-- client lodging upload (lib/lodgingUpload.ts, app/add-your-data) speaks a different
+-- dialect: its CSV column is `week_ending`, and it carries that string through to the
+-- chart as an opaque label without ever converting it.
+--
+-- Today the two never meet, so nothing is broken. But `lodging_source = 'client'`
+-- below exists precisely so a property's own weekly occupancy can land in this table,
+-- and on the day that wiring is written a week-ENDING date gets inserted into a
+-- week-START column. Every client row would sit six days off every baseline row.
+-- Nothing would error. The dashboard would just be quietly, consistently wrong about
+-- which week a signal belongs to, which is the only thing it actually sells.
+--
+-- So the anchoring is enforced rather than commented. ISODOW: Monday = 1. A
+-- week-ending date is normally a Saturday or Sunday and will be REJECTED loudly at
+-- insert time instead of silently misaligning.
+--
+-- ⛔ If seeding fails on this constraint, that is the constraint working. It means the
+-- source data is week-ending and needs converting (subtract 6 days), not that the
+-- constraint is wrong. Do not drop it to make an import pass.
+--
+-- ⚠️ This file runs ONCE, on first database init (see the volume mount in
+-- docker-compose.prod.yml). Changing it after the stack is up requires destroying the
+-- volume, so it has to be right before the first deploy, not after.
 CREATE TABLE gatekeeper_observations (
-  week_start_date  DATE PRIMARY KEY,                              -- Monday of the week
+  week_start_date  DATE PRIMARY KEY
+    CHECK (EXTRACT(ISODOW FROM week_start_date) = 1),             -- Monday of the week
   hwy6_status      TEXT NOT NULL CHECK (hwy6_status IN ('OPEN','ADVISORY','RESTRICTED')),
   gas_price_aaa    NUMERIC,        -- AAA Oregon state avg, $/gal (load both sources to compare)
   gas_price_eia    NUMERIC,        -- EIA West Coast PADD5 weekly avg, $/gal
