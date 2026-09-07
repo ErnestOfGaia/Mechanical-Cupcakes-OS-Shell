@@ -57,4 +57,7 @@ export interface WeatherReading {
   condition: WeatherCondition
   tempF: number
   summary: string   // short human label, e.g. "Sunny", "Cold rain"
+  // When the forecast was generated (NWS generatedAt, ISO 8601). null when the
+  // reading is the fallback default — the page must not stamp a time on a default.
+  observedAt?: string | null
 }

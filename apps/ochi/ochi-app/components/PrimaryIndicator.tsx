@@ -3,12 +3,38 @@ import type { HeroView } from "../lib/dashboardView";
 import { Eyebrow, MultiplierScale } from "./ochi/primitives";
 
 interface PrimaryIndicatorProps {
-  hero: HeroView;
+  hero: HeroView | null;
+  // Shown in place of a number when there is nothing honest to score — the read
+  // failed, or the stored week is missing a signal the formula needs.
+  note?: string | null;
 }
 
 // Hero — Master Multiplier. A humble synthesis of the four gatekeepers, not an
 // oracle. Number accent in terracotta; band pill + scale marker keyed to tone.
-export function PrimaryIndicator({ hero }: PrimaryIndicatorProps) {
+export function PrimaryIndicator({ hero, note }: PrimaryIndicatorProps) {
+  if (!hero) {
+    return (
+      <div style={{ position: "relative" }} aria-labelledby="primary-indicator-title">
+        <Eyebrow><span id="primary-indicator-title">Master Multiplier</span></Eyebrow>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 14, marginTop: 12 }}>
+          <div style={{
+            fontSize: 52, lineHeight: 0.92, fontWeight: 700, color: "var(--st-nodata)",
+            letterSpacing: "-.02em", flex: "none",
+          }} aria-label="Multiplier value unavailable">
+            —
+          </div>
+          <span style={{
+            padding: "4px 11px", borderRadius: 6, whiteSpace: "nowrap",
+            fontSize: 13, fontWeight: 700, letterSpacing: ".04em",
+            background: "var(--st-nodata-soft)", color: "var(--st-nodata-ink)",
+          }}>NO SCORE</span>
+        </div>
+        <p style={{ margin: "18px 0 0", fontSize: 16.5, fontWeight: 600, color: "var(--ink)", letterSpacing: "-.01em", textWrap: "pretty" }}>
+          {note ?? "No score is available."}
+        </p>
+      </div>
+    );
+  }
   const pill = {
     background: `var(--band-${hero.bandTone})`,
     color: `var(--band-${hero.bandTone}-ink)`,

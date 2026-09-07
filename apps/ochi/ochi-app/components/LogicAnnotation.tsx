@@ -44,7 +44,7 @@ export function LogicAnnotation({ view }: { view: DashboardView }) {
       <Collapse open={open}>
         <div style={{ marginTop: 12, display: "grid", gap: 11 }}>
           <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.5, color: "var(--taupe)", textWrap: "pretty" }}>
-            Each live signal contributes by how reliably it leads visitor volume. The lodging-tax pulse is
+            Each signal contributes by how reliably it leads visitor volume. The lodging-tax pulse is
             downweighted while it lags.
           </p>
           {ordered.map((w) => (

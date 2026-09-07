@@ -56,7 +56,7 @@ function ConditionsCard({ card }: { card: GatekeeperView }) {
             {card.weatherNote}
           </p>
           <div style={{ fontSize: 11, color: "var(--st-nodata)", fontWeight: 500 }}>
-            Road updates {card.cadence} · weather hourly
+            Road {card.freshness} · weather {w.asOf ? `forecast ${w.asOf}` : "forecast time unknown"}
           </div>
         </div>
       </Collapse>
@@ -117,7 +117,7 @@ function GatekeeperRow({ card }: { card: GatekeeperView }) {
               letterSpacing: "-.01em", lineHeight: 1.05,
             }}>{card.value}</div>
             <div style={{ fontSize: 11.5, color: "var(--st-nodata)", marginTop: 4, fontWeight: 500 }}>
-              updates {card.cadence}
+              {card.freshness}
             </div>
           </div>
           <div style={{ flex: "none" }}>
