@@ -203,7 +203,9 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     hasLiveApp: true,
     note:
       "Reads real weekly signals since September 2026, collect-forward, one row a week. Writeup at /under-the-hood.",
-    status: "pilot",
+    // 2026-09-07: "pilot" → "operational" — Ernest's call on tape (session 08, seam 8):
+    // "we are now operational as OCHI stands." Real data, one week deep, routine scheduled.
+    status: "operational",
     color: "text-blue-400",
     bg: "bg-blue-400/10",
     border: "border-blue-400/20",
