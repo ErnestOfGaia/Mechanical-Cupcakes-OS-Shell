@@ -34,6 +34,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ─── Hoot's brain (shell only) — G13, locked by SEAM-15 ──────────────────
+      # public/brain.json is gitignored, so the checkout never carries it and every
+      # shell image before 2026-09-08 shipped with no knowledge base (/health said
+      # knowledge:"missing"). Build it here, from the public writeups, and let the
+      # docker build context pick it up. The ingest throws on a missing key, a
+      # missing writeup, a failed fetch, zero chunks, or a dummy embedding — so a
+      # bad brain fails this job and no image is published. VOYAGE_API_KEY lives
+      # in the repo's Actions secrets (Ernest's).
+      - name: Set up Node for the brain build
+        if: matrix.service == 'mcos-shell'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install root deps (no workspaces — the apps are built by their own jobs)
+        if: matrix.service == 'mcos-shell'
+        run: npm install --ignore-scripts --workspaces=false
+
+      - name: Build Hoot's brain from the writeups
+        if: matrix.service == 'mcos-shell'
+        env:
+          VOYAGE_API_KEY: ${{ secrets.VOYAGE_API_KEY }}
+        run: npm run ingest:ci
+
+      - name: Prove the brain is real (fail-capable)
+        if: matrix.service == 'mcos-shell'
+        run: |
+          node -e "const b=require('./public/brain.json'); if(!Array.isArray(b)||b.length<20){console.error('brain.json has',Array.isArray(b)?b.length:'no','chunks');process.exit(1)} console.log('brain.json:',b.length,'chunks')"
+
       - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
