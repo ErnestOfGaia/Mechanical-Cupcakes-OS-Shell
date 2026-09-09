@@ -96,13 +96,15 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     color: "text-teal",
     bg: "bg-teal/10",
     border: "border-teal/20",
+    // Hoot has no Pellito writeup (the client instance stays private); it knows the
+    // registry entry and The Family Recipe App's writeup, which is the public sibling.
     suggestedPrompts: [
-      "What recipes are here?",
-      "How do I use the Pellito Hub agent?",
+      "What is Pellito Hub?",
+      "How is it different from The Family Recipe App?",
       "Show other tools",
     ],
     welcomeScript:
-      "Welcome to Pellito Hub — the interactive recipe library. Ask me about available recipes or how the agent works.",
+      "Welcome to Pellito Hub — the login-gated client instance. Its public sibling is The Family Recipe App; ask me how the two relate.",
   },
   {
     // The Penny Post keeps the /postcards gallery slot (decision 2026-08-01) —
@@ -188,13 +190,16 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     color: "text-violet",
     bg: "bg-violet/10",
     border: "border-violet/20",
+    // L8 (2026-09-09): prompts promise only what Hoot can answer. Hoot explains
+    // NHW's purpose and why it is a guest here; it never carries the lore (SEAM-13:
+    // "its canon stays home"). "Who is Newsy?" was a prompt Hoot was built to decline.
     suggestedPrompts: [
       "What is News Hub World?",
-      "Who is Newsy?",
-      "Show other tools",
+      "Why is it a guest exhibit here?",
+      "Where does the comic itself live?",
     ],
     welcomeScript:
-      "Welcome to News Hub World — Newsy's Comic Book of Comic Strips. Ask me what's new or how the comic works.",
+      "Welcome to News Hub World — a separate world Ernest also builds. I can tell you what it is and why it is a guest here; the comic itself, and its canon, live at news.ernestofgaia.xyz.",
   },
   {
     id: "ochi",
@@ -219,7 +224,7 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "What is the Hwy 6 signal?",
     ],
     welcomeScript:
-      "Welcome to OCHI — Oregon Coastal Hospitality Intelligence. This is a raw, utilitarian instrument of prediction. Five Gatekeeper signals feed a single Master Multiplier score between 0.00 and 1.00. Above 0.70 is high volume. Below 0.40 means stay lean. The Forecast Annotation explains why.",
+      "Welcome to OCHI — Oregon Coastal Hospitality Intelligence, a current-conditions check-in for Pacific City. Four gatekeeper signals, each with the time it was recorded, and a Master Multiplier between 0.00 and 1.00 that folds them together. Above 0.70 is high volume; below 0.40 means stay lean.",
   },
   {
     id: "scout",
