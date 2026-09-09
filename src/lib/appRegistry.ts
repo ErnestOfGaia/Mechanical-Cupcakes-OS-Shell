@@ -31,7 +31,11 @@ export interface AppRegistryEntry {
    * `deprecating` — development has stopped and the app is being wound down on
    *                 purpose, documented as it goes (SEAM-11).
    */
-  status: "operational" | "pilot" | "dev" | "standby" | "queued" | "deprecating";
+  /**
+   * `deprecated`  — finished winding down: code archived and removed, a writeup
+   *                 in its place. The card opens the headstone, never an app (L7).
+   */
+  status: "operational" | "pilot" | "dev" | "standby" | "queued" | "deprecating" | "deprecated";
   tier: AppTier;
   /**
    * False when the card has no app to open — a placard. The card still renders and
@@ -221,24 +225,26 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     id: "scout",
     name: "Scout Protocol",
     icon: Radio,
-    description: "A local-first agent coordination system — the Garage is where you query the network, send missions, and manage agent candidates.",
+    description: "A prototype about decentralised agent discovery, deprecated on purpose. The card opens the writeup: what it was, why it stopped, what was kept, and how the cleanup was done.",
     route: "/scout",
     isExternal: false,
     tier: "directory",
+    // true because /scout still opens something real — the headstone page that
+    // renders apps/scout/WRITEUP.md. It is not an app and never will be again.
     hasLiveApp: true,
     note:
-      "Deprecation in progress, documented as it happens. The prototype taught what it had to teach.",
-    status: "deprecating",
+      "Deprecated 2026-09-09. Backed up and verified, then archived and removed. The writeup is the exhibit; the code lives in git history.",
+    status: "deprecated",
     color: "text-slate-400",
     bg: "bg-slate-400/10",
     border: "border-slate-400/20",
     suggestedPrompts: [
-      "What is Scout Protocol?",
-      "What is the Garage?",
-      "What is a Walkie Talkie query?",
+      "What was Scout Protocol?",
+      "Why was Scout deprecated?",
+      "What was worth keeping from Scout?",
     ],
     welcomeScript:
-      "Welcome to the Scout Protocol Garage. This is a local prototype — all interactions are simulated. Send a mission to query the mock peer network and receive agent candidates.",
+      "Scout Protocol was a prototype about agent discovery. It was deprecated on purpose in 2026, backed up, archived and removed, and this page is its writeup. Ask me what it was or why it stopped.",
   },
   // ---------------------------------------------------------------- placards
   // Registered at L3 (2026-09-02). These are REAL projects with briefs and, in two
@@ -396,6 +402,7 @@ const STATUS_LABELS: Record<AppRegistryEntry["status"], string> = {
   standby: "Standby",
   queued: "Queued",
   deprecating: "Deprecating",
+  deprecated: "Deprecated",
 };
 
 export function getStatusLabel(status: AppRegistryEntry["status"]): string {

@@ -27,15 +27,8 @@ services:
     networks:
       - nginx-proxy
 
-  mcos-scout:
-    build:
-      context: ./apps/scout/scout-app
-    container_name: mcos-scout
-    restart: unless-stopped
-    ports:
-      - "3004:3004"
-    networks:
-      - nginx-proxy
+  # mcos-scout removed 2026-09-09 (L7 / SEAM-11): Scout Protocol is deprecated,
+  # its code archived and deleted. Do not re-add. apps/scout/WRITEUP.md is the record.
 
   # Static export served by nginx — no env vars, no secrets, no database. No host
   # port: NPM proxies mcos-pennypost:80 by container name, matching ochi-metabase

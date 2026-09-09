@@ -43,6 +43,10 @@ docs
 # than in the code. The Penny Post and Family Recipe App .dockerignores carry the
 # same line for the same reason.
 !WRITEUP.md
+# Scout's headstone: apps/ is excluded above, this one file is re-included so
+# /scout can render it at build time (L7, 2026-09-09). A missing file fails the
+# build on purpose — see src/lib/writeup.ts.
+!apps/scout/WRITEUP.md
 docker-compose*.yml
 Dockerfile
 Dockerfile.*

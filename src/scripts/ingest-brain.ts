@@ -44,6 +44,7 @@ const SOURCES: Source[] = [
   { id: "shell", title: "Mechanical Cupcakes OS: development and architecture", file: "WRITEUP.md" },
   { id: "pennypost", title: "The Penny Post: development and architecture", file: "apps/pennypost/WRITEUP.md" },
   { id: "ochi", title: "OCHI: development and architecture", file: "apps/ochi/ochi-app/WRITEUP.md" },
+  { id: "scout", title: "Scout Protocol: a deprecation, done on purpose", file: "apps/scout/WRITEUP.md" },
   {
     id: "recipes",
     title: "The Family Recipe App: development and architecture",
@@ -86,7 +87,8 @@ function renderRegistry(): string {
     "This is the list of exhibits on mechanicalcupcakes.fun, rendered from the same registry the",
     "landing page uses. Status words mean exactly what they say: operational is live and used;",
     "queued is a brief with no build yet; standby is built but deliberately not deployed;",
-    "deprecating is being wound down on purpose; private is not open to the public.",
+    "deprecating is being wound down on purpose; deprecated is finished winding down — archived and removed,",
+    "with a writeup in its place; private is not open to the public.",
     "",
   ];
   for (const a of APP_REGISTRY) {

@@ -29,3 +29,14 @@ import path from "node:path";
 export function readWriteup(): string {
   return readFileSync(path.join(process.cwd(), "WRITEUP.md"), "utf8");
 }
+
+/**
+ * Scout's deprecation writeup — the headstone at /scout. Same rules as above.
+ * apps/ is excluded from the Docker build context wholesale; .dockerignore
+ * carries an explicit `!apps/scout/WRITEUP.md` so this one file rides in. If
+ * /scout ever dies with ENOENT in CI while building locally, that line is why —
+ * and a failed build is the intended outcome, not an empty headstone.
+ */
+export function readScoutWriteup(): string {
+  return readFileSync(path.join(process.cwd(), "apps", "scout", "WRITEUP.md"), "utf8");
+}
