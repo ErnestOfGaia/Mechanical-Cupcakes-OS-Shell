@@ -105,8 +105,11 @@ async function ask(message: string): Promise<{ text: string; usedKnowledge: bool
   if (LOCAL) {
     const { hootAgent } = await import("../mastra/agents/hootAgent");
     const result = await hootAgent.generate(message);
-    const steps = (result as { steps?: { toolCalls?: { toolName?: string }[] }[] }).steps ?? [];
-    const usedKnowledge = steps.some((st) => (st.toolCalls ?? []).some((c) => c?.toolName === "search_knowledge"));
+    type Call = { toolName?: string; payload?: { toolName?: string } };
+    const steps = (result as { steps?: { toolCalls?: Call[] }[] }).steps ?? [];
+    const usedKnowledge = steps.some((st) =>
+      (st.toolCalls ?? []).some((c) => (c?.toolName ?? c?.payload?.toolName) === "search_knowledge"),
+    );
     return { text: String(result.text ?? ""), usedKnowledge };
   }
   const res = await fetch(`${BASE}/api/chat`, {

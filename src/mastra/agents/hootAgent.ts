@@ -1,5 +1,26 @@
 import { Agent } from "@mastra/core/agent";
+import { createAnthropic } from "@ai-sdk/anthropic";
 import { searchKnowledgeTool } from "../tools/searchKnowledgeTool";
+
+/**
+ * ⛔ THE MODEL PIN — changed 2026-09-09 with Ernest's approval, for two measured
+ * reasons, both proven before this edit:
+ *
+ * 1. `claude-3-5-haiku-latest` is RETIRED on the API: a direct call returns 404
+ *    and /v1/models lists only claude-haiku-4-5-20251001 in the Haiku family.
+ *    So "the same model" no longer exists; Haiku 4.5 is its successor.
+ * 2. Mastra's string router (`model: { id: "ANTHROPIC/…" }`) is broken for
+ *    Anthropic in @mastra/core 1.28: the uppercase provider is unresolvable
+ *    ("Could not find config for provider ANTHROPIC" — the production 500 from
+ *    2026-09-08's logs), and the lowercase form posts to /messages without /v1.
+ *    So the model is built here with the official provider, pinned exact in
+ *    package.json, with the base URL stated explicitly — an ANTHROPIC_BASE_URL
+ *    in the environment must not be able to drop the /v1 (it did, locally).
+ *
+ * API key: ANTHROPIC_API_KEY from the environment (the provider's default).
+ */
+const anthropic = createAnthropic({ baseURL: "https://api.anthropic.com/v1" });
+export const HOOT_MODEL_ID = "claude-haiku-4-5";
 
 /**
  * Hoot — the agent in the top bar. This prompt is a rendering of the vault's
@@ -9,7 +30,7 @@ import { searchKnowledgeTool } from "../tools/searchKnowledgeTool";
  * and asked for "slightly magical" — both struck. The inventory now comes from
  * the registry chunk in the brain, and the voice matches the writeups: plain.
  *
- * ⛔ Model is PINNED. Never change without Ernest's approval (AGENTS - MCOS Shell).
+ * ⛔ Model is PINNED (see the block below). Never change without Ernest's approval.
  */
 export const hootAgent = new Agent({
   id: "hoot-agent",
@@ -54,7 +75,5 @@ Calm, short, plain. No puns, no whimsy, no marketing. Match the writeups.`,
   tools: {
     search_knowledge: searchKnowledgeTool,
   },
-  model: {
-    id: "ANTHROPIC/claude-3-5-haiku-latest",
-  },
+  model: anthropic(HOOT_MODEL_ID),
 });

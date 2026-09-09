@@ -45,7 +45,7 @@ Before touching a sub-app, read its `PROJECT_BRIEF.md` (OCHI: `Project DNA Brief
 - **Shell owns the bar; apps own the canvas.** TopBar z-index 900, Hoot/Directory overlays 1000, scanlines 10000. No layout push into app content.
 - **Sub-apps stay standalone.** Each app must keep working on its own subdomain with no hard dependency on shell JS/CSS. In-shell integration = iframe to the subdomain (`src/app/ochi/page.tsx` is the reference pattern).
 - **Scout is intentionally disabled** (`[ MODE: SIMULATED ]`, v0.1 constraint, all controls `.disabled`, no storage). Don't enable interactions unless the task explicitly says so (Phase 4).
-- **Hoot model is pinned** to `claude-3-5-haiku-latest` in `src/mastra/agents/hootAgent.ts` — never change without approval.
+- **Hoot model is pinned** to `claude-haiku-4-5` (via `@ai-sdk/anthropic`, explicit `/v1` base URL) in `src/mastra/agents/hootAgent.ts` — never change without approval. Changed 2026-09-09 with approval: 3.5 Haiku retired on the API.
 - **Hoot auto-open** uses `localStorage` keys `mcos_visited_<app>` — preserve when touching HootPanel/layout.
 - See `ARCHITECTURE.md` for the full design contract; `CONTRIBUTING.md` for repo conventions.
 

@@ -19,8 +19,12 @@ function extractToolActivity(result: unknown): ToolActivity[] {
     if (!Array.isArray(calls)) return [];
     return calls
       .map((call) => {
-        const c = call as { toolName?: unknown; toolCallId?: unknown };
-        return typeof c?.toolName === "string" ? c.toolName : null;
+        // @mastra/core 1.28 nests the call under `payload` ({ type, payload: { toolName } });
+        // earlier shapes put toolName at the top level. Read both — measured 2026-09-09,
+        // when the top-level-only read meant the knowledge badge never lit in production.
+        const c = call as { toolName?: unknown; payload?: { toolName?: unknown } };
+        const name = typeof c?.toolName === "string" ? c.toolName : c?.payload?.toolName;
+        return typeof name === "string" ? name : null;
       })
       .filter((n): n is string => Boolean(n));
   });

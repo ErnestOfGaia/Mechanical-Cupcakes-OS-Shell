@@ -17,6 +17,7 @@
     "prebuild": "npm run check:registry"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "3.0.69",
     "@mastra/core": "latest",
     "@mastra/rag": "latest",
     "clsx": "latest",
