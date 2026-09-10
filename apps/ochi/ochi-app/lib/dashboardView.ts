@@ -58,7 +58,7 @@ export interface GatekeeperView {
   // mode; "sample value" in demo; "unavailable" when the read failed.
   freshness: string
   recorded: boolean      // false when there is no reading behind `value`
-  sourceLabel?: string   // Lodging: which source feeds it, e.g. "Tillamook County TLT (public)"
+  sourceLabel?: string   // Lodging + Gas: which source fed this number. Gas resolves per row (EIA or AAA); lodging is static.
   // Hwy 6 only: weather is shown alongside the road as the lead "conditions"
   // card, and a paired verdict reads the road+weather pair at a glance.
   weather?: WeatherView
@@ -279,6 +279,7 @@ export async function buildDashboardView(
         freshness: 'unavailable — no stored reading could be shown',
         recorded: false,
         ...(g.id === 'lodging' && { sourceLabel: g.dataSource.sourceLabel }),
+        ...(g.id === 'gas' && { sourceLabel: g.dataSource.sourceLabel }),
         ...(isRoad && {
           weather: weatherViewOf(weather),
           verdict: 'Road status unavailable — the weather is live, the road reading is not.',
@@ -304,6 +305,16 @@ export async function buildDashboardView(
       missing: [],
     }
   }
+
+  // The gas card names its own source. The routine can write either field, EIA is
+  // preferred (see selectGas), and AAA survives on older rows — so "which number
+  // is this?" is answered per row, not by a static config string that would go
+  // stale the moment the fallback fired. Ernest's call, 2026-09-10, the same day
+  // he started spot-checking pump prices himself.
+  const GAS_SOURCE_LABEL = {
+    eia: 'U.S. EIA — West Coast except California, weekly',
+    aaa: 'AAA Oregon — hand-checked',
+  } as const
 
   // ── live or demo: build per-signal cards from what the read carries. ──
   const isDemo = r.state === 'demo'
@@ -372,6 +383,11 @@ export async function buildDashboardView(
       freshness,
       recorded: !notRecorded,
       ...(g.id === 'lodging' && { sourceLabel: g.dataSource.sourceLabel }),
+      ...(g.id === 'gas' && {
+        sourceLabel: live?.observation.gasSource
+          ? GAS_SOURCE_LABEL[live.observation.gasSource]
+          : g.dataSource.sourceLabel,
+      }),
       ...(isRoad && {
         weather: weatherViewOf(weather),
         verdict: conditionsVerdict(hwy6Status, weather),

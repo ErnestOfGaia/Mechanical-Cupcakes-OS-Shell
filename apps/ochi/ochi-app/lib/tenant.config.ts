@@ -83,7 +83,7 @@ export const PACIFIC_CITY_CONFIG: TenantConfig = {
       loudAiAnnotation: 'Regional fuel prices above $4.50/gal correlate with suppressed weekend travel. Travelers self-select shorter trips when fill-up cost for a round trip exceeds psychological thresholds.',
       icon: 'Fuel',
       unit: '$/gal',
-      dataSource: { type: 'api', refreshCadence: 'daily', sourceLabel: 'AAA Oregon' },
+      dataSource: { type: 'api', refreshCadence: 'weekly', sourceLabel: 'U.S. EIA — West Coast except California, weekly' },
     },
     {
       id: 'search',

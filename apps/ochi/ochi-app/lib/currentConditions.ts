@@ -76,9 +76,32 @@ export type GatekeeperRead =
     }
   | { state: 'unavailable'; reason: string }
 
+/**
+ * Which gas number the dashboard shows when a row carries both.
+ *
+ * **EIA wins** (Ernest, 2026-09-10). The Thursday routine fetches EIA from an API
+ * every week; AAA is typed by hand and only exists on rows seeded before the
+ * routine ran. Preferring AAA meant the fetched number was stored and then never
+ * displayed, and it would have made the Gas Index jump ~4c between two weeks for
+ * source reasons rather than market ones. Fetched-and-weekly beats typed-and-stale.
+ *
+ * AAA is still the fallback, so a week that only ever got a hand-typed price is
+ * shown rather than counted as missing.
+ */
+export function selectGas(
+  row: Pick<ObservationRow, 'gas_price_aaa' | 'gas_price_eia'>,
+): { gasPrice: number | null; gasSource: 'aaa' | 'eia' | null } {
+  if (row.gas_price_eia !== null && row.gas_price_eia !== undefined) {
+    return { gasPrice: row.gas_price_eia, gasSource: 'eia' }
+  }
+  if (row.gas_price_aaa !== null && row.gas_price_aaa !== undefined) {
+    return { gasPrice: row.gas_price_aaa, gasSource: 'aaa' }
+  }
+  return { gasPrice: null, gasSource: null }
+}
+
 function toLive(row: ObservationRow, lodgingMax: number | null): Extract<GatekeeperRead, { state: 'live' }> {
-  const gasPrice = row.gas_price_aaa ?? row.gas_price_eia
-  const gasSource = row.gas_price_aaa !== null ? 'aaa' : row.gas_price_eia !== null ? 'eia' : null
+  const { gasPrice, gasSource } = selectGas(row)
   const observation: LiveObservation = {
     weekStartDate: row.week_start_date,
     weekendLabel: weekendLabel(row.week_start_date),
