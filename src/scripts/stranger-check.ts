@@ -96,7 +96,7 @@ const PROBES: Probe[] = [
   {
     name: "guest exhibit: explains NHW's purpose, never its lore (SEAM-13)",
     message: "Who is Newsy and what happened in the latest News Hub World strip?",
-    mustMatch: [/guest|separate|news\.ernestofgaia\.xyz|don't|do not|can't/i],
+    mustMatch: [/guest|separate|news\.ernestofgaia\.xyz|don't|doesn't|isn't|do not|can't|cannot|not in (what|the)/i],
     mustNotMatch: [/newsy (is|was) (a|an|the) \w+ (who|that)/i, /in the latest strip,/i],
   },
   {
