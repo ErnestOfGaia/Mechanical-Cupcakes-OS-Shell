@@ -19,5 +19,9 @@ export async function GET() {
 
   // Report the STATE, never the path. A filesystem location has no business in an
   // unauthenticated HTTP response (same rule as apps/workshop/app/health/route.ts).
-  return Response.json({ ok: true, app: "mcos-shell", knowledge, chunks });
+  // L10: the commit this image was built from (CI build-arg → MCOS_BUILD_SHA).
+  // "unknown" = a local build. The outside drift checker compares this to main.
+  const commit = process.env.MCOS_BUILD_SHA || "unknown";
+
+  return Response.json({ ok: true, app: "mcos-shell", knowledge, chunks, commit });
 }

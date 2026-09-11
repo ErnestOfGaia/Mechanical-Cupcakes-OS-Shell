@@ -11,5 +11,6 @@
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  return Response.json({ ok: true, app: "mcos-ochi" });
+  // L10: commit baked in by CI (MCOS_BUILD_SHA); "unknown" = a local build.
+  return Response.json({ ok: true, app: "mcos-ochi", commit: process.env.MCOS_BUILD_SHA || "unknown" });
 }

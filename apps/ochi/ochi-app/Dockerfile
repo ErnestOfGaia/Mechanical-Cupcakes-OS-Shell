@@ -33,6 +33,9 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # wget healthcheck; 0.0.0.0 so the container is reachable from the network.
 ENV PORT=3003
 ENV HOSTNAME=0.0.0.0
+# L10: commit baked in by CI, reported by /health as `commit` (see the shell's Dockerfile.node).
+ARG GIT_SHA=unknown
+ENV MCOS_BUILD_SHA=$GIT_SHA
 
 COPY --from=builder --chown=node:node /app/.next/standalone ./
 COPY --from=builder --chown=node:node /app/.next/static ./.next/static

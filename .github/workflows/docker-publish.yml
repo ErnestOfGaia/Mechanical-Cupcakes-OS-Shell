@@ -87,3 +87,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          # L10 deploy-drift signal: every image knows the commit it was built from
+          # and reports it at /health (shell, ochi) or /version.json (pennypost), so
+          # "is production the code on main?" is answerable from OUTSIDE the VPS.
+          build-args: |
+            GIT_SHA=${{ github.sha }}

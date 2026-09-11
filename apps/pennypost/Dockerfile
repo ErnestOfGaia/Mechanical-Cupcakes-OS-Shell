@@ -29,6 +29,13 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=builder /app/out /usr/share/nginx/html
 
+# L10: nginx has no runtime to report a commit from, so the commit becomes a
+# static file: GET /version.json → {"app":"mcos-pennypost","commit":"<sha>"}.
+# The drift checker reads it the way it reads the other apps' /health.
+ARG GIT_SHA=unknown
+RUN printf '{"app":"mcos-pennypost","commit":"%s"}
+' "$GIT_SHA" > /usr/share/nginx/html/version.json
+
 # Container-internal only. NPM proxies to mcos-pennypost:80 over the shared
 # nginx-proxy network; no host port is published (ports 80/443 are NPM-only).
 EXPOSE 80

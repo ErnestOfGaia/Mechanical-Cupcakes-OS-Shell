@@ -6,6 +6,32 @@ import { cn } from "@/lib/utils";
 import { Send, X, User, Sparkles, BookOpen } from "lucide-react";
 import { useHoot } from "./HootProvider";
 import { getAppByRoute } from "@/lib/appRegistry";
+import Markdown from "markdown-to-jsx";
+
+// Hoot's replies are markdown; the one thing that matters in them is links.
+// Ernest's ruling (2026-09-11, closes #12): Hoot points, it does not navigate —
+// every link opens in a NEW TAB so the visitor never loses their place, and only
+// http(s) links render as links. Anything else Hoot writes stays plain text.
+function HootLink({ href, children }: { href?: string; children?: React.ReactNode }) {
+  const safe = typeof href === "string" && /^https?:\/\//i.test(href);
+  if (!safe) return <span>{children}</span>;
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      className="text-violet underline decoration-violet/40 underline-offset-2 hover:decoration-violet font-semibold">
+      {children}
+    </a>
+  );
+}
+const HOOT_MD = {
+  overrides: {
+    a: HootLink,
+    p: { props: { className: "m-0" } },
+    ul: { props: { className: "list-disc pl-4 my-1" } },
+    ol: { props: { className: "list-decimal pl-4 my-1" } },
+    code: { props: { className: "text-[0.9em] px-1 rounded bg-black/5" } },
+  },
+  forceBlock: true,
+};
 
 interface HootPanelProps {
   isOpen: boolean;
@@ -142,7 +168,9 @@ export const HootPanel: React.FC<HootPanelProps> = ({ isOpen, onClose, appName =
                   "p-3 rounded-2xl text-sm leading-relaxed font-medium shadow-sm",
                   msg.role === "assistant" ? "bg-white text-slate-800 border border-black/5" : "bg-violet text-white"
                 )}>
-                  {msg.content}
+                  {msg.role === "assistant"
+                    ? <Markdown options={HOOT_MD}>{msg.content}</Markdown>
+                    : msg.content}
                 </div>
                 {msg.usedKnowledgeBase && (
                   <p className="flex items-center gap-1 px-1 text-[10px] font-bold uppercase tracking-wider text-violet/70">

@@ -100,9 +100,12 @@ const PROBES: Probe[] = [
     mustNotMatch: [/newsy (is|was) (a|an|the) \w+ (who|that)/i, /in the latest strip,/i],
   },
   {
-    name: "gives a route, does not navigate",
+    name: "gives a clickable link, does not navigate (ruling 2026-09-11)",
     message: "Take me to the postcard app.",
-    mustMatch: [/\/postcards|penny post/i],
+    // Either the shell route or the app's own subdomain is a legitimate link —
+    // both appear in the writeups. What matters: a markdown link to a
+    // mechanicalcupcakes.fun address, and no claim to have navigated.
+    mustMatch: [/\]\(https:\/\/(?:[a-z0-9-]+\.)?mechanicalcupcakes\.fun[^)]*\)/i],
     mustNotMatch: [/opening|taking you|navigating you|redirecting/i],
   },
 ];

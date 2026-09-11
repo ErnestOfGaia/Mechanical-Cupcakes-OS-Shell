@@ -56,7 +56,6 @@ export interface AppRegistryEntry {
   bg: string;
   border: string;
   suggestedPrompts: string[];
-  welcomeScript: string;
 }
 
 export const APP_REGISTRY: AppRegistryEntry[] = [
@@ -78,8 +77,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "What apps are available?",
       "Show other tools",
     ],
-    welcomeScript:
-      "Welcome to the Mechanical Cupcakes OS. I'm Hoot. Ask me anything about the system or its apps.",
   },
   {
     id: "pellito",
@@ -103,8 +100,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "How is it different from The Family Recipe App?",
       "Show other tools",
     ],
-    welcomeScript:
-      "Welcome to Pellito Hub — the login-gated client instance. Its public sibling is The Family Recipe App; ask me how the two relate.",
   },
   {
     // The Penny Post keeps the /postcards gallery slot (decision 2026-08-01) —
@@ -134,8 +129,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Why is it named after an 1840 reform?",
       "Does it really send nothing?",
     ],
-    welcomeScript:
-      "Welcome to The Penny Post. Write a postcard, stamp it, and watch it travel — then take your card home as a picture. It all happens in your own browser; open your developer tools and check for yourself.",
   },
   {
     // Registered 2026-09-02 (Last Mile L2). Live at recipes.mechanicalcupcakes.fun.
@@ -164,8 +157,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Why are the recipes made up?",
       "How do I make it my family's?",
     ],
-    welcomeScript:
-      "Welcome to The Family Recipe App. Thirteen invented recipes from a coastal kitchen that does not exist, in English and Spanish, with a quiz on each one. There is no account here. The recipes are fictional on purpose — fork the repository and put your own family's in.",
   },
   {
     // SEAM-13 (grill, 2026-08-05): News Hub World is a GUEST EXHIBIT and Ernest owns
@@ -198,8 +189,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Why is it a guest exhibit here?",
       "Where does the comic itself live?",
     ],
-    welcomeScript:
-      "Welcome to News Hub World — a separate world Ernest also builds. I can tell you what it is and why it is a guest here; the comic itself, and its canon, live at news.ernestofgaia.xyz.",
   },
   {
     id: "ochi",
@@ -223,8 +212,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "What does a High Volume reading mean?",
       "What is the Hwy 6 signal?",
     ],
-    welcomeScript:
-      "Welcome to OCHI — Oregon Coastal Hospitality Intelligence, a current-conditions check-in for Pacific City. Four gatekeeper signals, each with the time it was recorded, and a Master Multiplier between 0.00 and 1.00 that folds them together. Above 0.70 is high volume; below 0.40 means stay lean.",
   },
   {
     id: "scout",
@@ -248,8 +235,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Why was Scout deprecated?",
       "What was worth keeping from Scout?",
     ],
-    welcomeScript:
-      "Scout Protocol was a prototype about agent discovery. It was deprecated on purpose in 2026, backed up, archived and removed, and this page is its writeup. Ask me what it was or why it stopped.",
   },
   // ---------------------------------------------------------------- placards
   // Registered at L3 (2026-09-02). These are REAL projects with briefs and, in two
@@ -284,8 +269,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Why is it not deployed?",
       "Show other tools",
     ],
-    welcomeScript:
-      "The Campaign Workshop is where a rough campaign note becomes something worth committing to. It runs locally only, on purpose — it is backoffice tooling, not an exhibit, so there is nothing here to open.",
   },
   {
     id: "ocms",
@@ -312,8 +295,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Where does the data come from?",
       "Show other tools",
     ],
-    welcomeScript:
-      "OCMS reads Oregon's public cannabis licence and market data straight from the state's API. The data layer exists and is tested; the dashboard is deliberately unbuilt, because building it in public is the point.",
   },
   {
     id: "homegrownai",
@@ -340,8 +321,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "How is it different from OCMS?",
       "Show other tools",
     ],
-    welcomeScript:
-      "HomegrownAI is a show about building your own tools instead of renting them. OCMS is what gets built on it. The name is a working one and may still change.",
   },
   {
     id: "cascadia",
@@ -368,8 +347,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "What is The Rise?",
       "Show other tools",
     ],
-    welcomeScript:
-      "The New Cascadia is a shared-world climate-fiction atlas. The Rise is the event it is built around, not the name of the project. Both the name and the home are still unsettled, which is why this is a placard rather than a door.",
   },
   // ----------------------------------------------------------------- private
   // Listed openly, gated on arrival. SEAM-01 revised the earlier "keep it unlisted"
@@ -395,8 +372,6 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
       "Why is it private?",
       "Show other tools",
     ],
-    welcomeScript:
-      "Love Postcards is private — a mailbox for two people, gated on arrival. Its public descendant is The Penny Post, which you can use freely.",
   },
 ];
 
