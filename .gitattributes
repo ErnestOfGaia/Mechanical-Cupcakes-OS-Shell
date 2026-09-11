@@ -1,0 +1,2 @@
+# Shell scripts run on the Linux VPS; a CRLF checkout would break the shebang.
+*.sh text eol=lf
