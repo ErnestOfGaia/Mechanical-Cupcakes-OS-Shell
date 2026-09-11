@@ -33,8 +33,7 @@ COPY --from=builder /app/out /usr/share/nginx/html
 # static file: GET /version.json → {"app":"mcos-pennypost","commit":"<sha>"}.
 # The drift checker reads it the way it reads the other apps' /health.
 ARG GIT_SHA=unknown
-RUN printf '{"app":"mcos-pennypost","commit":"%s"}
-' "$GIT_SHA" > /usr/share/nginx/html/version.json
+RUN printf '{"app":"mcos-pennypost","commit":"%s"}\n' "$GIT_SHA" > /usr/share/nginx/html/version.json
 
 # Container-internal only. NPM proxies to mcos-pennypost:80 over the shared
 # nginx-proxy network; no host port is published (ports 80/443 are NPM-only).
