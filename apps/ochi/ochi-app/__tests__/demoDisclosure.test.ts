@@ -170,3 +170,29 @@ describe('the three states render as themselves', () => {
     expect(wet.hero!.score).toBeLessThan(view.hero!.score)
   })
 })
+
+describe('stale badge (L6)', () => {
+  it('a live row recorded within the weekly threshold is not stale', async () => {
+    const fresh: GatekeeperRead = {
+      ...LIVE_READ,
+      observation: { ...LIVE_READ.observation, updatedAt: new Date(Date.now() - 3 * 86400000).toISOString() },
+    }
+    const view = await buildDashboardView(undefined, fresh, CLEAR)
+    expect(view.stale).toBe(false)
+    expect(view.staleNote).toBeNull()
+  })
+
+  it('a live row older than 10 days is flagged stale, with a note that says so', async () => {
+    const old: GatekeeperRead = {
+      ...LIVE_READ,
+      observation: { ...LIVE_READ.observation, updatedAt: new Date(Date.now() - 12 * 86400000).toISOString() },
+    }
+    const view = await buildDashboardView(undefined, old, CLEAR)
+    expect(view.stale).toBe(true)
+    expect(view.staleNote).toMatch(/more than 10 days old/)
+  })
+
+  it('demo and unavailable reads are never stale — there is no row to be old', async () => {
+    expect((await buildDashboardView(undefined, UNAVAILABLE_READ, CLEAR)).stale).toBe(false)
+  })
+})

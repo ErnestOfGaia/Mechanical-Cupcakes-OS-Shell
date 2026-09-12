@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { checkIsStale } from '../components/SignalTimestamp'
+import { checkIsStale } from '../lib/staleness'
 
 const daysAgo = (n: number) => new Date(Date.now() - n * 86400000).toISOString()
 
@@ -8,5 +8,8 @@ describe('checkIsStale', () => {
   it('daily: stale at 3 days', () => expect(checkIsStale(daysAgo(3), 'daily')).toBe(true))
   it('quarterly: fresh at 89 days', () => expect(checkIsStale(daysAgo(89), 'quarterly')).toBe(false))
   it('quarterly: stale at 91 days', () => expect(checkIsStale(daysAgo(91), 'quarterly')).toBe(true))
+  it('weekly: fresh at 9 days', () => expect(checkIsStale(daysAgo(9), 'weekly')).toBe(false))
+  it('weekly: stale at 11 days', () => expect(checkIsStale(daysAgo(11), 'weekly')).toBe(true))
+  it('unparseable time: not stale, just unknown', () => expect(checkIsStale('garbage', 'weekly')).toBe(false))
   it('realtime: never stale', () => expect(checkIsStale(daysAgo(999), 'realtime')).toBe(false))
 })

@@ -50,8 +50,25 @@ export default async function OchiDashboard() {
             </span>
             <span style={{ fontSize: 12, color: "var(--taupe)", fontWeight: 500 }}>
               stored signals as of {view.asOf ?? "an unknown time"}
+              {view.stale && (
+                <span
+                  role="status"
+                  title={view.staleNote ?? undefined}
+                  style={{
+                    marginLeft: 8, padding: "1px 7px", borderRadius: 999, fontSize: 11, fontWeight: 700,
+                    color: "var(--terracotta, #b5532a)", border: "1px solid currentColor", letterSpacing: ".02em",
+                  }}
+                >
+                  Stale
+                </span>
+              )}
             </span>
           </div>
+        )}
+        {view.stale && view.staleNote && (
+          <p role="note" style={{ margin: 0, fontSize: 12, color: "var(--taupe)", padding: "0 2px" }}>
+            {view.staleNote}
+          </p>
         )}
 
         {view.isDemoData && (

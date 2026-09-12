@@ -10,6 +10,7 @@ import {
   weatherDemandFactor,
 } from './multiplier'
 import { ACTIVE_TENANT } from './tenant.config'
+import { checkIsStale, STALE_THRESHOLD_DAYS } from './staleness'
 import type { TenantConfig } from './tenant.config'
 
 // ─── View model ───────────────────────────────────────────────────────────────
@@ -100,6 +101,11 @@ export interface DashboardView {
   // Live mode only: which weekend the stored row describes and when it was written.
   weekLabel: string | null
   asOf: string | null
+  // Live mode only: true when the stored row is older than the weekly source
+  // cadence allows (STALE_THRESHOLD_DAYS.weekly) — the Thursday routine missed a
+  // week and the page must not present an old read as current. `staleNote` says so.
+  stale: boolean
+  staleNote: string | null
   // Unavailable mode only: the reason, in English, for the banner.
   unavailableReason: string | null
   // Live mode: signals the stored week does not carry.
@@ -301,6 +307,8 @@ export async function buildDashboardView(
       isDemoData: false,
       weekLabel: null,
       asOf: null,
+      stale: false,
+      staleNote: null,
       unavailableReason: r.reason,
       missing: [],
     }
@@ -421,6 +429,8 @@ export async function buildDashboardView(
       isDemoData: true,
       weekLabel: null,
       asOf: null,
+      stale: false,
+      staleNote: null,
       unavailableReason: null,
       missing: [],
     }
@@ -430,6 +440,10 @@ export async function buildDashboardView(
   const o = live!.observation
   const weekLabel = o.weekendLabel
   const asOfText = asOf ?? 'an unknown time'
+  const stale = checkIsStale(o.updatedAt, 'weekly')
+  const staleNote = stale
+    ? `Stale — this row is more than ${STALE_THRESHOLD_DAYS.weekly} days old; no newer weekly reading has been recorded.`
+    : null
 
   if (complete) {
     const score = deriveMultiplierScore(complete, tenant, weather)
@@ -449,6 +463,8 @@ export async function buildDashboardView(
       isDemoData: false,
       weekLabel,
       asOf,
+      stale,
+      staleNote,
       unavailableReason: null,
       missing: [],
     }
@@ -470,6 +486,8 @@ export async function buildDashboardView(
     isDemoData: false,
     weekLabel,
     asOf,
+    stale,
+    staleNote,
     unavailableReason: null,
     missing,
   }
