@@ -60,6 +60,11 @@ export function Placard({ id }: { id: string }) {
                   Nothing to open
                 </span>
               )}
+              {app.tier === "private" && (
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-warm-white/25">
+                  Private · login required
+                </span>
+              )}
             </div>
           </div>
 
@@ -86,9 +91,9 @@ export function Placard({ id }: { id: string }) {
         )}
 
         <p className="text-[10px] text-warm-white/20 leading-relaxed pt-4 border-t border-white/5">
-          This is a placard rather than an exhibit. It is listed because the gallery should be
-          honest about what exists, including the parts that are not finished, not deployed, or
-          not built at all yet.
+          {app.tier === "private"
+            ? "This is a listing rather than an exhibit. The app is real and running, and it is private: it is listed because the gallery should be honest about what exists, including the parts a visitor cannot open."
+            : "This is a placard rather than an exhibit. It is listed because the gallery should be honest about what exists, including the parts that are not finished, not deployed, or not built at all yet."}
         </p>
       </div>
     </div>

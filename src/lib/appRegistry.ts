@@ -363,6 +363,10 @@ export const APP_REGISTRY: AppRegistryEntry[] = [
     hasLiveApp: true,
     note:
       "Private and login-gated. Listed here so the two people with logins can find it, not as an invitation.",
+    placardBody: [
+      "Love Postcards is a mailbox for two people, and it is the lab The Penny Post came out of. The public demo kept the postcard and dropped the sending; this one keeps the sending and is not public.",
+      "It runs on its own subdomain from its own repository, behind a login. There is nothing here for a visitor to get into, which is the point of listing it rather than hiding it: the gallery says what exists, including the parts that are private.",
+    ],
     status: "operational",
     color: "text-rose-400",
     bg: "bg-rose-400/10",
