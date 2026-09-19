@@ -5,11 +5,11 @@
 window.ETM_ES = {
   // ---- shared chrome
   "Pelican · Line Training Binder": "Pelican · Carpeta de capacitación de línea",
-  "Binder Home": "Inicio de la carpeta",
-  "01. Storage & Temps": "01. Almacenamiento y temperaturas",
-  "02. Shift Checklists": "02. Listas de turno",
-  "03. Line Callouts": "03. Llamados en la línea",
-  "04. Oil Quality": "04. Calidad del aceite",
+  "Home": "Inicio",
+  "01 Storage & Temps": "01 Almacenamiento y temps",
+  "02 Checklists": "02 Listas de turno",
+  "03 Callouts": "03 Llamados",
+  "04 Oil Quality": "04 Calidad del aceite",
   "Quick Guide": "Guía rápida",
   "Fryer Station": "Estación de freidora",
   "BINDER SPEC:": "ESPEC. CARPETA:",

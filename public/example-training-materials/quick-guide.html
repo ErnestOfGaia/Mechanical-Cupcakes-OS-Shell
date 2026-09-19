@@ -12,6 +12,7 @@
 <script src="tw-config.js"></script>
 <style>
 html, body { margin: 0; padding: 0; }
+[hidden] { display: none !important; } /* Tailwind's .flex would otherwise beat the hidden attribute */
 .hazard { background: repeating-linear-gradient(-45deg, #141b2b, #141b2b 12px, #fe932c 12px, #fe932c 24px); }
 .num { font-variant-numeric: tabular-nums; }
 .punch { position: absolute; left: 6px; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed #76777d; background: #d9e3f6; }
@@ -38,15 +39,14 @@ html, body { margin: 0; padding: 0; }
 <div class="min-h-16 w-full px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm">
 <div class="flex items-center gap-space-lg">
 <div class="flex items-center gap-space-sm bg-primary px-space-md py-space-xs"><span class="w-2 h-2 bg-secondary-container"></span><span class="font-headline-md text-headline-md uppercase tracking-wide text-on-primary">Fryer Station</span></div>
-<div class="hidden md:flex items-center gap-space-xs bg-surface-container-highest/20 px-space-sm py-space-xs"><span class="font-label-sm text-label-sm text-on-primary-container uppercase">FORMAT:</span><span class="font-label-sm text-label-sm text-primary-fixed uppercase">8.5" × 11" PORTRAIT</span></div>
 </div>
 <nav class="flex flex-wrap items-center gap-space-xs" aria-label="Binder">
-<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Binder Home</a>
-<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-01-storage-temps.html">01. Storage &amp; Temps</a>
-<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-02-shift-checklists.html">02. Shift Checklists</a>
-<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">03. Line Callouts</a>
-<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">04. Oil Quality</a>
-<a aria-current="page" class="font-label-md text-label-md uppercase px-space-md py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="quick-guide.html">Quick Guide</a>
+<a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Home</a>
+<a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-01-storage-temps.html">01 Storage &amp; Temps</a>
+<a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-02-shift-checklists.html">02 Checklists</a>
+<a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">03 Callouts</a>
+<a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">04 Oil Quality</a>
+<a aria-current="page" class="font-label-md text-label-md uppercase px-space-sm py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="quick-guide.html">Quick Guide</a>
 </nav>
 <div class="flex items-center gap-space-sm">
 <button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
@@ -71,19 +71,19 @@ html, body { margin: 0; padding: 0; }
 </div>
 <div class="hazard h-2.5 w-full"></div>
 
-<!-- MASTER HEADER -->
-<div class="pl-8 pr-5 pt-3 pb-2 border-b-2 border-primary-container">
+<!-- MASTER HEADER — the same ink band the cards open with -->
+<div class="pl-8 pr-5 pt-3 pb-3 bg-primary-container text-on-primary border-b-4 border-secondary-container">
 <div class="flex flex-wrap items-start justify-between gap-2">
 <div>
 <div class="flex flex-wrap items-center gap-1.5">
 <span class="bg-primary text-on-primary px-2 py-0.5 font-label-sm text-label-sm uppercase">Station 04 // Fryer</span>
 <span class="bg-secondary-container text-on-secondary-container px-1.5 py-0.5 font-label-sm text-label-sm uppercase font-bold">Rev: 2025.1-Q1</span>
-<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Synthesis: FS-Card-01 to FS-Card-04</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Synthesis: FS-Card-01 to FS-Card-04</span>
 </div>
-<h1 class="font-display text-display uppercase text-on-background leading-none mt-1">Fryer Station Quick Guide</h1>
-<p class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wide mt-0.5">One sheet: storage &amp; temps · shift checklists · line callouts · oil quality</p>
+<h1 class="font-display text-display uppercase text-on-primary leading-none mt-1">Fryer Station Quick Guide</h1>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim uppercase tracking-wide mt-0.5">One sheet: storage &amp; temps · shift checklists · line callouts · oil quality</p>
 </div>
-<div class="bg-tertiary-container text-tertiary-fixed p-2 max-w-[300px] flex items-start gap-2">
+<div class="bg-tertiary-container text-tertiary-fixed p-2 max-w-[300px] flex items-start gap-2 border-2 border-secondary-container">
 <span class="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg px-1.5 leading-none py-0.5">!</span>
 <div class="text-[10px] leading-tight font-body-sm">
 <div class="font-label-sm text-label-sm uppercase font-bold text-on-tertiary-container">Critical control points (CCP)</div>
