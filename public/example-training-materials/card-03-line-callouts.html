@@ -1,0 +1,283 @@
+<!DOCTYPE html><html lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Card 03 · Line Callouts</title><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script src="tw-config.js"></script><style>
+label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
+.is-editing [data-edit] { outline: 2px dashed #fe932c; outline-offset: 1px; cursor: text; background: #fff7ed; }
+.is-editing [data-edit]:focus { outline: 2px solid #141b2b; background: #fff; }
+[data-edited]::after { content: ""; display: inline-block; width: 6px; height: 6px; background: #fe932c; margin-left: 4px; vertical-align: middle; }
+@media print {
+  [data-edit] { outline: none !important; background: transparent !important; }
+  [data-edited]::after { display: none !important; }
+  @page { size: letter landscape; margin: 0.3in; }
+  html, body { background: #fff !important; }
+  body { min-height: 0 !important; display: block !important; }
+  body > header, body > footer, .no-print { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
+  main > div { width: 100% !important; max-width: none !important; }
+  #card { max-width: none !important; width: 100.00% !important; zoom: 1; margin: 0 !important; box-shadow: none !important; break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .animate-ping, .animate-pulse { animation: none !important; }
+  
+  .sm\:inline-block{display:inline-block!important}.sm\:inline{display:inline!important}.sm\:block{display:block!important}.sm\:flex{display:flex!important}
+  .sm\:flex-row{flex-direction:row!important}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .md\:flex{display:flex!important}.md\:flex-row{flex-direction:row!important}.md\:flex-col{flex-direction:column!important}.md\:items-center{align-items:center!important}.md\:w-auto{width:auto!important}.md\:flex-initial{flex:0 1 auto!important}
+  .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))!important}
+  .lg\:col-span-2{grid-column:span 2/span 2!important}.lg\:col-span-4{grid-column:span 4/span 4!important}.lg\:col-span-8{grid-column:span 8/span 8!important}
+  .xl\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+</style>
+</head><body data-card="03" class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="sticky top-0 left-0 w-full z-50 bg-primary-container text-on-primary shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="min-h-16 w-full px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm bg-primary px-space-md py-space-xs"><span class="w-2 h-2 bg-secondary-container"></span><span class="font-headline-md text-headline-md uppercase tracking-wide text-on-primary">Fryer Station</span></div><div class="hidden md:flex items-center gap-space-xs bg-surface-container-highest/20 px-space-sm py-space-xs"><span class="font-label-sm text-label-sm text-on-primary-container uppercase">BINDER SPEC:</span><span class="font-label-sm text-label-sm text-primary-fixed uppercase">5.5" × 8.5" HALF-SHEET</span></div></div><nav class="flex flex-wrap items-center gap-space-xs" aria-label="Binder"><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Binder Home</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-01-storage-temps.html">01. Storage &amp; Temps</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-02-shift-checklists.html">02. Shift Checklists</a><a aria-current="page" class="font-label-md text-label-md uppercase px-space-md py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="card-03-line-callouts.html">03. Line Callouts</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">04. Oil Quality</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="quick-guide.html">Quick Guide</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm">
+<button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
+<button type="button" data-edit-toggle aria-pressed="false" class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">edit</span><span data-edit-label data-i18n-skip>Edit</span></button>
+<button type="button" data-edit-reset hidden class="flex items-center gap-1 bg-error-container text-on-error-container px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">undo</span><span>Reset edits</span></button>
+<button type="button" onclick="window.print()" class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-space-md py-space-xs font-label-md text-label-md uppercase tracking-wider font-bold shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">print</span><span>Print card</span></button>
+</div></div></div></header><div data-edit-banner hidden class="no-print w-full bg-secondary-fixed text-on-secondary-fixed px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm font-body-sm text-body-sm">
+<span><b>Demo edit mode.</b> Click any step, list item or table cell to change it. Headings and banners stay locked.</span>
+<span class="font-label-sm text-label-sm uppercase"><span data-edit-count>0</span> edits saved in this browser only · the quick guide shows them too</span>
+</div>
+<main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter"><div class="no-print w-full max-w-4xl mb-space-sm flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm"><div class="flex items-center gap-space-md"><span class="flex items-center gap-space-xs"><span class="inline-block w-3 h-3 rounded-full bg-outline-variant"></span>3-HOLE MARGIN GUIDE: 1.75" PUNCH SAFE ZONE (LEFT)</span><span class="hidden sm:inline-block text-outline">|</span><span class="hidden sm:inline-block">CARDSTOCK: 100LB MATTE LAMINATE</span></div><div class="flex items-center gap-space-xs"></div></div><div class="flex flex-col w-full">
+<div id="card" class="w-full max-w-5xl mx-auto flex flex-col gap-space-md">
+<!-- LAMINATED CARD CONTAINER (5.5" x 8.5" Half-Sheet Landscape Spec) -->
+<section class="w-full bg-surface-container-lowest text-on-surface shadow-2xl relative overflow-hidden flex flex-col" style="box-shadow: 6px 6px 0px #141b2b;">
+<!-- PUNCH MARGIN GUIDE OVERLAY (Left 1.75" mechanical punch safe zone indicator) -->
+<div class="absolute left-0 top-0 bottom-0 w-margin-punch pointer-events-none z-30 flex flex-col justify-between py-space-xl items-center opacity-30">
+<div class="w-4 h-4 rounded-full bg-outline"></div>
+<div class="w-4 h-4 rounded-full bg-outline"></div>
+<div class="w-4 h-4 rounded-full bg-outline"></div>
+</div>
+<!-- HAZARD STRIPE ACCENT (TOP SAFETY RATING BAR) -->
+<div class="w-full h-2 bg-[repeating-linear-gradient(45deg,#fe932c,#fe932c_12px,#141b2b_12px,#141b2b_24px)]"></div>
+<!-- CARD HEADER & METADATA BAR -->
+<div class="w-full bg-primary-container text-on-primary pl-[2.25rem] pr-space-lg py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="bg-secondary-container text-on-secondary-container px-space-xs py-0.5 font-label-sm text-label-sm uppercase tracking-wider font-bold">SEC-03</span>
+<div class="flex flex-col">
+<h1 class="font-headline-lg text-headline-lg uppercase tracking-wide leading-none text-on-primary">
+              FRYER STATION OPERATIONS: LINE CALLOUTS</h1>
+<span class="font-label-sm text-label-sm text-on-primary-container tracking-wider uppercase mt-0.5">
+              LINE DISCIPLINE SYSTEM</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm font-label-sm text-label-sm text-on-primary-container uppercase">
+<span class="bg-primary px-space-sm py-space-xs text-primary-fixed">FS-CARD-03 OF 04</span>
+<span class="hidden sm:inline bg-primary px-space-sm py-space-xs text-on-primary">REV: 2025.1-Q1</span>
+<span class="bg-secondary-container/20 text-secondary-fixed px-space-sm py-space-xs">LANDSCAPE 8.5" × 5.5"</span>
+</div>
+</div>
+<!-- HIGH-VISIBILITY MANDATORY RULE BANNER -->
+<div class="w-full bg-tertiary-container text-on-tertiary-container pl-[2.25rem] pr-space-lg py-space-xs flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container animate-pulse">warning</span>
+<span class="font-label-md text-label-md uppercase tracking-wider font-bold">
+            RULE: Call out and respond — silent drops are a safety hazard</span>
+</div>
+<div class="hidden md:flex items-center gap-space-xs bg-black/40 px-space-sm py-0.5 font-label-sm text-label-sm text-on-tertiary">
+
+</div>
+</div>
+<!-- CARD BODY: TABULAR REFERENCE MATRIX -->
+<div class="w-full pl-[2.25rem] pr-space-lg py-space-sm flex-1 flex flex-col justify-between">
+<!-- PROTOCOL TABLE -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-primary-container text-on-primary font-label-md text-label-md uppercase">
+<th class="py-space-xs px-space-sm w-[22%]">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-secondary-container inline-block"></span>
+                    LEAD / EXPO CALL
+                  </span>
+</th>
+<th class="py-space-xs px-space-sm w-[26%] bg-[#0e1420]">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-primary-fixed inline-block"></span>
+                    FRYER CALLBACK (ECHO)
+                  </span>
+</th>
+<th class="py-space-xs px-space-sm w-[22%]">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-outline-variant inline-block"></span>Position Roles / Safety</span>
+</th>
+<th class="py-space-xs px-space-sm w-[30%] bg-[#0e1420]">
+<span class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-error-container inline-block"></span>
+                    LINE DISCIPLINE &amp; SAFETY RULE
+                  </span>
+</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md divide-y-0">
+<!-- ROW 1 -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-lg text-label-lg font-bold text-on-surface">"I need a chicken strip on the fly please!"</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Ticket Fire Command</span>
+</td>
+<td class="py-space-xs px-space-sm bg-surface-container-low align-middle">
+<div class="inline-flex items-center gap-1 bg-primary text-primary-fixed px-space-xs py-0.5 font-label-md text-label-md uppercase font-bold">
+<span class="w-1.5 h-1.5 bg-secondary-container"></span>
+                    "Heard, 6 minutes!"
+                  </div>
+</td>
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-md text-label-md font-bold text-secondary">Support - Feed the Beast</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">drops frozen items into fryer<br>stocks up line<br>stocks up backups</div>
+</td>
+<td class="py-space-xs px-space-sm bg-surface-container-low align-middle">
+<div class="flex items-start gap-space-xs">
+<span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary px-1 py-0.5 font-bold">CCP</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-tight">
+                      Check internal temp (min 165°F / 74°C). <strong>Never pull early.</strong> Shake basket to prevent clumping.
+                    </p>
+</div>
+</td>
+</tr>
+<!-- ROW 2 -->
+<tr class="bg-surface-container-high/40 hover:bg-surface-container transition-colors">
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-lg text-label-lg font-bold text-on-surface">"How long on the Chicken Strip?"</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Expo Status Audit</span>
+</td>
+<td class="py-space-xs px-space-sm bg-surface-container align-middle">
+<div class="inline-flex items-center gap-1 bg-primary text-primary-fixed px-space-xs py-0.5 font-label-md text-label-md uppercase font-bold">
+<span class="w-1.5 h-1.5 bg-secondary-container"></span>
+                    "2 Minutes on Board!"
+                  </div>
+</td>
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-md text-label-md font-bold text-on-surface">Lead - Plate the Food</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">plates cooked food<br>stocks up cold well &amp; supplies<br>keeps station clean</div>
+</td>
+<td class="py-space-xs px-space-sm bg-surface-container align-middle">
+<p class="font-body-sm text-body-sm text-on-surface leading-tight">
+                    Look at physical basket countdown timer. <strong>Never guess or assume remaining seconds.</strong>
+</p>
+</td>
+</tr>
+
+<!-- ROW 4 (CRITICAL ALLERGY ROW) -->
+<tr class="bg-tertiary-fixed/30 hover:bg-tertiary-fixed/50 transition-colors">
+<td class="py-space-xs px-space-sm align-middle">
+<div class="flex items-center gap-1 text-tertiary-container font-headline-md text-headline-md font-bold uppercase">
+<span class="material-symbols-outlined text-[16px] text-tertiary-container">crisis_alert</span>
+                    "coming down the line wide load"
+                  </div>
+
+</td>
+<td class="py-space-xs px-space-sm bg-tertiary-fixed/50 align-middle">
+
+</td>
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-md text-label-md font-bold text-tertiary-container">ZERO CROSS-CONTACT</div>
+<div class="font-label-sm text-label-sm text-tertiary-container font-semibold">Sanitation water: change every 2 hours&nbsp;<br>Dry towels are not sanitary</div>
+</td>
+<td class="py-space-xs px-space-sm bg-tertiary-fixed/50 align-middle">
+<div class="flex items-start gap-space-xs">
+<span class="font-label-sm text-label-sm bg-tertiary-container text-on-tertiary px-1 py-0.5 font-bold">ALLERGEN</span>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold leading-tight">
+<strong>Change gloves immediately.</strong> Use sanitized RED silicone tongs. Never share fryer oil or staging pan.
+                    </p>
+</div>
+</td>
+</tr>
+<!-- ROW 5 (LINE SAFETY ROW) -->
+<tr class="bg-secondary-fixed/30 hover:bg-secondary-fixed/50 transition-colors">
+<td class="py-space-xs px-space-sm align-middle">
+<div class="flex items-center gap-1 text-secondary font-headline-md text-headline-md font-bold uppercase">
+<span class="material-symbols-outlined text-[16px] text-secondary">emergency_home</span>
+                    "Behind You / Hot Oil!"
+                  </div>
+<span class="font-label-sm text-label-sm text-on-secondary-fixed-variant uppercase tracking-wider font-bold">Physical Safety Call</span>
+</td>
+<td class="py-space-xs px-space-sm bg-secondary-fixed/50 align-middle">
+
+</td>
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-md text-label-md font-bold text-secondary">Seafood Warnings</div>
+<div class="font-label-sm text-label-sm text-on-secondary-fixed-variant">Seafood should not be stored above other food</div>
+</td>
+<td class="py-space-xs px-space-sm bg-secondary-fixed/50 align-middle">
+<div class="flex items-start gap-space-xs">
+<span class="font-label-sm text-label-sm bg-secondary text-on-secondary px-1 py-0.5 font-bold">BURN HAZ</span>
+<p class="font-body-sm text-body-sm text-on-surface font-semibold leading-tight">
+<strong>Freeze all line movement.</strong> Keep elbows tucked and stay anchored until hot oil transport fully clears corridor.
+                    </p>
+</div>
+</td>
+</tr>
+<!-- ROW 6 -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container transition-colors">
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-lg text-label-lg font-bold text-error"><br></div>
+
+</td>
+<td class="py-space-xs px-space-sm bg-surface-container-low align-middle">
+
+</td>
+<td class="py-space-xs px-space-sm align-middle">
+<div class="font-label-md text-label-md font-bold text-error">Warm Table</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">145°F minimum temp<br>hold no longer than 4 hours</div>
+</td>
+<td class="py-space-xs px-space-sm bg-surface-container-low align-middle">
+<div class="flex items-start gap-space-xs">
+<span class="font-label-sm text-label-sm bg-error text-on-error px-1 py-0.5 font-bold">WASTE</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-tight">
+                      Strict dump chute timer audit. <strong>Stale fried product must be logged on waste sheet and tossed.</strong> Never re-dredge.
+                    </p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- QUICK DIAGNOSTIC HUD STRIP -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm mt-space-sm pt-space-xs bg-surface-container-low p-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 bg-secondary-container shrink-0"></span>
+<div>
+
+
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 bg-tertiary-container shrink-0"></span>
+<div>
+
+
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 bg-primary shrink-0"></span>
+<div>
+
+
+</div>
+</div>
+</div>
+</div>
+<!-- CARD FOOTER & PHYSICAL SIGN-OFF BINDING STRIP -->
+<div class="w-full bg-primary-container text-on-primary pl-[2.25rem] pr-space-lg py-space-xs flex flex-wrap items-center justify-between gap-space-sm mt-space-xs">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-primary-container uppercase">STATION COOK:</span>
+<span class="bg-surface-container-highest/20 px-space-sm py-0.5 font-label-md text-label-md text-primary-fixed uppercase tracking-wider">_________________</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-primary-container uppercase">TRAINER SIGN-OFF:</span>
+<span class="bg-surface-container-highest/20 px-space-sm py-0.5 font-label-md text-label-md text-secondary-fixed uppercase tracking-wider">___________</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-primary-container uppercase tracking-widest">
+<span class="material-symbols-outlined text-[14px]">book</span>
+<span class="">STANDARD 3-RING HALF-BINDER</span>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+</main><footer class="w-full bg-primary-container text-on-primary-container py-space-sm"><div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm uppercase tracking-wider"><div class="flex items-center gap-space-md"><span class="">SURFACE: CHEMICAL &amp; OIL RESISTANT</span></div></div></footer><script src="es.js"></script>
+<script src="edit.js"></script>
+<script src="i18n.js"></script>
+</body></html>

@@ -1,6 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Static demo site (Pelican fryer-station training binder) served straight from
+  // public/example-training-materials — no route, no registry entry, no brain chunk.
+  // Its pages link each other relatively, so the clean URL redirects to index.html
+  // rather than rewriting (a rewrite would leave the browser at a base without a
+  // trailing slash and break every relative link). Temporary: it moves to its own
+  // repo if the pitch turns into a client project.
+  async redirects() {
+    return [
+      {
+        source: "/example-training-materials",
+        destination: "/example-training-materials/index.html",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

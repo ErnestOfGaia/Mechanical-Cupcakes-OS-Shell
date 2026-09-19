@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Fryer Station Quick Guide</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="tw-config.js"></script>
+<style>
+html, body { margin: 0; padding: 0; }
+.hazard { background: repeating-linear-gradient(-45deg, #141b2b, #141b2b 12px, #fe932c 12px, #fe932c 24px); }
+.num { font-variant-numeric: tabular-nums; }
+.punch { position: absolute; left: 6px; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed #76777d; background: #d9e3f6; }
+.box { display: inline-block; width: 11px; height: 11px; border: 1.5px solid #141b2b; vertical-align: -1px; margin-right: 4px; background: #fff; }
+[data-edited]::after { content: ""; display: inline-block; width: 5px; height: 5px; background: #fe932c; margin-left: 3px; vertical-align: middle; }
+/* One US Letter sheet, portrait. Chrome prints at the paper width (816px), so the sheet
+   is laid out wider and zoomed down to fit one page. print-layout.css forces the desktop grid. */
+@media print {
+  @page { size: letter portrait; margin: 0.35in 0.4in; }
+  html, body { background: #fff !important; }
+  body { min-height: 0 !important; display: block !important; }
+  body > header, body > footer, .no-print { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
+  #sheet { max-width: none !important; width: 1080px !important; zoom: 0.75; margin: 0 !important; box-shadow: none !important; }
+  [data-edited]::after { display: none !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
+</style>
+<link rel="stylesheet" href="print-layout.css" media="print">
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col">
+
+<header class="sticky top-0 left-0 w-full z-50 bg-primary-container text-on-primary shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+<div class="min-h-16 w-full px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-sm bg-primary px-space-md py-space-xs"><span class="w-2 h-2 bg-secondary-container"></span><span class="font-headline-md text-headline-md uppercase tracking-wide text-on-primary">Fryer Station</span></div>
+<div class="hidden md:flex items-center gap-space-xs bg-surface-container-highest/20 px-space-sm py-space-xs"><span class="font-label-sm text-label-sm text-on-primary-container uppercase">FORMAT:</span><span class="font-label-sm text-label-sm text-primary-fixed uppercase">8.5" × 11" PORTRAIT</span></div>
+</div>
+<nav class="flex flex-wrap items-center gap-space-xs" aria-label="Binder">
+<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Binder Home</a>
+<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-01-storage-temps.html">01. Storage &amp; Temps</a>
+<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-02-shift-checklists.html">02. Shift Checklists</a>
+<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">03. Line Callouts</a>
+<a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">04. Oil Quality</a>
+<a aria-current="page" class="font-label-md text-label-md uppercase px-space-md py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="quick-guide.html">Quick Guide</a>
+</nav>
+<div class="flex items-center gap-space-sm">
+<button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
+<button type="button" onclick="window.print()" class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-space-md py-space-xs font-label-md text-label-md uppercase tracking-wider font-bold shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">print</span><span>Print guide</span></button>
+</div>
+</div>
+</header>
+
+<div data-edit-banner hidden class="no-print w-full bg-secondary-fixed text-on-secondary-fixed px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm font-body-sm text-body-sm">
+<span><b>Following the cards.</b> Lines marked with an amber dot were edited on a card in this browser; the guide shows the edited text.</span>
+<span class="flex items-center gap-space-sm font-label-sm text-label-sm uppercase"><span><span data-edit-count>0</span> edits</span><button type="button" data-edit-reset hidden class="bg-error-container text-on-error-container px-space-sm py-0.5 font-label-sm text-label-sm uppercase tracking-wider">Reset edits</button></span>
+</div>
+<main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter">
+<div class="no-print w-full max-w-[850px] mb-space-sm flex flex-wrap items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase">
+<span>Synthesis of cards 01–04 · Only facts that appear on the cards</span>
+<span>Binder front pocket · Letter portrait · Laminate</span>
+</div>
+
+<article id="sheet" class="w-full max-w-[850px] bg-surface-container-lowest text-on-surface shadow-xl relative">
+<div class="hidden sm:block absolute left-0 top-0 bottom-0 w-6 pointer-events-none">
+<div class="punch" style="top:14%"></div><div class="punch" style="top:50%"></div><div class="punch" style="top:86%"></div>
+</div>
+<div class="hazard h-2.5 w-full"></div>
+
+<!-- MASTER HEADER -->
+<div class="pl-8 pr-5 pt-3 pb-2 border-b-2 border-primary-container">
+<div class="flex flex-wrap items-start justify-between gap-2">
+<div>
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="bg-primary text-on-primary px-2 py-0.5 font-label-sm text-label-sm uppercase">Station 04 // Fryer</span>
+<span class="bg-secondary-container text-on-secondary-container px-1.5 py-0.5 font-label-sm text-label-sm uppercase font-bold">Rev: 2025.1-Q1</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Synthesis: FS-Card-01 to FS-Card-04</span>
+</div>
+<h1 class="font-display text-display uppercase text-on-background leading-none mt-1">Fryer Station Quick Guide</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant uppercase tracking-wide mt-0.5">One sheet: storage &amp; temps · shift checklists · line callouts · oil quality</p>
+</div>
+<div class="bg-tertiary-container text-tertiary-fixed p-2 max-w-[300px] flex items-start gap-2">
+<span class="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg px-1.5 leading-none py-0.5">!</span>
+<div class="text-[10px] leading-tight font-body-sm">
+<div class="font-label-sm text-label-sm uppercase font-bold text-on-tertiary-container">Critical control points (CCP)</div>
+<div class="mt-0.5 num">Freezer &lt;31°F (&lt;1°C) · Cold storage &lt;41°F (&lt;5°C) · Fryer oil 350°F / 375°F · Poultry internal 165°F (74°C) · Max 50% basket load</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- KEY NUMBERS -->
+<div class="pl-8 pr-5 py-2 grid grid-cols-2 sm:grid-cols-4 gap-2 border-b border-outline-variant">
+<div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Wells 1–3</div><div class="font-headline-md text-headline-md num">350°F <span class="font-label-sm text-label-sm text-on-surface-variant">(177°C)</span></div></div>
+<div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Crispy skin fries</div><div class="font-headline-md text-headline-md num">375°F <span class="font-label-sm text-label-sm text-on-surface-variant">(190°C)</span></div></div>
+<div class="bg-secondary-fixed p-1.5 text-on-secondary-fixed"><div class="font-label-sm text-label-sm uppercase">Max basket load</div><div class="font-headline-md text-headline-md num">50% <span class="font-label-sm text-label-sm">drop &gt;25°F = overload</span></div></div>
+<div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Calamari fridge hold</div><div class="font-headline-md text-headline-md num">7 MIN MAX <span class="font-label-sm text-label-sm text-on-surface-variant">heat lamp ≥165°F</span></div></div>
+</div>
+
+<!-- 01 STORAGE & TEMPS -->
+<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
+<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm uppercase">01. Storage zones &amp; critical temps</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Card 01 · Section 01</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5">
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">01</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone A // Freezer</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Frozen food storage</div>
+<div class="font-label-sm text-label-sm text-error font-bold num">Target &lt; 31°F (&lt;1°C)</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fries">Fries</span> · <span data-edit="01:ice-cream">Ice cream</span> · <span data-edit="01:onion-rings">Onion rings</span></div>
+<div class="bg-tertiary-container/10 text-on-tertiary-container font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>If freezer is beeping:</b> <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></div>
+</div>
+<div class="border-2 border-secondary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">02</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone B // Fridge</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Cold food storage</div>
+<div class="font-label-sm text-label-sm font-bold num">Target &lt; 41°F (&lt;5°C)</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fish">Fish</span> · <span data-edit="01:slaw">Slaw</span> · <span data-edit="01:tartar-sauce">Tartar sauce</span></div>
+<div class="bg-secondary-fixed text-on-secondary-fixed font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Allergen: gluten &amp; egg.</b> <span data-edit="01:dedicated-gf-dredge-tub-green-wire-basket-segreg">Dedicated GF dredge tub &amp; green wire basket segregated 24" left.</span></div>
+</div>
+<div class="border-2 border-error p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">03</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone C // Fryer</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Well submersion &amp; timing</div>
+<div class="font-label-sm text-label-sm font-bold num">Wells 1–3: 350°F (177°C)</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:agitate-basket-at-30s-elapsed-to-avoid-clumping">Agitate basket at 30s elapsed.</span> <b data-edit="01:max-50-basket-load-prevent-oil-thermal-shock-sog">Max 50% basket load.</b></div>
+<div class="bg-error-container text-on-error-container font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Thermal drop hazard:</b> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">temp drop &gt;25°F = basket overload. Refire batch.</span></div>
+</div>
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">04</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone D // Calamari fridge</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Calamari fridge storage</div>
+<div class="font-label-sm text-label-sm text-error font-bold num">Discard timer: 7 min max hold</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:calamari">Calamari</span> · <span data-edit="01:milk">Milk</span> · <span data-edit="01:peppers">Peppers</span></div>
+<div class="bg-surface-container-highest font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Heat lamp min 165°F (74°C).</b> <span data-edit="01:reset-kds-station-timer-on-dump-pitch-batch-stri">Reset KDS timer on dump. Pitch batch at the 7:00 mark.</span></div>
+</div>
+</div>
+<table class="w-full mt-1.5 text-left font-body-sm text-[10px] border-collapse">
+<thead class="bg-primary-container text-on-primary font-label-sm text-label-sm uppercase"><tr><th class="px-1.5 py-0.5">Menu item protein</th><th class="px-1.5 py-0.5">Batch qty</th><th class="px-1.5 py-0.5 text-right">Target well temp</th><th class="px-1.5 py-0.5 text-right">Cook time</th><th class="px-1.5 py-0.5 text-right">Internal CCP</th></tr></thead>
+<tbody class="num">
+<tr class="border-b border-outline-variant"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:buttermilk-crispy-thigh">Buttermilk Crispy Thigh</td><td class="px-1.5 py-0.5 font-label-sm" data-edit="01:4-portions">4 Portions</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:350f-177c">350°F / 177°C</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:6m-30s">6m 30s</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:165f-74c">165°F (74°C)</td></tr>
+<tr class="border-b border-outline-variant bg-surface-container-low"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:tenderloins-scratch-batter">Tenderloins (Scratch Batter)</td><td class="px-1.5 py-0.5 font-label-sm" data-edit="01:6-portions">6 Portions</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:350f-177c-2">350°F / 177°C</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:4m-15s">4m 15s</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:165f-74c-2">165°F (74°C)</td></tr>
+<tr class="border-b border-outline-variant"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:crispy-skin-fries-blanched">Crispy Skin Fries (Blanched)</td><td class="px-1.5 py-0.5 font-label-sm" data-edit="01:1-basket-1-5-lb">1 Basket (1.5 lb)</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:375f-190c">375°F / 190°C</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:2m-45s">2m 45s</td><td class="px-1.5 py-0.5 font-label-sm text-right text-on-surface-variant" data-edit="01:golden-crisp">Golden / Crisp</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- 02 SHIFT CHECKLISTS -->
+<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
+<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm uppercase">02. Shift checklists &amp; routines</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Card 02 · Lead verifies at changeover · HACCP Sec 4.12</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
+<div class="bg-surface-container-low p-1.5">
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">01. Open routine <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— set-up &amp; calibrate</span></div>
+<div><span class="box"></span><span data-edit="02:inspect-well-oil-levels-to-upper-cold-scribe-mar">Inspect well oil levels to upper cold scribe mark.</span></div>
+<div><span class="box"></span><span data-edit="02:verify-exhaust-hoods-makeup-air-cfm-draw-active">Verify exhaust hoods &amp; makeup-air CFM draw active.</span></div>
+<div><span class="box"></span><span data-edit="02:preheat-wells-1-3-to-350f-calibrate-probe-in-ice">Preheat Wells 1–3 to 350°F; calibrate probe in ice-water (32°F ±1°F).</span></div>
+<div><span class="box"></span><span data-edit="02:set-up-dredge-tubs-ice-bath-under-egg-wash-sanit">Set up dredge tubs, ice bath under egg wash (≤ 40°F), sanitized tongs.</span></div>
+<div><span class="box"></span><span data-edit="02:test-heat-lamp-bulbs-over-fry-dump-station">Test heat lamp bulbs over fry dump station (≥ 165°F / 74°C).</span></div>
+<div><span class="box"></span><span data-edit="02:stock-portion-pans-clean-landing-trays-timer-bat">Stock portion pans, clean landing trays, timer batteries.</span></div>
+<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">OPEN VERIFY · INIT: [ _____ ] · TIME: [ _____ ]</div>
+</div>
+<div class="bg-surface-container-low p-1.5">
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">02. Mid-shift reset <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— check, sanitize, stock</span></div>
+<div><span class="box"></span><span data-edit="02:skim-crumb-surface-floaters-with-fine-mesh-skimm">Skim crumb surface &amp; floaters with fine mesh skimmer (every 30m in the rush).</span></div>
+<div><span class="box"></span><span data-edit="02:perform-mid-day-hot-oil-filtration-on-heavy-well">Mid-day hot oil filtration on heavy wells (Wells 1 &amp; 2 via pump recirculator).</span></div>
+<div><span class="box"></span><span data-edit="02:top-off-oil-levels-using-fresh-reserve-jug">Top off oil with fresh reserve jug (max 1 qt per well during service).</span></div>
+<div><span class="box"></span><span data-edit="02:wipe-crumb-trays-stainless-splash-guards-heat-sh">Wipe crumb trays, splash guards &amp; heat shields (no aerosol sprays near vats).</span></div>
+<div><span class="box"></span><span data-edit="02:restock-raw-freezer-lowboy-batch-chicken-fries-s">Restock raw freezer lowboy: chicken, fries, seafood (readout &lt; 0°F; FIFO).</span></div>
+<div><span class="box"></span><span data-edit="02:sanitize-seasoning-shakers-discard-clumped-dredg">Sanitize seasoning shakers &amp; discard clumped dredge flour (#10 mesh sieve).</span></div>
+<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">RUSH RESET · INIT: [ _____ ] · OIL TPM: [ ___% ]</div>
+</div>
+<div class="bg-surface-container-low p-1.5">
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">03. Close breakdown <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— shutdown &amp; sanitation</span></div>
+<div><span class="box"></span><span data-edit="02:power-down-burners-pilot-valves-cool-below-150f">Power down burners &amp; pilot valves; cool below 150°F. Do not drain boiling oil.</span></div>
+<div><span class="box"></span><span data-edit="02:run-complete-filtration-through-paper-discard-co">Run complete filtration through paper &amp; discard cone; replace filter pad envelope.</span></div>
+<div><span class="box"></span><span data-edit="02:scrub-vat-walls-heating-elements-tank-sides">Scrub vat walls, heating elements &amp; tank sides (high-temp long brass brush).</span></div>
+<div><span class="box"></span><span data-edit="02:empty-sediment-crumb-pans-degrease-splash-surfac">Empty sediment crumb pans; degrease splash surfaces; air-dry upside down.</span></div>
+<div><span class="box"></span><span data-edit="02:install-clean-stainless-night-covers-over-all-4">Install clean stainless night covers over all 4 wells.</span></div>
+<div><span class="box"></span><span data-edit="02:wipe-fry-dump-station-and-hang-sanitized-baskets">Wipe fry dump station and hang sanitized baskets inverted on wall bracket.</span></div>
+<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">CLOSE VERIFY · INIT: [ _____ ] · PILOT OFF [ X ]</div>
+</div>
+</div>
+</section>
+
+<!-- 03 LINE CALLOUTS -->
+<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
+<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm uppercase">03. Line callouts &amp; echo</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container uppercase font-bold">Rule: call out and respond — silent drops are a safety hazard</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high font-label-sm text-label-sm uppercase"><tr><th class="px-1.5 py-0.5 w-1/2">Lead / expo call</th><th class="px-1.5 py-0.5">Fryer callback (echo)</th></tr></thead>
+<tbody>
+<tr class="border-b border-outline-variant"><td class="px-1.5 py-1 font-label-sm font-bold" data-edit="03:i-need-a-chicken-strip-on-the-fly-please">"I need a chicken strip on the fly please!"</td><td class="px-1.5 py-1"><span class="bg-primary text-primary-fixed font-label-sm px-1 py-0.5 uppercase" data-edit="03:heard-6-minutes">"Heard, 6 minutes!"</span></td></tr>
+<tr class="border-b border-outline-variant"><td class="px-1.5 py-1 font-label-sm font-bold" data-edit="03:how-long-on-the-chicken-strip">"How long on the chicken strip?"</td><td class="px-1.5 py-1"><span class="bg-primary text-primary-fixed font-label-sm px-1 py-0.5 uppercase" data-edit="03:2-minutes-on-board">"2 minutes on board!"</span> <span data-edit="03:look-at-physical-basket-countdown-timer-never-gu">Look at the physical basket timer. Never guess.</span></td></tr>
+<tr class="border-b border-outline-variant bg-tertiary-fixed/30"><td class="px-1.5 py-1 font-headline-sm text-headline-sm uppercase text-tertiary-container" data-edit="03:coming-down-the-line-wide-load">"Coming down the line wide load"</td><td class="px-1.5 py-1"><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1 py-0.5">ALLERGEN</span> <span data-edit="03:change-gloves-immediately-use-sanitized-red-sili">Change gloves immediately. Use sanitized RED silicone tongs. Never share fryer oil or staging pan.</span></td></tr>
+<tr class="bg-secondary-fixed/30"><td class="px-1.5 py-1 font-headline-sm text-headline-sm uppercase text-secondary" data-edit="03:behind-you-hot-oil">"Behind you / Hot oil!"</td><td class="px-1.5 py-1"><span class="bg-secondary text-on-secondary font-label-sm px-1 py-0.5">BURN HAZ</span> <span data-edit="03:freeze-all-line-movement-keep-elbows-tucked-and">Freeze all line movement. Keep elbows tucked and stay anchored until hot oil transport fully clears corridor.</span></td></tr>
+</tbody>
+</table>
+<div class="flex flex-col gap-1">
+<div class="grid grid-cols-2 gap-1">
+<div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm font-bold text-secondary uppercase" data-edit="03:support-feed-the-beast">Support — Feed the Beast</div><div class="text-[9.5px]" data-edit="03:drops-frozen-items-into-fryer-stocks-up-line-sto">Drops frozen items into fryer · Stocks up line · Stocks up backups</div></div>
+<div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm font-bold uppercase" data-edit="03:lead-plate-the-food">Lead — Plate the Food</div><div class="text-[9.5px]" data-edit="03:plates-cooked-food-stocks-up-cold-well-supplies">Plates cooked food · Stocks up cold well &amp; supplies · Keeps station clean</div></div>
+</div>
+<div class="border-2 border-primary-container p-1.5 flex flex-col gap-0.5 text-[9.5px]">
+<div><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1">CCP</span> <span data-edit="03:check-internal-temp-min-165f-74c-never-pull-earl">Check internal temp (min 165°F / 74°C). <b>Never pull early.</b> Shake basket to prevent clumping.</span></div>
+<div><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1">ZERO CROSS-CONTACT</span> <span data-edit="03:sanitation-water-change-every-2-hours-dry-towels">Sanitation water: change every 2 hours. Dry towels are not sanitary.</span></div>
+<div><span class="bg-secondary text-on-secondary font-label-sm px-1">SEAFOOD</span> <span data-edit="03:seafood-should-not-be-stored-above-other-food">Seafood should not be stored above other food.</span></div>
+<div><span class="bg-error text-on-error font-label-sm px-1">WARM TABLE</span> <span data-edit="03:145f-minimum-temp-hold-no-longer-than-4-hours">145°F minimum temp. Hold no longer than 4 hours.</span></div>
+<div><span class="bg-error text-on-error font-label-sm px-1">WASTE</span> <span data-edit="03:strict-dump-chute-timer-audit-stale-fried-produc">Strict dump chute timer audit. <b>Stale fried product must be logged on waste sheet and tossed.</b> Never re-dredge.</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 04 OIL QUALITY -->
+<section class="pl-8 pr-5 pt-2 pb-2">
+<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm uppercase">04. Oil quality &amp; TPM comparator</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Card 04 · Sample window 320°F–350°F · Calibration: Testo 270</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5 text-[9.5px] leading-tight font-body-sm">
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between font-label-sm text-[8.5px] uppercase"><span>Stage 01</span><span class="bg-surface-container-high px-1">Optimal new (day 1–2)</span></div>
+<div class="font-headline-md text-headline-md num">0.0% – 11.0% <span class="font-label-sm text-[8px] text-on-surface-variant">TPM</span></div>
+<div class="h-2.5 w-full" style="background:linear-gradient(90deg,#FEFCE8,#FEF08A)"></div>
+<div class="font-label-sm text-[8.5px] uppercase num">Optical: pale straw · Smoke: &gt;450°F</div>
+<div class="mt-0.5"><span data-edit="04:light-clean-champagne-viscosity-zero-off-odors">Light, clean champagne viscosity. Zero off-odors.</span> <span data-edit="04:minimum-crust-blistering-optimal-for-tempura-bla">Minimum crust blistering; optimal for tempura &amp; blanching.</span></div>
+<div class="mt-0.5 bg-surface-container-low p-1 font-label-sm text-[8.5px]"><b>ACTION:</b> <span data-edit="04:approved-for-all-line-items-top-off-as-needed">Approved for all line items. Top off as needed.</span></div>
+</div>
+<div class="border-2 border-secondary-container p-1.5">
+<div class="flex items-center justify-between font-label-sm text-[8.5px] uppercase"><span>Stage 02</span><span class="bg-secondary-fixed text-on-secondary-fixed px-1">Peak quality (day 3–4)</span></div>
+<div class="font-headline-md text-headline-md text-secondary num">12.0% – 18.0% <span class="font-label-sm text-[8px] text-on-surface-variant">TPM</span></div>
+<div class="h-2.5 w-full" style="background:linear-gradient(90deg,#FDE047,#F59E0B)"></div>
+<div class="font-label-sm text-[8.5px] uppercase num">Optical: golden amber · Smoke: ~420°F</div>
+<div class="mt-0.5"><span data-edit="04:perfect-heat-transfer-matrix-instant-seal-on-pro">Perfect heat transfer matrix. Instant seal on proteins.</span> <span data-edit="04:golden-brown-crust-bloom-crisp-cellular-bite-on">Golden brown crust bloom, crisp cellular bite on dredge.</span></div>
+<div class="mt-0.5 bg-surface-container-low p-1 font-label-sm text-[8.5px]"><b class="text-secondary">PRIME WINDOW:</b> <span data-edit="04:ideal-for-breaded-poultry-hand-cut-fries-and-sea">Ideal for breaded poultry, hand-cut fries, and seafood.</span></div>
+</div>
+<div class="border-2 border-secondary-container p-1.5">
+<div class="flex items-center justify-between font-label-sm text-[8.5px] uppercase"><span>Stage 03</span><span class="bg-secondary-container/20 text-secondary-container px-1">Watch critical (day 5)</span></div>
+<div class="font-headline-md text-headline-md text-secondary-container num">19.0% – 23.5% <span class="font-label-sm text-[8px] text-on-surface-variant">TPM</span></div>
+<div class="h-2.5 w-full" style="background:linear-gradient(90deg,#D97706,#B45309)"></div>
+<div class="font-label-sm text-[8.5px] uppercase num">Optical: deep hazel/brown · Smoke: ~375°F</div>
+<div class="mt-0.5"><span data-edit="04:persistent-surface-foam-rings-oil-viscosity-thic">Persistent surface foam rings. Oil viscosity thickens visibly.</span> <span data-edit="04:greasy-mouthfeel-product-begins-absorbing-up-to">Greasy mouthfeel; product begins absorbing up to 18% more oil.</span></div>
+<div class="mt-0.5 bg-surface-container-low p-1 font-label-sm text-[8.5px]"><b class="text-secondary-container">REMEDIATION:</b> <span data-edit="04:run-filter-cycle-dump-crumb-tray-replenish-20-fr">Run filter cycle; dump crumb tray; replenish 20% fresh oil.</span></div>
+</div>
+<div class="border-2 border-error p-1.5">
+<div class="flex items-center justify-between font-label-sm text-[8.5px] uppercase"><span class="bg-error text-on-error px-1">Stage 04</span><span class="bg-error-container text-on-error-container px-1">Mandatory discard</span></div>
+<div class="font-headline-md text-headline-md text-error num">≥ 24.0% TPM</div>
+<div class="font-label-sm text-[8px] text-error uppercase">Regulatory limit</div>
+<div class="h-2.5 w-full" style="background:linear-gradient(90deg,#451A03,#171717)"></div>
+<div class="font-label-sm text-[8.5px] uppercase num">Optical: black molasses · Smoke: &lt;350°F</div>
+<div class="mt-0.5"><span data-edit="04:acrid-white-haze-bitter-scorched-volatile-hydroc">Acrid white haze. Bitter, scorched volatile hydrocarbon aroma.</span> <span data-edit="04:darkening-core-unapproved-for-consumption-under">Darkening core; unapproved for consumption under food code.</span></div>
+<div class="mt-0.5 bg-error text-on-error p-1 font-label-sm text-[8.5px]"><b>MANDATORY:</b> <span data-edit="04:lock-out-well-immediate-pump-out-and-caustic-boi">LOCK OUT WELL. Immediate pump-out and caustic boil-out.</span></div>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 mt-1.5 text-[9.5px] leading-tight font-body-sm">
+<div class="bg-surface-container-low p-1.5">
+<div class="font-label-sm text-label-sm uppercase font-bold">Shift audit log · mandatory intervals</div>
+<div class="num mt-0.5 font-label-sm text-[8.5px]"><span class="box"></span><span data-edit="04:audit-1-10-00-open">AUDIT 1 // 10:00 OPEN</span> · TPM: ____%</div>
+<div class="num font-label-sm text-[8.5px]"><span class="box"></span><span data-edit="04:audit-2-14-00-mid-key">AUDIT 2 // 14:00 MID (KEY)</span> · TPM: ____%</div>
+<div class="num font-label-sm text-[8.5px]"><span class="box"></span><span data-edit="04:audit-3-21-00-close">AUDIT 3 // 21:00 CLOSE</span> · TPM: ____%</div>
+</div>
+<div class="bg-surface-container-low p-1.5">
+<div class="font-label-sm text-label-sm uppercase font-bold">Cleaning instructions</div>
+<div class="mt-0.5"><b>4-well fryer:</b> <span data-edit="04:step-1-safety-step-2-drain-filter-oil-step-3-cle">1. Safety. 2. Drain &amp; filter oil. 3. Clean all surfaces with a dry towel, green scrubby if needed.</span></div>
+<div class="mt-0.5"><b>1-well fryer:</b> <span data-edit="04:quick-reference-steps-to-be-modeled-by-trainer-a">quick reference steps to be modeled by trainer and verified by chef.</span></div>
+</div>
+<div class="bg-surface-container-low p-1.5">
+<div class="font-label-sm text-label-sm uppercase font-bold">Why does polar matter matter?</div>
+<div class="mt-0.5" data-edit="04:fresh-cooking-oil-consists-almost-entirely-of-no">Fresh oil is almost entirely non-polar triglycerides. Heat, oxygen and moisture break them into polar compounds: the higher the TPM, the more degraded the oil. Skim frequently.</div>
+</div>
+</div>
+</section>
+
+<!-- FOOTER / SIGN-OFF -->
+<footer class="pl-8 pr-5 pt-2 pb-3 border-t-2 border-primary-container font-label-sm text-[9px] text-on-surface">
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 items-end">
+<div><span class="block text-on-surface-variant uppercase font-bold">Station cook</span><div class="border-b border-primary-container h-5"></div></div>
+<div><span class="block text-on-surface-variant uppercase font-bold">Trainer sign-off</span><div class="border-b border-primary-container h-5"></div></div>
+<div><span class="block text-on-surface-variant uppercase font-bold">Date / shift code</span><div class="border-b border-primary-container h-5 flex items-end num">_____ / _____ / 2025 · AM / PM</div></div>
+<div class="text-right"><span class="bg-primary text-on-primary px-2 py-0.5 font-bold uppercase">HACCP Form 104-FS</span><div class="text-on-surface-variant text-[8px] mt-0.5 uppercase">Laminate 100lb matte · 3-ring punch left</div></div>
+</div>
+<div class="flex flex-wrap justify-between gap-1 text-on-surface-variant text-[8px] border-t border-outline-variant pt-1 mt-1.5 uppercase">
+<span>Fryer station binder // Quick guide</span>
+<span>Synthesis of FS-Card-01 to FS-Card-04 · Rev 2025.1-Q1</span>
+<span>Standard 8.5" × 11" page insert</span>
+</div>
+</footer>
+</article>
+</main>
+
+<footer class="w-full bg-primary-container text-on-primary-container py-space-sm">
+<div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm uppercase tracking-wider">
+<span>Example training materials · demo</span>
+<span>Every fact on this sheet appears on one of the four cards</span>
+</div>
+</footer>
+<script src="es.js"></script>
+<script src="edit.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

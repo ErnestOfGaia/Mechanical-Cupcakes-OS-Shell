@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Card 02 · Shift Checklists</title><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script src="tw-config.js"></script><style>
+label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
+.is-editing [data-edit] { outline: 2px dashed #fe932c; outline-offset: 1px; cursor: text; background: #fff7ed; }
+.is-editing [data-edit]:focus { outline: 2px solid #141b2b; background: #fff; }
+[data-edited]::after { content: ""; display: inline-block; width: 6px; height: 6px; background: #fe932c; margin-left: 4px; vertical-align: middle; }
+@media print {
+  [data-edit] { outline: none !important; background: transparent !important; }
+  [data-edited]::after { display: none !important; }
+  @page { size: letter landscape; margin: 0.3in; }
+  html, body { background: #fff !important; }
+  body { min-height: 0 !important; display: block !important; }
+  body > header, body > footer, .no-print { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
+  main > div { width: 100% !important; max-width: none !important; }
+  #card { max-width: none !important; width: 100.00% !important; zoom: 1; margin: 0 !important; box-shadow: none !important; break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .animate-ping, .animate-pulse { animation: none !important; }
+  
+  .sm\:inline-block{display:inline-block!important}.sm\:inline{display:inline!important}.sm\:block{display:block!important}.sm\:flex{display:flex!important}
+  .sm\:flex-row{flex-direction:row!important}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .md\:flex{display:flex!important}.md\:flex-row{flex-direction:row!important}.md\:flex-col{flex-direction:column!important}.md\:items-center{align-items:center!important}.md\:w-auto{width:auto!important}.md\:flex-initial{flex:0 1 auto!important}
+  .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))!important}
+  .lg\:col-span-2{grid-column:span 2/span 2!important}.lg\:col-span-4{grid-column:span 4/span 4!important}.lg\:col-span-8{grid-column:span 8/span 8!important}
+  .xl\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+</style>
+</head><body data-card="02" class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="sticky top-0 left-0 w-full z-50 bg-primary-container text-on-primary shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="min-h-16 w-full px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm bg-primary px-space-md py-space-xs"><span class="w-2 h-2 bg-secondary-container"></span><span class="font-headline-md text-headline-md uppercase tracking-wide text-on-primary">Fryer Station</span></div><div class="hidden md:flex items-center gap-space-xs bg-surface-container-highest/20 px-space-sm py-space-xs"><span class="font-label-sm text-label-sm text-on-primary-container uppercase">BINDER SPEC:</span><span class="font-label-sm text-label-sm text-primary-fixed uppercase">5.5" × 8.5" HALF-SHEET</span></div></div><nav class="flex flex-wrap items-center gap-space-xs" aria-label="Binder"><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Binder Home</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-01-storage-temps.html">01. Storage &amp; Temps</a><a aria-current="page" class="font-label-md text-label-md uppercase px-space-md py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="card-02-shift-checklists.html">02. Shift Checklists</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">03. Line Callouts</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">04. Oil Quality</a><a class="font-label-md text-label-md uppercase px-space-md py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="quick-guide.html">Quick Guide</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm">
+<button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
+<button type="button" data-edit-toggle aria-pressed="false" class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">edit</span><span data-edit-label data-i18n-skip>Edit</span></button>
+<button type="button" data-edit-reset hidden class="flex items-center gap-1 bg-error-container text-on-error-container px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">undo</span><span>Reset edits</span></button>
+<button type="button" onclick="window.print()" class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-space-md py-space-xs font-label-md text-label-md uppercase tracking-wider font-bold shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">print</span><span>Print card</span></button>
+</div></div></div></header><div data-edit-banner hidden class="no-print w-full bg-secondary-fixed text-on-secondary-fixed px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm font-body-sm text-body-sm">
+<span><b>Demo edit mode.</b> Click any step, list item or table cell to change it. Headings and banners stay locked.</span>
+<span class="font-label-sm text-label-sm uppercase"><span data-edit-count>0</span> edits saved in this browser only · the quick guide shows them too</span>
+</div>
+<main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter"><div class="no-print w-full max-w-4xl mb-space-sm flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm"><div class="flex items-center gap-space-md"><span class="flex items-center gap-space-xs"><span class="inline-block w-3 h-3 rounded-full bg-outline-variant"></span>3-HOLE MARGIN GUIDE: 1.75" PUNCH SAFE ZONE (LEFT)</span><span class="hidden sm:inline-block text-outline">|</span><span class="hidden sm:inline-block">CARDSTOCK: 100LB MATTE LAMINATE</span></div><div class="flex items-center gap-space-xs"></div></div><div class="flex flex-col w-full">
+<div id="card" class="w-full max-w-5xl mx-auto flex flex-col shadow-xl bg-surface-container-lowest">
+<div class="w-full h-2.5 bg-secondary-container relative overflow-hidden">
+<div class="absolute inset-0 opacity-30 bg-[repeating-linear-gradient(45deg,#000000,#000000_10px,transparent_10px,transparent_20px)]"></div>
+</div>
+<div class="w-full bg-primary text-on-primary px-space-lg py-space-sm flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-md">
+<div class="bg-secondary-container text-on-secondary-container px-space-sm py-0.5 font-label-md text-label-md uppercase tracking-wider font-bold">
+          FS-CARD-02
+        </div>
+<div>
+<h1 class="font-headline-lg text-headline-lg uppercase tracking-wide leading-none text-on-primary">
+            FRYER STATION OPs: SHIFT CHECKLISTS &amp; ROUTINES
+          </h1>
+<p class="font-body-sm text-body-sm text-surface-variant uppercase tracking-wider mt-0.5">
+            Mandatory verification by line lead upon shift changeover // HACCP Sec 4.12
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 font-label-sm text-label-sm text-surface-variant">
+<span class="bg-surface-variant/20 px-space-xs py-0.5">REV: 2025.1-Q1</span>
+<span class="">|</span>
+<span class="bg-surface-variant/20 px-space-xs py-0.5">SPEC: 8.5" × 5.5" HORIZONTAL</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-low px-space-lg py-space-xs flex flex-wrap items-center justify-between text-on-surface-variant font-label-sm text-label-sm gap-space-xs">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-space-xs text-secondary font-bold">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+
+</span>
+<span class="hidden sm:inline text-outline-variant">•</span>
+<span class="hidden sm:inline">TARGET TEMP: 350°F (177°C)</span>
+</div>
+<div class="flex items-center gap-space-md">
+
+
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-0 bg-surface-container-highest/60">
+<section class="flex flex-col bg-surface-container-lowest p-space-md shadow-sm">
+<div class="bg-primary text-on-primary px-space-sm py-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 bg-secondary-container"></span>
+<span class="font-headline-md text-headline-md uppercase tracking-wider">01. OPEN ROUTINE</span>
+</div>
+
+</div>
+<div class="mt-space-xs bg-surface-container px-space-sm py-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface uppercase">Set-UP &amp; CALIBRATe</span>
+
+</div>
+<div class="flex flex-col mt-space-sm gap-space-sm flex-1">
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Inspect well oil levels to upper cold scribe mark.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Cold marker line; do not overfill past cold notch</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Verify exhaust hoods &amp; makeup-air CFM draw active.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Interlock indicator green; baffles seated flush</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Preheat Wells 1-3 to 350°F; calibrate probe in ice-water.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Ice slush bath: 32°F (±1°F tolerance limit)</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Set up dredge tubs, ice bath under egg wash, sanitized tongs.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Liquid temp ≤ 40°F maintained throughout</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Test heat lamp bulbs over fry dump station.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Infrared surface thermometer ≥ 165°F (74°C)</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Stock portion pans, clean landing trays, timer batteries.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">6x landing inserts ready; loud digital chimes verified</span>
+</div>
+</label>
+</div>
+<div class="mt-space-md p-space-xs bg-surface-container-low flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant uppercase">OPEN VERIFY:</span>
+<div class="flex items-center gap-space-xs">
+<span class="bg-surface-container-lowest px-space-sm py-0.5 text-on-surface font-mono">INIT: [ _____ ]</span>
+<span class="bg-surface-container-lowest px-space-sm py-0.5 text-on-surface font-mono">TIME: [ _____ ]</span>
+</div>
+</div>
+</section>
+<section class="flex flex-col bg-surface-container-lowest p-space-md shadow-sm">
+<div class="bg-primary text-on-primary px-space-sm py-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 bg-secondary-container"></span>
+<span class="font-headline-md text-headline-md uppercase tracking-wider">02. MID-SHIFT RESET</span>
+</div>
+
+</div>
+<div class="mt-space-xs bg-surface-container px-space-sm py-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface uppercase">check, Sanitize, and stock</span>
+
+</div>
+<div class="flex flex-col mt-space-sm gap-space-sm flex-1">
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Skim crumb surface &amp; floaters with fine mesh skimmer.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Routine cycle every 30m during operational rush</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Perform mid-day hot oil filtration on heavy wells.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Cycle Wells 1 &amp; 2 via automatic pump recirculator</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Top off oil levels using fresh reserve jug.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Maximum 1 qt fresh oil add-in per well during service</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Wipe crumb trays, stainless splash guards &amp; heat shields.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Use degreasing sanitizer wipe; no aerosol sprays near vats</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Restock raw freezer lowboy: batch chicken, fries, seafood.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Verify freezer readout &lt; 0°F; FIFO inventory rotation</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Sanitize seasoning shakers &amp; discard clumped dredge flour.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Dump dredge starch clumps through #10 mesh sieve</span>
+</div>
+</label>
+</div>
+<div class="mt-space-md p-space-xs bg-surface-container-low flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant uppercase">RUSH RESET:</span>
+<div class="flex items-center gap-space-xs">
+<span class="bg-surface-container-lowest px-space-sm py-0.5 text-on-surface font-mono">INIT: [ _____ ]</span>
+<span class="bg-surface-container-lowest px-space-sm py-0.5 text-on-surface font-mono">OIL TPM: [ ___% ]</span>
+</div>
+</div>
+</section>
+<section class="flex flex-col bg-surface-container-lowest p-space-md shadow-sm">
+<div class="bg-primary text-on-primary px-space-sm py-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 bg-secondary-container"></span>
+<span class="font-headline-md text-headline-md uppercase tracking-wider">03. CLOSE BREAKDOWN</span>
+</div>
+
+</div>
+<div class="mt-space-xs bg-surface-container px-space-sm py-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface uppercase">SHUTDOWN &amp; SANITATION</span>
+
+</div>
+<div class="flex flex-col mt-space-sm gap-space-sm flex-1">
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Power down burners &amp; pilot valves; cool below 150°F.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Lockout/tagout pilot toggle; do not drain boiling oil</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Run complete filtration through paper &amp; discard cone.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Replace filter pad envelope; measure discard threshold</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Scrub vat walls, heating elements &amp; tank sides.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Use high-temp long brass brush; remove carbon bake-on</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Empty sediment crumb pans; degrease splash surfaces.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hot soapy soak in scullery; air-dry upside down</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Install clean stainless night covers over all 4 wells.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Secures vats from airborne particulates overnight</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-xs bg-surface hover:bg-surface-container transition-colors cursor-pointer group">
+<input class="sr-only peer" onchange="toggleCheck(this)" type="checkbox">
+<div class="w-[18px] h-[18px] shrink-0 bg-surface-container-lowest flex items-center justify-center peer-checked:bg-primary transition-all">
+<span class="material-symbols-outlined text-[14px] text-on-primary opacity-0 peer-checked:opacity-100 font-bold">check</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-medium peer-checked:line-through peer-checked:text-outline leading-tight">Wipe fry dump station and hang sanitized baskets.</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Drain grid clean; wire baskets inverted on wall bracket</span>
+</div>
+</label>
+</div>
+<div class="mt-space-md p-space-xs bg-surface-container-low flex items-center justify-between font-label-sm text-label-sm">
+<span class="text-on-surface-variant uppercase">CLOSE VERIFY:</span>
+<div class="flex items-center gap-space-xs">
+<span class="bg-surface-container-lowest px-space-sm py-0.5 text-on-surface font-mono">INIT: [ _____ ]</span>
+<span class="bg-surface-container-lowest px-space-sm py-0.5 text-on-surface font-mono">PILOT OFF [ X ]</span>
+</div>
+</div>
+</section>
+</div>
+<div class="w-full bg-surface-container px-space-lg py-space-sm flex flex-col md:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md w-full md:w-auto">
+<div class="flex items-center gap-space-xs bg-primary text-on-primary px-space-sm py-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">assignment_turned_in</span>
+<span class="font-label-md text-label-md uppercase tracking-wider">LEAD SIGN-OFF:</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm flex-1 md:flex-initial">
+<div class="bg-surface-container-lowest px-space-md py-space-xs font-label-sm text-label-sm flex items-center gap-space-xs">
+<span class="text-on-surface-variant">INITIALS:</span>
+<span class="font-mono text-on-surface font-bold">__________</span>
+</div>
+<div class="bg-surface-container-lowest px-space-md py-space-xs font-label-sm text-label-sm flex items-center gap-space-xs">
+<span class="text-on-surface-variant">DATE:</span>
+<span class="font-mono text-on-surface font-bold">____/____/2025</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="uppercase tracking-wide font-semibold text-on-surface">STANDARD 3-RING HALF-BINDER</span>
+</div>
+<span class="text-outline">|</span>
+<span class="uppercase text-on-surface-variant">PUNCH TOP / LEFT MARGIN (1.75" CLEAR)</span>
+</div>
+</div>
+<div class="w-full bg-primary-container text-on-primary-container px-space-lg py-space-xs flex flex-wrap items-center justify-between font-label-sm text-label-sm">
+<div class="flex items-center gap-space-sm">
+<span class="">FS-CARD-02 OF 04</span>
+<span class="">•</span>
+
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-secondary-fixed">CHEMICAL &amp; GREASE LAMINATED SURFACE SPEC</span>
+
+</div>
+</div>
+</div>
+</div>
+<script>
+  function toggleCheck(checkbox) {
+    const card = checkbox.closest('label');
+    if (checkbox.checked) {
+      card.classList.add('bg-surface-container-highest/40');
+    } else {
+      card.classList.remove('bg-surface-container-highest/40');
+    }
+  }
+
+  function resetChecklist() {
+    const inputs = document.querySelectorAll('input[type="checkbox"]');
+    inputs.forEach(input => {
+      input.checked = false;
+      toggleCheck(input);
+    });
+  }
+</script></main><footer class="w-full bg-primary-container text-on-primary-container py-space-sm"><div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm uppercase tracking-wider"><div class="flex items-center gap-space-md"></div></div></footer><script src="es.js"></script>
+<script src="edit.js"></script>
+<script src="i18n.js"></script>
+</body></html>
