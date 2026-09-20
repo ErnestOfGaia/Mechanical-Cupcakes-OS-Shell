@@ -1,0 +1,178 @@
+/* Teacher's Aids + the manager's character sheet. Same tokens as the cards (design/tw-config.js):
+   ink #141b2b, hazard amber #fe932c, amber ink #904d00, critical red #410002 / #f63a35.
+   Zero radius, hard offsets only, nothing decorative. Meaning never rides on color alone:
+   every colored part also carries a label, a border style or a box. */
+html, body { margin: 0; padding: 0; }
+[hidden] { display: none !important; } /* Tailwind's .flex would otherwise beat the hidden attribute */
+.hazard { background: repeating-linear-gradient(-45deg, #141b2b, #141b2b 12px, #fe932c 12px, #fe932c 24px); }
+.num { font-variant-numeric: tabular-nums; }
+.punch { position: absolute; left: 6px; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed #76777d; background: #d9e3f6; }
+[data-edited]::after { content: ""; display: inline-block; width: 5px; height: 5px; background: #fe932c; margin-left: 3px; vertical-align: middle; }
+
+#sheet { --ink: #141b2b; --amber: #fe932c; --amber-ink: #904d00; --muted: #45464c; --line: #c6c6cd;
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --mono: "JetBrains Mono", Consolas, "Courier New", monospace; }
+#sheet section, #sheet .method, #sheet .stopband { margin: 0; }
+#sheet .zone { padding: 6px 20px 0 32px; }
+
+/* the open slot: teaching knowledge that only Ernest can supply. Dashed border + the ERNEST →
+   label carry the meaning (it survives a black-and-white printer); amber is a bonus. */
+.cslot { display: flex; align-items: baseline; gap: 5px; border: 1.5px dashed #904d00; background: #fff7ed; color: #2f1500; padding: 1px 6px; font: 400 11.5px/14px "IBM Plex Sans", sans-serif; min-width: 0; }
+.cslot b { flex: none; font: 700 10px/13px "JetBrains Mono", monospace; letter-spacing: 0.04em; color: #904d00; white-space: nowrap; }
+.cslot i { margin-left: auto; flex: none; font: 700 10px/13px "JetBrains Mono", monospace; font-style: normal; letter-spacing: 0.02em; color: #904d00; }
+.placeholder-key { border: 1.5px dashed #904d00; background: #fff7ed; color: #2f1500; padding: 4px 8px; font: 400 11px/14px "IBM Plex Sans", sans-serif; }
+.placeholder-key b { font: 700 9.5px/12px "JetBrains Mono", monospace; letter-spacing: 0.05em; color: #904d00; margin-right: 4px; }
+
+/* 1 · header */
+.aid-head { display: grid; grid-template-columns: minmax(0, 1fr) 272px; gap: 4px 14px; align-items: start; padding: 6px 20px 7px 32px; background: #141b2b; color: #fff; border-bottom: 4px solid #fe932c; }
+.aid-sub { margin: 3px 0 0; max-width: 62ch; font: 400 12px/15px var(--body); color: #c0c6db; }
+.aid-top { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; }
+.daybox { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; font: 700 11px/14px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.daybox .day { display: inline-flex; align-items: baseline; gap: 6px; background: #fff; color: #141b2b; padding: 2px 8px; font: 800 22px/24px var(--display); letter-spacing: 0.03em; }
+.daybox .day small { font: 700 11px/14px var(--mono); letter-spacing: 0.04em; }
+.daybox .pips { display: inline-flex; gap: 3px; }
+.daybox .pips i { width: 12px; height: 12px; border: 2px solid #fff; }
+.daybox .pips i.on { background: #fff; }
+.daybox .mode { border: 1.5px solid #fe932c; color: #fe932c; padding: 1px 6px; }
+
+.cardmap { border: 1.5px solid #7d8497; padding: 4px; }
+.cardmap-h { display: flex; justify-content: space-between; font: 700 9.5px/12px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: #c0c6db; margin-bottom: 4px; }
+.cardmap .grid { display: grid; gap: 3px; }
+.cardmap .cell { min-width: 0; display: flex; align-items: flex-start; gap: 4px; min-height: 21px; padding: 1px 3px; border: 1px solid #7d8497; font: 600 10px/12px var(--mono); letter-spacing: 0.02em; text-transform: uppercase; color: #dce2f7; }
+.cardmap .cell b { flex: none; min-width: 13px; align-self: flex-start; padding: 0 2px; background: #fff; color: #141b2b; text-align: center; font: 700 10px/13px var(--mono); }
+.cardmap .cell.plain { border-style: dashed; color: #7d8497; }
+
+/* 2 · stop the line */
+.stopband { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: start; padding: 5px 20px 5px 32px; background: #410002; color: #ffdad6; border-bottom: 3px solid #f63a35; }
+.stopband-h { display: flex; align-items: center; gap: 6px; font: 800 19px/22px var(--display); letter-spacing: 0.03em; text-transform: uppercase; color: #fff; white-space: nowrap; }
+.stopband-h .bang { background: #f63a35; color: #410002; padding: 0 7px; font: 700 16px/20px var(--mono); }
+.stopband ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px 14px; font: 500 12px/14.5px var(--body); }
+.stopband li { padding-left: 12px; position: relative; }
+.stopband li::before { content: ""; position: absolute; left: 0; top: 5px; width: 6px; height: 6px; background: #f63a35; }
+
+/* 3 · method strip */
+.method { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 12px; padding: 3px 20px 3px 32px; background: #ffdcc3; color: #2f1500; border-bottom: 2px solid #141b2b; font: 400 11.5px/15px var(--body); }
+.method b { font: 700 11px/14px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; border: 1.5px solid #141b2b; background: #fff; color: #141b2b; padding: 0 5px; margin-right: 5px; }
+.method .method-h { font: 700 16px/18px var(--display); letter-spacing: 0.02em; text-transform: uppercase; color: #141b2b; }
+.method .method-why b { background: #141b2b; color: #fff; }
+
+/* the day's own rule, in Ernest's words (day 1: shadow closely) */
+.dayrule { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; font: 500 12.5px/15px var(--body); color: #fff; }
+.dayrule b { flex: none; font: 700 11px/14px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; background: #fe932c; color: #2f1500; padding: 0 6px; }
+
+/* zones */
+.zone-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #141b2b; color: #fff; padding: 3px 8px; }
+.zone-h b { font: 700 16px/18px var(--display); letter-spacing: 0.02em; text-transform: uppercase; }
+.zone-h span { font: 700 10px/13px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: #c0c6db; text-align: right; }
+
+/* 5 · teach rows */
+.teach { display: grid; gap: 3px; margin-top: 3px; }
+.trow { display: grid; grid-template-columns: 26px minmax(0, 1fr); border: 2px solid #141b2b; break-inside: avoid; }
+.trow > .n { display: flex; align-items: flex-start; justify-content: center; padding-top: 3px; background: #141b2b; color: #fff; font: 800 19px/20px var(--display); }
+.trow > .mid { padding: 1px 7px 3px; display: grid; gap: 1px; min-width: 0; }
+.trow .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.trow .panel { font: 700 15.5px/17px var(--display); letter-spacing: 0.02em; text-transform: uppercase; }
+.trow .say { font: 400 12.5px/15px var(--body); }
+.trow .tag { font: 700 10px/13px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; color: #45464c; margin-right: 5px; }
+.trow .pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; align-items: start; }
+.trow .why { background: #eff4ff; padding: 1px 6px; font: 500 11.5px/14px var(--body); }
+.trow .day-extra { background: #ffdcc3; color: #2f1500; }
+.trow.also { border-style: dashed; }
+.trow.also > .n { background: #45464c; }
+.trow .ticks { flex: none; display: flex; gap: 10px; }
+.tick { display: flex; align-items: center; gap: 4px; font: 700 10px/12px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap; }
+.tick i, .vbox { flex: none; display: inline-block; width: 14px; height: 14px; border: 2px solid #141b2b; background: #fff; }
+
+/* a slim strip of open slots under a zone: a label, then its slots, side by side */
+.strip { display: flex; align-items: center; gap: 5px; margin-top: 3px; }
+.strip-h { flex: none; font: 700 14px/16px var(--display); letter-spacing: 0.02em; text-transform: uppercase; padding-right: 2px; white-space: nowrap; }
+.strip .cslot, .strip .why { flex: 1 1 0; }
+.mantra { margin-top: 3px; padding: 2px 8px; background: #ffdcc3; color: #2f1500; font: 500 13px/17px var(--body); border-left: 4px solid #fe932c; }
+.mantra b { font-weight: 700; }
+.verify.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px 14px; margin-top: 0; }
+.strip .cslot + .strip-h, .strip .why + .strip-h { margin-left: 6px; }
+.strip .why { background: #eff4ff; padding: 1px 6px; font: 500 11.5px/14px var(--body); }
+
+/* 6 · ask, don't tell: one line each, question then the card's answer */
+.ask { display: grid; gap: 2px; margin-top: 3px; }
+.qa { padding: 1px 6px; background: #eff4ff; font: 400 12.5px/15px var(--body); }
+.qa .q { font-weight: 600; }
+.qa .a { color: #45464c; font-weight: 500; }
+.qa .a::before { content: " → "; color: #904d00; font-weight: 700; }
+
+/* 7 · verify & sign */
+.verify { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1px; margin-top: 3px; }
+.vitem { display: grid; grid-template-columns: 14px auto minmax(0, 1fr); gap: 6px; align-items: start; padding: 0; font: 400 12.5px/15px var(--body); }
+.lens { display: inline-block; font: 700 10px/14px var(--mono); font-style: normal; letter-spacing: 0.05em; text-transform: uppercase; border: 1.5px solid #141b2b; padding: 0 4px; background: #fff; color: #141b2b; }
+.signline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 12px; margin-top: 0; padding: 3px 6px; background: #e6eeff; font: 700 10px/13px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.signline .lens-key { font: 400 11px/14px var(--body); letter-spacing: 0; text-transform: none; color: #45464c; }
+.signline .lens-key .lens { margin: 0 3px 0 6px; }
+.signline .lens-key .lens:first-child { margin-left: 0; }
+.handoff { margin-top: 3px; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 10px; align-items: end; }
+.handoff-h { grid-row: span 2; align-self: start; font: 700 10px/13px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: #45464c; max-width: 120px; padding-top: 4px; }
+.handoff .rule { height: 16px; border-bottom: 1px solid #141b2b; }
+
+.aid-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; margin-top: 6px; padding: 3px 20px 5px 32px; border-top: 2px solid #141b2b; font: 700 9.5px/12px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: #45464c; }
+
+/* the training week (screen chrome on the aids, a section on the home page) */
+.week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) auto; gap: 4px; }
+.week a, .week div.slot { display: grid; gap: 1px; align-content: start; padding: 5px 7px; border: 2px solid #141b2b; background: #fff; color: #141b2b; text-decoration: none; min-height: 58px; }
+.week .d { font: 700 9.5px/12px "JetBrains Mono", monospace; letter-spacing: 0.05em; text-transform: uppercase; color: #45464c; }
+.week .t { font: 700 15px/16px "Barlow Condensed", sans-serif; letter-spacing: 0.02em; text-transform: uppercase; }
+.week .m { font: 700 8.5px/11px "JetBrains Mono", monospace; letter-spacing: 0.05em; text-transform: uppercase; color: #904d00; }
+.week a[aria-current] { background: #141b2b; color: #fff; box-shadow: 3px 3px 0 #fe932c; }
+.week a[aria-current] .d, .week a[aria-current] .m { color: #c0c6db; }
+.week div.slot { border-style: dashed; background: #fff7ed; }
+.week a.sheet { background: #fe932c; color: #2f1500; align-content: center; }
+.week a.sheet .d { color: #2f1500; }
+
+/* the character sheet */
+.cs-head { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; align-items: start; padding: 10px 20px 10px 32px; background: #141b2b; color: #fff; border-bottom: 4px solid #fe932c; }
+.cs-id { display: grid; gap: 5px; background: #fff; color: #141b2b; padding: 6px 8px; font: 700 9.5px/12px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; }
+.cs-id div { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px; align-items: end; }
+.cs-id div i { border-bottom: 1px solid #141b2b; height: 15px; }
+.cs-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 6px 20px 0 32px; }
+.cs-stat { border: 2px solid #141b2b; padding: 3px 6px 4px; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 2px 6px; }
+.cs-stat .lens { grid-area: 1 / 1; }
+.cs-stat .pips { grid-area: 1 / 2; justify-self: end; display: flex; gap: 4px; align-items: center; font: 700 9px/11px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: #45464c; }
+.cs-stat p { grid-area: 2 / 1 / 3 / 3; margin: 0; font: 400 10.5px/13px var(--body); color: #45464c; }
+.cs-stat .pips i { width: 12px; height: 12px; border: 2px solid #141b2b; background: #fff; }
+.cs-days { display: grid; gap: 4px; padding: 6px 20px 0 32px; }
+.cs-day { display: grid; grid-template-columns: 74px minmax(0, 3fr) minmax(0, 1fr); border: 2px solid #141b2b; break-inside: avoid; }
+.cs-day > .dn { background: #141b2b; color: #fff; padding: 4px 6px; display: grid; align-content: start; gap: 2px; }
+.cs-day > .dn b { font: 800 24px/24px var(--display); letter-spacing: 0.02em; text-transform: uppercase; }
+.cs-day > .dn span { font: 700 8.5px/11px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; color: #c0c6db; }
+.cs-day > .col { padding: 3px 7px 5px; display: grid; gap: 1px; align-content: start; }
+.cs-day > .col + .col { border-left: 1px solid #c6c6cd; background: #eff4ff; }
+.cs-day .ch { display: flex; justify-content: space-between; gap: 6px; font: 700 9.5px/12px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: #45464c; margin-bottom: 1px; }
+.cs-day .ch b { font: 700 14px/15px var(--display); letter-spacing: 0.02em; color: #141b2b; }
+.cs-day .vitem { font-size: 11px; line-height: 14px; grid-template-columns: 13px auto minmax(0, 1fr); gap: 5px; padding: 1px 0; }
+.cs-day .vitem .vbox { width: 13px; height: 13px; }
+.cs-day .init { margin-top: 3px; display: flex; flex-wrap: wrap; gap: 2px 10px; font: 700 9.5px/13px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; }
+.cs-day.open { border-style: dashed; }
+.cs-day.open > .dn { background: #45464c; }
+
+@media (max-width: 700px) {
+  .aid-head, .cs-head, .stopband, .stopband ul, .trow .pair, .cs-stats { grid-template-columns: minmax(0, 1fr); }
+  .trow .top { flex-wrap: wrap; }
+  .strip { flex-wrap: wrap; }
+  .strip .cslot, .strip .why { flex-basis: 100%; }
+  .cs-day { grid-template-columns: minmax(0, 1fr); }
+  .cs-day > .col + .col { border-left: 0; border-top: 1px solid #c6c6cd; }
+  .week { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* One US Letter sheet, portrait. Chrome prints at the paper width in CSS px (816), so the sheet
+   keeps its 850px screen layout and is zoomed to the printable width: what you see is what prints.
+   Printable box = 816 − 2×0.4in wide, 1056 − 2×0.3in tall → 739 × 998 px → 850 × 1154 at this zoom. */
+@media print {
+  @page { size: letter portrait; margin: 0.3in 0.4in; }
+  html, body { background: #fff !important; }
+  body { min-height: 0 !important; display: block !important; }
+  body > header, body > footer, .no-print { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
+  #sheet { max-width: none !important; width: 850px !important; zoom: 0.865; margin: 0 !important; box-shadow: none !important; }
+  [data-edited]::after { display: none !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}

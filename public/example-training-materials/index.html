@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect">
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="aids.css">
 <style>
 /* The binder's own tokens — the same values the cards' Tailwind config uses (design/tw-config.js). */
 :root {
@@ -88,6 +89,9 @@ section > .wrap { display: grid; gap: 16px; }
 .links { display: flex; gap: 6px; }
 .links a { padding: 4px 10px; border: 2px solid var(--ink); background: var(--paper); font: 700 11px/14px var(--mono); letter-spacing: 0.03em; text-transform: uppercase; text-decoration: none; }
 .links a.p { background: var(--ink); color: #fff; }
+.card.reserved { border-style: dashed; }
+.card.reserved figure { background: repeating-linear-gradient(-45deg, var(--s4) 0 12px, var(--s2) 12px 24px); }
+.teach-notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
 
 /* how to print */
 .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; counter-reset: step; }
@@ -195,6 +199,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <a href="card-03-line-callouts.html">03 Callouts</a>
 <a href="card-04-oil-quality.html">04 Oil Quality</a>
 <a href="quick-guide.html">Quick Guide</a>
+<a href="aid-03-line-callouts.html">Teacher's Aids</a>
 </nav>
 <div class="tools">
 <button type="button" class="btn ghost" data-lang-toggle data-i18n-skip aria-label="Cambiar a español"><span data-lang-label>Español</span></button>
@@ -215,6 +220,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="fact"><b>4 cards</b><span>Storage &amp; temps, shift checklists, line callouts, oil quality</span></div>
 <div class="fact"><b>1 quick guide</b><span>A one-sheet summary of the four cards for the binder's front pocket</span></div>
 <div class="fact"><b class="num">8.5 × 5.5 in</b><span>Half-sheet landscape cards, 3-hole punched on the left</span></div>
+<div class="fact"><b>4 teacher's aids</b><span>The teacher's edition of each card, for whoever the new hire is shadowing</span></div>
 <div class="fact"><b>EN / ES</b><span>Every page flips to Spanish with one button</span></div>
 </div>
 <div class="actions">
@@ -253,10 +259,51 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 </article>
 <article class="card">
 <figure><img src="preview/quick-guide.png" alt="Quick guide preview: one portrait sheet summarizing all four cards" loading="lazy"></figure>
-<div class="body"><span class="tag amber">Quick guide</span><h3>Fryer Station Quick Guide</h3><p>One portrait sheet that repeats only what the four cards say: critical temps, the three routines, the callouts, the four oil stages. Nothing new is introduced here.</p></div>
+<div class="body"><span class="tag amber">Quick guide</span><h3>Fryer Station Quick Guide</h3><p>One portrait sheet that repeats what the four cards say: critical temps, the three routines, the callouts, the four oil stages. The only line that is not on a card is the station mantra, in Ernest's own words.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="quick-guide.html">Open</a><a class="p" href="quick-guide.html?print=1">Print</a></div></div>
 </article>
 </div>
+</div>
+</section>
+
+<section id="teach" aria-labelledby="h-teach">
+<div class="wrap">
+<div class="head"><h2 id="h-teach">Each one teach one: the first five days</h2><span class="label">3 days supervised · 2 days unsupervised, verified</span></div>
+<p class="intro">On the line, whoever works the station teaches the station. Nobody can promise that cook has ever trained anyone, so each card gets a Teacher's Aid: the teacher's edition that says how to teach the card. One card is posted at the station each day, so the trainee and the teacher both know what to work on when they are not making food. The aids live in the full-page station binder.</p>
+<div class="week" aria-label="The first five days"><a href="aid-03-line-callouts.html"><span class="d"><span>Day</span> 1</span><span class="t">Line Callouts</span><span class="m">Supervised</span></a><a href="aid-01-storage-temps.html"><span class="d"><span>Day</span> 2</span><span class="t">Storage &amp; Temps</span><span class="m">Supervised</span></a><a href="aid-02-shift-checklists.html"><span class="d"><span>Day</span> 3</span><span class="t">Shift Checklists</span><span class="m">Supervised</span></a><a href="aid-04-oil-quality.html"><span class="d"><span>Day</span> 4</span><span class="t">Oil Quality</span><span class="m">Unsupervised · verified</span></a><div class="slot"><span class="d"><span>Day</span> 5</span><span class="t">Open slot</span><span class="m">Unsupervised · verified</span></div><a class="sheet" href="character-sheet.html"><span class="d">Manager</span><span class="t">Character sheet</span></a></div>
+<div class="binder">
+<article class="card">
+<figure><img src="preview/aid-03.png" alt="Teacher's Aid 03 preview" loading="lazy"></figure>
+<div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 1</span><h3>Line Callouts &amp; Echo</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
+<div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-03-line-callouts.html">Open</a><a class="p" href="aid-03-line-callouts.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
+<figure><img src="preview/aid-01.png" alt="Teacher's Aid 01 preview" loading="lazy"></figure>
+<div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 2</span><h3>Storage &amp; Critical Temps</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
+<div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-01-storage-temps.html">Open</a><a class="p" href="aid-01-storage-temps.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
+<figure><img src="preview/aid-02.png" alt="Teacher's Aid 02 preview" loading="lazy"></figure>
+<div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 3</span><h3>Shift Checklists &amp; Routines</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
+<div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-02-shift-checklists.html">Open</a><a class="p" href="aid-02-shift-checklists.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
+<figure><img src="preview/aid-04.png" alt="Teacher's Aid 04 preview" loading="lazy"></figure>
+<div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 4</span><h3>Oil Quality &amp; TPM Standard</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
+<div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-04-oil-quality.html">Open</a><a class="p" href="aid-04-oil-quality.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
+<figure><img src="preview/character-sheet.png" alt="Character sheet preview" loading="lazy"></figure>
+<div class="body"><span class="tag amber">Manager's copy</span><h3>Character Sheet</h3><p>One sheet per new hire. Each day lists the skills the trainee has to show and what the teacher has to have done. A blank form: names stay on paper.</p></div>
+<div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="character-sheet.html">Open</a><a class="p" href="character-sheet.html?print=1">Print</a></div></div>
+</article>
+<article class="card reserved">
+<figure></figure>
+<div class="body"><span class="tag quiet">Reserved</span><h3>Page 5 · Deeper Detail</h3><p>Reserved. A two-page insert with deeper instructional detail on specific areas of the station. Which areas, and what goes on day 5, are still to be ruled on.</p></div>
+<div class="foot"><span class="label-sm">Letter · two pages</span></div>
+</article>
+</div>
+<div class="note" data-i18n-skip><b>Design pass.</b> The amber dashed "ERNEST →" boxes on the aids are open slots for teaching knowledge that comes from a recorded interview. The day order is one line in <code>site-src/aids/aids.data.mjs</code>; day 5 stays open until it is ruled on.</div>
 </div>
 </section>
 
@@ -264,7 +311,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="wrap">
 <div class="head"><h2 id="h-print">How to print</h2><span class="label">Chrome or Edge · backgrounds on</span></div>
 <div class="steps">
-<div class="step"><h4>Open the page, press Print</h4><p>Use the Print button on the page, the Print link above, or Ctrl+P. Cards come out Letter landscape; the quick guide comes out Letter portrait. That is set on the page, not by you.</p></div>
+<div class="step"><h4>Open the page, press Print</h4><p>Use the Print button on the page, the Print link above, or Ctrl+P. Cards come out Letter landscape; the quick guide, the Teacher's Aids and the character sheet come out Letter portrait. That is set on the page, not by you.</p></div>
 <div class="step"><h4>Check two settings</h4><p>Paper: Letter. "Background graphics": on, so the black banners and hazard stripes print. Leave margins on the default and scale on 100%.</p></div>
 <div class="step"><h4>Cut, laminate, punch</h4><p>For the binder's half-sheet cards, print "2 pages per sheet" and cut the sheet in half, or trim a single landscape print. Laminate in 5 mil matte. Punch the left edge: the card keeps a 1.75 rem strip clear for the holes.</p></div>
 </div>

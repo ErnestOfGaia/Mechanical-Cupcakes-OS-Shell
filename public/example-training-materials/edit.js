@@ -19,14 +19,9 @@
       "#card .bg-surface-container p"                       // supervisor note
     ],
     "02": ["#card label .flex-col > span"],                 // checklist line + its note
-    "03": [
-      "#card tbody td .font-label-lg",                      // expo calls
-      "#card tbody td .inline-flex",                        // fryer echo
-      "#card tbody td > div.flex.items-center.gap-1",       // the two shouted calls
-      "#card tbody td > div.font-label-md",                 // role names
-      "#card tbody td > div.font-label-sm",                 // role duties
-      "#card tbody td p"                                    // rules
-    ],
+    // Card 03's body is built by hand (CARD3_BODY in build-site.mjs) and every editable line
+    // already carries its data-edit id, so there is nothing to discover by selector here.
+    "03": [],
     "04": [
       "#card li > span:last-child",                         // stage observations
       "#card .mt-space-sm.pt-space-xs > span:last-child",   // action / remediation lines

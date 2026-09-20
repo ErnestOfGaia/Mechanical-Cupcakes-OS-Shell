@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Teacher's Aid 01 · Storage &amp; Temps</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="tw-config.js"></script>
+<link rel="stylesheet" href="aids.css">
+<link rel="stylesheet" href="print-layout.css" media="print">
+</head>
+<body data-aid="01" class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col">
+
+<header class="sticky top-0 left-0 w-full z-50 bg-primary-container text-on-primary shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+<div class="min-h-16 w-full px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-sm bg-primary px-space-md py-space-xs"><span class="w-2 h-2 bg-secondary-container"></span><span class="font-headline-md text-headline-md uppercase tracking-wide text-on-primary">Fryer Station</span></div>
+</div>
+<nav class="flex flex-wrap items-center gap-space-xs" aria-label="Binder"><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Home</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-01-storage-temps.html">01 Storage &amp; Temps</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-02-shift-checklists.html">02 Checklists</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">03 Callouts</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">04 Oil Quality</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="quick-guide.html">Quick Guide</a><a aria-current="page" class="font-label-md text-label-md uppercase px-space-sm py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="aid-03-line-callouts.html">Teacher's Aids</a></nav>
+<div class="flex items-center gap-space-sm">
+<button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
+<button type="button" onclick="window.print()" class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-space-md py-space-xs font-label-md text-label-md uppercase tracking-wider font-bold shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">print</span><span>Print aid</span></button>
+</div>
+</div>
+</header>
+
+<div data-edit-banner hidden class="no-print w-full bg-secondary-fixed text-on-secondary-fixed px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm font-body-sm text-body-sm">
+<span><b>Following the cards.</b> Lines marked with an amber dot were edited on a card in this browser; the aid shows the edited text.</span>
+<span class="flex items-center gap-space-sm font-label-sm text-label-sm uppercase"><span><span data-edit-count>0</span> edits</span><button type="button" data-edit-reset hidden class="bg-error-container text-on-error-container px-space-sm py-0.5 font-label-sm text-label-sm uppercase tracking-wider">Reset edits</button></span>
+</div>
+
+<main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter">
+
+<!-- screen only: the training week, and where this aid sits in it -->
+<div class="no-print w-full max-w-[850px] mb-space-sm">
+<div class="week" aria-label="The first five days"><a href="aid-03-line-callouts.html"><span class="d"><span>Day</span> 1</span><span class="t">Line Callouts</span><span class="m">Supervised</span></a><a href="aid-01-storage-temps.html" aria-current="page"><span class="d"><span>Day</span> 2</span><span class="t">Storage &amp; Temps</span><span class="m">Supervised</span></a><a href="aid-02-shift-checklists.html"><span class="d"><span>Day</span> 3</span><span class="t">Shift Checklists</span><span class="m">Supervised</span></a><a href="aid-04-oil-quality.html"><span class="d"><span>Day</span> 4</span><span class="t">Oil Quality</span><span class="m">Unsupervised · verified</span></a><div class="slot"><span class="d"><span>Day</span> 5</span><span class="t">Open slot</span><span class="m">Unsupervised · verified</span></div><a class="sheet" href="character-sheet.html"><span class="d">Manager</span><span class="t">Character sheet</span></a></div>
+<div class="mt-space-sm flex flex-wrap items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase">
+<span>Teacher's edition of <a class="underline" href="card-01-storage-temps.html">FS-Card-01</a> · the card is posted at the station, this page says how to teach it</span>
+<span>Full-page station binder · Letter portrait · Laminate</span>
+</div>
+<div class="placeholder-key mt-space-xs" data-i18n-skip><b>ERNEST →</b> Amber dashed boxes are open slots: teaching knowledge that comes from the recorded interview, not from Claude. Everything else restates the card, or is Ernest's own words.</div>
+</div>
+
+<article id="sheet" class="w-full max-w-[850px] bg-surface-container-lowest text-on-surface shadow-xl relative">
+<div class="hidden sm:block absolute left-0 top-0 bottom-0 w-6 pointer-events-none">
+<div class="punch" style="top:14%"></div><div class="punch" style="top:50%"></div><div class="punch" style="top:86%"></div>
+</div>
+<div class="hazard h-2.5 w-full"></div>
+
+<!-- 1 · INK HEADER: what this page is, which card it pairs with, which day -->
+<div class="aid-head">
+<div class="aid-top">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 font-label-sm text-label-sm uppercase font-bold">Teacher's Aid</span>
+<span class="bg-primary text-on-primary px-2 py-0.5 font-label-sm text-label-sm uppercase">Pairs with FS-Card-01</span>
+</div>
+<div class="daybox"><span class="day"><small>Day</small> 2 <small>of 5</small></span><span class="pips" aria-hidden="true"><i></i><i class="on"></i><i></i><i></i><i></i></span><span class="mode">Supervised</span></div>
+</div>
+<div>
+<h1 class="font-display text-display uppercase text-on-primary leading-none">Storage &amp; Critical Temps</h1>
+<p class="aid-sub">Each one teach one. You work this station to spec, so today you're the teacher. The card is posted at the station; this page tells you how to teach it.</p>
+<div class="dayrule" data-src="ernest"><b>Day 2</b><span><strong>Inventory management.</strong> Some time unsupervised, to learn the building and who can help.</span></div>
+</div>
+<div class="cardmap" aria-label="Map of the paired card's panels">
+<div class="cardmap-h"><span>Card map</span><span>FS-Card-01</span></div>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="cell" style="grid-column:span 1"><b>1</b><span>Freezer</span></div><div class="cell" style="grid-column:span 1"><b>2</b><span>Fridge</span></div><div class="cell" style="grid-column:span 1"><b>3</b><span>Fryer</span></div><div class="cell" style="grid-column:span 1"><b>4</b><span>Calamari</span></div><div class="cell" style="grid-column:span 3"><b>5</b><span>Fry time &amp; yield table</span></div><div class="cell plain" style="grid-column:span 1"><span>Sign-off</span></div></div>
+</div>
+</div>
+
+<!-- 2 · STOP THE LINE: the card's own critical lines. Critical red, one per page, near the top. -->
+<div class="stopband">
+<div class="stopband-h"><span class="bang">!</span><span>Stop the line</span></div>
+<ul><li>CCP: Freezer &lt;31°F · Cold &lt;41°F · Internal <span data-edit="01:165f-74c">165°F</span></li><li>ALLERGEN: GLUTEN &amp; EGG. <span data-edit="01:dedicated-gf-dredge-tub-green-wire-basket-segreg">GF tub segregated.</span></li><li><span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">Temp drop &gt;25°F: refire.</span></li><li>DISCARD TIMER: 7 MIN MAX HOLD. <span data-edit="01:reset-kds-station-timer-on-dump-pitch-batch-stri">Reset KDS timer.</span></li></ul>
+</div>
+
+<!-- 3 · HOW TO TEACH: the same strip on every aid -->
+<div class="method">
+<span class="method-h">How to teach it</span>
+<span><b>I do</b> they watch</span>
+<span><b>We do</b> together</span>
+<span><b>You do</b> you watch</span>
+<span class="method-why"><b>Say the why</b> out loud, every time</span>
+</div>
+
+<!-- 4 · THE FINISH LINE. One list: the teacher ticks it here, the manager checks the same
+     lines on the character sheet. (The first draft printed it twice, as outcomes and as a
+     sign-off; one zone went so the type did not have to shrink.) -->
+<section class="zone">
+<div class="zone-h"><b>By the end of today, the trainee…</b><span>The finish line · tick it when you watched them do it, to spec</span></div>
+<div class="verify"><div class="vitem"><i class="vbox"></i><i class="lens">STOCK</i><span>Points to Zones A, B and D, names every item in each, states Freezer and Fridge TARGET TEMP</span></div><div class="vitem"><i class="vbox"></i><i class="lens">SAFE</i><span>Drops every basket: <span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:agitate-basket-at-30s-elapsed-to-avoid-clumping">Agitate basket at 30s elapsed.</span> <span data-edit="01:max-50-basket-load-prevent-oil-thermal-shock-sog">Max 50% basket load.</span></span></div><div class="vitem"><i class="vbox"></i><i class="lens">SAFE</i><span>Keeps in place: <span data-edit="01:dedicated-gf-dredge-tub-green-wire-basket-segreg">Dedicated GF dredge tub &amp; green wire basket segregated 24" left.</span></span></div><div class="vitem"><i class="vbox"></i><i class="lens">SAFE</i><span>Cooks <span data-edit="01:buttermilk-crispy-thigh">Buttermilk Crispy Thigh</span> to Internal CCP <span data-edit="01:165f-74c">165°F</span>, <span data-edit="01:tenderloins-scratch-batter">Tenderloins (Scratch Batter)</span> to <span data-edit="01:165f-74c-2">165°F</span></span></div><div class="vitem"><i class="vbox"></i><i class="lens">COMMS</i><span>Says what to do If Freezer is Beeping: <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></span></div></div><div class="verify two"><div class="vitem"><i class="vbox"></i><i class="lens">STOCK</i><span data-src="ernest">Stocks the station from the walk-ins</span></div><div class="vitem"><i class="vbox"></i><i class="lens">STOCK</i><span data-src="ernest">Knows the station's part of the walk-in</span></div><div class="vitem"><i class="vbox"></i><i class="lens">COMMS</i><span data-src="ernest">Communicates moving through the restaurant</span></div><div class="vitem"><i class="vbox"></i><i class="lens">COMMS</i><span data-src="ernest">Knows 1-2 prep cooks; asks when unsure</span></div></div>
+<div class="strip"><span class="strip-h">Before the shift</span><div class="cslot" data-i18n-skip title="It's the start of the shift on a trainee's storage-and-temps day. Before they show up, what do you want already set up or checked at the fryer station so you can teach straight from this card?"><b>ERNEST →</b>what to have ready <i>Q01.1</i></div><div class="cslot" data-i18n-skip title="Where would you post this card so you and the trainee can both see it between tickets?"><b>ERNEST →</b>what to have ready <i>Q01.2</i></div></div>
+</section>
+
+<!-- 5 · TEACH IT IN THIS ORDER: one row per panel of the card, in the card's own order -->
+<section class="zone">
+<div class="zone-h"><b>Teach it in this order</b><span>One row per panel of the card · tick each box as you go</span></div>
+<div class="teach"><div class="trow">
+<div class="n">1</div>
+<div class="mid">
+<div class="top"><span class="panel">ZONE A // Freezer</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>TARGET TEMP &lt; 31°F (&lt;1°C). Stored here: <span data-edit="01:fries">Fries</span>, <span data-edit="01:ice-cream">Ice cream</span>, <span data-edit="01:onion-rings">Onion rings</span>. If Freezer is Beeping: <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></div>
+
+<div class="pair"><div class="cslot" data-i18n-skip title="When that freezer starts beeping, the card says notify chef and keep it closed. How do you explain the why behind that to someone new?"><b>ERNEST →</b>why it's done this way <i>Q01.3</i></div><div class="cslot" data-i18n-skip title="Walk me through the first time you take a new hire to the freezer. What do you actually do and say while you're standing there with them?"><b>ERNEST →</b>how you show it the first time <i>Q01.4</i></div></div>
+</div>
+</div>
+<div class="trow">
+<div class="n">2</div>
+<div class="mid">
+<div class="top"><span class="panel">ZONE B // Fridge</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>Target Temp &lt; 41°F (&lt;5°C). Stored here: <span data-edit="01:fish">Fish</span>, <span data-edit="01:slaw">Slaw</span>, <span data-edit="01:tartar-sauce">Tartar sauce</span>. ALLERGEN: GLUTEN &amp; EGG. <span data-edit="01:dedicated-gf-dredge-tub-green-wire-basket-segreg">Dedicated GF dredge tub &amp; green wire basket segregated 24" left.</span></div>
+
+<div class="pair"><div class="cslot" data-i18n-skip title="The card flags gluten and egg on that panel and keeps the GF dredge tub and green wire basket segregated. How do you explain to a new hire why that separation matters?"><b>ERNEST →</b>why it's done this way <i>Q01.5</i></div><div class="cslot" data-i18n-skip title="The fridge panel on this card carries the line about the dedicated GF dredge tub and the green wire basket, 24 inches left. Walk me through how you show a brand-new person that setup."><b>ERNEST →</b>how you show it the first time <i>Q01.6</i></div></div>
+</div>
+</div>
+<div class="trow">
+<div class="n">3</div>
+<div class="mid">
+<div class="top"><span class="panel">ZONE C // Fryer</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>WELLS 1-3: 350°F (177°C). <span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:agitate-basket-at-30s-elapsed-to-avoid-clumping">Agitate basket at 30s elapsed.</span> <span data-edit="01:max-50-basket-load-prevent-oil-thermal-shock-sog">Max 50% basket load.</span> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">Temp drop &gt;25°F indicates basket overload. Refire batch.</span></div>
+
+<div class="pair"><div class="why"><span class="tag">Why</span><span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Lower basket slowly to prevent splashing.</span> <span data-edit="01:agitate-basket-at-30s-elapsed-to-avoid-clumping">Agitate to avoid clumping.</span> <span data-edit="01:max-50-basket-load-prevent-oil-thermal-shock-sog">Max 50%: prevent oil thermal shock &amp; soggy crust.</span></div><div class="cslot" data-i18n-skip title="Walk me through the very first basket you let a new hire drop. What are you doing while their hands are on that basket?"><b>ERNEST →</b>how you show it the first time <i>Q01.8</i></div></div>
+</div>
+</div>
+<div class="trow">
+<div class="n">4</div>
+<div class="mid">
+<div class="top"><span class="panel">ZONE D // Calamari Fridge</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>Stored here: <span data-edit="01:calamari">Calamari</span>, <span data-edit="01:milk">Milk</span>, <span data-edit="01:peppers">Peppers</span>. DISCARD TIMER: 7 MIN MAX HOLD. HEAT LAMP MIN: 165°F (74°C). <span data-edit="01:reset-kds-station-timer-on-dump-pitch-batch-stri">Reset KDS timer on dump. Pitch batch at the 7:00 mark.</span></div>
+
+<div class="pair"><div class="cslot" data-i18n-skip title="The card says pitch the batch strictly at the seven-minute mark, and it doesn't say why. What's the why you give a new hire?"><b>ERNEST →</b>why it's done this way <i>Q01.9</i></div><div class="cslot" data-i18n-skip title="This panel covers the calamari fridge, and it also carries the seven-minute discard timer and the heat lamp line. When you teach that to a new hire, walk me through where you take them."><b>ERNEST →</b>how you show it the first time <i>Q01.10</i></div></div>
+</div>
+</div>
+<div class="trow">
+<div class="n">5</div>
+<div class="mid">
+<div class="top"><span class="panel">STANDARD FRY TIME &amp; YIELD CALIBRATION</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span><span data-edit="01:buttermilk-crispy-thigh">Thigh</span>: <span data-edit="01:4-portions">4 Portions</span>, <span data-edit="01:350f-177c">350°F</span>, <span data-edit="01:6m-30s">6m 30s</span>, Internal CCP <span data-edit="01:165f-74c">165°F</span>. <span data-edit="01:tenderloins-scratch-batter">Tenderloins</span>: <span data-edit="01:6-portions">6 Portions</span>, <span data-edit="01:350f-177c-2">350°F</span>, <span data-edit="01:4m-15s">4m 15s</span>, <span data-edit="01:165f-74c-2">165°F</span>. <span data-edit="01:crispy-skin-fries-blanched">Crispy Skin Fries</span>: <span data-edit="01:1-basket-1-5-lb">1 Basket (1.5 lb)</span>, <span data-edit="01:375f-190c">375°F</span>, <span data-edit="01:2m-45s">2m 45s</span>, <span data-edit="01:golden-crisp">Golden / Crisp</span>.</div>
+
+<div class="pair"><div class="cslot" data-i18n-skip title="The table wants 165 inside the thigh and the tenderloins, but for the fries it just says golden and crisp. How do you explain to a trainee why one gets a number and the other gets a look?"><b>ERNEST →</b>why it's done this way <i>Q01.11</i></div><div class="cslot" data-i18n-skip title="Think about the fry time table: the thigh, the tenderloins, the crispy skin fries. How do you get those times and temps to stick for somebody who's brand new?"><b>ERNEST →</b>how you show it the first time <i>Q01.12</i></div></div>
+</div>
+</div>
+<div class="trow also">
+<div class="n">+</div>
+<div class="mid">
+<div class="top"><span class="panel">ALSO TODAY · NOT ON THE CARD</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say" data-src="ernest"><span class="tag">Point &amp; say</span>Set the trainee up at the prep table; help find what the station needs in the walk-in. Role model moving through the restaurant, then have them practice. Introduce 1-2 prep cooks; they can always ask a chef or manager. Keep role modeling SOSSS (sanitize, organize, stock up, support, sweep); start on opening, mid-shift, closing.</div>
+
+
+</div>
+</div></div>
+</section>
+
+<!-- 6 · WHEN NOT MAKING FOOD -->
+<section class="zone">
+<div class="zone-h"><b>When you're not making food: ask, don't tell</b><span>Every answer is on the card</span></div>
+
+<div class="ask"><div class="qa"><span class="q">What's the freezer's TARGET TEMP, and what if it's beeping?</span> <span class="a">&lt; 31°F (&lt;1°C). If Freezer is Beeping: <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></span></div><div class="qa"><span class="q">What's the allergen on this card, and what's kept apart for it?</span> <span class="a">GLUTEN &amp; EGG. <span data-edit="01:dedicated-gf-dredge-tub-green-wire-basket-segreg">GF dredge tub &amp; green wire basket segregated.</span></span></div><div class="qa"><span class="q">Dropping a basket: how, and how do you spot an overload?</span> <span class="a"><span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">Temp drop &gt;25°F = overload.</span></span></div><div class="qa"><span class="q">How long can a batch hold, and what happens when time's up?</span> <span class="a">7 MIN MAX HOLD. <span data-edit="01:reset-kds-station-timer-on-dump-pitch-batch-stri">Pitch batch at the 7:00 mark.</span></span></div></div>
+<div class="strip"><span class="strip-h">In the gaps</span><div class="cslot" data-i18n-skip title="There's a lull, nothing on the board, and today's card is storage and temps. What do you have the new hire do with that dead time?"><b>ERNEST →</b>gap work <i>Q01.13</i></div><span class="strip-h">Watch for</span><div class="cslot" data-i18n-skip title="Think about the last few people you've watched learn the fryer. Picture the mistake nearly every one of them makes with a basket early on. What does it look like right before it happens?"><b>ERNEST →</b>the usual mistake <i>Q01.14</i></div><div class="cslot" data-i18n-skip title="When a new hire goes looking for something in the freezer, the fridge or the calamari fridge, what are you watching for while they hunt?"><b>ERNEST →</b>the usual mistake <i>Q01.15</i></div></div>
+</section>
+
+<!-- 7 · SIGN + HAND-OFF -->
+<section class="zone">
+<div class="signline num">
+<span class="lens-key"><i class="lens">Safe</i> sanitation &amp; safety <i class="lens">Comms</i> communication <i class="lens">Stock</i> inventory</span>
+<span>Teacher init: [ _____ ]</span><span>Date: [ _____ ]</span>
+</div>
+<div class="handoff">
+<span class="handoff-h">Hand-off to tomorrow's teacher</span>
+<div class="rule"></div><div class="rule"></div>
+</div>
+</section>
+
+<footer class="aid-foot">
+<span>Teacher's Aid 01 · Rev 2025.1-Q1</span>
+<span>The trainee may read this page too</span>
+<span>Sign-offs go on the manager's character sheet</span>
+</footer>
+</article>
+</main>
+
+<footer class="w-full bg-primary-container text-on-primary-container py-space-sm">
+<div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm uppercase tracking-wider">
+<span>Example training materials · demo</span>
+<span>Every fact on this sheet is on its card, or is Ernest's own words</span>
+</div>
+</footer>
+<script src="es.js"></script>
+<script src="edit.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

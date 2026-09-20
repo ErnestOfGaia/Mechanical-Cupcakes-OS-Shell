@@ -15,6 +15,7 @@ html, body { margin: 0; padding: 0; }
 [hidden] { display: none !important; } /* Tailwind's .flex would otherwise beat the hidden attribute */
 .hazard { background: repeating-linear-gradient(-45deg, #141b2b, #141b2b 12px, #fe932c 12px, #fe932c 24px); }
 .num { font-variant-numeric: tabular-nums; }
+@media (min-width: 640px) { .callouts { grid-template-columns: 1fr 0.7fr 0.85fr 1.45fr; } }
 .punch { position: absolute; left: 6px; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed #76777d; background: #d9e3f6; }
 .box { display: inline-block; width: 11px; height: 11px; border: 1.5px solid #141b2b; vertical-align: -1px; margin-right: 4px; background: #fff; }
 [data-edited]::after { content: ""; display: inline-block; width: 5px; height: 5px; background: #fe932c; margin-left: 3px; vertical-align: middle; }
@@ -27,6 +28,7 @@ html, body { margin: 0; padding: 0; }
   body > header, body > footer, .no-print { display: none !important; }
   main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
   #sheet { max-width: none !important; width: 1080px !important; zoom: 0.75; margin: 0 !important; box-shadow: none !important; }
+  .callouts { grid-template-columns: 1fr 0.7fr 0.85fr 1.45fr !important; }
   [data-edited]::after { display: none !important; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
@@ -47,6 +49,7 @@ html, body { margin: 0; padding: 0; }
 <a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">03 Callouts</a>
 <a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">04 Oil Quality</a>
 <a aria-current="page" class="font-label-md text-label-md uppercase px-space-sm py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="quick-guide.html">Quick Guide</a>
+<a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="aid-03-line-callouts.html">Teacher's Aids</a>
 </nav>
 <div class="flex items-center gap-space-sm">
 <button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
@@ -61,7 +64,7 @@ html, body { margin: 0; padding: 0; }
 </div>
 <main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter">
 <div class="no-print w-full max-w-[850px] mb-space-sm flex flex-wrap items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase">
-<span>Synthesis of cards 01–04 · Only facts that appear on the cards</span>
+<span>Synthesis of cards 01–04 · Card facts only, plus the station mantra</span>
 <span>Binder front pocket · Letter portrait · Laminate</span>
 </div>
 
@@ -187,34 +190,43 @@ html, body { margin: 0; padding: 0; }
 </div>
 </section>
 
-<!-- 03 LINE CALLOUTS -->
+<!-- 03 LINE CALLOUTS — regrouped to match card 03 (Ernest, 2026-09-20): TALK / ROLES / KEEP IT CLEAN / STOP THE LINE.
+     Same facts and the same data-edit ids as before; only the grouping changed. -->
 <section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
 <div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
 <span class="font-headline-sm text-headline-sm uppercase">03. Line callouts &amp; echo</span>
 <span class="font-label-sm text-label-sm text-on-tertiary-container uppercase font-bold">Rule: call out and respond — silent drops are a safety hazard</span>
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
-<table class="w-full text-left border-collapse">
-<thead class="bg-surface-container-high font-label-sm text-label-sm uppercase"><tr><th class="px-1.5 py-0.5 w-1/2">Lead / expo call</th><th class="px-1.5 py-0.5">Fryer callback (echo)</th></tr></thead>
-<tbody>
-<tr class="border-b border-outline-variant"><td class="px-1.5 py-1 font-label-sm font-bold" data-edit="03:i-need-a-chicken-strip-on-the-fly-please">"I need a chicken strip on the fly please!"</td><td class="px-1.5 py-1"><span class="bg-primary text-primary-fixed font-label-sm px-1 py-0.5 uppercase" data-edit="03:heard-6-minutes">"Heard, 6 minutes!"</span></td></tr>
-<tr class="border-b border-outline-variant"><td class="px-1.5 py-1 font-label-sm font-bold" data-edit="03:how-long-on-the-chicken-strip">"How long on the chicken strip?"</td><td class="px-1.5 py-1"><span class="bg-primary text-primary-fixed font-label-sm px-1 py-0.5 uppercase" data-edit="03:2-minutes-on-board">"2 minutes on board!"</span> <span data-edit="03:look-at-physical-basket-countdown-timer-never-gu">Look at the physical basket timer. Never guess.</span></td></tr>
-<tr class="border-b border-outline-variant bg-tertiary-fixed/30"><td class="px-1.5 py-1 font-headline-sm text-headline-sm uppercase text-tertiary-container" data-edit="03:coming-down-the-line-wide-load">"Coming down the line wide load"</td><td class="px-1.5 py-1"><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1 py-0.5">ALLERGEN</span> <span data-edit="03:change-gloves-immediately-use-sanitized-red-sili">Change gloves immediately. Use sanitized RED silicone tongs. Never share fryer oil or staging pan.</span></td></tr>
-<tr class="bg-secondary-fixed/30"><td class="px-1.5 py-1 font-headline-sm text-headline-sm uppercase text-secondary" data-edit="03:behind-you-hot-oil">"Behind you / Hot oil!"</td><td class="px-1.5 py-1"><span class="bg-secondary text-on-secondary font-label-sm px-1 py-0.5">BURN HAZ</span> <span data-edit="03:freeze-all-line-movement-keep-elbows-tucked-and">Freeze all line movement. Keep elbows tucked and stay anchored until hot oil transport fully clears corridor.</span></td></tr>
-</tbody>
-</table>
-<div class="flex flex-col gap-1">
-<div class="grid grid-cols-2 gap-1">
-<div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm font-bold text-secondary uppercase" data-edit="03:support-feed-the-beast">Support — Feed the Beast</div><div class="text-[9.5px]" data-edit="03:drops-frozen-items-into-fryer-stocks-up-line-sto">Drops frozen items into fryer · Stocks up line · Stocks up backups</div></div>
-<div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm font-bold uppercase" data-edit="03:lead-plate-the-food">Lead — Plate the Food</div><div class="text-[9.5px]" data-edit="03:plates-cooked-food-stocks-up-cold-well-supplies">Plates cooked food · Stocks up cold well &amp; supplies · Keeps station clean</div></div>
+<div class="callouts grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
+<div class="border-2 border-primary-container p-1.5 flex flex-col gap-1">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">01</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Call &amp; echo</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Talk</div>
+<div><div class="font-label-sm text-label-sm font-bold leading-tight"><span data-edit="03:i-need-a-chicken-strip-on-the-fly-please">&quot;I need a chicken strip on the fly please!&quot;</span></div><div class="mb-1"><span class="inline-block bg-primary text-primary-fixed font-label-sm px-1 py-0.5 uppercase"><span data-edit="03:heard-6-minutes">&quot;Heard, 6 minutes!&quot;</span></span></div></div>
+<div><div class="font-label-sm text-label-sm font-bold leading-tight"><span data-edit="03:how-long-on-the-chicken-strip">&quot;How long on the chicken strip?&quot;</span></div><div class="mb-1"><span class="inline-block bg-primary text-primary-fixed font-label-sm px-1 py-0.5 uppercase"><span data-edit="03:2-minutes-on-board">&quot;2 minutes on board!&quot;</span></span></div></div>
+<div class="font-headline-sm text-headline-sm uppercase text-tertiary-container"><span data-edit="03:coming-down-the-line-wide-load">&quot;Coming down the line wide load&quot;</span></div>
+<div class="font-headline-sm text-headline-sm uppercase text-secondary"><span data-edit="03:behind-you-hot-oil">&quot;Behind you / Hot oil!&quot;</span></div>
 </div>
-<div class="border-2 border-primary-container p-1.5 flex flex-col gap-0.5 text-[9.5px]">
-<div><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1">CCP</span> <span data-edit="03:check-internal-temp-min-165f-74c-never-pull-earl">Check internal temp (min 165°F / 74°C). <b>Never pull early.</b> Shake basket to prevent clumping.</span></div>
+<div class="border-2 border-outline-variant p-1.5 flex flex-col gap-1">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">02</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Who does what</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Roles</div>
+<div><div class="font-label-sm text-label-sm font-bold text-secondary uppercase"><span data-edit="03:support-feed-the-beast">Support — Feed the Beast</span></div><div class="text-[9.5px]"><span data-edit="03:drops-frozen-items-into-fryer-stocks-up-line-sto">Drops frozen items into fryer · Stocks up line · Stocks up backups</span></div></div>
+<div><div class="font-label-sm text-label-sm font-bold uppercase"><span data-edit="03:lead-plate-the-food">Lead — Plate the Food</span></div><div class="text-[9.5px]"><span data-edit="03:plates-cooked-food-stocks-up-cold-well-supplies">Plates cooked food · Stocks up cold well &amp; supplies · Keeps station clean</span></div></div>
+</div>
+<div class="border-2 border-outline-variant p-1.5 flex flex-col gap-1 text-[9.5px]">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">03</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Clean &amp; hold</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Keep it clean</div>
 <div><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1">ZERO CROSS-CONTACT</span> <span data-edit="03:sanitation-water-change-every-2-hours-dry-towels">Sanitation water: change every 2 hours. Dry towels are not sanitary.</span></div>
 <div><span class="bg-secondary text-on-secondary font-label-sm px-1">SEAFOOD</span> <span data-edit="03:seafood-should-not-be-stored-above-other-food">Seafood should not be stored above other food.</span></div>
 <div><span class="bg-error text-on-error font-label-sm px-1">WARM TABLE</span> <span data-edit="03:145f-minimum-temp-hold-no-longer-than-4-hours">145°F minimum temp. Hold no longer than 4 hours.</span></div>
-<div><span class="bg-error text-on-error font-label-sm px-1">WASTE</span> <span data-edit="03:strict-dump-chute-timer-audit-stale-fried-produc">Strict dump chute timer audit. <b>Stale fried product must be logged on waste sheet and tossed.</b> Never re-dredge.</span></div>
 </div>
+<div class="border-2 border-error p-1.5 flex flex-col gap-1 text-[9.5px]">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">04</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Line discipline</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Stop the line</div>
+<div><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1">CCP</span> <span data-edit="03:check-internal-temp-min-165f-74c-never-pull-earl">Check internal temp (min 165°F / 74°C). <b>Never pull early.</b> Shake basket to prevent clumping.</span></div>
+<div><span data-edit="03:look-at-physical-basket-countdown-timer-never-gu">Look at the physical basket timer. Never guess.</span></div>
+<div><span class="bg-tertiary-container text-on-tertiary font-label-sm px-1">ALLERGEN</span> <span data-edit="03:change-gloves-immediately-use-sanitized-red-sili">Change gloves immediately. Use sanitized RED silicone tongs. Never share fryer oil or staging pan.</span></div>
+<div><span class="bg-secondary text-on-secondary font-label-sm px-1">BURN HAZ</span> <span data-edit="03:freeze-all-line-movement-keep-elbows-tucked-and">Freeze all line movement. Keep elbows tucked and stay anchored until hot oil transport fully clears corridor.</span></div>
+<div><span class="bg-error text-on-error font-label-sm px-1">WASTE</span> <span data-edit="03:strict-dump-chute-timer-audit-stale-fried-produc">Strict dump chute timer audit. <b>Stale fried product must be logged on waste sheet and tossed.</b> Never re-dredge.</span></div>
 </div>
 </div>
 </section>
@@ -269,13 +281,22 @@ html, body { margin: 0; padding: 0; }
 </div>
 <div class="bg-surface-container-low p-1.5">
 <div class="font-label-sm text-label-sm uppercase font-bold">Cleaning instructions</div>
-<div class="mt-0.5"><b>4-well fryer:</b> <span data-edit="04:step-1-safety-step-2-drain-filter-oil-step-3-cle">1. Safety. 2. Drain &amp; filter oil. 3. Clean all surfaces with a dry towel, green scrubby if needed.</span></div>
+<div class="mt-0.5"><b>4-well fryer:</b> <span data-edit="04:step-1-safety-step-2-drain-filter-oil-step-3-cle">1. Safety. 2. Drain &amp; filter oil. 3. Clean all surfaces with a sanitized towel, green scrubby if needed. Dry towels are for removing solid food particles before sanitizing.</span></div>
 <div class="mt-0.5"><b>1-well fryer:</b> <span data-edit="04:quick-reference-steps-to-be-modeled-by-trainer-a">quick reference steps to be modeled by trainer and verified by chef.</span></div>
 </div>
 <div class="bg-surface-container-low p-1.5">
 <div class="font-label-sm text-label-sm uppercase font-bold">Why does polar matter matter?</div>
 <div class="mt-0.5" data-edit="04:fresh-cooking-oil-consists-almost-entirely-of-no">Fresh oil is almost entirely non-polar triglycerides. Heat, oxygen and moisture break them into polar compounds: the higher the TPM, the more degraded the oil. Skim frequently.</div>
 </div>
+</div>
+</section>
+
+<!-- STATION MANTRA — Ernest's own words (2026-09-20), the one line here that is not on a card -->
+<section class="pl-8 pr-5 pt-2 pb-2 border-t border-outline-variant">
+<div class="bg-secondary-fixed text-on-secondary-fixed px-2 py-1.5 flex flex-wrap items-baseline gap-x-3 gap-y-0.5 border-l-4 border-secondary-container" data-src="ernest">
+<span class="font-label-sm text-label-sm uppercase font-bold">When you're not making food</span>
+<span class="font-headline-md text-headline-md uppercase">Sanitize, organize, stock up, support, sweep.</span>
+<span class="font-body-sm text-body-sm">Nothing else to do? Help somebody with a cleaning project.</span>
 </div>
 </section>
 
@@ -299,7 +320,7 @@ html, body { margin: 0; padding: 0; }
 <footer class="w-full bg-primary-container text-on-primary-container py-space-sm">
 <div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm uppercase tracking-wider">
 <span>Example training materials · demo</span>
-<span>Every fact on this sheet appears on one of the four cards</span>
+<span>Every fact on this sheet is on a card, except the mantra (Ernest's own words)</span>
 </div>
 </footer>
 <script src="es.js"></script>
