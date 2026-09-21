@@ -44,7 +44,8 @@ p { margin: 0; }
 .brand { display: flex; align-items: center; gap: 8px; background: var(--black); padding: 4px 12px; font: 700 19px/22px var(--display); text-transform: uppercase; letter-spacing: 0.02em; }
 .brand i { width: 8px; height: 8px; background: var(--amber); }
 .top nav { display: flex; flex-wrap: wrap; gap: 4px; }
-.top nav a { text-decoration: none; padding: 4px 12px; color: var(--nav); font: 600 11px/14px var(--mono); letter-spacing: 0.03em; text-transform: uppercase; }
+.top nav a, .top nav span { text-decoration: none; padding: 4px 12px; color: var(--nav); font: 600 11px/14px var(--mono); letter-spacing: 0.03em; text-transform: uppercase; }
+.top nav span { opacity: 0.45; }
 .top nav a:hover { color: #fff; }
 .top nav a[aria-current] { background: var(--black); color: #fff; font-weight: 700; box-shadow: 2px 2px 0 var(--amber); }
 .tools { display: flex; gap: 8px; }
@@ -194,10 +195,11 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="brand"><i></i><span>Pelican · Line Training Binder</span></div>
 <nav aria-label="Binder">
 <a aria-current="page" href="index.html">Home</a>
-<a href="card-01-storage-temps.html">01 Storage &amp; Temps</a>
-<a href="card-02-shift-checklists.html">02 Checklists</a>
-<a href="card-03-line-callouts.html">03 Callouts</a>
-<a href="card-04-oil-quality.html">04 Oil Quality</a>
+<a href="card-03-line-callouts.html">Day 1 · Callouts</a>
+<a href="card-01-storage-temps.html">Day 2 · Storage</a>
+<a href="card-02-shift-checklists.html">Day 3 · Checklists</a>
+<span aria-disabled="true" title="This day has no card yet">Day 4 · Stock</span>
+<a href="card-04-oil-quality.html">Day 5 · Oil</a>
 <a href="quick-guide.html">Quick Guide</a>
 <a href="aid-03-line-callouts.html">Teacher's Aids</a>
 </nav>
