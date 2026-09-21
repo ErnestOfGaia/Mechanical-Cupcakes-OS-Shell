@@ -6,9 +6,9 @@
 <title>Fryer Station Binder</title>
 <meta name="description" content="Example training materials: printable, laminated station cards for the line, one web page per card, with the style kit for building the next station.">
 <meta name="robots" content="noindex">
-<link href="https://fonts.googleapis.com" rel="preconnect">
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts.css">
+
+
 <link rel="stylesheet" href="aids.css">
 <style>
 /* The binder's own tokens — the same values the cards' Tailwind config uses (design/tw-config.js). */
@@ -427,36 +427,20 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 </div>
 </section>
 
-<section aria-labelledby="h-next">
+<section id="download" aria-labelledby="h-download">
 <div class="wrap">
-<div class="head"><h2 id="h-next">Make the next station</h2><span class="label">Grill · Sauté · Pantry · Expo · Dish</span></div>
-<div class="next">
-<div class="steps" style="grid-template-columns:1fr">
-<div class="step"><h4>Write the station's facts</h4><p>Zones and target temps, what lives where, cook times, the calls and echoes, the hazards, the cleaning steps, the audit intervals. Only what the station lead will sign off on. A card never says more than the kitchen actually does.</p></div>
-<div class="step"><h4>Paste the prompt</h4><p>Copy the prompt on the right into Claude Design (or Stitch), attach the design file below, and paste the facts where it says. It returns one HTML file that prints like the fryer cards.</p></div>
-<div class="step"><h4>Print, laminate, punch</h4><p>Add the page to this site and the binder. Same fonts, same colors, same sign-off strip, so the whole line reads as one system.</p></div>
-<div class="files" data-i18n-skip><a href="design/DESIGN.md" download>DESIGN.md</a><a href="design/tw-config.js" download>tw-config.js</a><a href="card-01-storage-temps.html">Reference card</a></div>
+<div class="head"><h2 id="h-download">Take a copy with you</h2><span class="label">Runs on your own machine · nothing leaves the building</span></div>
+<p class="intro">The binder is a folder, not a service. Download it, drop it wherever the office already keeps shared files, and open it. No account, no install, and no internet needed once you have it: the fonts and the stylesheet are inside the folder, so a card looks the same with the network unplugged.</p>
+<div class="steps">
+<div class="step"><h4>Download the folder</h4><p>One zip file. It holds all five cards, all five Teacher's Aids, the quick guide and the character sheet, in English and Spanish.</p></div>
+<div class="step"><h4>Unzip it anywhere</h4><p>A shared drive works, so the whole crew reads the same copy. So does the office desktop, or a USB stick taped inside the binder.</p></div>
+<div class="step"><h4>Open the home page</h4><p>It opens in whatever browser is already on the machine, and prints from there exactly the way this page prints.</p></div>
 </div>
-<div class="prompt">
-<div class="bar"><span class="label">Prompt · Claude Design</span><button type="button" class="btn ghost" id="copy-prompt" data-i18n-skip>Copy</button></div>
-<pre id="prompt-text" data-i18n-skip>Build a laminated training card for the [STATION NAME] station at Pelican, as a single HTML page that prints on one US Letter sheet, landscape, and looks like it belongs in the same binder as the Fryer Station cards (reference: the attached card-01-storage-temps.html and DESIGN.md).
-
-DESIGN SYSTEM — do not change it
-- Fonts (Google Fonts): Barlow Condensed for headlines, always UPPERCASE; IBM Plex Sans for body text; JetBrains Mono for labels, numbers, times and temperatures, with tabular figures.
-- Colors: ink #141b2b, black #000000, hazard amber #fe932c, amber ink #904d00, amber tint #ffdcc3, critical red #410002 with #f63a35 text, error red #ba1a1a, error tint #ffdad6, paper #ffffff, surfaces #f8f9ff / #eff4ff / #e6eeff / #dee9fc / #d9e3f6, page ground #d0dbed, text #121c2a, muted #45464c, outline #76777d and #c6c6cd.
-- Shapes: 0px corners everywhere. No blurred shadows; hard offsets only (3px 3px 0 #141b2b). Borders 1px or 2px ink; 3px amber or red for hazards. Hazard stripe: repeating-linear-gradient(-45deg, #141b2b 0 12px, #fe932c 12px 24px).
-- Card anatomy, top to bottom: hazard stripe → ink header bar (card number "FS-CARD-0X OF 04", title, REV, format) → critical control point banner in critical red → body of 2–4 panels, each with a station banner, one metric badge and a short checklist → sign-off strip (INIT / TIME / DATE boxes) → footer with the binder spec. Keep the left 1.75rem clear for the 3-hole punch.
-- Rules: one card = one topic = one side; never spill to the back. Every temperature as °F (°C). Short imperative lines. Name the critical control point. Nothing decorative.
-
-CONTENT — use only these facts, do not invent numbers or steps
-[paste the station's facts here: zones and target temps, items per zone, cook times, callouts and echoes, roles, hazards, cleaning steps, audit intervals]
-
-OUTPUT
-One self-contained HTML file: Tailwind play CDN (https://cdn.tailwindcss.com) with the attached tw-config.js loaded right after it, the Google Fonts links above, a sticky site header with a Print button (window.print()), and this print stylesheet:
-@media print { @page { size: letter landscape; margin: 0.3in; } body > header, body > footer, .no-print { display: none !important; } #card { max-width: none !important; width: 100% !important; box-shadow: none !important; } * { print-color-adjust: exact !important; -webkit-print-color-adjust: exact !important; } }
-Give the card wrapper id="card". Add a Spanish version of every text string as a JSON object { "English": "Español" } at the end of your answer.</pre>
+<div class="actions">
+<a class="btn dark" href="binder.zip" download>Download the binder</a>
+<a class="btn" href="quick-guide.html">Read the quick guide</a>
 </div>
-</div>
+<div class="note"><b>What this copy does not do yet.</b> Edits made in demo edit mode live in one browser and nobody else sees them. The version being built saves changes into the folder itself, so a lead can adjust a line to match their own kitchen and the whole crew gets it — while the layout, the colours and the type stay locked, because those are what keep a card readable at arm's length through steam.</div>
 </div>
 </section>
 

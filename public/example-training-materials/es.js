@@ -179,15 +179,6 @@ window.ETM_ES = {
   "Sign-off strip: initials, time or date boxes the lead fills with a grease pencil.": "Franja de firma: casillas de iniciales, hora o fecha que el encargado llena con lápiz graso.",
   "Footer with the binder spec. The left 1.75 rem stays empty for the three punch holes.": "Pie con la especificación de la carpeta. Los 1.75 rem de la izquierda quedan libres para las tres perforaciones.",
   "Corners are square. Shadows are hard offsets or nothing. Borders are 1, 2 or 3 px of ink, amber or red. Nothing is decorative.": "Las esquinas son rectas. Las sombras son desplazamientos duros o nada. Los bordes son de 1, 2 o 3 px de tinta, ámbar o rojo. Nada es decorativo.",
-  "Make the next station": "Crea la siguiente estación",
-  "Grill · Sauté · Pantry · Expo · Dish": "Parrilla · Salteado · Fríos · Expo · Lavado",
-  "Write the station's facts": "Escribe los datos de la estación",
-  "Zones and target temps, what lives where, cook times, the calls and echoes, the hazards, the cleaning steps, the audit intervals. Only what the station lead will sign off on. A card never says more than the kitchen actually does.": "Zonas y temperaturas objetivo, qué va en cada zona, tiempos de cocción, los llamados y sus ecos, los peligros, los pasos de limpieza, los intervalos de auditoría. Solo lo que el encargado de la estación firmará. Una tarjeta nunca dice más de lo que la cocina realmente hace.",
-  "Paste the prompt": "Pega el prompt",
-  "Copy the prompt on the right into Claude Design (or Stitch), attach the design file below, and paste the facts where it says. It returns one HTML file that prints like the fryer cards.": "Copia el prompt de la derecha en Claude Design (o Stitch), adjunta el archivo de diseño de abajo y pega los datos donde se indica. Devuelve un archivo HTML que se imprime como las tarjetas de la freidora.",
-  "Print, laminate, punch": "Imprime, lamina, perfora",
-  "Add the page to this site and the binder. Same fonts, same colors, same sign-off strip, so the whole line reads as one system.": "Agrega la página a este sitio y a la carpeta. Mismas fuentes, mismos colores, misma franja de firma, para que toda la línea se lea como un solo sistema.",
-  "Prompt · Claude Design": "Prompt · Claude Design",
   "Example training materials · a demo, not an official document": "Materiales de capacitación de ejemplo · una demo, no un documento oficial",
   "Fryer Station Binder · Rev 2025.1-Q1": "Carpeta de la estación de freidora · Rev 2025.1-Q1",
 
@@ -1046,5 +1037,20 @@ window.ETM_ES = {
   "Days 1–5": "Días 1–5",
   "Days 1–5 · Rev 2025.1-Q1": "Días 1–5 · Rev 2025.1-Q1",
   "Two Letter sheets": "Dos hojas tamaño carta",
+
+
+  // ---- the download section, 2026-09-21. Still Claude's Spanish.
+  "Take a copy with you": "Llévate una copia",
+  "Runs on your own machine · nothing leaves the building": "Funciona en tu propia máquina · nada sale del edificio",
+  "The binder is a folder, not a service. Download it, drop it wherever the office already keeps shared files, and open it. No account, no install, and no internet needed once you have it: the fonts and the stylesheet are inside the folder, so a card looks the same with the network unplugged.": "El material es una carpeta de archivos, no un servicio. Descárgala, ponla donde la oficina ya guarda los archivos compartidos y ábrela. Sin cuenta, sin instalación y sin internet una vez que la tienes: las tipografías y la hoja de estilos van dentro de la carpeta, así que una tarjeta se ve igual con la red desconectada.",
+  "Download the folder": "Descarga la carpeta",
+  "One zip file. It holds all five cards, all five Teacher's Aids, the quick guide and the character sheet, in English and Spanish.": "Un solo archivo zip. Contiene las cinco tarjetas, las cinco Guías del que enseña, la guía rápida y la hoja de personaje, en inglés y español.",
+  "Unzip it anywhere": "Descomprímela donde sea",
+  "A shared drive works, so the whole crew reads the same copy. So does the office desktop, or a USB stick taped inside the binder.": "Un disco compartido funciona, así todo el equipo lee la misma copia. También sirve la computadora de la oficina, o una memoria USB pegada dentro de la carpeta de argollas.",
+  "Open the home page": "Abre la página de inicio",
+  "It opens in whatever browser is already on the machine, and prints from there exactly the way this page prints.": "Se abre en el navegador que ya tenga la máquina, y se imprime desde ahí igual que esta página.",
+  "Download the binder": "Descargar la carpeta",
+  "What this copy does not do yet.": "Lo que esta copia todavía no hace.",
+  "Edits made in demo edit mode live in one browser and nobody else sees them. The version being built saves changes into the folder itself, so a lead can adjust a line to match their own kitchen and the whole crew gets it — while the layout, the colours and the type stay locked, because those are what keep a card readable at arm's length through steam.": "Los cambios hechos en el modo de edición de demo viven en un solo navegador y nadie más los ve. La versión que se está construyendo guarda los cambios en la carpeta misma, para que un encargado ajuste una línea a su propia cocina y todo el equipo la reciba, mientras el diseño, los colores y la tipografía quedan bloqueados, porque son lo que mantiene una tarjeta legible a un brazo de distancia entre el vapor.",
 
 };
