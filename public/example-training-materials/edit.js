@@ -15,6 +15,7 @@
     "01": [
       "#card .space-y-space-xs > div > span:last-child",   // zone items and handling rules
       "#card .mt-space-md > div.mt-0\\.5",                 // the note under each zone
+      "#card .mt-space-sm > div.mt-0\\.5",                 // …and the same note where the rhythm is tighter
       "#card tbody td",                                     // fry time & yield table
       "#card .bg-surface-container p"                       // supervisor note
     ],
@@ -26,7 +27,9 @@
       "#card li > span:last-child",                         // stage observations
       "#card .mt-space-sm.pt-space-xs > span:last-child",   // action / remediation lines
       "#card label[for^='check-']",                         // audit intervals
-      "#card .grid.grid-cols-2 span.block.font-bold",       // cleaning steps
+      "#card .grid span.block.font-bold",                   // cleaning steps (any column count: a
+                                                            // grid-cols-2 selector deleted these ids
+                                                            // when the column stacked, 2026-09-20)
       "#card span.font-body-sm.text-body-sm.text-on-surface-variant" // why polar matters
     ]
   };
