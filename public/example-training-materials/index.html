@@ -45,7 +45,8 @@ p { margin: 0; }
 .brand i { width: 8px; height: 8px; background: var(--amber); }
 .top nav { display: flex; flex-wrap: wrap; gap: 4px; }
 .top nav a, .top nav span { text-decoration: none; padding: 4px 12px; color: var(--nav); font: 600 11px/14px var(--mono); letter-spacing: 0.03em; text-transform: uppercase; }
-.top nav span { opacity: 0.45; }
+.top nav a.open { opacity: 0.5; }
+.card:target { outline: 4px solid var(--amber); outline-offset: 3px; }
 .top nav a:hover { color: #fff; }
 .top nav a[aria-current] { background: var(--black); color: #fff; font-weight: 700; box-shadow: 2px 2px 0 var(--amber); }
 .tools { display: flex; gap: 8px; }
@@ -198,7 +199,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <a href="card-03-line-callouts.html">Day 1 · Callouts</a>
 <a href="card-01-storage-temps.html">Day 2 · Storage</a>
 <a href="card-02-shift-checklists.html">Day 3 · Checklists</a>
-<span aria-disabled="true" title="This day has no card yet">Day 4 · Stock</span>
+<a href="card-05-food-levels.html">Day 4 · Stock</a>
 <a href="card-04-oil-quality.html">Day 5 · Oil</a>
 <a href="quick-guide.html">Quick Guide</a>
 <a href="aid-03-line-callouts.html">Teacher's Aids</a>
@@ -272,7 +273,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="wrap">
 <div class="head"><h2 id="h-teach">Each one teach one: the first five days</h2><span class="label">3 days supervised · 2 days unsupervised, verified</span></div>
 <p class="intro">On the line, whoever works the station teaches the station. Nobody can promise that cook has ever trained anyone, so each card gets a Teacher's Aid: the teacher's edition that says how to teach the card. One card is posted at the station each day, so the trainee and the teacher both know what to work on when they are not making food. The aids live in the full-page station binder.</p>
-<div class="week" aria-label="The first five days"><a href="aid-03-line-callouts.html"><span class="d"><span>Day</span> 1</span><span class="t">Line Callouts</span><span class="m">Supervised</span></a><a href="aid-01-storage-temps.html"><span class="d"><span>Day</span> 2</span><span class="t">Storage &amp; Temps</span><span class="m">Supervised</span></a><a href="aid-02-shift-checklists.html"><span class="d"><span>Day</span> 3</span><span class="t">Shift Checklists</span><span class="m">Supervised</span></a><div class="slot"><span class="d"><span>Day</span> 4</span><span class="t">Food levels &amp; self-management</span><span class="m">Unsupervised · verified</span></div><a href="aid-04-oil-quality.html"><span class="d"><span>Day</span> 5</span><span class="t">Oil Quality</span><span class="m">Unsupervised · verified</span></a><a class="sheet" href="character-sheet.html"><span class="d">Manager</span><span class="t">Character sheet</span></a></div>
+<div class="week" aria-label="The first five days"><a href="aid-03-line-callouts.html"><span class="d"><span>Day</span> 1</span><span class="t">Line Callouts</span><span class="m">Supervised</span></a><a href="aid-01-storage-temps.html"><span class="d"><span>Day</span> 2</span><span class="t">Storage &amp; Temps</span><span class="m">Supervised</span></a><a href="aid-02-shift-checklists.html"><span class="d"><span>Day</span> 3</span><span class="t">Shift Checklists</span><span class="m">Supervised</span></a><a href="aid-05-food-levels.html"><span class="d"><span>Day</span> 4</span><span class="t">Food Levels</span><span class="m">Unsupervised · verified</span></a><a href="aid-04-oil-quality.html"><span class="d"><span>Day</span> 5</span><span class="t">Oil Quality</span><span class="m">Unsupervised · verified</span></a><a class="sheet" href="character-sheet.html"><span class="d">Manager</span><span class="t">Character sheet</span></a></div>
 <div class="binder">
 <article class="card">
 <figure><img src="preview/aid-03.png" alt="Teacher's Aid 03 preview" loading="lazy"></figure>
@@ -290,6 +291,11 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-02-shift-checklists.html">Open</a><a class="p" href="aid-02-shift-checklists.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
+<figure><img src="preview/aid-05.png" alt="Teacher's Aid 05 preview" loading="lazy"></figure>
+<div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 4</span><h3>Food Levels &amp; Self-Management</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
+<div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-05-food-levels.html">Open</a><a class="p" href="aid-05-food-levels.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
 <figure><img src="preview/aid-04.png" alt="Teacher's Aid 04 preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 5</span><h3>Oil Quality — Judge It By Eye</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-04-oil-quality.html">Open</a><a class="p" href="aid-04-oil-quality.html?print=1">Print</a></div></div>
@@ -298,11 +304,6 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <figure><img src="preview/character-sheet.png" alt="Character sheet preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber">Manager's copy</span><h3>Character Sheet</h3><p>One sheet per new hire. Each day lists the skills the trainee has to show and what the teacher has to have done. A blank form: names stay on paper.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="character-sheet.html">Open</a><a class="p" href="character-sheet.html?print=1">Print</a></div></div>
-</article>
-<article class="card reserved">
-<figure></figure>
-<div class="body"><span class="tag quiet"><span>Day</span> 4 · card to come</span><h3>Food levels &amp; self-management</h3><p>Check what they think needs stocking, and when the sanitation water was last changed. Offer to cover so they can do station maintenance ahead of peak. Ask what they need before you tell them what to do. Breaks: if somebody leaves at 7 and it's 6, and it's been an hour and a half since your last break, stock your line and ask now, so 10 to 30 minutes can be found. Nobody writes this down and every manager runs it differently, so say it out loud.</p></div>
-<div class="foot"><span class="label-sm">Half sheet · landscape</span></div>
 </article>
 <article class="card reserved">
 <figure></figure>

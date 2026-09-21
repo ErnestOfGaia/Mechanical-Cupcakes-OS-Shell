@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Teacher's Aid 05 · Food Levels</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="tw-config.js"></script>
+<link rel="stylesheet" href="aids.css">
+<link rel="stylesheet" href="print-layout.css" media="print">
+</head>
+<body data-aid="05" class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col">
+
+<header class="sticky top-0 left-0 w-full z-50 bg-primary-container text-on-primary shadow-[0_1px_8px_rgba(0,0,0,0.04)]">
+<div class="min-h-16 w-full px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-lg">
+<div class="flex items-center gap-space-sm bg-primary px-space-md py-space-xs"><span class="w-2 h-2 bg-secondary-container"></span><span class="font-headline-md text-headline-md uppercase tracking-wide text-on-primary">Fryer Station</span></div>
+</div>
+<nav class="flex flex-wrap items-center gap-space-xs" aria-label="Binder"><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Home</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">Day 1 · Callouts</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-01-storage-temps.html">Day 2 · Storage</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-02-shift-checklists.html">Day 3 · Checklists</a><a aria-current="page" class="font-label-md text-label-md uppercase px-space-sm py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="card-05-food-levels.html">Day 4 · Stock</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">Day 5 · Oil</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="quick-guide.html">Quick Guide</a><a aria-current="page" class="font-label-md text-label-md uppercase px-space-sm py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="aid-03-line-callouts.html">Teacher's Aids</a></nav>
+<div class="flex items-center gap-space-sm">
+<button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
+<button type="button" onclick="window.print()" class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-space-md py-space-xs font-label-md text-label-md uppercase tracking-wider font-bold shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">print</span><span>Print aid</span></button>
+</div>
+</div>
+</header>
+
+<div data-edit-banner hidden class="no-print w-full bg-secondary-fixed text-on-secondary-fixed px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm font-body-sm text-body-sm">
+<span><b>Following the cards.</b> Lines marked with an amber dot were edited on a card in this browser; the aid shows the edited text.</span>
+<span class="flex items-center gap-space-sm font-label-sm text-label-sm uppercase"><span><span data-edit-count>0</span> edits</span><button type="button" data-edit-reset hidden class="bg-error-container text-on-error-container px-space-sm py-0.5 font-label-sm text-label-sm uppercase tracking-wider">Reset edits</button></span>
+</div>
+
+<main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter">
+
+<!-- screen only: the training week, and where this aid sits in it -->
+<div class="no-print w-full max-w-[850px] mb-space-sm">
+<div class="week" aria-label="The first five days"><a href="aid-03-line-callouts.html"><span class="d"><span>Day</span> 1</span><span class="t">Line Callouts</span><span class="m">Supervised</span></a><a href="aid-01-storage-temps.html"><span class="d"><span>Day</span> 2</span><span class="t">Storage &amp; Temps</span><span class="m">Supervised</span></a><a href="aid-02-shift-checklists.html"><span class="d"><span>Day</span> 3</span><span class="t">Shift Checklists</span><span class="m">Supervised</span></a><a href="aid-05-food-levels.html" aria-current="page"><span class="d"><span>Day</span> 4</span><span class="t">Food Levels</span><span class="m">Unsupervised · verified</span></a><a href="aid-04-oil-quality.html"><span class="d"><span>Day</span> 5</span><span class="t">Oil Quality</span><span class="m">Unsupervised · verified</span></a><a class="sheet" href="character-sheet.html"><span class="d">Manager</span><span class="t">Character sheet</span></a></div>
+<div class="mt-space-sm flex flex-wrap items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase">
+<span>Teacher's edition of <a class="underline" href="card-05-food-levels.html">FS-Card-05</a> · the card is posted at the station, this page says how to teach it</span>
+<span>Full-page station binder · Letter portrait · Laminate</span>
+</div>
+<div class="placeholder-key mt-space-xs" data-i18n-skip><b>ERNEST →</b> Amber dashed boxes are open slots: teaching knowledge that comes from the recorded interview, not from Claude. Everything else restates the card, or is Ernest's own words.</div>
+</div>
+
+<article id="sheet" class="w-full max-w-[850px] bg-surface-container-lowest text-on-surface shadow-xl relative">
+<div class="hidden sm:block absolute left-0 top-0 bottom-0 w-6 pointer-events-none">
+<div class="punch" style="top:14%"></div><div class="punch" style="top:50%"></div><div class="punch" style="top:86%"></div>
+</div>
+<div class="hazard h-2.5 w-full"></div>
+
+<!-- 1 · INK HEADER: what this page is, which card it pairs with, which day -->
+<div class="aid-head">
+<div class="aid-top">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="bg-secondary-container text-on-secondary-container px-2 py-0.5 font-label-sm text-label-sm uppercase font-bold">Teacher's Aid</span>
+<span class="bg-primary text-on-primary px-2 py-0.5 font-label-sm text-label-sm uppercase">Pairs with FS-Card-05</span>
+</div>
+<div class="daybox"><span class="day"><small>Day</small> 4 <small>of 5</small></span><span class="pips" aria-hidden="true"><i></i><i></i><i></i><i class="on"></i><i></i></span><span class="mode">Unsupervised · verified</span></div>
+</div>
+<div>
+<h1 class="font-display text-display uppercase text-on-primary leading-none">Food Levels &amp; Self-Management</h1>
+<p class="aid-sub">Each one teach one. You work this station to spec, so today you're the teacher. The card is posted at the station; this page tells you how to teach it.</p>
+<div class="dayrule" data-src="ernest"><b>Day 4</b><span><strong>Food levels &amp; self-management.</strong> Ask before you tell: a question offers something, an order takes something away.</span></div>
+</div>
+<div class="cardmap" aria-label="Map of the paired card's panels">
+<div class="cardmap-h"><span>Card map</span><span>FS-Card-05</span></div>
+<div class="grid" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="cell" style="grid-column:span 1"><b>1</b><span>What full looks like</span></div><div class="cell" style="grid-column:span 1"><b>2</b><span>Two days of stock</span></div><div class="cell" style="grid-column:span 1"><b>3</b><span>Friday busy, Tuesday slow</span></div><div class="cell" style="grid-column:span 1"><b>4</b><span>Breaks &amp; maintenance</span></div><div class="cell" style="grid-column:span 3"><b>5</b><span>Stock levels table — filled at the station</span></div><div class="cell plain" style="grid-column:span 1"><span>Sign-off</span></div></div>
+</div>
+</div>
+
+<!-- 2 · STOP THE LINE: the card's own critical lines. Critical red, one per page, near the top. -->
+<div class="stopband">
+<div class="stopband-h"><span class="bang">!</span><span>Stop the line</span></div>
+<ul><li>THE DAY'S RULE: Unsupervised but guided. Ask what they need before telling them what to do.</li><li>2 DAYS OF STOCK. Change a pan twice a day and want 2 days? That's 4 pans, line plus backup.</li><li>BEFORE A BREAK: position covered, line stocked for the next hour, urgent things cleared.</li><li><span data-edit="03:sanitation-water-change-every-2-hours-dry-towels">Sanitation water: change every 2 hours. Dry towels are not sanitary.</span></li></ul>
+</div>
+
+<!-- 3 · HOW TO TEACH: the same strip on every aid -->
+<div class="method">
+<span class="method-h">How to teach it</span>
+<span><b>I do</b> they watch</span>
+<span><b>We do</b> together</span>
+<span><b>You do</b> you watch</span>
+<span class="method-why"><b>Say the why</b> out loud, every time</span>
+</div>
+
+<!-- 4 · THE FINISH LINE. One list: the teacher ticks it here, the manager checks the same
+     lines on the character sheet. (The first draft printed it twice, as outcomes and as a
+     sign-off; one zone went so the type did not have to shrink.) -->
+<section class="zone">
+<div class="zone-h"><b>By the end of today, the trainee…</b><span>The finish line · tick it when you watched them do it, to spec</span></div>
+<div class="verify"><div class="vitem"><i class="vbox"></i><i class="lens">STOCK</i><span>Stocks the station unsupervised before their shift ends</span></div><div class="vitem"><i class="vbox"></i><i class="lens">STOCK</i><span>Knows every item's full level for the season we're in</span></div><div class="vitem"><i class="vbox"></i><i class="lens">STOCK</i><span>Checks 2 days of cover, and tells the manager when we're low</span></div><div class="vitem"><i class="vbox"></i><i class="lens">SAFE</i><span>Knows when the sanitation water was last changed</span></div><div class="vitem"><i class="vbox"></i><i class="lens">COMMS</i><span>Asks for cover before a break, with the line stocked for an hour</span></div></div><div class="verify two"><div class="vitem"><i class="vbox"></i><i class="lens">COMMS</i><span data-src="ernest">Works both roles, and says which one suits them</span></div></div>
+<div class="strip"><span class="strip-h">Before the shift</span><div class="cslot" data-i18n-skip title="It's the trainee's first unsupervised day. Before they get there, what do you set up or check so you can let them run the station without standing over them?"><b>ERNEST →</b>what to have ready <i>Q05.1</i></div><div class="cslot" data-i18n-skip title="The stock table on this card is blank on purpose. When you sit down to fill it in, how do you work it out — do you count, or do you know?"><b>ERNEST →</b>what to have ready <i>Q05.2</i></div></div>
+</section>
+
+<!-- 5 · TEACH IT IN THIS ORDER: one row per panel of the card, in the card's own order -->
+<section class="zone">
+<div class="zone-h"><b>Teach it in this order</b><span>One row per panel of the card · tick each box as you go</span></div>
+<div class="teach"><div class="trow">
+<div class="n">1</div>
+<div class="mid">
+<div class="top"><span class="panel">WHAT FULL LOOKS LIKE</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>Every item has a full level, and it is not the same in summer as in winter. Simple mnemonics, so nobody has to memorise a number. Ask, don't memorise: how long does a pan of this last, and how long does the ingredient itself last?</div>
+
+<div class="pair"><div class="cslot" data-i18n-skip title="You said the mnemonics should be questions, not numbers, because every station's answer is different. Why does asking beat telling here?"><b>ERNEST →</b>why it's done this way <i>Q05.3</i></div><div class="cslot" data-i18n-skip title="Say one mnemonic out loud for an item you know cold, then walk me through how you'd teach somebody to work out the rest for themselves."><b>ERNEST →</b>how you show it the first time <i>Q05.4</i></div></div>
+</div>
+</div>
+<div class="trow">
+<div class="n">2</div>
+<div class="mid">
+<div class="top"><span class="panel">TWO DAYS OF STOCK</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>Do I have 2 days of stock if someone doesn't show up tomorrow? Change a pan twice a day and want 2 days? That's 4 pans, the line plus the backup. Tell the manager when we're low. Set the next shift up for success.</div>
+
+<div class="pair"><div class="cslot" data-i18n-skip title="Why two days and not one, or three? What happened that made two the number you teach?"><b>ERNEST →</b>why it's done this way <i>Q05.5</i></div><div class="cslot" data-i18n-skip title="Walk me through checking the station for two days of cover with a trainee beside you: what you pick up, what you count, what you write down."><b>ERNEST →</b>how you show it the first time <i>Q05.6</i></div></div>
+</div>
+</div>
+<div class="trow">
+<div class="n">3</div>
+<div class="mid">
+<div class="top"><span class="panel">FRIDAY BUSY, TUESDAY SLOW</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>Going into the weekend you can hardly make too many backups: what isn't used Friday gets used Saturday or Sunday. From Sunday you're heading toward Tuesday. Monday and Tuesday are slow, so stop stocking up. Run down what's there, first in first out.</div>
+
+<div class="pair"><div class="cslot" data-i18n-skip title="Somebody new can't feel the week yet. What tells them which way the week is pointing, besides the calendar?"><b>ERNEST →</b>why it's done this way <i>Q05.7</i></div><div class="cslot" data-i18n-skip title="It's Sunday and the walk-in is full. Show me how you'd teach somebody to decide what not to prep."><b>ERNEST →</b>how you show it the first time <i>Q05.8</i></div></div>
+</div>
+</div>
+<div class="trow">
+<div class="n">4</div>
+<div class="mid">
+<div class="top"><span class="panel">BREAKS &amp; MAINTENANCE</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say"><span class="tag">Point &amp; say</span>Breaks are easiest when your position is covered and the line is deepest. The station should be stocked for the next hour before you go. Clear anything urgent first. <span data-edit="03:sanitation-water-change-every-2-hours-dry-towels">Sanitation water: change every 2 hours. Dry towels are not sanitary.</span></div>
+<div class="why day-extra" data-src="ernest">Offer to cover so they can do station maintenance ahead of peak. Ask what they need before you tell them what to do.</div>
+<div class="pair"><div class="cslot" data-i18n-skip title="Nobody writes the break rules down and every manager runs them differently. What do you want a new person to understand about picking their moment?"><b>ERNEST →</b>why it's done this way <i>Q05.9</i></div><div class="cslot" data-i18n-skip title="Walk me through the ten minutes before a trainee takes their first break on their own. What do you watch them do?"><b>ERNEST →</b>how you show it the first time <i>Q05.10</i></div></div>
+</div>
+</div>
+<div class="trow also">
+<div class="n">+</div>
+<div class="mid">
+<div class="top"><span class="panel">ALSO TODAY · NOT ON THE CARD</span><span class="ticks"><span class="tick"><i></i>I do</span><span class="tick"><i></i>We do</span><span class="tick"><i></i>You do</span></span></div>
+<div class="say" data-src="ernest"><span class="tag">Point &amp; say</span>Check what they think needs stocking, and when the sanitation water was last changed. Offer to cover so they can do station maintenance ahead of peak. Ask what they need before you tell them what to do. Breaks: if somebody leaves at 7 and it's 6, and it's been an hour and a half since your last break, stock your line and ask now, so 10 to 30 minutes can be found. Nobody writes this down and every manager runs it differently, so say it out loud.</div>
+
+
+</div>
+</div></div>
+</section>
+
+<!-- 6 · WHEN NOT MAKING FOOD -->
+<section class="zone">
+<div class="zone-h"><b>When you're not making food: ask, don't tell</b><span>Every answer is on the card</span></div>
+
+<div class="ask"><div class="qa"><span class="q">Someone calls in sick tomorrow. Are we still stocked up?</span> <span class="a">2 DAYS OF STOCK. A pan changed twice a day means 4 pans, line plus backup.</span></div><div class="qa"><span class="q">Are we closer to Tuesday or Friday, and what changes?</span> <span class="a">FRIDAY BUSY, TUESDAY SLOW. Build backups into the weekend; run them down toward Tuesday, first in first out.</span></div><div class="qa"><span class="q">What has to be true before you take a break?</span> <span class="a">Position covered, line stocked for the next hour, urgent things cleared.</span></div><div class="qa"><span class="q">How often does the sanitation water change?</span> <span class="a"><span data-edit="03:sanitation-water-change-every-2-hours-dry-towels">Every 2 hours. Dry towels are not sanitary.</span></span></div></div>
+<div class="strip"><span class="strip-h">In the gaps</span><div class="cslot" data-i18n-skip title="It's the unsupervised day and the tickets stop. What should the trainee do with that time, and how do you check they did it without hovering?"><b>ERNEST →</b>gap work <i>Q05.11</i></div><span class="strip-h">Watch for</span><div class="cslot" data-i18n-skip title="On an unsupervised day, what's the first sign a trainee is falling behind on stock rather than on cooking?"><b>ERNEST →</b>the usual mistake <i>Q05.12</i></div><div class="cslot" data-i18n-skip title="Tell me about a time somebody set the next shift up badly. What did the next person walk into?"><b>ERNEST →</b>the usual mistake <i>Q05.13</i></div></div>
+</section>
+
+<!-- 7 · SIGN + HAND-OFF -->
+<section class="zone">
+<div class="signline num">
+<span class="lens-key"><i class="lens">Safe</i> sanitation &amp; safety <i class="lens">Comms</i> communication <i class="lens">Stock</i> inventory</span>
+<span>Teacher init: [ _____ ]</span><span>Date: [ _____ ]</span>
+</div>
+<div class="handoff">
+<span class="handoff-h">Hand-off to tomorrow's teacher</span>
+<div class="rule"></div><div class="rule"></div>
+</div>
+</section>
+
+<footer class="aid-foot">
+<span>Teacher's Aid 05 · Rev 2025.1-Q1</span>
+<span>The trainee may read this page too</span>
+<span>Sign-offs go on the manager's character sheet</span>
+</footer>
+</article>
+</main>
+
+<footer class="w-full bg-primary-container text-on-primary-container py-space-sm">
+<div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm uppercase tracking-wider">
+<span>Example training materials · demo</span>
+<span>Every fact on this sheet is on its card, or is Ernest's own words</span>
+</div>
+</footer>
+<script src="es.js"></script>
+<script src="edit.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

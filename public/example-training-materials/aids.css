@@ -117,7 +117,7 @@ html, body { margin: 0; padding: 0; }
 
 /* the training week (screen chrome on the aids, a section on the home page) */
 .week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) auto; gap: 4px; }
-.week a, .week div.slot { display: grid; gap: 1px; align-content: start; padding: 5px 7px; border: 2px solid #141b2b; background: #fff; color: #141b2b; text-decoration: none; min-height: 58px; }
+.week a, .week div.slot, .week a.slot, .week a.slot { display: grid; gap: 1px; align-content: start; padding: 5px 7px; border: 2px solid #141b2b; background: #fff; color: #141b2b; text-decoration: none; min-height: 58px; }
 .week .d { font: 700 9.5px/12px "JetBrains Mono", monospace; letter-spacing: 0.05em; text-transform: uppercase; color: #45464c; }
 .week .t { font: 700 15px/16px "Barlow Condensed", sans-serif; letter-spacing: 0.02em; text-transform: uppercase; }
 .week .m { font: 700 8.5px/11px "JetBrains Mono", monospace; letter-spacing: 0.05em; text-transform: uppercase; color: #904d00; }

@@ -23,6 +23,11 @@
     // Card 03's body is built by hand (CARD3_BODY in build-site.mjs) and every editable line
     // already carries its data-edit id, so there is nothing to discover by selector here.
     "03": [],
+    "05": [
+      "#card .space-y-space-xs > div > span:last-child",   // the four panels items
+      "#card .mt-space-sm > div.mt-0\\.5",               // the question under each panel
+      "#card tbody td"                                      // the stock table, blank on purpose
+    ],
     "04": [
       "#card li > span:last-child",                         // stage observations
       "#card .mt-space-sm.pt-space-xs > span:last-child",   // action / remediation lines

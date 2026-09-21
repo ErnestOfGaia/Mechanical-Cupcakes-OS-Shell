@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="en" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Card 05 · Food Levels &amp; Self-Management</title><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;family=JetBrains+Mono:wght@600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script src="tw-config.js"></script><style>
+[hidden] { display: none !important; } /* Tailwind's .flex would otherwise beat the hidden attribute */
+label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
+.is-editing [data-edit] { outline: 2px dashed #fe932c; outline-offset: 1px; cursor: text; background: #fff7ed; }
+.is-editing [data-edit]:focus { outline: 2px solid #141b2b; background: #fff; }
+[data-edited]::after { content: ""; display: inline-block; width: 6px; height: 6px; background: #fe932c; margin-left: 4px; vertical-align: middle; }
+@media print {
+  [data-edit] { outline: none !important; background: transparent !important; }
+  [data-edited]::after { display: none !important; }
+  @page { size: letter landscape; margin: 0.3in; }
+  html, body { background: #fff !important; }
+  body { min-height: 0 !important; display: block !important; }
+  body > header, body > footer, .no-print { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
+  main > div { width: 100% !important; max-width: none !important; }
+  #card { max-width: none !important; width: 100.00% !important; zoom: 1; margin: 0 !important; box-shadow: none !important; break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  .animate-ping, .animate-pulse { animation: none !important; }
+  
+  .sm\:inline-block{display:inline-block!important}.sm\:inline{display:inline!important}.sm\:block{display:block!important}.sm\:flex{display:flex!important}
+  .sm\:flex-row{flex-direction:row!important}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}.sm\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  .md\:flex{display:flex!important}.md\:flex-row{flex-direction:row!important}.md\:flex-col{flex-direction:column!important}.md\:items-center{align-items:center!important}.md\:w-auto{width:auto!important}.md\:flex-initial{flex:0 1 auto!important}
+  .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}.lg\:grid-cols-12{grid-template-columns:repeat(12,minmax(0,1fr))!important}
+  .lg\:col-span-2{grid-column:span 2/span 2!important}.lg\:col-span-4{grid-column:span 4/span 4!important}.lg\:col-span-8{grid-column:span 8/span 8!important}
+  .xl\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+</style>
+</head><body data-card="05" class="bg-background font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="sticky top-0 left-0 w-full z-50 bg-primary-container text-on-primary shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="min-h-16 w-full px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm bg-primary px-space-md py-space-xs"><span class="w-2 h-2 bg-secondary-container"></span><span class="font-headline-md text-headline-md uppercase tracking-wide text-on-primary">Fryer Station</span></div></div><nav class="flex flex-wrap items-center gap-space-xs" aria-label="Binder"><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="index.html">Home</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-03-line-callouts.html">Day 1 · Callouts</a><a aria-current="page" class="font-label-md text-label-md uppercase px-space-sm py-space-xs transition-colors bg-primary text-on-primary font-bold shadow-[2px_2px_0px_#fe932c]" href="card-01-storage-temps.html">Day 2 · Storage</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-02-shift-checklists.html">Day 3 · Checklists</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-05-food-levels.html">Day 4 · Stock</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="card-04-oil-quality.html">Day 5 · Oil</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="quick-guide.html">Quick Guide</a><a class="font-label-md text-label-md uppercase px-space-sm py-space-xs text-on-primary-container hover:text-on-primary transition-colors" href="aid-03-line-callouts.html">Teacher's Aids</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-sm">
+<button type="button" data-lang-toggle data-i18n-skip class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline" aria-label="Cambiar a español"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">translate</span><span data-lang-label>Español</span></button>
+<button type="button" data-edit-toggle aria-pressed="false" class="flex items-center gap-1 bg-primary text-on-primary px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider border border-outline"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">edit</span><span data-edit-label data-i18n-skip>Edit</span></button>
+<button type="button" data-edit-reset hidden class="flex items-center gap-1 bg-error-container text-on-error-container px-space-sm py-space-xs font-label-md text-label-md uppercase tracking-wider"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">undo</span><span>Reset edits</span></button>
+<button type="button" onclick="window.print()" class="flex items-center gap-1 bg-secondary-container text-on-secondary-container px-space-md py-space-xs font-label-md text-label-md uppercase tracking-wider font-bold shadow-[2px_2px_0px_#000000]"><span class="material-symbols-outlined text-[16px]" aria-hidden="true">print</span><span>Print card</span></button>
+</div></div></div></header><div data-edit-banner hidden class="no-print w-full bg-secondary-fixed text-on-secondary-fixed px-margin py-space-xs flex flex-wrap items-center justify-between gap-space-sm font-body-sm text-body-sm">
+<span><b>Demo edit mode.</b> Click any step, list item or table cell to change it. Headings and banners stay locked.</span>
+<span class="font-label-sm text-label-sm uppercase"><span data-edit-count>0</span> edits saved in this browser only · the quick guide shows them too</span>
+</div>
+<main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter"><div class="no-print w-full max-w-4xl mb-space-sm flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm"><div class="flex items-center gap-space-md"><span class="hidden sm:inline-block text-outline">|</span></div><div class="flex items-center gap-space-xs"></div></div><div class="flex flex-col w-full">
+<!-- PRINT / DISPLAY HALF-SHEET CONTAINER (Landscape 8.5" x 5.5" Proportions) -->
+<div class="no-print w-full max-w-5xl mx-auto mb-space-xs flex justify-end"><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant underline" href="aid-05-food-levels.html">Teacher's Aid for this card →</a></div>
+<div id="card" class="w-full max-w-5xl mx-auto bg-surface-container-lowest shadow-xl text-on-surface overflow-hidden">
+<!-- TOP HAZARD STRIPE ACCENT BAR -->
+<div class="w-full h-3 bg-secondary-container" style="background: repeating-linear-gradient(-45deg, #141b2b, #141b2b 12px, #fe932c 12px, #fe932c 24px);"></div>
+<!-- MAIN METADATA SUB-HEADER -->
+<div class="bg-primary-container px-space-lg py-space-xs flex flex-wrap items-center justify-between text-on-primary gap-space-sm">
+<div class="flex items-center gap-space-md">
+<span class="font-label-lg text-label-lg tracking-wider text-secondary-fixed">FS-CARD-05 OF 05</span>
+<span class="text-outline-variant">|</span>
+
+<span class="text-outline-variant hidden sm:inline">|</span>
+<span class="font-label-md text-label-md text-primary-fixed uppercase hidden sm:inline">FORMAT: HALF-LETTER LANDSCAPE (8.5" × 5.5")</span>
+</div>
+
+</div>
+<!-- SECTION TITLE & MASTER CCP CALLOUT BANNER -->
+<div class="bg-surface-container-low p-space-md flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex-1">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="bg-primary text-on-primary font-label-sm text-label-sm px-1.5 py-0.5 uppercase tracking-wider">DAY 04</span>
+
+</div>
+<h1 class="font-headline-lg text-headline-lg uppercase text-on-background tracking-tight leading-none">
+          FRYER STATION OPERATIONS: FOOD LEVELS &amp; SELF-MANAGEMENT</h1>
+</div>
+<!-- PRIMARY CCP ALERT BADGE -->
+<div class="bg-tertiary-container text-on-tertiary-fixed p-space-sm max-w-md shadow-md flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-on-tertiary-container text-[22px] shrink-0 mt-0.5">warning</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-tertiary-container tracking-wider">THE DAY'S RULE</span>
+<span class="w-1.5 h-1.5 bg-on-tertiary-container rounded-full animate-ping"></span>
+</div>
+<p class="font-body-sm text-body-sm text-tertiary-fixed leading-tight mt-0.5">Unsupervised but guided. <span class="font-bold text-on-tertiary-container">Ask what they need before telling them what to do.</span> The numbers on this card are filled in at the station, not printed at a desk.</p>
+</div>
+</div>
+</div>
+<!-- VECTOR FLOW VECTOR INDICATOR -->
+<div class="bg-primary text-on-primary px-space-md py-1 flex items-center justify-between font-label-sm text-label-sm uppercase tracking-widest">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">process_chart</span>
+
+</div>
+<div class="flex items-center gap-space-md text-primary-fixed-dim hidden sm:flex">
+
+
+
+
+
+
+
+</div>
+</div>
+<!-- 4-STEP BENTO PROCESS GRID -->
+<div class="px-space-md pt-space-md pb-space-sm grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-sm">
+<div class="bg-surface-container-lowest px-space-md py-space-sm flex flex-col justify-between shadow-sm relative">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="bg-primary text-on-primary font-label-lg text-label-lg px-2 py-0.5 font-bold">01</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">STOCK // WHAT FULL LOOKS LIKE</span>
+</div>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface leading-tight mb-space-xs">Full Is A Number</h2>
+<div class="bg-surface-container-high p-space-xs mb-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">SEASON</span>
+<span class="font-label-md text-label-md text-error font-bold">SUMMER / WINTER</span>
+</div>
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-[11px] leading-tight"><div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Every item has a full level, and it is not the same in summer as in winter.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Simple mnemonics, so nobody has to memorise a number.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">The table below is filled in at the station.</span>
+</div></div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-highest text-on-surface p-space-xs">
+<div class="flex items-center gap-1 font-label-sm text-label-sm font-bold uppercase">
+<span class="material-symbols-outlined text-[14px]">help</span>
+<span class="">Ask, don't memorise</span>
+</div>
+<div class="font-label-sm text-label-sm mt-0.5">How long does a pan of this last, and how long does the ingredient itself last?</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest px-space-md py-space-sm flex flex-col justify-between shadow-sm relative">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="bg-primary text-on-primary font-label-lg text-label-lg px-2 py-0.5 font-bold">02</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">COVER // TWO DAYS</span>
+</div>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface leading-tight mb-space-xs">Two Days Of Stock</h2>
+<div class="bg-surface-container-high p-space-xs mb-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">IF SOMEBODY CALLS IN</span>
+<span class="font-label-md text-label-md text-error font-bold">2 DAYS</span>
+</div>
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-[11px] leading-tight"><div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Do I have 2 days of stock if someone doesn't show up tomorrow?</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Tell the manager when we're low on an item.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Set the next shift up for success.</span>
+</div></div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-tertiary-container/10 text-on-tertiary-container p-space-xs">
+<div class="flex items-center gap-1 font-label-sm text-label-sm font-bold uppercase">
+<span class="material-symbols-outlined text-[14px]">help</span>
+<span class="">The arithmetic</span>
+</div>
+<div class="font-label-sm text-label-sm mt-0.5">Change a pan twice a day and want 2 days of stock? That's 4 pans, the line plus the backup.</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest px-space-md py-space-sm flex flex-col justify-between shadow-sm relative">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="bg-primary text-on-primary font-label-lg text-label-lg px-2 py-0.5 font-bold">03</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">THE WEEK // BUSY OR SLOW</span>
+</div>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface leading-tight mb-space-xs">Friday Busy, Tuesday Slow</h2>
+<div class="bg-surface-container-high p-space-xs mb-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">WHICH WAY</span>
+<span class="font-label-md text-label-md text-error font-bold">FRI / TUE</span>
+</div>
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-[11px] leading-tight"><div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Going into the weekend you can hardly make too many backups: what isn't used Friday gets used Saturday or Sunday.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">From Sunday you're heading toward Tuesday. Monday and Tuesday are slow, so stop stocking up.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Run down what's there. First in, first out.</span>
+</div></div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-highest text-on-surface p-space-xs">
+<div class="flex items-center gap-1 font-label-sm text-label-sm font-bold uppercase">
+<span class="material-symbols-outlined text-[14px]">help</span>
+<span class="">Ask yourself</span>
+</div>
+<div class="font-label-sm text-label-sm mt-0.5">Are we closer to Tuesday or Friday? Delivery days to be confirmed at the station.</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest px-space-md py-space-sm flex flex-col justify-between shadow-sm relative">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<span class="bg-primary text-on-primary font-label-lg text-label-lg px-2 py-0.5 font-bold">04</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold uppercase tracking-wider">YOURSELF // SET UP FOR SUCCESS</span>
+</div>
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface leading-tight mb-space-xs">Breaks And Maintenance</h2>
+<div class="bg-surface-container-high p-space-xs mb-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">BEFORE YOU STEP AWAY</span>
+<span class="font-label-md text-label-md text-error font-bold">1 HOUR STOCKED</span>
+</div>
+<div class="space-y-space-xs text-on-surface-variant font-body-sm text-[11px] leading-tight"><div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Breaks are easiest when your position is covered and the line is deepest.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">The station should be stocked for the next hour before you go.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] shrink-0 mt-0.5">check_box</span>
+<span class="">Clear anything urgent first, then take the break.</span>
+</div></div>
+</div>
+<div class="mt-space-sm pt-space-xs bg-surface-container-highest text-on-surface p-space-xs">
+<div class="flex items-center gap-1 font-label-sm text-label-sm font-bold uppercase">
+<span class="material-symbols-outlined text-[14px]">help</span>
+<span class="">Before peak</span>
+</div>
+<div class="font-label-sm text-label-sm mt-0.5"><span data-edit="03:sanitation-water-change-every-2-hours-dry-towels">Sanitation water: change every 2 hours. Dry towels are not sanitary.</span></div>
+</div>
+</div>
+</div>
+<!-- THE STOCK TABLE: blank on purpose. The numbers are Ernest's and are not invented here. -->
+<div class="mx-space-md mb-space-sm grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<div class="lg:col-span-2 bg-surface-container-low px-space-sm py-space-xs overflow-x-auto">
+<div class="flex items-center justify-between mb-space-xs px-space-xs">
+<span class="font-label-sm text-label-sm uppercase font-bold text-on-surface tracking-wider">STOCK LEVELS — FILL THIS IN AT THE STATION</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Grease pencil</span>
+</div>
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-primary-container text-on-primary font-label-sm text-label-sm uppercase">
+<tr>
+<th class="px-2 py-1">Item</th>
+<th class="px-2 py-1 text-right">Full — summer</th>
+<th class="px-2 py-1 text-right">Full — winter</th>
+<th class="px-2 py-1 text-right">A pan lasts</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest bg-surface-container-lowest font-label-md text-label-md">
+<tr>
+<td class="px-2 py-1">__________________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="px-2 py-1">__________________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+</tr>
+<tr>
+<td class="px-2 py-1">__________________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+</tr>
+<tr class="bg-surface-container-low">
+<td class="px-2 py-1">__________________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+</tr>
+<tr>
+<td class="px-2 py-1">__________________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+<td class="px-2 py-1 text-right">________</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="bg-surface-container px-space-sm py-space-xs flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-space-xs text-on-surface mb-space-xs">
+<span class="material-symbols-outlined text-[18px]">assignment_turned_in</span>
+<span class="font-headline-sm text-headline-sm uppercase">Unsupervised, verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-tight">Day 4 is worked without a shadow. The chefs or the shift lead check the skills, and ask what you need before telling you what to do.</p>
+</div>
+<div class="font-label-sm text-label-sm">
+<div class="flex justify-between items-center bg-surface-container-lowest px-space-sm py-0.5 mt-space-xs"><span class="text-on-surface-variant uppercase">Trainee init:</span><span class="text-on-surface">[ ______ ]</span></div>
+<div class="flex justify-between items-center bg-surface-container-lowest px-space-sm py-0.5 mt-0.5"><span class="text-on-surface-variant uppercase">Verifier init / date:</span><span class="text-on-surface">[ ______ ]</span></div>
+</div>
+</div>
+</div>
+<!-- PHYSICAL CARD BINDER DRILL MARGIN GUIDE & CAUTION FOOTER -->
+<div class="bg-primary-container px-space-md py-space-sm text-on-primary-container flex flex-col sm:flex-row items-center justify-between gap-space-xs font-label-sm text-label-sm border-t-2 border-secondary-container">
+<div class="flex items-center gap-space-sm uppercase">
+<span class="flex items-center gap-1 text-secondary-container font-bold">
+<span class="inline-block w-2.5 h-2.5 rounded-full bg-secondary-container"></span>
+          STANDARD 3-RING HALF-BINDER
+        </span>
+<span class="text-outline">|</span>
+
+</div>
+<div class="flex items-center gap-space-md text-on-primary font-bold">
+
+<span class="bg-secondary text-on-secondary px-1.5 py-0.5 text-[9px] uppercase">CARD 05 // FRONT</span>
+</div>
+</div>
+</div>
+</div></main><footer class="w-full bg-primary-container text-on-primary-container py-space-sm"><div class="w-full px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm uppercase tracking-wider"><div class="flex items-center gap-space-md"></div></div></footer>
+
+<script src="es.js"></script>
+<script src="edit.js"></script>
+<script src="i18n.js"></script>
+</body></html>
