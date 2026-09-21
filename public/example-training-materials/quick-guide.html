@@ -30,6 +30,7 @@ html, body { margin: 0; padding: 0; }
   #sheet { max-width: none !important; width: 1080px !important; zoom: 0.75; margin: 0 !important; box-shadow: none !important; }
   .callouts { grid-template-columns: 1fr 0.7fr 0.85fr 1.45fr !important; }
   [data-edited]::after { display: none !important; }
+  .sheet-break { break-before: page; page-break-before: always; height: 0; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }
 </style>
@@ -57,13 +58,10 @@ html, body { margin: 0; padding: 0; }
 <main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter">
 <div class="no-print w-full max-w-[850px] mb-space-sm flex flex-wrap items-center justify-between gap-space-xs text-on-surface-variant font-label-sm text-label-sm uppercase">
 <span>Synthesis of cards 01–04 · Card facts only, plus the station mantra</span>
-<span>Binder front pocket · Letter portrait · Laminate</span>
+<span>Binder front pocket · Letter portrait · two sheets · laminate</span>
 </div>
 
 <article id="sheet" class="w-full max-w-[850px] bg-surface-container-lowest text-on-surface shadow-xl relative">
-<div class="hidden sm:block absolute left-0 top-0 bottom-0 w-6 pointer-events-none">
-<div class="punch" style="top:14%"></div><div class="punch" style="top:50%"></div><div class="punch" style="top:86%"></div>
-</div>
 <div class="hazard h-2.5 w-full"></div>
 
 <!-- MASTER HEADER — the same ink band the cards open with -->
@@ -73,10 +71,10 @@ html, body { margin: 0; padding: 0; }
 <div class="flex flex-wrap items-center gap-1.5">
 <span class="bg-primary text-on-primary px-2 py-0.5 font-label-sm text-label-sm uppercase">Station 04 // Fryer</span>
 <span class="bg-secondary-container text-on-secondary-container px-1.5 py-0.5 font-label-sm text-label-sm uppercase font-bold">Rev: 2025.1-Q1</span>
-<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Synthesis: FS-Card-01 to FS-Card-04</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Days 1–5 · every fact is on a card</span>
 </div>
 <h1 class="font-display text-display uppercase text-on-primary leading-none mt-1">Fryer Station Quick Guide</h1>
-<p class="font-body-sm text-body-sm text-primary-fixed-dim uppercase tracking-wide mt-0.5">One sheet: storage &amp; temps · shift checklists · line callouts · oil quality</p>
+<p class="font-body-sm text-body-sm text-primary-fixed-dim uppercase tracking-wide mt-0.5">Day 1 line callouts · Day 2 storage &amp; temps · Day 3 shift checklists · Day 4 food levels · Day 5 oil quality</p>
 </div>
 <div class="bg-tertiary-container text-tertiary-fixed p-2 max-w-[300px] flex items-start gap-2 border-2 border-secondary-container">
 <span class="bg-secondary-container text-on-secondary-container font-label-lg text-label-lg px-1.5 leading-none py-0.5">!</span>
@@ -96,104 +94,11 @@ html, body { margin: 0; padding: 0; }
 <div class="bg-surface-container-low p-1.5"><div class="font-label-sm text-label-sm text-on-surface-variant uppercase">Calamari fridge hold</div><div class="font-headline-md text-headline-md num">7 MIN MAX <span class="font-label-sm text-label-sm text-on-surface-variant">heat lamp ≥165°F</span></div></div>
 </div>
 
-<!-- 01 STORAGE & TEMPS -->
-<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
-<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm uppercase">01. Storage zones &amp; critical temps</span>
-<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Card 01 · Section 01</span>
-</div>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5">
-<div class="border-2 border-primary-container p-1.5">
-<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">01</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone A // Freezer</span></div>
-<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Frozen food storage</div>
-<div class="font-label-sm text-label-sm text-error font-bold num">Target &lt; 31°F (&lt;1°C)</div>
-<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fries-ice-cream-onion-rings">Fries · Ice cream · Onion rings</span> · <span data-edit="01:bean-patties-shrimp-cheese-curds">Bean patties · Shrimp · Cheese curds</span> · <span data-edit="01:gf-pizza-crust-gf-buns-chicken-strips">GF pizza crust · GF buns · Chicken strips</span></div>
-<div class="bg-tertiary-container/10 text-on-tertiary-container font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>If freezer is beeping:</b> <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></div>
-</div>
-<div class="border-2 border-secondary-container p-1.5">
-<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">02</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone B // Line fridge</span></div>
-<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Cold food storage</div>
-<div class="font-label-sm text-label-sm font-bold num">Target &lt; 41°F (&lt;5°C)</div>
-<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fish-cocktail-sauce-tartar-sauce">Fish · Cocktail sauce · Tartar sauce</span> · <span data-edit="01:coleslaw-coleslaw-dressing">Coleslaw · Coleslaw dressing</span> · <span data-edit="01:backup-milk-seasonal-items">Backup milk · Seasonal items</span></div>
-<div class="bg-secondary-fixed text-on-secondary-fixed font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Allergen:</b> <span data-edit="01:use-gloves-and-appropriate-containers-to-stay-sa">Use gloves and appropriate containers to stay safe.</span></div>
-</div>
-<div class="border-2 border-error p-1.5">
-<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">03</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone C // Fryer</span></div>
-<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Well submersion &amp; timing</div>
-<div class="font-label-sm text-label-sm font-bold num">Wells 1–3: 350°F (177°C)</div>
-<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:agitate-basket-at-30s-elapsed-to-avoid-clumping">Agitate basket at 30s elapsed.</span> <b data-edit="01:max-50-basket-load-prevent-oil-thermal-shock-sog">Max 50% basket load.</b></div>
-<div class="bg-error-container text-on-error-container font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Ready or not:</b> <span data-edit="01:if-fryer-is-not-ready-do-not-drop-batch">If Fryer is Not Ready do not drop batch.</span> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">Temp drop &gt;25°F = basket overload. Refire batch.</span></div>
-</div>
-<div class="border-2 border-primary-container p-1.5">
-<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">04</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone D // Calamari fridge</span></div>
-<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Calamari fridge storage</div>
-<div class="font-label-sm text-label-sm text-error font-bold num">Discard timer: 7 min max hold</div>
-<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:calamari-shrimp-peppers-milk">Calamari · Shrimp · Peppers · Milk</span> · <span data-edit="01:seafood-for-another-station">Seafood for another station</span> · <span data-edit="01:seasonal-tomato-lettuce">Seasonal: tomato, lettuce</span></div>
-<div class="bg-surface-container-highest font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Heat lamp min 165°F (74°C).</b> <span data-edit="01:reset-kds-station-timer-on-dump-pitch-batch-stri">Reset KDS timer on dump. Pitch batch at the 7:00 mark.</span></div>
-
-</div>
-<div class="border-2 border-primary-container p-1.5 col-span-2 sm:col-span-4">
-<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">05</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Zone E // Warmer cabinet &amp; fry holder</span></div>
-<div class="font-label-sm text-label-sm text-error font-bold num">Min hold temp 145°F (63°C)</div>
-<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fry-holder-do-not-hold-fries-longer-than-20-min">Fry holder: do not hold fries longer than 20 min.</span> · <span data-edit="01:warmer-cabinet-chicken-and-tortillas-hold-no-lon">Warmer cabinet: chicken and tortillas hold no longer than 4 hours.</span></div>
-</div>
-</div>
-<table class="w-full mt-1.5 text-left font-body-sm text-[10px] border-collapse">
-<thead class="bg-primary-container text-on-primary font-label-sm text-label-sm uppercase"><tr><th class="px-1.5 py-0.5">Drop times — everything else is 2:30</th><th class="px-1.5 py-0.5 text-right">Drop time</th><th class="px-1.5 py-0.5 text-right">Basket button</th></tr></thead>
-<tbody class="num">
-<tr class="border-b border-outline-variant"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:calamari">Calamari</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:1-00">1:00</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:1-or-6">1 or 6</td></tr>
-<tr class="border-b border-outline-variant bg-surface-container-low"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:cheese-curds">Cheese curds</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:1-30">1:30</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:4-or-9">4 or 9</td></tr>
-<tr class="border-b border-outline-variant"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:extra-crispy-fries">Extra crispy fries</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:4-00">4:00</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:3-or-8">3 or 8</td></tr>
-<tr class="bg-surface-container-low"><td class="px-1.5 py-0.5 font-label-sm leading-tight" colspan="3" data-edit="01:everything-else-2-30-button-2-or-7-2-baskets-and">French fries and everything else: 2:30, button 2 or 7. Each well holds 2 baskets and 2 identical sets of buttons; button 5 is unused, button 10 has no time.</td></tr>
-</tbody>
-</table>
-</section>
-
-<!-- 02 SHIFT CHECKLISTS -->
-<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
-<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm uppercase">02. Shift checklists &amp; routines</span>
-<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Card 02 · Lead verifies at changeover · HACCP Sec 4.12</span>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
-<div class="bg-surface-container-low p-1.5">
-<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">01. Open routine <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— set-up &amp; calibrate</span></div>
-<div><span class="box"></span><span data-edit="02:inspect-well-oil-levels-to-upper-cold-scribe-mar">Inspect well oil levels to upper cold scribe mark.</span></div>
-<div><span class="box"></span><span data-edit="02:verify-exhaust-hoods-makeup-air-cfm-draw-active">Verify exhaust hoods &amp; makeup-air CFM draw active.</span></div>
-<div><span class="box"></span><span data-edit="02:preheat-wells-1-3-to-350f-calibrate-probe-in-ice">Preheat Wells 1–3 to 350°F; calibrate probe in ice-water (32°F ±1°F).</span></div>
-<div><span class="box"></span><span data-edit="02:set-up-dredge-tubs-ice-bath-under-egg-wash-sanit">Set up dredge tubs, ice bath under egg wash (≤ 40°F), sanitized tongs.</span></div>
-<div><span class="box"></span><span data-edit="02:test-heat-lamp-bulbs-over-fry-dump-station">Test heat lamp bulbs over fry dump station (≥ 165°F / 74°C).</span></div>
-<div><span class="box"></span><span data-edit="02:stock-portion-pans-clean-landing-trays-timer-bat">Stock portion pans, clean landing trays, timer batteries.</span></div>
-<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">OPEN VERIFY · INIT: [ _____ ] · TIME: [ _____ ]</div>
-</div>
-<div class="bg-surface-container-low p-1.5">
-<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">02. Mid-shift reset <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— check, sanitize, stock</span></div>
-<div><span class="box"></span><span data-edit="02:skim-crumb-surface-floaters-with-fine-mesh-skimm">Skim crumb surface &amp; floaters with fine mesh skimmer (every 30m in the rush).</span></div>
-<div><span class="box"></span><span data-edit="02:perform-mid-day-hot-oil-filtration-on-heavy-well">Mid-day hot oil filtration on heavy wells (Wells 1 &amp; 2 via pump recirculator).</span></div>
-<div><span class="box"></span><span data-edit="02:top-off-oil-levels-using-fresh-reserve-jug">Top off oil with fresh reserve jug (max 1 qt per well during service).</span></div>
-<div><span class="box"></span><span data-edit="02:wipe-crumb-trays-stainless-splash-guards-heat-sh">Wipe crumb trays, splash guards &amp; heat shields (no aerosol sprays near vats).</span></div>
-<div><span class="box"></span><span data-edit="02:restock-raw-freezer-lowboy-batch-chicken-fries-s">Restock raw freezer lowboy: chicken, fries, seafood (readout &lt; 0°F; FIFO).</span></div>
-<div><span class="box"></span><span data-edit="02:sanitize-seasoning-shakers-discard-clumped-dredg">Sanitize seasoning shakers &amp; discard clumped dredge flour (#10 mesh sieve).</span></div>
-<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">RUSH RESET · INIT: [ _____ ] · OIL CHECKED BY EYE [ ]</div>
-</div>
-<div class="bg-surface-container-low p-1.5">
-<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">03. Close breakdown <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— shutdown &amp; sanitation</span></div>
-<div><span class="box"></span><span data-edit="02:power-down-burners-pilot-valves-cool-below-150f">Power down burners &amp; pilot valves; cool below 150°F. Do not drain boiling oil.</span></div>
-<div><span class="box"></span><span data-edit="02:run-complete-filtration-through-paper-discard-co">Run complete filtration through paper &amp; discard cone; replace filter pad envelope.</span></div>
-<div><span class="box"></span><span data-edit="02:scrub-vat-walls-heating-elements-tank-sides">Scrub vat walls, heating elements &amp; tank sides (high-temp long brass brush).</span></div>
-<div><span class="box"></span><span data-edit="02:empty-sediment-crumb-pans-degrease-splash-surfac">Empty sediment crumb pans; degrease splash surfaces; air-dry upside down.</span></div>
-<div><span class="box"></span><span data-edit="02:install-clean-stainless-night-covers-over-all-4">Install clean stainless night covers over all 4 wells.</span></div>
-<div><span class="box"></span><span data-edit="02:wipe-fry-dump-station-and-hang-sanitized-baskets">Wipe fry dump station and hang sanitized baskets inverted on wall bracket.</span></div>
-<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">CLOSE VERIFY · INIT: [ _____ ] · PILOT OFF [ X ]</div>
-</div>
-</div>
-</section>
-
 <!-- 03 LINE CALLOUTS — regrouped to match card 03 (Ernest, 2026-09-20): TALK / ROLES / KEEP IT CLEAN / STOP THE LINE.
      Same facts and the same data-edit ids as before; only the grouping changed. -->
 <section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
 <div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm uppercase">03. Line callouts &amp; echo</span>
+<span class="font-headline-sm text-headline-sm uppercase">Day 1 · Line callouts &amp; echo</span>
 <span class="font-label-sm text-label-sm text-on-tertiary-container uppercase font-bold">Rule: call out and respond — silent drops are a safety hazard</span>
 </div>
 <div class="callouts grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
@@ -230,11 +135,142 @@ html, body { margin: 0; padding: 0; }
 </div>
 </section>
 
+<!-- 01 STORAGE & TEMPS -->
+<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
+<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm uppercase">Day 2 · Storage zones &amp; critical temps</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Five areas · every temp on this row is a stop-the-line number</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5">
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">01</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Freezer</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Frozen food storage</div>
+<div class="font-label-sm text-label-sm text-error font-bold num">Target &lt; 31°F (&lt;1°C)</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fries-ice-cream-onion-rings">Fries · Ice cream · Onion rings</span> · <span data-edit="01:bean-patties-shrimp-cheese-curds">Bean patties · Shrimp · Cheese curds</span> · <span data-edit="01:gf-pizza-crust-gf-buns-chicken-strips">GF pizza crust · GF buns · Chicken strips</span></div>
+<div class="bg-tertiary-container/10 text-on-tertiary-container font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>If freezer is beeping:</b> <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></div>
+</div>
+<div class="border-2 border-secondary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">02</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Line fridge</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Cold food storage</div>
+<div class="font-label-sm text-label-sm font-bold num">Target &lt; 41°F (&lt;5°C)</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fish-cocktail-sauce-tartar-sauce">Fish · Cocktail sauce · Tartar sauce</span> · <span data-edit="01:coleslaw-coleslaw-dressing">Coleslaw · Coleslaw dressing</span> · <span data-edit="01:backup-milk-seasonal-items">Backup milk · Seasonal items</span></div>
+<div class="bg-secondary-fixed text-on-secondary-fixed font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Allergen:</b> <span data-edit="01:use-gloves-and-appropriate-containers-to-stay-sa">Use gloves and appropriate containers to stay safe.</span></div>
+</div>
+<div class="border-2 border-error p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">03</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Fryer</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Well submersion &amp; timing</div>
+<div class="font-label-sm text-label-sm font-bold num">Wells 1–3: 350°F (177°C)</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:agitate-basket-at-30s-elapsed-to-avoid-clumping">Agitate basket at 30s elapsed.</span> <b data-edit="01:max-50-basket-load-prevent-oil-thermal-shock-sog">Max 50% basket load.</b></div>
+<div class="bg-error-container text-on-error-container font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Ready or not:</b> <span data-edit="01:if-fryer-is-not-ready-do-not-drop-batch">If Fryer is Not Ready do not drop batch.</span> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">Temp drop &gt;25°F = basket overload. Refire batch.</span></div>
+</div>
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">04</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Calamari fridge</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Calamari fridge storage</div>
+<div class="font-label-sm text-label-sm text-error font-bold num">Discard timer: 7 min max hold</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:calamari-shrimp-peppers-milk">Calamari · Shrimp · Peppers · Milk</span> · <span data-edit="01:seafood-for-another-station">Seafood for another station</span> · <span data-edit="01:seasonal-tomato-lettuce">Seasonal: tomato, lettuce</span></div>
+<div class="bg-surface-container-highest font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Heat lamp min 165°F (74°C).</b> <span data-edit="01:reset-kds-station-timer-on-dump-pitch-batch-stri">Reset KDS timer on dump. Pitch batch at the 7:00 mark.</span></div>
+
+</div>
+<div class="border-2 border-primary-container p-1.5 col-span-2 sm:col-span-4">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">05</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Warmer cabinet &amp; fry holder</span></div>
+<div class="font-label-sm text-label-sm text-error font-bold num">Min hold temp 145°F (63°C)</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="01:fry-holder-do-not-hold-fries-longer-than-20-min">Fry holder: do not hold fries longer than 20 min.</span> · <span data-edit="01:warmer-cabinet-chicken-and-tortillas-hold-no-lon">Warmer cabinet: chicken and tortillas hold no longer than 4 hours.</span></div>
+</div>
+</div>
+<table class="w-full mt-1.5 text-left font-body-sm text-[10px] border-collapse">
+<thead class="bg-primary-container text-on-primary font-label-sm text-label-sm uppercase"><tr><th class="px-1.5 py-0.5">Drop times — everything else is 2:30</th><th class="px-1.5 py-0.5 text-right">Drop time</th><th class="px-1.5 py-0.5 text-right">Basket button</th></tr></thead>
+<tbody class="num">
+<tr class="border-b border-outline-variant"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:calamari">Calamari</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:1-00">1:00</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:1-or-6">1 or 6</td></tr>
+<tr class="border-b border-outline-variant bg-surface-container-low"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:cheese-curds">Cheese curds</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:1-30">1:30</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:4-or-9">4 or 9</td></tr>
+<tr class="border-b border-outline-variant"><td class="px-1.5 py-0.5 font-semibold" data-edit="01:extra-crispy-fries">Extra crispy fries</td><td class="px-1.5 py-0.5 font-label-sm text-right text-error font-bold" data-edit="01:4-00">4:00</td><td class="px-1.5 py-0.5 font-label-sm text-right" data-edit="01:3-or-8">3 or 8</td></tr>
+<tr class="bg-surface-container-low"><td class="px-1.5 py-0.5 font-label-sm leading-tight" colspan="3" data-edit="01:everything-else-2-30-button-2-or-7-2-baskets-and">French fries and everything else: 2:30, button 2 or 7. Each well holds 2 baskets and 2 identical sets of buttons; button 5 is unused, button 10 has no time.</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- 02 SHIFT CHECKLISTS -->
+<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
+<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm uppercase">Day 3 · Shift checklists &amp; routines</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Lead verifies at changeover</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
+<div class="bg-surface-container-low p-1.5">
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">01. Open routine <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— set-up &amp; calibrate</span></div>
+<div><span class="box"></span><span data-edit="02:inspect-well-oil-levels-to-upper-cold-scribe-mar">Inspect well oil levels to upper cold scribe mark.</span></div>
+<div><span class="box"></span><span data-edit="02:verify-exhaust-hoods-makeup-air-cfm-draw-active">Verify exhaust hoods &amp; makeup-air CFM draw active.</span></div>
+<div><span class="box"></span><span data-edit="02:preheat-wells-1-3-to-350f-calibrate-probe-in-ice">Preheat Wells 1–3 to 350°F; calibrate probe in ice-water (32°F ±1°F).</span></div>
+<div><span class="box"></span><span data-edit="02:set-up-dredge-tubs-ice-bath-under-egg-wash-sanit">Set up dredge tubs, ice bath under egg wash (≤ 40°F), sanitized tongs.</span></div>
+<div><span class="box"></span><span data-edit="02:test-heat-lamp-bulbs-over-fry-dump-station">Test heat lamp bulbs over fry dump station (≥ 165°F / 74°C).</span></div>
+<div><span class="box"></span><span data-edit="02:stock-portion-pans-clean-landing-trays-timer-bat">Stock portion pans, clean landing trays, timer batteries.</span></div>
+<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">OPEN VERIFY · INIT: [ _____ ] · TIME: [ _____ ]</div>
+</div>
+<div class="bg-surface-container-low p-1.5">
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">02. Mid-shift reset <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— check, sanitize, stock</span></div>
+<div><span class="box"></span><span data-edit="02:skim-crumb-surface-floaters-with-fine-mesh-skimm">Skim crumb surface &amp; floaters with fine mesh skimmer (every 30m in the rush).</span></div>
+<div><span class="box"></span><span data-edit="02:perform-mid-day-hot-oil-filtration-on-heavy-well">Mid-day hot oil filtration on heavy wells (Wells 1 &amp; 2 via pump recirculator).</span></div>
+<div><span class="box"></span><span data-edit="02:top-off-oil-levels-using-fresh-reserve-jug">Top off oil with fresh reserve jug (max 1 qt per well during service).</span></div>
+<div><span class="box"></span><span data-edit="02:wipe-crumb-trays-stainless-splash-guards-heat-sh">Wipe crumb trays, splash guards &amp; heat shields (no aerosol sprays near vats).</span></div>
+<div><span class="box"></span><span data-edit="02:restock-raw-freezer-lowboy-batch-chicken-fries-s">Restock raw freezer lowboy: chicken, fries, seafood (readout &lt; 0°F; FIFO).</span></div>
+<div><span class="box"></span><span data-edit="02:sanitize-seasoning-shakers-discard-clumped-dredg">Sanitize seasoning shakers &amp; discard clumped dredge flour (#10 mesh sieve).</span></div>
+<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">RUSH RESET · INIT: [ _____ ] · OIL CHECKED BY EYE [ ]</div>
+</div>
+<div class="bg-surface-container-low p-1.5">
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">03. Close breakdown <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— shutdown &amp; sanitation</span></div>
+<div><span class="box"></span><span data-edit="02:power-down-burners-pilot-valves-cool-below-150f">Power down burners &amp; pilot valves; cool below 150°F. Do not drain boiling oil.</span></div>
+<div><span class="box"></span><span data-edit="02:run-complete-filtration-through-paper-discard-co">Run complete filtration through paper &amp; discard cone; replace filter pad envelope.</span></div>
+<div><span class="box"></span><span data-edit="02:scrub-vat-walls-heating-elements-tank-sides">Scrub vat walls, heating elements &amp; tank sides (high-temp long brass brush).</span></div>
+<div><span class="box"></span><span data-edit="02:empty-sediment-crumb-pans-degrease-splash-surfac">Empty sediment crumb pans; degrease splash surfaces; air-dry upside down.</span></div>
+<div><span class="box"></span><span data-edit="02:install-clean-stainless-night-covers-over-all-4">Install clean stainless night covers over all 4 wells.</span></div>
+<div><span class="box"></span><span data-edit="02:wipe-fry-dump-station-and-hang-sanitized-baskets">Wipe fry dump station and hang sanitized baskets inverted on wall bracket.</span></div>
+<div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">CLOSE VERIFY · INIT: [ _____ ] · PILOT OFF [ X ]</div>
+</div>
+</div>
+</section>
+
+<!-- PAGE BREAK — days 1-3 print on sheet one, days 4-5 on sheet two (Ernest, 2026-09-21) -->
+<div class="sheet-break" aria-hidden="true"></div>
+
+<!-- DAY 4 · FOOD LEVELS & SELF-MANAGEMENT (card 05, added 2026-09-21) -->
+<section class="pl-8 pr-5 pt-2 pb-2 border-b border-outline-variant">
+<div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm uppercase">Day 4 · Food levels &amp; self-management</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Unsupervised but guided · the numbers are filled in at the station</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5">
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">01</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Stock // what full looks like</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Full is a number</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="05:every-item-has-a-full-level-and-it-is-not-the-sa">Every item has a full level, and it is not the same in summer as in winter.</span> · <span data-edit="05:simple-mnemonics-so-nobody-has-to-memorise-a-num">Simple mnemonics, so nobody has to memorise a number.</span> · <span data-edit="05:the-table-below-is-filled-in-at-the-station">The table below is filled in at the station.</span></div>
+<div class="bg-surface-container-highest font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Ask, don't memorise:</b> <span data-edit="05:how-long-does-a-pan-of-this-last-and-how-long-do">How long does a pan of this last, and how long does the ingredient itself last?</span></div>
+</div>
+<div class="border-2 border-secondary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">02</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Cover // two days</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Two days of stock</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="05:do-i-have-2-days-of-stock-if-someone-doesn-t-sho">Do I have 2 days of stock if someone doesn't show up tomorrow?</span> · <span data-edit="05:tell-the-manager-when-we-re-low-on-an-item">Tell the manager when we're low on an item.</span> · <span data-edit="05:set-the-next-shift-up-for-success">Set the next shift up for success.</span></div>
+<div class="bg-surface-container-highest font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>The arithmetic:</b> <span data-edit="05:change-a-pan-twice-a-day-and-want-2-days-of-stoc">Change a pan twice a day and want 2 days of stock? That's 4 pans, the line plus the backup.</span></div>
+</div>
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">03</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">The week // busy or slow</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Friday busy, Tuesday slow</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="05:going-into-the-weekend-you-can-hardly-make-too-m">Going into the weekend you can hardly make too many backups: what isn't used Friday gets used Saturday or Sunday.</span> · <span data-edit="05:from-sunday-you-re-heading-toward-tuesday-monday">From Sunday you're heading toward Tuesday. Monday and Tuesday are slow, so stop stocking up.</span> · <span data-edit="05:run-down-what-s-there-first-in-first-out">Run down what's there. First in, first out.</span></div>
+<div class="bg-surface-container-highest font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Ask yourself:</b> <span data-edit="05:are-we-closer-to-tuesday-or-friday-delivery-days">Are we closer to Tuesday or Friday? Delivery days to be confirmed at the station.</span></div>
+</div>
+<div class="border-2 border-primary-container p-1.5">
+<div class="flex items-center justify-between"><span class="bg-primary text-on-primary font-label-sm text-label-sm px-1">04</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Yourself // set up for success</span></div>
+<div class="font-headline-sm text-headline-sm uppercase mt-0.5">Breaks and maintenance</div>
+<div class="font-body-sm text-[10px] leading-tight mt-0.5"><span data-edit="05:breaks-are-easiest-when-your-position-is-covered">Breaks are easiest when your position is covered and the line is deepest.</span> · <span data-edit="05:the-station-should-be-stocked-for-the-next-hour">The station should be stocked for the next hour before you go.</span> · <span data-edit="05:clear-anything-urgent-first-then-take-the-break">Clear anything urgent first, then take the break.</span></div>
+<div class="bg-surface-container-highest font-label-sm text-[8.5px] leading-tight mt-1 p-1"><b>Before peak:</b> <span data-edit="05:sanitation-water-change-every-2-hours-dry-towels">Sanitation water: change every 2 hours. Dry towels are not sanitary.</span></div>
+</div>
+</div>
+<div class="bg-surface-container-low mt-1.5 p-1.5 font-label-sm text-[9px] uppercase text-on-surface-variant">Stock levels — full for summer, full for winter, and how long a pan lasts — are written on card 05 at the station, in grease pencil. They are deliberately blank here.</div>
+</section>
+
 <!-- 04 OIL QUALITY -->
 <section class="pl-8 pr-5 pt-2 pb-2">
 <div class="bg-primary-container text-on-primary px-2 py-1 flex items-center justify-between">
-<span class="font-headline-sm text-headline-sm uppercase">04. Oil quality — judge it by eye</span>
-<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">Card 04 · No meter at this station · Skim frequently</span>
+<span class="font-headline-sm text-headline-sm uppercase">Day 5 · Oil quality — judge it by eye</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase">No meter at this station · skim frequently</span>
 </div>
 <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mt-1.5 text-[9.5px] leading-tight font-body-sm">
 <div class="border-2 border-primary-container p-1.5">
@@ -304,12 +340,12 @@ html, body { margin: 0; padding: 0; }
 <div><span class="block text-on-surface-variant uppercase font-bold">Station cook</span><div class="border-b border-primary-container h-5"></div></div>
 <div><span class="block text-on-surface-variant uppercase font-bold">Trainer sign-off</span><div class="border-b border-primary-container h-5"></div></div>
 <div><span class="block text-on-surface-variant uppercase font-bold">Date / shift code</span><div class="border-b border-primary-container h-5 flex items-end num">_____ / _____ / 2025 · AM / PM</div></div>
-<div class="text-right"><span class="bg-primary text-on-primary px-2 py-0.5 font-bold uppercase">HACCP Form 104-FS</span><div class="text-on-surface-variant text-[8px] mt-0.5 uppercase">Laminate 100lb matte · 3-ring punch left</div></div>
+<div class="text-right"><span class="bg-primary text-on-primary px-2 py-0.5 font-bold uppercase">Days 1–5</span></div>
 </div>
 <div class="flex flex-wrap justify-between gap-1 text-on-surface-variant text-[8px] border-t border-outline-variant pt-1 mt-1.5 uppercase">
 <span>Fryer station binder // Quick guide</span>
-<span>Synthesis of FS-Card-01 to FS-Card-04 · Rev 2025.1-Q1</span>
-<span>Standard 8.5" × 11" page insert</span>
+<span>Days 1–5 · Rev 2025.1-Q1</span>
+<span>Two Letter sheets</span>
 </div>
 </footer>
 </article>

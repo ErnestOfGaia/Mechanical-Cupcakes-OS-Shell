@@ -81,9 +81,7 @@ section > .wrap { display: grid; gap: 16px; }
 
 /* the binder */
 .binder { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
-.card { background: var(--paper); border: 2px solid var(--ink); display: grid; grid-template-rows: auto 1fr auto; }
-.card figure { margin: 0; aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 2px solid var(--ink); background: var(--s4); }
-.card img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.card { background: var(--paper); border: 2px solid var(--ink); display: grid; grid-template-rows: 1fr auto; }
 .card .body { padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
 .card .body p { color: var(--muted); font-size: 13px; }
 .card .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 14px; background: var(--s1); border-top: 1px solid var(--outline2); }
@@ -92,7 +90,6 @@ section > .wrap { display: grid; gap: 16px; }
 .links a { padding: 4px 10px; border: 2px solid var(--ink); background: var(--paper); font: 700 11px/14px var(--mono); letter-spacing: 0.03em; text-transform: uppercase; text-decoration: none; }
 .links a.p { background: var(--ink); color: #fff; }
 .card.reserved { border-style: dashed; }
-.card.reserved figure { background: repeating-linear-gradient(-45deg, var(--s4) 0 12px, var(--s2) 12px 24px); }
 .teach-notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
 
 /* how to print */
@@ -218,16 +215,16 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="hero">
 <div class="eyebrow"><span class="tag amber">Example training materials</span><span class="tag">Demo · Station 04</span><span class="tag quiet">Not an official document</span></div>
 <h1 id="h-hero">Fryer Station Binder</h1>
-<p class="lede">One laminated card per topic, one web page per card. Open a card, press Print, laminate it, punch it, and it lives in the 3-ring binder at the station. The same page works on a phone or a kitchen tablet, in English or Spanish.</p>
+<p class="lede">One laminated card per day of training, one web page per card. Open a card, press Print, laminate it, punch it, and it lives in the 3-ring binder at the station. The same page works on a phone or a kitchen tablet, in English or Spanish.</p>
 <div class="facts">
-<div class="fact"><b>4 cards</b><span>Storage &amp; temps, shift checklists, line callouts, oil quality</span></div>
-<div class="fact"><b>1 quick guide</b><span>A one-sheet summary of the four cards for the binder's front pocket</span></div>
+<div class="fact"><b>5 cards</b><span>Line callouts, storage &amp; temps, shift checklists, food levels, oil quality</span></div>
+<div class="fact"><b>1 quick guide</b><span>A one-sheet summary of the five cards for the binder's front pocket</span></div>
 <div class="fact"><b class="num">8.5 × 5.5 in</b><span>Half-sheet landscape cards, 3-hole punched on the left</span></div>
-<div class="fact"><b>4 teacher's aids</b><span>The teacher's edition of each card, for whoever the new hire is shadowing</span></div>
+<div class="fact"><b>5 teacher's aids</b><span>The teacher's edition of each card, for whoever the new hire is shadowing</span></div>
 <div class="fact"><b>EN / ES</b><span>Every page flips to Spanish with one button</span></div>
 </div>
 <div class="actions">
-<a class="btn dark" href="card-01-storage-temps.html">Start with Card 01</a>
+<a class="btn dark" href="card-03-line-callouts.html">Start with Day 1</a>
 <a class="btn" href="quick-guide.html">Read the quick guide</a>
 <a class="btn amber" href="#kit">See the style kit</a>
 </div>
@@ -237,32 +234,31 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 
 <section aria-labelledby="h-binder">
 <div class="wrap">
-<div class="head"><h2 id="h-binder">The binder</h2><span class="label">Fryer Station · Rev 2025.1-Q1 · 5 pages</span></div>
+<div class="head"><h2 id="h-binder">The binder</h2><span class="label">Fryer Station · Rev 2025.1-Q1 · 6 pages</span></div>
 <p class="intro">Each page prints on its own. "Print" opens the page and the print dialog together; the paper size and orientation are already set on the page.</p>
 <div class="binder">
 <article class="card">
-<figure><img src="preview/card-01.png" alt="Card 01 preview: four storage zones with target temperatures and the fry time table" loading="lazy"></figure>
-<div class="body"><span class="tag">FS-Card-01 of 04</span><h3>Storage &amp; Critical Temps</h3><p>Four zones: freezer, fridge, fryer wells, calamari fridge. Target temps, what lives where, the fry time &amp; yield table, and the supervisor sign-off.</p></div>
-<div class="foot"><span class="label-sm">Half-letter landscape</span><div class="links"><a href="card-01-storage-temps.html">Open</a><a class="p" href="card-01-storage-temps.html?print=1">Print</a></div></div>
-</article>
-<article class="card">
-<figure><img src="preview/card-02.png" alt="Card 02 preview: open, mid-shift and close checklists in three columns" loading="lazy"></figure>
-<div class="body"><span class="tag">FS-Card-02 of 04</span><h3>Shift Checklists &amp; Routines</h3><p>Open routine, mid-shift reset, close breakdown. Eighteen check boxes with the "why" under each line, plus initials and time boxes for the lead.</p></div>
-<div class="foot"><span class="label-sm">Half-letter landscape</span><div class="links"><a href="card-02-shift-checklists.html">Open</a><a class="p" href="card-02-shift-checklists.html?print=1">Print</a></div></div>
-</article>
-<article class="card">
-<figure><img src="preview/card-03.png" alt="Card 03 preview: expo calls, fryer echo, position roles and safety rules" loading="lazy"></figure>
-<div class="body"><span class="tag">FS-Card-03 of 04</span><h3>Line Callouts &amp; Echo</h3><p>What expo calls and what the fryer calls back. Support and lead roles. The CCP, allergen, burn-hazard and waste rules in one table.</p></div>
+<div class="body"><span class="tag"><span>Day</span> 1</span><h3>Line Callouts &amp; Echo</h3><p>What expo calls and what the fryer calls back. Support and lead roles. The CCP, allergen, burn-hazard and waste rules in one table.</p></div>
 <div class="foot"><span class="label-sm">Half-letter landscape</span><div class="links"><a href="card-03-line-callouts.html">Open</a><a class="p" href="card-03-line-callouts.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
-<figure><img src="preview/card-04.png" alt="Card 04 preview: four oil quality stages with color ramps and the shift audit log" loading="lazy"></figure>
-<div class="body"><span class="tag">FS-Card-04 of 04</span><h3>Oil Quality — Judge It By Eye</h3><p>Four oil stages by colour, with the action for each. Cleaning and reset every shift, cleaning steps for both fryers, what success looks like, and the supervisor sign-off.</p></div>
+<div class="body"><span class="tag"><span>Day</span> 2</span><h3>Storage &amp; Critical Temps</h3><p>Four zones: freezer, fridge, fryer wells, calamari fridge. Target temps, what lives where, the fry time &amp; yield table, and the supervisor sign-off.</p></div>
+<div class="foot"><span class="label-sm">Half-letter landscape</span><div class="links"><a href="card-01-storage-temps.html">Open</a><a class="p" href="card-01-storage-temps.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
+<div class="body"><span class="tag"><span>Day</span> 3</span><h3>Shift Checklists &amp; Routines</h3><p>Open routine, mid-shift reset, close breakdown. Eighteen check boxes with the "why" under each line, plus initials and time boxes for the lead.</p></div>
+<div class="foot"><span class="label-sm">Half-letter landscape</span><div class="links"><a href="card-02-shift-checklists.html">Open</a><a class="p" href="card-02-shift-checklists.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
+<div class="body"><span class="tag"><span>Day</span> 4</span><h3>Food Levels &amp; Self-Management</h3><p>Full is a number, not a feeling. Two days of stock, which days run busy and which run slow, and the breaks and maintenance that fit in the gaps. The stock table is blank on purpose.</p></div>
+<div class="foot"><span class="label-sm">Half-letter landscape</span><div class="links"><a href="card-05-food-levels.html">Open</a><a class="p" href="card-05-food-levels.html?print=1">Print</a></div></div>
+</article>
+<article class="card">
+<div class="body"><span class="tag"><span>Day</span> 5</span><h3>Oil Quality — Judge It By Eye</h3><p>Four oil stages by colour, with the action for each. Cleaning and reset every shift, cleaning steps for both fryers, what success looks like, and the supervisor sign-off.</p></div>
 <div class="foot"><span class="label-sm">Half-letter landscape</span><div class="links"><a href="card-04-oil-quality.html">Open</a><a class="p" href="card-04-oil-quality.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
-<figure><img src="preview/quick-guide.png" alt="Quick guide preview: one portrait sheet summarizing all four cards" loading="lazy"></figure>
-<div class="body"><span class="tag amber">Quick guide</span><h3>Fryer Station Quick Guide</h3><p>One portrait sheet that repeats what the four cards say: critical temps, the three routines, the callouts, the four oil stages. The only line that is not on a card is the station mantra, in Ernest's own words.</p></div>
+<div class="body"><span class="tag">Quick guide</span><h3>Fryer Station Quick Guide</h3><p>One portrait sheet that repeats what the five cards say: critical temps, the three routines, the callouts, the four oil stages. The only line that is not on a card is the station mantra, in Ernest's own words.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="quick-guide.html">Open</a><a class="p" href="quick-guide.html?print=1">Print</a></div></div>
 </article>
 </div>
@@ -276,42 +272,35 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="week" aria-label="The first five days"><a href="aid-03-line-callouts.html"><span class="d"><span>Day</span> 1</span><span class="t">Line Callouts</span><span class="m">Supervised</span></a><a href="aid-01-storage-temps.html"><span class="d"><span>Day</span> 2</span><span class="t">Storage &amp; Temps</span><span class="m">Supervised</span></a><a href="aid-02-shift-checklists.html"><span class="d"><span>Day</span> 3</span><span class="t">Shift Checklists</span><span class="m">Supervised</span></a><a href="aid-05-food-levels.html"><span class="d"><span>Day</span> 4</span><span class="t">Food Levels</span><span class="m">Unsupervised · verified</span></a><a href="aid-04-oil-quality.html"><span class="d"><span>Day</span> 5</span><span class="t">Oil Quality</span><span class="m">Unsupervised · verified</span></a><a class="sheet" href="character-sheet.html"><span class="d">Manager</span><span class="t">Character sheet</span></a></div>
 <div class="binder">
 <article class="card">
-<figure><img src="preview/aid-03.png" alt="Teacher's Aid 03 preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 1</span><h3>Line Callouts &amp; Echo</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-03-line-callouts.html">Open</a><a class="p" href="aid-03-line-callouts.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
-<figure><img src="preview/aid-01.png" alt="Teacher's Aid 01 preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 2</span><h3>Storage &amp; Critical Temps</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-01-storage-temps.html">Open</a><a class="p" href="aid-01-storage-temps.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
-<figure><img src="preview/aid-02.png" alt="Teacher's Aid 02 preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 3</span><h3>Shift Checklists &amp; Routines</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-02-shift-checklists.html">Open</a><a class="p" href="aid-02-shift-checklists.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
-<figure><img src="preview/aid-05.png" alt="Teacher's Aid 05 preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 4</span><h3>Food Levels &amp; Self-Management</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-05-food-levels.html">Open</a><a class="p" href="aid-05-food-levels.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
-<figure><img src="preview/aid-04.png" alt="Teacher's Aid 04 preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber"><span>Teacher's Aid</span> · <span>Day</span> 5</span><h3>Oil Quality — Judge It By Eye</h3><p>The teacher's edition of the day's card: the stop-the-line items, a teach row for each panel, questions for the gaps between tickets, and the sign-off.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="aid-04-oil-quality.html">Open</a><a class="p" href="aid-04-oil-quality.html?print=1">Print</a></div></div>
 </article>
 <article class="card">
-<figure><img src="preview/character-sheet.png" alt="Character sheet preview" loading="lazy"></figure>
 <div class="body"><span class="tag amber">Manager's copy</span><h3>Character Sheet</h3><p>One sheet per new hire. Each day lists the skills the trainee has to show and what the teacher has to have done. A blank form: names stay on paper.</p></div>
 <div class="foot"><span class="label-sm">Letter portrait</span><div class="links"><a href="character-sheet.html">Open</a><a class="p" href="character-sheet.html?print=1">Print</a></div></div>
 </article>
 <article class="card reserved">
-<figure></figure>
 <div class="body"><span class="tag quiet">Reserved</span><h3>Page 5 · Deeper Detail</h3><p>Reserved. A two-page insert with deeper instructional detail on specific areas of the station. Which areas is still to be ruled on.</p></div>
 <div class="foot"><span class="label-sm">Letter · two pages</span></div>
 </article>
 </div>
-<div class="note" data-i18n-skip><b>Design pass.</b> The amber dashed "ERNEST →" boxes on the aids are open slots for teaching knowledge that comes from a recorded interview. The day order is one line in <code>site-src/aids/aids.data.mjs</code>; day 5 stays open until it is ruled on.</div>
+<div class="note" data-i18n-skip><b>Design pass.</b> The amber dashed "ERNEST →" boxes on the aids are open slots for teaching knowledge that comes from a recorded interview. The day order is one line in <code>site-src/aids/aids.data.mjs</code>; page 5, the deeper-detail insert, is still reserved.</div>
 </div>
 </section>
 
