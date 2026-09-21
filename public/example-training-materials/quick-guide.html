@@ -13,7 +13,7 @@
 <style>
 html, body { margin: 0; padding: 0; }
 [hidden] { display: none !important; } /* Tailwind's .flex would otherwise beat the hidden attribute */
-.hazard { background: repeating-linear-gradient(-45deg, #141b2b, #141b2b 12px, #fe932c 12px, #fe932c 24px); }
+.hazard { background: #fe932c; }
 .num { font-variant-numeric: tabular-nums; }
 @media (min-width: 640px) { .callouts { grid-template-columns: 1fr 0.7fr 0.85fr 1.45fr; } }
 .punch { position: absolute; left: 6px; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed #76777d; background: #d9e3f6; }
@@ -28,6 +28,7 @@ html, body { margin: 0; padding: 0; }
   body > header, body > footer, .no-print { display: none !important; }
   main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
   #sheet { max-width: none !important; width: 1080px !important; zoom: 0.75; margin: 0 !important; box-shadow: none !important; }
+  #sheet * { box-shadow: none !important; }
   .callouts { grid-template-columns: 1fr 0.7fr 0.85fr 1.45fr !important; }
   [data-edited]::after { display: none !important; }
   .sheet-break { break-before: page; page-break-before: always; height: 0; }
@@ -196,7 +197,7 @@ html, body { margin: 0; padding: 0; }
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 mt-1.5 font-body-sm text-[10px] leading-tight">
 <div class="bg-surface-container-low p-1.5">
-<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">01. Open routine <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— set-up &amp; calibrate</span></div>
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">01. Open routine <span class="block font-label-sm text-[8.5px] text-on-surface-variant normal-case">set-up &amp; calibrate</span></div>
 <div><span class="box"></span><span data-edit="02:inspect-well-oil-levels-to-upper-cold-scribe-mar">Inspect well oil levels to upper cold scribe mark.</span></div>
 <div><span class="box"></span><span data-edit="02:verify-exhaust-hoods-makeup-air-cfm-draw-active">Verify exhaust hoods &amp; makeup-air CFM draw active.</span></div>
 <div><span class="box"></span><span data-edit="02:preheat-wells-1-3-to-350f-calibrate-probe-in-ice">Preheat Wells 1–3 to 350°F; calibrate probe in ice-water (32°F ±1°F).</span></div>
@@ -206,7 +207,7 @@ html, body { margin: 0; padding: 0; }
 <div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">OPEN VERIFY · INIT: [ _____ ] · TIME: [ _____ ]</div>
 </div>
 <div class="bg-surface-container-low p-1.5">
-<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">02. Mid-shift reset <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— check, sanitize, stock</span></div>
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">02. Mid-shift reset <span class="block font-label-sm text-[8.5px] text-on-surface-variant normal-case">check, sanitize, stock</span></div>
 <div><span class="box"></span><span data-edit="02:skim-crumb-surface-floaters-with-fine-mesh-skimm">Skim crumb surface &amp; floaters with fine mesh skimmer (every 30m in the rush).</span></div>
 <div><span class="box"></span><span data-edit="02:perform-mid-day-hot-oil-filtration-on-heavy-well">Mid-day hot oil filtration on heavy wells (Wells 1 &amp; 2 via pump recirculator).</span></div>
 <div><span class="box"></span><span data-edit="02:top-off-oil-levels-using-fresh-reserve-jug">Top off oil with fresh reserve jug (max 1 qt per well during service).</span></div>
@@ -216,7 +217,7 @@ html, body { margin: 0; padding: 0; }
 <div class="font-label-sm text-[8.5px] mt-1 bg-surface-container-lowest p-1 num">RUSH RESET · INIT: [ _____ ] · OIL CHECKED BY EYE [ ]</div>
 </div>
 <div class="bg-surface-container-low p-1.5">
-<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">03. Close breakdown <span class="font-label-sm text-[8.5px] text-on-surface-variant normal-case">— shutdown &amp; sanitation</span></div>
+<div class="font-headline-sm text-headline-sm uppercase border-b border-primary-container mb-1">03. Close breakdown <span class="block font-label-sm text-[8.5px] text-on-surface-variant normal-case">shutdown &amp; sanitation</span></div>
 <div><span class="box"></span><span data-edit="02:power-down-burners-pilot-valves-cool-below-150f">Power down burners &amp; pilot valves; cool below 150°F. Do not drain boiling oil.</span></div>
 <div><span class="box"></span><span data-edit="02:run-complete-filtration-through-paper-discard-co">Run complete filtration through paper &amp; discard cone; replace filter pad envelope.</span></div>
 <div><span class="box"></span><span data-edit="02:scrub-vat-walls-heating-elements-tank-sides">Scrub vat walls, heating elements &amp; tank sides (high-temp long brass brush).</span></div>

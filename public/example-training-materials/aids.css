@@ -4,7 +4,7 @@
    every colored part also carries a label, a border style or a box. */
 html, body { margin: 0; padding: 0; }
 [hidden] { display: none !important; } /* Tailwind's .flex would otherwise beat the hidden attribute */
-.hazard { background: repeating-linear-gradient(-45deg, #141b2b, #141b2b 12px, #fe932c 12px, #fe932c 24px); }
+.hazard { background: #fe932c; }
 .num { font-variant-numeric: tabular-nums; }
 .punch { position: absolute; left: 6px; width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed #76777d; background: #d9e3f6; }
 [data-edited]::after { content: ""; display: inline-block; width: 5px; height: 5px; background: #fe932c; margin-left: 3px; vertical-align: middle; }
@@ -175,6 +175,7 @@ html, body { margin: 0; padding: 0; }
   body > header, body > footer, .no-print { display: none !important; }
   main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
   #sheet { max-width: none !important; width: 850px !important; zoom: 0.865; margin: 0 !important; box-shadow: none !important; }
+  #sheet * { box-shadow: none !important; }
   [data-edited]::after { display: none !important; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 }

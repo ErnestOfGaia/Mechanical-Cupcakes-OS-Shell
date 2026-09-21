@@ -5,8 +5,8 @@
 /* The three binder holes go through the card's left edge. Backgrounds stay full-bleed and only
    the content of each top-level row is pushed clear, which is how card 03 used to do it alone.
    1.75rem is the design system's own margin-punch token. */
-#card > *, #card > section > * { padding-left: 1.75rem; }
-#card > section { padding-left: 0; }
+#card > *, #card > section > * { padding-left: 1.75rem; padding-right: 1rem; }
+#card > section { padding-left: 0; padding-right: 0; }
 label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
 .is-editing [data-edit] { outline: 2px dashed #fe932c; outline-offset: 1px; cursor: text; background: #fff7ed; }
 .is-editing [data-edit]:focus { outline: 2px solid #141b2b; background: #fff; }
@@ -21,6 +21,7 @@ label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
   main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
   main > div { width: 100% !important; max-width: none !important; }
   #card { max-width: none !important; width: 100.00% !important; zoom: 1; margin: 0 !important; box-shadow: none !important; break-inside: avoid; }
+  #card *, #card section { box-shadow: none !important; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   .animate-ping, .animate-pulse { animation: none !important; }
   
@@ -48,14 +49,14 @@ label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
 <!-- LAMINATED CARD CONTAINER (5.5" x 8.5" Half-Sheet Landscape Spec) -->
 <section class="w-full bg-surface-container-lowest text-on-surface shadow-2xl relative overflow-hidden flex flex-col" style="box-shadow: 6px 6px 0px #141b2b;">
 <!-- HAZARD STRIPE ACCENT (TOP SAFETY RATING BAR) -->
-<div class="w-full h-2 bg-[repeating-linear-gradient(45deg,#fe932c,#fe932c_12px,#141b2b_12px,#141b2b_24px)]"></div>
+<div class="w-full h-2.5 bg-secondary-container"></div>
 <!-- CARD HEADER & METADATA BAR -->
 <div class="w-full bg-primary-container text-on-primary px-space-lg py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
 <div class="flex items-center gap-space-md">
 <span class="bg-secondary-container text-on-secondary-container px-space-sm py-0.5 font-label-md text-label-md uppercase tracking-wider font-bold">DAY 1 OF 5</span>
 <div class="flex flex-col">
 <h1 class="font-headline-lg text-headline-lg uppercase tracking-wide leading-none text-on-primary">FRYER STATION OPERATIONS: LINE CALLOUTS</h1>
-<span class="font-label-sm text-label-sm text-on-primary-container tracking-wider uppercase mt-0.5">LINE DISCIPLINE SYSTEM</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim tracking-wider uppercase mt-0.5">LINE DISCIPLINE SYSTEM</span>
 </div>
 </div>
 <div class="flex items-center gap-space-sm shrink-0"><span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-widest">REV: 2025.1-Q1</span></div>
@@ -63,7 +64,7 @@ label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
 <!-- HIGH-VISIBILITY MANDATORY RULE BANNER -->
 <div class="w-full bg-tertiary-container text-on-tertiary-container pl-space-lg pr-space-lg py-space-xs flex items-center justify-between gap-space-md">
 <div class="flex items-center gap-space-sm">
-<span class="material-symbols-outlined text-[18px] text-on-tertiary-container animate-pulse">warning</span>
+<span class="material-symbols-outlined text-[18px] text-on-tertiary-container">warning</span>
 <span class="font-label-md text-label-md uppercase tracking-wider font-bold">
             RULE: Call out and respond — silent drops are a safety hazard</span>
 </div>

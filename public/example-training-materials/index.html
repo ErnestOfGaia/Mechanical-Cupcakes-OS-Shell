@@ -36,7 +36,7 @@ p { margin: 0; }
 .label-sm { font: 700 9.5px/12px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; }
 .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
 .wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 16px; }
-.hazard { height: 10px; background: repeating-linear-gradient(-45deg, var(--ink) 0 12px, var(--amber) 12px 24px); }
+.hazard { height: 10px; background: var(--amber); }
 
 /* site header — same bar as the cards */
 .top { position: sticky; top: 0; z-index: 50; background: var(--ink); color: #fff; }
@@ -325,7 +325,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="swatches">
 <div class="sw"><i style="background:#141b2b"></i><div><b>Ink</b><code>#141b2b</code><small>Header bars, borders, banners</small></div></div>
 <div class="sw"><i style="background:#000000"></i><div><b>Black</b><code>#000000</code><small>Section tags, active buttons</small></div></div>
-<div class="sw"><i style="background:#fe932c"></i><div><b>Hazard amber</b><code>#fe932c</code><small>Stripes, accents, active tab</small></div></div>
+<div class="sw"><i style="background:#fe932c"></i><div><b>Hazard amber</b><code>#fe932c</code><small>Top rule, accents, active tab</small></div></div>
 <div class="sw"><i style="background:#904d00"></i><div><b>Amber ink</b><code>#904d00</code><small>Caution text, roles</small></div></div>
 <div class="sw"><i style="background:#ffdcc3"></i><div><b>Amber tint</b><code>#ffdcc3</code><small>Allergen boxes, hold badges</small></div></div>
 <div class="sw"><i style="background:#410002"></i><div><b>Critical red</b><code>#410002</code><small>CCP banners, allergen rows</small></div></div>
@@ -341,7 +341,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="sw"><i style="background:#d0dbed"></i><div><b>Page ground</b><code>#d0dbed</code><small>Behind the card on screen</small></div></div>
 <div class="sw"><i style="background:#121c2a"></i><div><b>Text</b><code>#121c2a</code><small>Body copy</small></div></div>
 <div class="sw"><i style="background:#45464c"></i><div><b>Muted text</b><code>#45464c</code><small>Notes, sub-lines</small></div></div>
-<div class="sw"><i style="background:#76777d"></i><div><b>Outline</b><code>#76777d</code><small>Dividers, punch marks</small></div></div>
+<div class="sw"><i style="background:#76777d"></i><div><b>Outline</b><code>#76777d</code><small>Dividers, quiet rules</small></div></div>
 <div class="sw"><i style="background:#c0c6db"></i><div><b>Steel</b><code>#c0c6db</code><small>Text on ink bars</small></div></div>
 </div>
 <div class="ramp">
@@ -362,7 +362,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div><span class="t-bs">Body small · notes under a checklist line.</span><code>11 / 14 · 400</code></div>
 <div><span class="t-ll num">LABEL LARGE · JETBRAINS MONO · 350°F (177°C) · 6M 30S</span><code>13 / 16 · 700</code></div>
 <div><span class="t-lm num">LABEL MEDIUM · TARGET TEMP · INIT: [ _____ ]</span><code>11 / 14 · 600</code></div>
-<div><span class="t-ls num">LABEL SMALL · ZONE A // FREEZER · REV 2025.1-Q1</span><code>9.5 / 12 · 700</code></div>
+<div><span class="t-ls num">LABEL SMALL · DAY 2 OF 5 · REV 2025.1-Q1</span><code>9.5 / 12 · 700</code></div>
 </div>
 
 <h3>Parts</h3>
@@ -380,18 +380,18 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 <div class="sheet" aria-label="Diagram of the six zones of a card, top to bottom">
 <div class="punch" style="top:12%"></div><div class="punch" style="top:50%"></div><div class="punch" style="top:88%"></div>
 <div class="z1"></div>
-<div class="z2"><span>1 · Header bar: FS-Card-0X of 04 · Title</span><span>Rev · Format</span></div>
+<div class="z2"><span>1 · Header bar: Day N of 5 · Title</span><span>Rev</span></div>
 <div class="z3"><span>2 · Critical control point</span><span>Temps</span></div>
 <div class="z4"><i></i><i></i><i></i><i></i></div>
 <div class="z5"><span>4 · Sign-off strip</span><span>Init [ ] · Time [ ]</span></div>
-<div class="z6"><span>5 · Binder spec footer</span><span>Card 0X // Front</span></div>
+<div class="z6"><span>5 · Punch strip, left edge</span><span>1.75 rem kept clear</span></div>
 </div>
 <ul class="rules">
-<li><b>1</b>Hazard stripe, then the ink header bar with the card number, title, revision and paper format.</li>
+<li><b>1</b>A solid amber rule, then the ink header bar: the day, the card's title and its revision. The card number is not on the card, because the binder is walked by day.</li>
 <li><b>2</b>The critical control point in critical red, right under the title. Temperatures in °F with °C in brackets.</li>
 <li><b>3</b>The body: two to four columns of panels, each with a station banner, one metric badge and a short checklist. One card, one topic, one side. Never spill to the back.</li>
 <li><b>4</b>Sign-off strip: initials, time or date boxes the lead fills with a grease pencil.</li>
-<li><b>5</b>Footer with the binder spec. The left 1.75 rem stays empty for the three punch holes.</li>
+<li><b>5</b>The left 1.75 rem of every row stays clear for the three punch holes. Paper stock, punch margin and laminate are print settings: they sit on the web page above the card, never on the card itself.</li>
 <li><b>0</b>Corners are square. Shadows are hard offsets or nothing. Borders are 1, 2 or 3 px of ink, amber or red. Nothing is decorative.</li>
 </ul>
 </div>

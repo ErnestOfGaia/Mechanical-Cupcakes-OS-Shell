@@ -5,8 +5,8 @@
 /* The three binder holes go through the card's left edge. Backgrounds stay full-bleed and only
    the content of each top-level row is pushed clear, which is how card 03 used to do it alone.
    1.75rem is the design system's own margin-punch token. */
-#card > *, #card > section > * { padding-left: 1.75rem; }
-#card > section { padding-left: 0; }
+#card > *, #card > section > * { padding-left: 1.75rem; padding-right: 1rem; }
+#card > section { padding-left: 0; padding-right: 0; }
 label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
 .is-editing [data-edit] { outline: 2px dashed #fe932c; outline-offset: 1px; cursor: text; background: #fff7ed; }
 .is-editing [data-edit]:focus { outline: 2px solid #141b2b; background: #fff; }
@@ -21,6 +21,7 @@ label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
   main { padding: 0 !important; margin: 0 !important; background: #fff !important; min-height: 0 !important; display: block !important; }
   main > div { width: 100% !important; max-width: none !important; }
   #card { max-width: none !important; width: 100.00% !important; zoom: 1; margin: 0 !important; box-shadow: none !important; break-inside: avoid; }
+  #card *, #card section { box-shadow: none !important; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   .animate-ping, .animate-pulse { animation: none !important; }
   
@@ -45,15 +46,13 @@ label > input[type="checkbox"].peer + div { border: 2px solid #141b2b; }
 <main class="w-full flex-1 bg-surface-dim flex flex-col items-center justify-start py-space-xl px-gutter"><div class="flex flex-col w-full">
 <div class="no-print w-full max-w-5xl mx-auto mb-space-xs flex flex-wrap items-center justify-between gap-space-xs font-label-sm text-label-sm text-on-surface-variant"><div class="flex flex-wrap items-center gap-space-md"><span class="flex items-center gap-space-xs"><span class="inline-block w-3 h-3 rounded-full bg-outline-variant"></span>PRINT: LETTER · LANDSCAPE · 100% · BACKGROUND GRAPHICS ON</span><span class="hidden sm:inline-block text-outline">|</span><span class="hidden sm:inline-block">CARD: HALF-LETTER 8.5" × 5.5"</span><span class="hidden sm:inline-block text-outline">|</span><span class="hidden sm:inline-block">PUNCH: 3 HOLES, LEFT EDGE · 1/4" KEPT CLEAR</span><span class="hidden sm:inline-block text-outline">|</span><span class="hidden sm:inline-block">STOCK: 100LB MATTE · 5 MIL LAMINATE</span></div><a class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant underline shrink-0" href="aid-02-shift-checklists.html">Teacher's Aid for this card →</a></div>
 <div id="card" class="w-full max-w-5xl mx-auto flex flex-col shadow-xl bg-surface-container-lowest">
-<div class="w-full h-2.5 bg-secondary-container relative overflow-hidden">
-<div class="absolute inset-0 opacity-30 bg-[repeating-linear-gradient(45deg,#000000,#000000_10px,transparent_10px,transparent_20px)]"></div>
-</div>
+<div class="w-full h-2.5 bg-secondary-container"></div>
 <div class="w-full bg-primary-container text-on-primary px-space-lg py-space-sm flex flex-wrap items-center justify-between gap-space-sm">
 <div class="flex items-center gap-space-md">
 <span class="bg-secondary-container text-on-secondary-container px-space-sm py-0.5 font-label-md text-label-md uppercase tracking-wider font-bold">DAY 3 OF 5</span>
 <div class="flex flex-col">
 <h1 class="font-headline-lg text-headline-lg uppercase tracking-wide leading-none text-on-primary">FRYER STATION OPERATIONS: SHIFT CHECKLISTS &amp; ROUTINES</h1>
-<span class="font-label-sm text-label-sm text-on-primary-container tracking-wider uppercase mt-0.5">Mandatory verification by line lead upon shift changeover</span>
+<span class="font-label-sm text-label-sm text-primary-fixed-dim tracking-wider uppercase mt-0.5">Mandatory verification by line lead upon shift changeover</span>
 </div>
 </div>
 <div class="flex items-center gap-space-sm shrink-0"><span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-widest">REV: 2025.1-Q1</span></div>
