@@ -98,7 +98,7 @@ section > .wrap { display: grid; gap: 16px; }
 .step::before { counter-increment: step; content: "0" counter(step); font: 800 26px/1 var(--display); color: var(--amber-ink); }
 .step p { color: var(--muted); font-size: 13px; }
 .note { background: var(--amber-tint); color: var(--amber-deep); border: 3px solid var(--amber); padding: 10px 12px; font-size: 13px; }
-.note::before { content: ""; display: block; height: 4px; margin: -10px -12px 8px; background: repeating-linear-gradient(45deg, var(--ink) 0 8px, var(--amber) 8px 16px); }
+.note::before { content: ""; display: block; height: 4px; margin: -10px -12px 8px; background: var(--amber); }
 
 /* style guide */
 .kit { display: grid; gap: 16px; }
@@ -157,7 +157,7 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 .sheet { background: var(--paper); border: 2px solid var(--ink); position: relative; padding-left: 28px; display: grid; }
 .sheet .punch { position: absolute; left: 6px; width: 14px; height: 14px; border-radius: 50%; border: 1.5px dashed var(--outline); background: var(--s4); }
 .sheet > div { padding: 6px 8px; font: 600 10px/12px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; display: flex; justify-content: space-between; gap: 8px; }
-.sheet .z1 { padding: 0; height: 8px; background: repeating-linear-gradient(-45deg, var(--ink) 0 8px, var(--amber) 8px 16px); }
+.sheet .z1 { padding: 0; height: 8px; background: var(--amber); }
 .sheet .z2 { background: var(--ink); color: #fff; }
 .sheet .z3 { background: var(--red); color: var(--red-text); }
 .sheet .z4 { background: var(--s1); min-height: 110px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
