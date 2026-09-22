@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Storage &amp; Temps · phone version</title>
+<meta name="robots" content="noindex">
+<!-- The phone version links its OWN stylesheet. No Tailwind, no CDN, no Google Fonts: the four
+     typefaces are the ones already vendored in site/fonts/, one folder up. -->
+<link rel="stylesheet" href="../fonts.css">
+<link rel="stylesheet" href="mobile.css">
+</head>
+<!-- data-no-print: i18n.js will not honour ?print=1 here. Nothing on the phone prints. -->
+<body data-mobile data-no-print>
+
+<header class="top">
+<div class="wrap">
+<a class="back" href="index.html" aria-label="Back to the five days">&#8592;</a>
+<div class="who"><b>Storage &amp; Temps</b><span><span data-struct>Day 2</span></span></div>
+</div>
+</header>
+<div class="hazard"></div>
+
+<main>
+<section><div class="wrap">
+<div class="eyebrow"><span class="tag"><span data-struct>Day 2</span></span><span class="tag quiet">Inventory management</span></div>
+<h1>Storage &amp; Critical Temps</h1>
+</div></section>
+<section><div class="wrap">
+<h2>Know this cold</h2>
+<p class="lede">The lines off this day's card that are worth having in your head before you stand there.</p>
+<ul class="band"><li>CCP: Freezer &lt;31°F · Cold &lt;41°F · Internal 165°F (74°C)</li><li>ALLERGEN: <span data-edit="01:use-gloves-and-appropriate-containers-to-stay-sa">Use gloves and appropriate containers to stay safe.</span></li><li>READY OR NOT: <span data-edit="01:if-fryer-is-not-ready-do-not-drop-batch">If Fryer is Not Ready do not drop batch.</span> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">Temp drop &gt;25°F: refire.</span></li><li>HOLD: <span data-edit="01:fry-holder-do-not-hold-fries-longer-than-20-min">Fries 20 min.</span> <span data-edit="01:warmer-cabinet-chicken-and-tortillas-hold-no-lon">Chicken &amp; tortillas 4 hours.</span> Min 145°F. DISCARD TIMER: 7 MIN MAX. <span data-edit="01:reset-kds-station-timer-on-dump-pitch-batch-stri">Reset KDS timer.</span></li></ul>
+</div></section>
+<section><div class="wrap">
+<h2>Test yourself</h2>
+<p class="lede">You check your own answer. Nothing is marked, nothing is saved, nothing is sent.</p>
+<p class="count" data-count hidden><span data-struct><b class="num" data-left>4</b></span> left</p>
+<ul class="deck" data-deck><li class="q" tabindex="-1">
+
+<p class="ask">What's the freezer's TARGET TEMP, and what if it's beeping?</p>
+<div class="ans"><span class="k">The card says</span>&lt; 31°F (&lt;1°C). If Freezer is Beeping: <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></div>
+<div data-ctl hidden>
+<button type="button" class="btn dark" data-show>Show me the answer</button>
+<div class="row" data-mark hidden>
+<button type="button" class="btn" data-again>Ask me again</button>
+<button type="button" class="btn amber" data-got>Got it</button>
+</div>
+</div>
+</li><li class="q" tabindex="-1">
+
+<p class="ask">ALLERGEN: what does this card tell you to do?</p>
+<div class="ans"><span class="k">The card says</span><span data-edit="01:use-gloves-and-appropriate-containers-to-stay-sa">Use gloves and appropriate containers to stay safe.</span></div>
+<div data-ctl hidden>
+<button type="button" class="btn dark" data-show>Show me the answer</button>
+<div class="row" data-mark hidden>
+<button type="button" class="btn" data-again>Ask me again</button>
+<button type="button" class="btn amber" data-got>Got it</button>
+</div>
+</div>
+</li><li class="q" tabindex="-1">
+
+<p class="ask">Dropping a basket: how, and how do you spot an overload?</p>
+<div class="ans"><span class="k">The card says</span><span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:temp-drop-25f-indicates-basket-overload-refire-b">Temp drop &gt;25°F = overload.</span></div>
+<div data-ctl hidden>
+<button type="button" class="btn dark" data-show>Show me the answer</button>
+<div class="row" data-mark hidden>
+<button type="button" class="btn" data-again>Ask me again</button>
+<button type="button" class="btn amber" data-got>Got it</button>
+</div>
+</div>
+</li><li class="q" tabindex="-1">
+
+<p class="ask">Three hold limits: the staging pan, the fry holder, the warmer cabinet?</p>
+<div class="ans"><span class="k">The card says</span>7 MIN MAX HOLD. <span data-edit="01:fry-holder-do-not-hold-fries-longer-than-20-min">Fries 20 min.</span> <span data-edit="01:warmer-cabinet-chicken-and-tortillas-hold-no-lon">Chicken &amp; tortillas 4 hours.</span></div>
+<div data-ctl hidden>
+<button type="button" class="btn dark" data-show>Show me the answer</button>
+<div class="row" data-mark hidden>
+<button type="button" class="btn" data-again>Ask me again</button>
+<button type="button" class="btn amber" data-got>Got it</button>
+</div>
+</div>
+</li></ul>
+<div class="sheet" data-end hidden tabindex="-1">
+<h3>That's the set.</h3>
+<p class="lede">Nothing was recorded. Go again whenever you like.</p>
+<button type="button" class="btn" data-restart>Ask me these again</button>
+<a class="btn dark" href="day-3.html">Next day</a>
+</div>
+<p class="noscript-note lede">Every question above is listed with its answer. With JavaScript on you get asked them one at a time instead.</p>
+</div></section>
+<section><div class="wrap">
+<h2>What they'll ask you to show</h2>
+<p class="lede">At work, on this day, these are the things a trainer signs off. Reading them is not doing them — the list is here so none of it is a surprise.</p>
+<ul class="show"><li><i class="lens">STOCK</i><span>Points to the freezer, line fridge and calamari fridge, names every item in each, states the target temp for each</span></li><li><i class="lens">SAFE</i><span>Drops every basket: <span data-edit="01:if-fryer-is-not-ready-do-not-drop-batch">Not ready, no drop.</span> <span data-edit="01:drop-away-from-torso-lower-basket-slowly-to-prev">Drop away from torso.</span> <span data-edit="01:agitate-basket-at-30s-elapsed-to-avoid-clumping">Agitate basket at 30s elapsed.</span> <span data-edit="01:max-50-basket-load-prevent-oil-thermal-shock-sog">Max 50% basket load.</span></span></li><li><i class="lens">SAFE</i><span>Allergen: <span data-edit="01:use-gloves-and-appropriate-containers-to-stay-sa">Uses gloves and appropriate containers to stay safe.</span></span></li><li><i class="lens">SAFE</i><span>Holds to time: <span data-edit="01:fry-holder-do-not-hold-fries-longer-than-20-min">fries 20 min</span>, <span data-edit="01:warmer-cabinet-chicken-and-tortillas-hold-no-lon">chicken &amp; tortillas 4 hours</span>, min 145°F</span></li><li><i class="lens">SAFE</i><span>Pulls at Internal CCP 165°F (74°C), never early. Uses the right button: <span data-edit="01:calamari">calamari</span> <span data-edit="01:1-00">1:00</span>, <span data-edit="01:cheese-curds">curds</span> <span data-edit="01:1-30">1:30</span>, <span data-edit="01:extra-crispy-fries">extra crispy</span> <span data-edit="01:4-00">4:00</span></span></li><li><i class="lens">COMMS</i><span>Says what to do If Freezer is Beeping: <span data-edit="01:temp-is-low-notify-chef-keep-closed">temp is low, notify chef, keep closed.</span></span></li><li><i class="lens">STOCK</i><span data-src="ernest">Stocks the station from the walk-ins</span></li><li><i class="lens">STOCK</i><span data-src="ernest">Knows the station's part of the walk-in</span></li><li><i class="lens">COMMS</i><span data-src="ernest">Communicates moving through the restaurant</span></li><li><i class="lens">COMMS</i><span data-src="ernest">Knows 1-2 prep cooks; asks when unsure</span></li></ul>
+</div></section>
+<section><div class="wrap">
+<div class="gap"><b>Not written down yet</b><p><span data-struct><span class="num">9</span></span> parts of this day are still only in the chefs' heads: how it gets shown the first time, the usual mistake, what to have ready. Nobody has recorded them, so nothing here can ask you about them.</p></div>
+</div></section>
+</main>
+
+<script src="../es.js"></script>
+<script src="../edit.js"></script>
+<script src="../i18n.js"></script>
+<script src="quiz.js"></script>
+</body>
+</html>

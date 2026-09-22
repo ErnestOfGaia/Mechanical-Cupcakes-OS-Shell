@@ -75,7 +75,9 @@
   apply(lang);
 
   // Home page "Print" links open the card with ?print=1: wait for fonts, then print.
-  if (params.get("print") === "1") {
+  // A page marked data-no-print refuses: the phone version has no print path at all, and
+  // that ruling is enforced here rather than just written down (handoff 04 §1, §7.7).
+  if (params.get("print") === "1" && !document.body.hasAttribute("data-no-print")) {
     var go = function () { setTimeout(function () { window.print(); }, 150); };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(go); else window.addEventListener("load", go);
   }
