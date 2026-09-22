@@ -50,6 +50,12 @@ html, body { margin: 0; padding: 0; }
 .stopband ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px 14px; font: 500 12px/14.5px var(--body); }
 .stopband li { padding-left: 12px; position: relative; }
 .stopband li::before { content: ""; position: absolute; left: 0; top: 5px; width: 6px; height: 6px; background: #f63a35; }
+/* A day with nothing that stops the line still has things worth reinforcing. Same slot in the
+   page, same contrast (13.3:1), read as a note instead of an alarm. */
+.stopband.reinforce { background: #ffdcc3; color: #2f1500; border-bottom-color: #fe932c; }
+.stopband.reinforce .stopband-h { color: #2f1500; }
+.stopband.reinforce .stopband-h .bang { background: #2f1500; color: #ffdcc3; }
+.stopband.reinforce li::before { background: #904d00; }
 
 /* 3 · method strip */
 .method { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 12px; padding: 3px 20px 3px 32px; background: #ffdcc3; color: #2f1500; border-bottom: 2px solid #141b2b; font: 400 11.5px/15px var(--body); }
@@ -58,8 +64,7 @@ html, body { margin: 0; padding: 0; }
 .method .method-why b { background: #141b2b; color: #fff; }
 
 /* the day's own rule, in Ernest's words (day 1: shadow closely) */
-.dayrule { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; font: 500 12.5px/15px var(--body); color: #fff; }
-.dayrule b { flex: none; font: 700 11px/14px var(--mono); letter-spacing: 0.04em; text-transform: uppercase; background: #fe932c; color: #2f1500; padding: 0 6px; }
+.dayrule { align-self: start; border-left: 3px solid #fe932c; padding: 1px 0 1px 9px; font: 500 12.5px/15px var(--body); color: #fff; }
 
 /* zones */
 .zone-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; background: #141b2b; color: #fff; padding: 3px 8px; }
