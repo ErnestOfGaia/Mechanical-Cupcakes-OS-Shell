@@ -17,6 +17,10 @@
 <div class="wrap">
 <a class="back" href="index.html" aria-label="Back to the five days">&#8592;</a>
 <div class="who"><b>Shift Checklists</b><span><span data-struct>Day 3</span></span></div>
+<!-- Spanish on the phone, at Ernest's word 2026-09-21. Same one dictionary as the binder
+     (es.js), no duplicate pages. i18n.js carries ?lang=es along every link, so a Spanish
+     reader stays in Spanish even where localStorage is unavailable. -->
+<button type="button" class="lang" data-lang-toggle data-i18n-skip aria-label="Cambiar a español"><span data-lang-label>Español</span></button>
 </div>
 </header>
 <div class="hazard"></div>
@@ -34,7 +38,7 @@
 <section><div class="wrap">
 <h2>Test yourself</h2>
 <p class="lede">You check your own answer. Nothing is marked, nothing is saved, nothing is sent.</p>
-<p class="count" data-count hidden><span data-struct><b class="num" data-left>5</b></span> left</p>
+<p class="count" data-count hidden><span data-struct data-i18n-skip><b class="num" data-left>5</b></span> left</p>
 <ul class="deck" data-deck><li class="q" tabindex="-1">
 
 <p class="ask">Where does the oil level sit at open?</p>

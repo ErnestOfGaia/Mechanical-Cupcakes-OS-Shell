@@ -112,6 +112,17 @@ b, strong { font-weight: 600; }
 .top .who { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .top .who b { font: 700 19px/20px var(--display); text-transform: uppercase; letter-spacing: 0.02em; }
 .top .who span { font: 600 14px/16px var(--mono); text-transform: uppercase; letter-spacing: 0.04em; color: var(--c-primary-fixed-dim); }
+.top .lang {
+  margin-left: auto; flex: none;
+  min-height: 44px; min-width: 44px; padding: 8px 12px;
+  background: var(--c-primary); color: var(--c-on-primary);
+  border: 2px solid var(--c-outline);
+  font: 700 14px/18px var(--mono); letter-spacing: 0.04em; text-transform: uppercase;
+  cursor: pointer;
+}
+/* Spanish runs longer than English, and 320px is where that shows. The title takes the hit by
+   wrapping rather than pushing the toggle off the screen. */
+.top .who b { overflow-wrap: anywhere; }
 .hazard { height: 8px; background: var(--c-secondary-container); }
 
 a:focus-visible, button:focus-visible { outline: 3px solid var(--c-secondary-container); outline-offset: 2px; }
