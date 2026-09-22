@@ -1,4 +1,4 @@
-/* Teacher's Aids + the manager's character sheet. Same tokens as the cards (design/tw-config.js):
+/* Teacher's Aids + the manager's training log. Same tokens as the cards (design/tw-config.js):
    ink #141b2b, hazard amber #fe932c, amber ink #904d00, critical red #410002 / #f63a35.
    Zero radius, hard offsets only, nothing decorative. Meaning never rides on color alone:
    every colored part also carries a label, a border style or a box. */
@@ -16,7 +16,7 @@ html, body { margin: 0; padding: 0; }
 #sheet section, #sheet .method, #sheet .stopband { margin: 0; }
 #sheet .zone { padding: 6px 20px 0 32px; }
 
-/* the open slot: teaching knowledge that only Ernest can supply. Dashed border + the ERNEST →
+/* the open slot: teaching knowledge that only the chefs can supply. Dashed border + the CHEF →
    label carry the meaning (it survives a black-and-white printer); amber is a bonus. */
 .cslot { display: flex; align-items: baseline; gap: 5px; border: 1.5px dashed #904d00; background: #fff7ed; color: #2f1500; padding: 1px 6px; font: 400 11.5px/14px "IBM Plex Sans", sans-serif; min-width: 0; }
 .cslot b { flex: none; font: 700 10px/13px "JetBrains Mono", monospace; letter-spacing: 0.04em; color: #904d00; white-space: nowrap; }
@@ -132,7 +132,7 @@ html, body { margin: 0; padding: 0; }
 .week a.sheet { background: #fe932c; color: #2f1500; align-content: center; }
 .week a.sheet .d { color: #2f1500; }
 
-/* the character sheet */
+/* the training log */
 .cs-head { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; align-items: start; padding: 10px 20px 10px 32px; background: #141b2b; color: #fff; border-bottom: 4px solid #fe932c; }
 .cs-id { display: grid; gap: 5px; background: #fff; color: #141b2b; padding: 6px 8px; font: 700 9.5px/12px var(--mono); letter-spacing: 0.05em; text-transform: uppercase; }
 .cs-id div { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px; align-items: end; }
