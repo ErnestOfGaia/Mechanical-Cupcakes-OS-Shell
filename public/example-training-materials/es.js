@@ -31,7 +31,7 @@ window.ETM_ES = {
   "Fryer Station Binder": "Carpeta de la estación de freidora",
   "One laminated card per day of training, one web page per card. Open a card, press Print, laminate it, punch it, and it lives in the 3-ring binder at the station. The same page works on a phone or a kitchen tablet, in English or Spanish.": "Una tarjeta laminada por cada día de capacitación, una página web por tarjeta. Abre una tarjeta, pulsa Imprimir, lamínala, perfórala y vive en la carpeta de argollas de la estación. La misma página funciona en un teléfono o una tableta de cocina, en inglés o en español.",
   "5 cards": "5 tarjetas",
-  "Line callouts, storage & temps, shift checklists, food levels, oil quality": "Llamados en la línea, almacenamiento y temperaturas, listas de turno, niveles de producto, calidad del aceite",
+  "Communication & safety, storage & temperature, shift checklists, food levels, oil quality": "Comunicación y seguridad, almacenamiento y temperatura, listas de turno, niveles de producto, calidad del aceite",
   "1 quick guide": "1 guía rápida",
   "A one-sheet summary of the five cards for the binder's front pocket": "Un resumen de una hoja de las cinco tarjetas para el bolsillo delantero de la carpeta",
   "8.5 × 5.5 in": "8.5 × 5.5 pulg",
