@@ -1099,7 +1099,4 @@ window.ETM_ES = {
   "Open the phone version": "Abre la versión para teléfono",
   "It records nothing.": "No registra nada.",
   "No score, no sign-off, nothing sent to a manager, and nothing to print, because the cards are already posted at the station. The binder is the system of record and this is not it. The questions are generated from the same card data, so editing a card edits the question.": "Sin puntaje, sin firma, nada se envía a un gerente, y nada que imprimir, porque las tarjetas ya están puestas en la estación. La carpeta es el registro oficial y esto no lo es. Las preguntas se generan de los mismos datos de las tarjetas, así que editar una tarjeta edita la pregunta.",
-  // ---- the narrow-screen offer on the home page, 2026-09-21.
-  "On your own phone?": "¿En tu propio teléfono?",
-  "There is a version built for learning at home.": "Hay una versión hecha para aprender en casa.",
 };

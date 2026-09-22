@@ -46,18 +46,8 @@ p { margin: 0; }
 .top nav { display: flex; flex-wrap: wrap; gap: 4px; }
 .top nav a, .top nav span { text-decoration: none; padding: 4px 12px; color: var(--nav); font: 600 11px/14px var(--mono); letter-spacing: 0.03em; text-transform: uppercase; }
 .top nav a.open { opacity: 0.5; }
-/* The phone-version offer. Hidden on anything wide enough to hold a card. */
-.phonebar { display: none; }
-@media (max-width: 760px) {
-  .phonebar {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    min-height: 52px; padding: 10px 16px; text-decoration: none;
-    background: var(--amber); color: var(--amber-deep);
-    border-bottom: 3px solid var(--ink); font-size: 15px; line-height: 1.4;
-  }
-  .phonebar b { font-weight: 700; }
-  .phonebar i { font-style: normal; font-family: var(--mono); font-weight: 700; font-size: 20px; }
-}
+@media (max-width: 760px) { .tools .btn { min-height: 44px; padding-inline: 14px; } }
+
 .card:target { outline: 4px solid var(--amber); outline-offset: 3px; }
 .top nav a:hover { color: #fff; }
 .top nav a[aria-current] { background: var(--black); color: #fff; font-weight: 700; box-shadow: 2px 2px 0 var(--amber); }
@@ -67,6 +57,12 @@ p { margin: 0; }
 .btn.dark { background: var(--ink); color: #fff; }
 .btn.amber { background: var(--amber); color: var(--amber-deep); }
 .btn.ghost { background: var(--black); color: #fff; border-color: var(--outline); box-shadow: none; padding: 4px 10px; font-size: 11px; }
+/* After .btn.ghost on purpose: same specificity, so order decides. */
+.btn.phone { border-color: var(--amber); color: var(--amber); }
+/* Ernest's call, 2026-09-21: ONE affordance, in the toolbar's dead space, visible from
+   every scroll position. A full-width banner said the same thing twice and pushed the
+   hero 65px down the phone. Still an offer, not a device redirect — the binder and the
+   phone version are for different PEOPLE, not different screens (DNA section 9). */
 .btn:focus-visible, .top nav a:focus-visible, a:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
 
 /* sections */
@@ -215,20 +211,11 @@ table.spec tr:nth-child(even) td { background: var(--s1); }
 </nav>
 <div class="tools">
 <button type="button" class="btn ghost" data-lang-toggle data-i18n-skip aria-label="Cambiar a español"><span data-lang-label>Español</span></button>
+<a class="btn ghost phone" href="mobile/index.html">Phone version</a>
 </div>
 </div>
 </header>
 <div class="hazard"></div>
-
-<!-- Narrow screens only, and an OFFER rather than a redirect. Sniffing the device and sending
-     a phone straight to /mobile would be wrong: the two surfaces are for different PEOPLE, not
-     different screens (DNA section 9). A manager checking a card on their phone, or a kitchen
-     tablet mounted on the line, wants the binder — the thing built for paper. CSS only, so it
-     behaves the same in the downloaded folder, and nobody can get trapped on the wrong side. -->
-<a class="phonebar" href="mobile/index.html">
-<span><b>On your own phone?</b> There is a version built for learning at home.</span>
-<i aria-hidden="true">&#8594;</i>
-</a>
 
 <main>
 
