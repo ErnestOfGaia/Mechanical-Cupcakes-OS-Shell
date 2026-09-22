@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
         destination: "/example-training-materials/index.html",
         permanent: false,
       },
+      {
+        // The phone version is a FOLDER inside that folder, and nothing serves a
+        // directory index: /example-training-materials/mobile was a 404 on the day it
+        // shipped (2026-09-21), while /mobile/index.html worked. Same redirect, same
+        // reason as above — a rewrite would leave the browser at a base with no
+        // trailing slash and break every relative link on the phone pages.
+        source: "/example-training-materials/mobile",
+        destination: "/example-training-materials/mobile/index.html",
+        permanent: false,
+      },
     ];
   },
   async headers() {
