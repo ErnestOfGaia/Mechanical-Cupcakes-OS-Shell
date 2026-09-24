@@ -4,7 +4,7 @@
 // stay as they are. Flag for a native line cook's read before it goes on a wall.
 window.ETM_ES = {
   // ---- shared chrome
-  "Pelican · Line Training Binder": "Pelican · Carpeta de capacitación de línea",
+  "Line Training Binder": "Carpeta de capacitación de línea",
   "Home": "Inicio",
   "Quick Guide": "Guía rápida",
   "Fryer Station": "Estación de freidora",
